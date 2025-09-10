@@ -4,22 +4,22 @@
 
 :root {
   --background: hsl(0 0% 100%);
-  --foreground: hsl(220 13% 18%);
-  --card: hsl(180 6.6667% 97.0588%);
-  --card-foreground: hsl(210 25% 7.8431%);
+  --foreground: hsl(263 15% 15%);
+  --card: hsl(263 40% 98%);
+  --card-foreground: hsl(263 15% 15%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(210 25% 7.8431%);
-  --primary: hsl(221 83% 53%);
+  --primary: hsl(263 85% 60%);
   --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(220 14% 96%);
-  --secondary-foreground: hsl(220 13% 18%);
-  --muted: hsl(240 1.9608% 90%);
-  --muted-foreground: hsl(210 25% 7.8431%);
-  --accent: hsl(211.5789 51.3514% 92.7451%);
-  --accent-foreground: hsl(203.8863 88.2845% 53.1373%);
+  --secondary: hsl(263 50% 95%);
+  --secondary-foreground: hsl(263 15% 15%);
+  --muted: hsl(263 30% 94%);
+  --muted-foreground: hsl(263 15% 50%);
+  --accent: hsl(45 100% 60%);
+  --accent-foreground: hsl(263 15% 15%);
   --destructive: hsl(356.3033 90.5579% 54.3137%);
   --destructive-foreground: hsl(0 0% 100%);
-  --border: hsl(201.4286 30.4348% 90.9804%);
+  --border: hsl(263 20% 88%);
   --input: hsl(200 23.0769% 97.4510%);
   --ring: hsl(202.8169 89.1213% 53.1373%);
   --chart-1: hsl(203.8863 88.2845% 53.1373%);
