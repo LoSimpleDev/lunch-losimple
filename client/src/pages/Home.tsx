@@ -6,9 +6,173 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { Cart } from "@/components/Cart";
-import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail } from "lucide-react";
+import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail, FileText, Edit } from "lucide-react";
 import isotipoUrl from "@assets/aArtboard 1@2x_1757538290957.png";
 import type { Service } from "@shared/schema";
+import { useState } from "react";
+
+// Componente interactivo para Servicios Digitales
+function DigitalServicesSection({ services, onAddToCart }: { 
+  services: Service[], 
+  onAddToCart: (service: Service) => void 
+}) {
+  const [selectedCategory, setSelectedCategory] = useState<'facturacion' | 'firmas'>('facturacion');
+  
+  const facturacionServices = services.filter(s => s.category === "Facturación Electrónica");
+  const firmasServices = services.filter(s => s.category === "Firmas Electrónicas");
+
+  return (
+    <div className="space-y-8">
+      {/* Selector de Categoría */}
+      <div className="flex justify-center">
+        <div className="flex bg-muted rounded-lg p-1 max-w-md w-full">
+          <Button
+            variant={selectedCategory === 'facturacion' ? 'default' : 'ghost'}
+            className="flex-1 rounded-md"
+            onClick={() => setSelectedCategory('facturacion')}
+            data-testid="button-select-facturacion"
+          >
+            <FileText className="mr-2 h-4 w-4" />
+            Facturación Electrónica
+          </Button>
+          <Button
+            variant={selectedCategory === 'firmas' ? 'default' : 'ghost'}
+            className="flex-1 rounded-md"
+            onClick={() => setSelectedCategory('firmas')}
+            data-testid="button-select-firmas"
+          >
+            <Edit className="mr-2 h-4 w-4" />
+            Firmas Electrónicas
+          </Button>
+        </div>
+      </div>
+
+      {/* Contenido basado en selección */}
+      <div className="space-y-6">
+        {selectedCategory === 'facturacion' && (
+          <div className="space-y-6">
+            <div className="text-center">
+              <h4 className="text-xl font-semibold mb-2 text-primary">💰 Facturación Electrónica</h4>
+              <p className="text-muted-foreground">Planes mensuales con precios exactos (incluye IVA)</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {facturacionServices.map((service) => (
+                <Card key={service.id} className="relative hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20" data-testid={`card-facturacion-${service.id}`}>
+                  <CardHeader className="pb-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <Badge variant="outline" className="text-xs">
+                        {service.name.includes('50') ? '50 comprobantes' : 
+                         service.name.includes('120') ? '120 comprobantes' :
+                         service.name.includes('200') ? '200 comprobantes' :
+                         service.name.includes('400') ? '400 comprobantes' :
+                         service.name.includes('600') ? '600 comprobantes' : 'Ilimitados'}
+                      </Badge>
+                      <div className="text-2xl font-bold text-primary">
+                        ${service.price}
+                      </div>
+                    </div>
+                    <CardTitle className="text-lg" data-testid={`text-facturacion-name-${service.id}`}>
+                      {service.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {service.shortDescription}
+                    </p>
+                    <div className="space-y-1">
+                      {service.features.slice(0, 3).map((feature, idx) => (
+                        <div key={idx} className="flex items-start text-xs text-muted-foreground">
+                          <CheckCircle className="h-3 w-3 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                          {feature}
+                        </div>
+                      ))}
+                      {service.features.length > 3 && (
+                        <p className="text-xs text-muted-foreground">
+                          +{service.features.length - 3} beneficios más
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="pt-0">
+                    <Button 
+                      className="w-full" 
+                      size="sm"
+                      onClick={() => onAddToCart(service)}
+                      data-testid={`button-add-facturacion-${service.id}`}
+                    >
+                      <ShoppingCart className="mr-2 h-3 w-3" />
+                      Agregar Plan
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {selectedCategory === 'firmas' && (
+          <div className="space-y-6">
+            <div className="text-center">
+              <h4 className="text-xl font-semibold mb-2 text-primary">✍️ Firmas Electrónicas</h4>
+              <p className="text-muted-foreground">Opciones de vigencia según tus necesidades</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {firmasServices.map((service) => (
+                <Card key={service.id} className="relative hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20" data-testid={`card-firmas-${service.id}`}>
+                  <CardHeader className="pb-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <Badge variant="outline" className="text-xs">
+                        {service.name.includes('30 días') ? '30 días' :
+                         service.name.includes('1 año') ? '1 año' :
+                         service.name.includes('2 años') ? '2 años' :
+                         service.name.includes('3 años') ? '3 años' : '4 años'} de vigencia
+                      </Badge>
+                      <div className="text-2xl font-bold text-primary">
+                        ${service.price}
+                      </div>
+                    </div>
+                    <CardTitle className="text-lg" data-testid={`text-firmas-name-${service.id}`}>
+                      {service.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {service.shortDescription}
+                    </p>
+                    <div className="space-y-1">
+                      {service.features.slice(0, 3).map((feature, idx) => (
+                        <div key={idx} className="flex items-start text-xs text-muted-foreground">
+                          <CheckCircle className="h-3 w-3 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                          {feature}
+                        </div>
+                      ))}
+                      {service.features.length > 3 && (
+                        <p className="text-xs text-muted-foreground">
+                          +{service.features.length - 3} beneficios más
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="pt-0">
+                    <Button 
+                      className="w-full" 
+                      size="sm"
+                      onClick={() => onAddToCart(service)}
+                      data-testid={`button-add-firmas-${service.id}`}
+                    >
+                      <ShoppingCart className="mr-2 h-3 w-3" />
+                      Obtener Firma
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const { data: services, isLoading, error } = useQuery<Service[]>({
@@ -230,76 +394,243 @@ export default function Home() {
           </div>
 
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Card key={i} className="h-[400px]">
-                  <CardHeader>
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-2/3" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </CardContent>
-                  <CardFooter>
-                    <Skeleton className="h-10 w-full" />
-                  </CardFooter>
-                </Card>
+            <div className="space-y-16">
+              {Array.from({ length: 4 }).map((_, categoryIndex) => (
+                <div key={categoryIndex} className="space-y-8">
+                  <Skeleton className="h-8 w-64 mx-auto" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <Card key={i} className="h-[400px]">
+                        <CardHeader>
+                          <Skeleton className="h-6 w-3/4" />
+                          <Skeleton className="h-4 w-full" />
+                          <Skeleton className="h-4 w-2/3" />
+                        </CardHeader>
+                        <CardContent>
+                          <Skeleton className="h-4 w-full mb-2" />
+                          <Skeleton className="h-4 w-full mb-2" />
+                          <Skeleton className="h-4 w-3/4" />
+                        </CardContent>
+                        <CardFooter>
+                          <Skeleton className="h-10 w-full" />
+                        </CardFooter>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services?.map((service) => (
-                <Card key={service.id} className="h-full hover:shadow-lg transition-shadow duration-300" data-testid={`card-service-${service.id}`}>
-                  <CardHeader>
-                    <div className="flex justify-between items-start mb-2">
-                      <Badge variant="secondary" className="mb-2">
-                        {service.category}
-                      </Badge>
-                      <div className="text-2xl font-bold text-primary">
-                        ${service.price}
-                      </div>
-                    </div>
-                    <CardTitle className="text-xl" data-testid={`text-service-name-${service.id}`}>
-                      {service.name}
-                    </CardTitle>
-                    <CardDescription data-testid={`text-service-description-${service.id}`}>
-                      {service.shortDescription}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <div className="space-y-2">
-                      <h4 className="font-semibold text-sm">Incluye:</h4>
-                      <ul className="space-y-1">
-                        {service.features.slice(0, 3).map((feature, idx) => (
-                          <li key={idx} className="flex items-start text-sm text-muted-foreground">
-                            <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                        {service.features.length > 3 && (
-                          <li className="text-sm text-muted-foreground">
-                            +{service.features.length - 3} beneficios más
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="pt-4">
-                    <Button 
-                      className="w-full" 
-                      size="lg"
-                      onClick={() => handleAddToCart(service)}
-                      data-testid={`button-add-to-cart-${service.id}`}
-                    >
-                      <ShoppingCart className="mr-2 h-4 w-4" />
-                      Agregar al Carrito
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
+            <div className="space-y-20">
+              {/* Servicios Corporativos */}
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-primary">
+                    Servicios Corporativos
+                  </h3>
+                  <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
+                  <p className="text-muted-foreground max-w-xl mx-auto">
+                    Registro de marcas y desarrollo web profesional para impulsar tu negocio.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {services?.filter(service => service.category === "Registro de Marca" || service.category === "Página Web").map((service) => (
+                    <Card key={service.id} className="h-full hover:shadow-lg transition-shadow duration-300" data-testid={`card-service-${service.id}`}>
+                      <CardHeader>
+                        <div className="flex justify-between items-start mb-2">
+                          <Badge variant="secondary" className="mb-2">
+                            {service.category}
+                          </Badge>
+                          <div className="text-2xl font-bold text-primary">
+                            ${service.price}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl" data-testid={`text-service-name-${service.id}`}>
+                          {service.name}
+                        </CardTitle>
+                        <CardDescription data-testid={`text-service-description-${service.id}`}>
+                          {service.shortDescription}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex-1">
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-sm">Incluye:</h4>
+                          <ul className="space-y-1">
+                            {service.features.slice(0, 3).map((feature, idx) => (
+                              <li key={idx} className="flex items-start text-sm text-muted-foreground">
+                                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                                {feature}
+                              </li>
+                            ))}
+                            {service.features.length > 3 && (
+                              <li className="text-sm text-muted-foreground">
+                                +{service.features.length - 3} beneficios más
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="pt-4">
+                        <Button 
+                          className="w-full" 
+                          size="lg"
+                          onClick={() => handleAddToCart(service)}
+                          data-testid={`button-add-to-cart-${service.id}`}
+                        >
+                          <ShoppingCart className="mr-2 h-4 w-4" />
+                          Agregar al Carrito
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              {/* SAS */}
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-primary">
+                    SAS - Sociedades por Acciones Simplificadas
+                  </h3>
+                  <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
+                  <p className="text-muted-foreground max-w-xl mx-auto">
+                    Constituye tu empresa de forma ágil y segura con todos los beneficios legales.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {services?.filter(service => service.category === "SAS").map((service) => (
+                    <Card key={service.id} className="h-full hover:shadow-lg transition-shadow duration-300" data-testid={`card-service-${service.id}`}>
+                      <CardHeader>
+                        <div className="flex justify-between items-start mb-2">
+                          <Badge variant="secondary" className="mb-2">
+                            {service.category}
+                          </Badge>
+                          <div className="text-2xl font-bold text-primary">
+                            ${service.price}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl" data-testid={`text-service-name-${service.id}`}>
+                          {service.name}
+                        </CardTitle>
+                        <CardDescription data-testid={`text-service-description-${service.id}`}>
+                          {service.shortDescription}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex-1">
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-sm">Incluye:</h4>
+                          <ul className="space-y-1">
+                            {service.features.slice(0, 3).map((feature, idx) => (
+                              <li key={idx} className="flex items-start text-sm text-muted-foreground">
+                                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                                {feature}
+                              </li>
+                            ))}
+                            {service.features.length > 3 && (
+                              <li className="text-sm text-muted-foreground">
+                                +{service.features.length - 3} beneficios más
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="pt-4">
+                        <Button 
+                          className="w-full" 
+                          size="lg"
+                          onClick={() => handleAddToCart(service)}
+                          data-testid={`button-add-to-cart-${service.id}`}
+                        >
+                          <ShoppingCart className="mr-2 h-4 w-4" />
+                          Agregar al Carrito
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              {/* Servicios Digitales - Interactive Section */}
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-primary">
+                    Servicios Digitales
+                  </h3>
+                  <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
+                  <p className="text-muted-foreground max-w-xl mx-auto">
+                    Soluciones digitales para facturación electrónica y firmas certificadas.
+                  </p>
+                </div>
+
+                <DigitalServicesSection 
+                  services={services || []}
+                  onAddToCart={handleAddToCart}
+                />
+              </div>
+
+              {/* Otros - Servicios Contables y Legales */}
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-primary">
+                    Otros Servicios
+                  </h3>
+                  <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
+                  <p className="text-muted-foreground max-w-xl mx-auto">
+                    Servicios complementarios de contabilidad y consultoría legal especializados.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                  {services?.filter(service => service.category === "Servicios Contables" || service.category === "Servicios Legales").map((service) => (
+                    <Card key={service.id} className="h-full hover:shadow-lg transition-shadow duration-300" data-testid={`card-service-${service.id}`}>
+                      <CardHeader>
+                        <div className="flex justify-between items-start mb-2">
+                          <Badge variant="secondary" className="mb-2">
+                            {service.category}
+                          </Badge>
+                          <div className="text-2xl font-bold text-primary">
+                            ${service.price}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl" data-testid={`text-service-name-${service.id}`}>
+                          {service.name}
+                        </CardTitle>
+                        <CardDescription data-testid={`text-service-description-${service.id}`}>
+                          {service.shortDescription}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex-1">
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-sm">Incluye:</h4>
+                          <ul className="space-y-1">
+                            {service.features.slice(0, 3).map((feature, idx) => (
+                              <li key={idx} className="flex items-start text-sm text-muted-foreground">
+                                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                                {feature}
+                              </li>
+                            ))}
+                            {service.features.length > 3 && (
+                              <li className="text-sm text-muted-foreground">
+                                +{service.features.length - 3} beneficios más
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="pt-4">
+                        <Button 
+                          className="w-full" 
+                          size="lg"
+                          onClick={() => handleAddToCart(service)}
+                          data-testid={`button-add-to-cart-${service.id}`}
+                        >
+                          <ShoppingCart className="mr-2 h-4 w-4" />
+                          Agregar al Carrito
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </div>
