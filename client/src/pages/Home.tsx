@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/contexts/CartContext";
+import { Cart } from "@/components/Cart";
 import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail } from "lucide-react";
 import type { Service } from "@shared/schema";
 
@@ -10,6 +13,17 @@ export default function Home() {
   const { data: services, isLoading, error } = useQuery<Service[]>({
     queryKey: ['/api/services'],
   });
+  
+  const { addToCart, itemCount } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = (service: Service) => {
+    addToCart(service);
+    toast({
+      title: "Servicio agregado",
+      description: `${service.name} se ha agregado a tu carrito`,
+    });
+  };
 
   if (error) {
     return (
@@ -25,7 +39,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section - Inspired by sasecuador.com */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-accent/20 py-20 px-4">
+      <section className="bg-gradient-to-br from-primary/10 via-background to-accent/20 py-20 px-4 relative">
+        {/* Cart Button - Fixed position */}
+        <div className="absolute top-6 right-6">
+          <Cart />
+        </div>
+        
         <div className="container mx-auto text-center max-w-4xl">
           <div className="mb-6">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
@@ -169,6 +188,7 @@ export default function Home() {
                     <Button 
                       className="w-full" 
                       size="lg"
+                      onClick={() => handleAddToCart(service)}
                       data-testid={`button-add-to-cart-${service.id}`}
                     >
                       <ShoppingCart className="mr-2 h-4 w-4" />
