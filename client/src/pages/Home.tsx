@@ -90,8 +90,8 @@ export default function Home() {
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-8 py-6"
-              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+              className="text-lg px-8 py-6 bg-green-500 text-white border-green-500 hover:bg-green-600 hover:border-green-600"
+              onClick={() => window.open('https://wa.me/593964274013', '_blank')}
               data-testid="button-contact-whatsapp"
             >
               <MessageCircle className="mr-2 h-5 w-5" />
@@ -128,6 +128,90 @@ export default function Home() {
             <div className="text-xl font-bold">Endeavor</div>
             <div className="text-xl font-bold">Impaqto</div>
             <div className="text-xl font-bold">Strive Community</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonios Section */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Lo que Dicen Nuestros Clientes
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Más de 500 empresas han confiado en Lo Simple para formalizar y hacer crecer sus negocios.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-1">
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-500">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+              </div>
+              <p className="text-sm mb-4 italic">
+                "Excelente servicio, muy profesionales y rápidos. Me ayudaron a constituir mi SAS en tiempo record."
+              </p>
+              <div className="text-sm">
+                <div className="font-semibold">María González</div>
+                <div className="text-muted-foreground">Fundadora, Tech Solutions</div>
+              </div>
+            </div>
+
+            <div className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-2">
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-500">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+              </div>
+              <p className="text-sm mb-4 italic">
+                "El proceso fue súper simple y transparente. Recomiendo 100% los servicios de Lo Simple."
+              </p>
+              <div className="text-sm">
+                <div className="font-semibold">Carlos Mendoza</div>
+                <div className="text-muted-foreground">CEO, Mendoza Consulting</div>
+              </div>
+            </div>
+
+            <div className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-3">
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-500">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+              </div>
+              <p className="text-sm mb-4 italic">
+                "Asesoría especializada y seguimiento personalizado. Definitivamente los mejores."
+              </p>
+              <div className="text-sm">
+                <div className="font-semibold">Ana Rodriguez</div>
+                <div className="text-muted-foreground">Directora, Digital Marketing Pro</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-4">
+              Basado en más de 150 reseñas verificadas
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => window.open('https://maps.app.goo.gl/A99V3DxESVZBNWSp8', '_blank')}
+              data-testid="button-view-all-reviews"
+            >
+              Ver Todas las Reseñas en Google Maps
+              <Star className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>
@@ -235,8 +319,8 @@ export default function Home() {
             <Button 
               variant="secondary" 
               size="lg" 
-              className="text-lg px-8 py-6"
-              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+              className="text-lg px-8 py-6 bg-green-500 text-white border-green-500 hover:bg-green-600 hover:border-green-600"
+              onClick={() => window.open('https://wa.me/593964274013', '_blank')}
               data-testid="button-contact-advisor"
             >
               <MessageCircle className="mr-2 h-5 w-5" />
@@ -294,7 +378,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm opacity-80">
                 <li className="flex items-center">
                   <MessageCircle className="h-4 w-4 mr-2" />
-                  <a href="https://wa.me/593958613237" className="hover:opacity-100 transition-opacity">
+                  <a href="https://wa.me/593964274013" className="hover:opacity-100 transition-opacity">
                     WhatsApp
                   </a>
                 </li>

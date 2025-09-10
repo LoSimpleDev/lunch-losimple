@@ -284,6 +284,223 @@ export class MemStorage implements IStorage {
         ],
         isActive: 1,
         imageUrl: null
+      },
+      // FACTURACIÓN ELECTRÓNICA - Planes mensuales
+      {
+        id: "facturacion-50-comprobantes",
+        name: "Facturación Electrónica - 50 comprobantes",
+        description: "Plan mensual de facturación electrónica para pequeños negocios. Incluye hasta 50 comprobantes al mes con soporte técnico completo.",
+        shortDescription: "50 comprobantes mensuales - Ideal para emprendimientos",
+        price: "4.48",
+        category: "Facturación Electrónica",
+        features: [
+          "Hasta 50 comprobantes electrónicos al mes",
+          "Facturas, notas de crédito y débito", 
+          "Guía de retenciones automática",
+          "Soporte técnico incluido",
+          "Dashboard de control en tiempo real",
+          "Reportes mensuales automáticos",
+          "Cumplimiento normativo SRI",
+          "Integración con tu sistema contable"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "facturacion-120-comprobantes",
+        name: "Facturación Electrónica - 120 comprobantes",
+        description: "Plan mensual con 120 comprobantes electrónicos, perfecto para pequeñas empresas en crecimiento.",
+        shortDescription: "120 comprobantes mensuales - Pequeñas empresas",
+        price: "8.96",
+        category: "Facturación Electrónica",
+        features: [
+          "Hasta 120 comprobantes electrónicos al mes",
+          "Todos los tipos de comprobantes SRI",
+          "Retenciones automáticas configurables",
+          "Soporte técnico prioritario",
+          "Reportes analíticos avanzados",
+          "Backup automático de datos",
+          "Integración API disponible",
+          "Capacitación personalizada incluida"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "facturacion-200-comprobantes", 
+        name: "Facturación Electrónica - 200 comprobantes",
+        description: "Plan mensual diseñado para medianas empresas que requieren hasta 200 comprobantes electrónicos mensuales.",
+        shortDescription: "200 comprobantes mensuales - Medianas empresas",
+        price: "11.20",
+        category: "Facturación Electrónica",
+        features: [
+          "Hasta 200 comprobantes electrónicos al mes",
+          "Gestión multi-sucursal incluida",
+          "Configuración avanzada de impuestos",
+          "Soporte técnico 24/7",
+          "Reportes personalizables",
+          "Integración con sistemas ERP",
+          "API completa para desarrolladores",
+          "Capacitación para equipo contable"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "facturacion-400-comprobantes",
+        name: "Facturación Electrónica - 400 comprobantes", 
+        description: "Plan empresarial para empresas que manejan alto volumen de transacciones, hasta 400 comprobantes mensuales.",
+        shortDescription: "400 comprobantes mensuales - Alto volumen",
+        price: "16.80",
+        category: "Facturación Electrónica",
+        features: [
+          "Hasta 400 comprobantes electrónicos al mes",
+          "Gestión empresarial multi-punto",
+          "Configuraciones especializadas por sector",
+          "Soporte técnico dedicado",
+          "Business Intelligence integrado",
+          "Sincronización con software contable",
+          "API empresarial completa",
+          "Consultoría mensual incluida"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "facturacion-600-comprobantes",
+        name: "Facturación Electrónica - 600 comprobantes",
+        description: "Plan corporativo para grandes empresas, diseñado para manejar hasta 600 comprobantes electrónicos mensualmente.",
+        shortDescription: "600 comprobantes mensuales - Plan corporativo",
+        price: "29.12",
+        category: "Facturación Electrónica", 
+        features: [
+          "Hasta 600 comprobantes electrónicos al mes",
+          "Arquitectura corporativa escalable",
+          "Configuraciones especializadas avanzadas",
+          "Account manager dedicado",
+          "Reportería ejecutiva personalizada",
+          "Integración con sistemas legacy",
+          "API empresarial con SLA garantizado",
+          "Consultoría estratégica trimestral"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "facturacion-ilimitada",
+        name: "Facturación Electrónica Ilimitada",
+        description: "Plan premium sin límites de comprobantes, ideal para empresas de gran escala con volúmenes variables.",
+        shortDescription: "Comprobantes ilimitados - Plan premium",
+        price: "44.80",
+        category: "Facturación Electrónica",
+        features: [
+          "Comprobantes electrónicos ilimitados",
+          "Infraestructura premium dedicada",
+          "Configuraciones empresariales ilimitadas",
+          "Soporte 24/7 con SLA premium",
+          "Dashboards ejecutivos en tiempo real",
+          "Integraciones empresariales sin límite",
+          "API empresarial de alta disponibilidad",
+          "Consultoría estratégica mensual"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      // FIRMAS ELECTRÓNICAS - Opciones de vigencia
+      {
+        id: "firma-30-dias",
+        name: "Firma Electrónica - 30 días",
+        description: "Firma electrónica con validez legal por 30 días, ideal para documentos de corta duración o pruebas del servicio.",
+        shortDescription: "Firma electrónica válida 30 días - Prueba",
+        price: "17.00",
+        category: "Firmas Electrónicas",
+        features: [
+          "Validez legal 30 días",
+          "Certificado digital incluido",
+          "Compatible con todos los formatos PDF",
+          "Soporte técnico básico",
+          "Validación en línea disponible",
+          "Cumple normativas ecuatorianas",
+          "Instalación guiada"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "firma-1-ano",
+        name: "Firma Electrónica - 1 año",
+        description: "Firma electrónica con validez de 1 año, perfecta para uso empresarial regular con certificado robusto.",
+        shortDescription: "Firma electrónica válida 1 año - Empresarial",
+        price: "28.00",
+        category: "Firmas Electrónicas",
+        features: [
+          "Validez legal 1 año completo",
+          "Certificado digital robusto",
+          "Soporte en múltiples dispositivos",
+          "Soporte técnico prioritario",
+          "Backup de certificado incluido",
+          "Compatible con sistemas empresariales",
+          "Capacitación personalizada"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "firma-2-anos",
+        name: "Firma Electrónica - 2 años",
+        description: "Firma electrónica con validez extendida de 2 años, ideal para empresas que requieren estabilidad a medio plazo.",
+        shortDescription: "Firma electrónica válida 2 años - Estabilidad",
+        price: "42.00",
+        category: "Firmas Electrónicas",
+        features: [
+          "Validez legal 2 años completos",
+          "Certificado de alta seguridad",
+          "Gestión multi-dispositivo avanzada",
+          "Soporte técnico 24/7",
+          "Renovación automática opcional",
+          "Integración con workflow empresarial",
+          "Auditoría de firmas incluida"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "firma-3-anos",
+        name: "Firma Electrónica - 3 años",
+        description: "Firma electrónica con validez de 3 años, perfecta para contratos de largo plazo y documentos importantes.",
+        shortDescription: "Firma electrónica válida 3 años - Largo plazo",
+        price: "60.00",
+        category: "Firmas Electrónicas",
+        features: [
+          "Validez legal 3 años completos",
+          "Certificado premium de máxima seguridad",
+          "Gestión centralizada de múltiples firmas",
+          "Account manager dedicado",
+          "Políticas de renovación flexibles",
+          "Integración con sistemas legacy",
+          "Consultoría en implementación"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "firma-4-anos",
+        name: "Firma Electrónica - 4 años",
+        description: "Firma electrónica con la máxima validez de 4 años, diseñada para grandes corporaciones y proyectos estratégicos.",
+        shortDescription: "Firma electrónica válida 4 años - Corporativo",
+        price: "75.00",
+        category: "Firmas Electrónicas",
+        features: [
+          "Validez legal máxima de 4 años",
+          "Certificado corporativo de élite",
+          "Arquitectura empresarial escalable",
+          "Soporte corporativo con SLA",
+          "Gestión avanzada de políticas",
+          "Integración con infraestructura IT",
+          "Consultoría estratégica continua"
+        ],
+        isActive: 1,
+        imageUrl: null
       }
     ];
 

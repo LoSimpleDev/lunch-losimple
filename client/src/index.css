@@ -2,6 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fuentes ES Build del manual de marca */
+@font-face {
+  font-family: 'ES Build';
+  src: url('@assets/ES Build_1757539799193.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ES Build';
+  src: url('@assets/ES Build Bold_1757539799194.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ES Build';
+  src: url('@assets/ES Build Medium_1757539799194.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ES Build';
+  src: url('@assets/ES Build Semibold_1757539799194.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(263 15% 15%);
@@ -35,7 +68,7 @@
   --sidebar-accent-foreground: hsl(263 15% 15%);
   --sidebar-border: hsl(263 20% 88%);
   --sidebar-ring: hsl(263 85% 60%);
-  --font-sans: Open Sans, sans-serif;
+  --font-sans: 'ES Build', 'Open Sans', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: 1.3rem;
@@ -84,7 +117,7 @@
   --sidebar-accent-foreground: hsl(263 80% 70%);
   --sidebar-border: hsl(263 20% 26%);
   --sidebar-ring: hsl(263 85% 60%);
-  --font-sans: Open Sans, sans-serif;
+  --font-sans: 'ES Build', 'Open Sans', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: 1.3rem;
