@@ -580,7 +580,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                  {services?.filter(service => service.category === "Servicios Contables" || service.category === "Servicios Legales").map((service) => (
+                  {services?.filter(service => service.category === "Otros" || service.category === "Servicios Contables" || service.category === "Servicios Legales").map((service) => (
                     <Card key={service.id} className="h-full hover:shadow-lg transition-shadow duration-300" data-testid={`card-service-${service.id}`}>
                       <CardHeader>
                         <div className="flex justify-between items-start mb-2">

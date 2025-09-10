@@ -210,7 +210,7 @@ export class MemStorage implements IStorage {
           "Nuevos certificados de aportación",
           "Actualización registral completa"
         ],
-        isActive: 1,
+        isActive: 0,
         imageUrl: null
       },
       {
@@ -498,6 +498,136 @@ export class MemStorage implements IStorage {
           "Gestión avanzada de políticas",
           "Integración con infraestructura IT",
           "Consultoría estratégica continua"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      // SERVICIOS CORPORATIVOS - Como solicitó el usuario
+      {
+        id: "cesion-acciones",
+        name: "Cesión de Acciones",
+        description: "Traspaso legal de acciones entre socios con todos los trámites registrales y documentación oficial requerida.",
+        shortDescription: "Traspaso legal de acciones - Documentación completa",
+        price: "180.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Elaboración de contrato de cesión",
+          "Inscripción en Registro Mercantil",
+          "Actualización de libro de accionistas",
+          "Nuevos certificados de acciones",
+          "Asesoría legal especializada",
+          "Trámites registrales completos"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "aumento-capital",
+        name: "Aumento de Capital",
+        description: "Incremento del capital social de tu empresa con todos los procedimientos legales y registrales correspondientes.",
+        shortDescription: "Aumento de capital social - Trámites completos",
+        price: "220.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Junta general extraordinaria",
+          "Reforma de estatutos sociales",
+          "Inscripción en Registro Mercantil",
+          "Actualización de documentos societarios",
+          "Emisión de nuevas acciones",
+          "Asesoría financiera y legal"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "cambio-nombre",
+        name: "Cambio de Nombre Empresarial",
+        description: "Modificación de la razón social de tu empresa con todos los trámites legales y actualización de documentos.",
+        shortDescription: "Cambio de razón social - Trámites legales",
+        price: "150.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Verificación de disponibilidad",
+          "Reforma de estatutos",
+          "Inscripción registral",
+          "Actualización RUC",
+          "Nuevos documentos societarios",
+          "Asesoría en proceso completo"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "aumento-actividad-economica",
+        name: "Aumento de Actividad Económica",
+        description: "Ampliación del objeto social de tu empresa para incluir nuevas actividades económicas permitidas.",
+        shortDescription: "Ampliación objeto social - Nuevas actividades",
+        price: "140.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Análisis de actividades propuestas",
+          "Reforma de estatutos sociales",
+          "Trámites en Registro Mercantil",
+          "Actualización en SRI",
+          "Documentos actualizados",
+          "Asesoría en clasificación CIIU"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "renovacion-nombramiento",
+        name: "Renovación de Nombramiento",
+        description: "Renovación de nombramientos de representantes legales y administradores con inscripción registral.",
+        shortDescription: "Renovación de nombramientos - Representantes legales",
+        price: "120.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Junta general de accionistas",
+          "Actas de nombramiento",
+          "Inscripción en Registro Mercantil",
+          "Certificados actualizados",
+          "Poderes notariales si aplica",
+          "Asesoría en procedimientos"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "registro-marca-corporativo",
+        name: "Registro de Marca",
+        description: "Protección legal de tu marca comercial con registro oficial ante el IEPI para uso exclusivo y comercialización.",
+        shortDescription: "Registro oficial de marca - Protección legal",
+        price: "350.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Búsqueda de antecedentes",
+          "Solicitud de registro ante IEPI",
+          "Seguimiento del proceso",
+          "Certificado de registro",
+          "Asesoría en clasificación",
+          "Protección legal garantizada"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      // DESARROLLO WEB - Movido a categoría "Otros" con precio $500
+      {
+        id: "desarrollo-web-otros",
+        name: "Desarrollo Web Profesional",
+        description: "Desarrollo de sitio web profesional personalizado con diseño responsivo y funcionalidades modernas para tu empresa.",
+        shortDescription: "Sitio web profesional personalizado - Diseño moderno",
+        price: "500.00",
+        category: "Otros",
+        features: [
+          "Diseño web responsivo",
+          "Hasta 5 páginas incluidas",
+          "Formulario de contacto",
+          "Optimización SEO básica",
+          "Panel de administración",
+          "Hosting por 1 año incluido",
+          "Certificado SSL gratuito",
+          "Soporte técnico 3 meses"
         ],
         isActive: 1,
         imageUrl: null
