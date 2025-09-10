@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { Cart } from "@/components/Cart";
 import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail } from "lucide-react";
+import isotipoUrl from "@assets/aArtboard 1@2x_1757538290957.png";
 import type { Service } from "@shared/schema";
 
 export default function Home() {
@@ -38,24 +39,42 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section - Inspired by sasecuador.com */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-accent/20 py-20 px-4 relative">
-        {/* Cart Button - Fixed position */}
-        <div className="absolute top-6 right-6">
-          <Cart />
+      
+      {/* Hero Section - Lo Simple Brand Design */}
+      <section className="bg-gradient-to-br from-primary/15 via-background to-accent/10 py-20 px-4 relative overflow-hidden">
+        {/* Abstract Brand Elements - Inspired by Lo Simple isotipo */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Official Lo Simple S Isotipo */}
+          <div className="absolute top-20 -right-32 w-64 h-64 opacity-20">
+            <img 
+              src={isotipoUrl} 
+              alt="Lo Simple Isotipo" 
+              className="w-full h-full object-contain"
+              data-testid="img-isotipo"
+            />
+          </div>
+          
+          {/* Accent circles */}
+          <div className="absolute top-32 left-20 w-12 h-12 bg-accent/20 rounded-full"></div>
+          <div className="absolute bottom-40 right-48 w-8 h-8 bg-primary/20 rounded-full"></div>
+          <div className="absolute top-72 left-1/3 w-6 h-6 bg-accent/30 rounded-full"></div>
+          
+          {/* Abstract geometric lines */}
+          <div className="absolute top-16 left-16 w-32 h-1 bg-gradient-to-r from-primary/20 to-transparent transform -rotate-12"></div>
+          <div className="absolute bottom-32 right-20 w-24 h-1 bg-gradient-to-r from-accent/30 to-transparent transform rotate-12"></div>
         </div>
         
-        <div className="container mx-auto text-center max-w-4xl">
+        
+        <div className="container mx-auto text-center max-w-4xl relative z-10">
           <div className="mb-6">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-              Marketplace de Servicios
-              <br />
               <span className="text-primary">Lo Simple</span>
+              <br />
+              Servicios Empresariales
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              El mejor impulso de crecimiento es formalizar tu negocio. 
-              Encuentra todos los servicios que necesitas para hacer crecer tu empresa 
-              de forma fácil, rápida y accesible.
+              En Lo Simple, entendemos que tomar decisiones para tu empresa puede parecer un desafío, 
+              pero estamos aquí para hacerlo simple. Dar el primer paso hacia tu futuro nunca fue tan fácil.
             </p>
           </div>
           
