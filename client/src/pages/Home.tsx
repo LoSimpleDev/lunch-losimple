@@ -235,7 +235,7 @@ export default function Home() {
               <br />
               Servicios Empresariales
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">En Lo Simple puedes encontrar todo lo que una empresa SAS en Ecuador necesita.
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">En Lo Simple puedes encontrar todo lo que una empresa SAS en Ecuador necesita. 
             Nuestro proceso es sencillo, escoges el trámite, pagas el 50%, envías el comprobante a nuestro Whatsapp y empezamos. </p>
           </div>
           
