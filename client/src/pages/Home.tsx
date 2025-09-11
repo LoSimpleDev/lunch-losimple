@@ -203,7 +203,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      
       {/* Hero Section - Lo Simple Brand Design */}
       <section className="bg-gradient-to-br from-primary/15 via-background to-accent/10 py-20 px-4 relative overflow-hidden">
         {/* Abstract Brand Elements - Inspired by Lo Simple isotipo */}
@@ -236,10 +235,8 @@ export default function Home() {
               <br />
               Servicios Empresariales
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              En Lo Simple, entendemos que tomar decisiones para tu empresa puede parecer un desafío, 
-              pero estamos aquí para hacerlo simple. Dar el primer paso hacia tu futuro nunca fue tan fácil.
-            </p>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">En Lo Simple puedes encontrar todo lo que una empresa SAS en Ecuador necesita.
+            Nuestro proceso es sencillo, escoges el trámite, pagas el 50%, envías el comprobante a nuestro Whatsapp y empezamos. </p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -280,7 +277,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Trust Section */}
       <section className="py-12 px-4 bg-muted/50">
         <div className="container mx-auto text-center">
@@ -295,7 +291,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Testimonios Section */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-7xl">
@@ -379,7 +374,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Services Section */}
       <section id="services" className="py-20 px-4">
         <div className="container mx-auto max-w-7xl">
@@ -635,7 +629,6 @@ export default function Home() {
           )}
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="py-20 px-4 bg-primary text-primary-foreground">
         <div className="container mx-auto text-center max-w-4xl">
@@ -669,7 +662,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="bg-secondary text-secondary-foreground py-12 px-4">
         <div className="container mx-auto max-w-6xl">
