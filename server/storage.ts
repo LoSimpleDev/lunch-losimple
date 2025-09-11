@@ -159,43 +159,6 @@ export class MemStorage implements IStorage {
         imageUrl: null
       },
       {
-        id: "company-liquidation",
-        name: "Liquidación de Empresas",
-        description: "Proceso completo de liquidación y cierre de empresas de manera legal y ordenada, cumpliendo con todos los requisitos regulatorios.",
-        shortDescription: "Cierre legal y ordenado de tu empresa",
-        price: "450.00",
-        category: "Servicios Corporativos",
-        features: [
-          "Análisis de situación actual de la empresa",
-          "Preparación de documentos de liquidación",
-          "Gestión ante organismos oficiales",
-          "Cancelación de RUC y obligaciones",
-          "Liquidación de activos y pasivos",
-          "Cierre de cuentas bancarias empresariales",
-          "Documentación final de cierre"
-        ],
-        isActive: 1,
-        imageUrl: null
-      },
-      {
-        id: "statute-reform",
-        name: "Reforma de Estatutos",
-        description: "Actualiza y modifica los estatutos de tu empresa para adaptarlos a nuevas necesidades del negocio o cambios regulatorios.",
-        shortDescription: "Actualiza los estatutos de tu empresa",
-        price: "350.00",
-        category: "Servicios Corporativos",
-        features: [
-          "Análisis de estatutos actuales",
-          "Redacción de modificaciones necesarias",
-          "Gestión ante Superintendencia de Compañías",
-          "Actualización de nombramientos si aplica",
-          "Inscripción de reformas",
-          "Documentos actualizados"
-        ],
-        isActive: 1,
-        imageUrl: null
-      },
-      {
         id: "capital-increase",
         name: "Aumento de Capital",
         description: "Incrementa el capital social de tu empresa de manera legal y ordenada para respaldar el crecimiento del negocio.",
@@ -508,7 +471,7 @@ export class MemStorage implements IStorage {
         name: "Cesión de Acciones",
         description: "Traspaso legal de acciones entre socios con todos los trámites registrales y documentación oficial requerida.",
         shortDescription: "Traspaso legal de acciones - Documentación completa",
-        price: "180.00",
+        price: "65.00",
         category: "Servicios Corporativos",
         features: [
           "Elaboración de contrato de cesión",
@@ -526,7 +489,7 @@ export class MemStorage implements IStorage {
         name: "Aumento de Capital",
         description: "Incremento del capital social de tu empresa con todos los procedimientos legales y registrales correspondientes.",
         shortDescription: "Aumento de capital social - Trámites completos",
-        price: "220.00",
+        price: "500.00",
         category: "Servicios Corporativos",
         features: [
           "Junta general extraordinaria",
@@ -544,7 +507,7 @@ export class MemStorage implements IStorage {
         name: "Cambio de Nombre Empresarial",
         description: "Modificación de la razón social de tu empresa con todos los trámites legales y actualización de documentos.",
         shortDescription: "Cambio de razón social - Trámites legales",
-        price: "150.00",
+        price: "170.00",
         category: "Servicios Corporativos",
         features: [
           "Verificación de disponibilidad",
@@ -562,7 +525,7 @@ export class MemStorage implements IStorage {
         name: "Aumento de Actividad Económica",
         description: "Ampliación del objeto social de tu empresa para incluir nuevas actividades económicas permitidas.",
         shortDescription: "Ampliación objeto social - Nuevas actividades",
-        price: "140.00",
+        price: "170.00",
         category: "Servicios Corporativos",
         features: [
           "Análisis de actividades propuestas",
@@ -580,7 +543,7 @@ export class MemStorage implements IStorage {
         name: "Renovación de Nombramiento",
         description: "Renovación de nombramientos de representantes legales y administradores con inscripción registral.",
         shortDescription: "Renovación de nombramientos - Representantes legales",
-        price: "120.00",
+        price: "85.00",
         category: "Servicios Corporativos",
         features: [
           "Junta general de accionistas",
@@ -598,7 +561,7 @@ export class MemStorage implements IStorage {
         name: "Registro de Marca",
         description: "Protección legal de tu marca comercial con registro oficial ante el IEPI para uso exclusivo y comercialización.",
         shortDescription: "Registro oficial de marca - Protección legal",
-        price: "350.00",
+        price: "300.00",
         category: "Servicios Corporativos",
         features: [
           "Búsqueda de antecedentes",
@@ -607,6 +570,60 @@ export class MemStorage implements IStorage {
           "Certificado de registro",
           "Asesoría en clasificación",
           "Protección legal garantizada"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "liquidacion-abreviada-1",
+        name: "Liquidación Abreviada un Accionista sin soporte contable",
+        description: "Proceso de liquidación abreviada para empresas con un solo accionista, sin incluir soporte contable.",
+        shortDescription: "Liquidación abreviada un accionista",
+        price: "179.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Análisis de documentación societaria",
+          "Resolución de junta de accionistas",
+          "Elaboración de estado de liquidación",
+          "Trámites en Registro Mercantil",
+          "Cancelación de RUC",
+          "Documentación final de cierre"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "liquidacion-abreviada-2-3",
+        name: "Liquidación Abreviada dos o tres Accionistas sin soporte contable",
+        description: "Proceso de liquidación abreviada para empresas con dos o tres accionistas, sin incluir soporte contable.",
+        shortDescription: "Liquidación abreviada 2-3 accionistas",
+        price: "299.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Análisis de documentación societaria",
+          "Resolución de junta de accionistas",
+          "Elaboración de estado de liquidación",
+          "Trámites en Registro Mercantil",
+          "Cancelación de RUC",
+          "Documentación final de cierre"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "liquidacion-abreviada-4",
+        name: "Liquidación Abreviada cuatro Accionistas sin soporte contable",
+        description: "Proceso de liquidación abreviada para empresas con cuatro accionistas, sin incluir soporte contable.",
+        shortDescription: "Liquidación abreviada 4 accionistas",
+        price: "399.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Análisis de documentación societaria",
+          "Resolución de junta de accionistas",
+          "Elaboración de estado de liquidación",
+          "Trámites en Registro Mercantil",
+          "Cancelación de RUC",
+          "Documentación final de cierre"
         ],
         isActive: 1,
         imageUrl: null
