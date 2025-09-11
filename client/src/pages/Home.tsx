@@ -16,159 +16,68 @@ function DigitalServicesSection({ services, onAddToCart }: {
   services: Service[], 
   onAddToCart: (service: Service) => void 
 }) {
-  const [selectedCategory, setSelectedCategory] = useState<'facturacion' | 'firmas'>('facturacion');
+  // Simplificado para mostrar solo firmas electrónicas
   
-  const facturacionServices = services.filter(s => s.category === "Facturación Electrónica");
   const firmasServices = services.filter(s => s.category === "Firmas Electrónicas");
 
   return (
     <div className="space-y-8">
-      {/* Selector de Categoría */}
-      <div className="flex justify-center">
-        <div className="flex bg-muted rounded-lg p-1 max-w-md w-full">
-          <Button
-            variant={selectedCategory === 'facturacion' ? 'default' : 'ghost'}
-            className="flex-1 rounded-md"
-            onClick={() => setSelectedCategory('facturacion')}
-            data-testid="button-select-facturacion"
-          >
-            <FileText className="mr-2 h-4 w-4" />
-            Facturación Electrónica
-          </Button>
-          <Button
-            variant={selectedCategory === 'firmas' ? 'default' : 'ghost'}
-            className="flex-1 rounded-md"
-            onClick={() => setSelectedCategory('firmas')}
-            data-testid="button-select-firmas"
-          >
-            <Edit className="mr-2 h-4 w-4" />
-            Firmas Electrónicas
-          </Button>
-        </div>
-      </div>
-
-      {/* Contenido basado en selección */}
       <div className="space-y-6">
-        {selectedCategory === 'facturacion' && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h4 className="text-xl font-semibold mb-2 text-primary">💰 Facturación Electrónica</h4>
-              <p className="text-muted-foreground">Planes mensuales con precios exactos (incluye IVA)</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {facturacionServices.map((service) => (
-                <Card key={service.id} className="relative hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20" data-testid={`card-facturacion-${service.id}`}>
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-center mb-2">
-                      <Badge variant="outline" className="text-xs">
-                        {service.name.includes('50') ? '50 comprobantes' : 
-                         service.name.includes('120') ? '120 comprobantes' :
-                         service.name.includes('200') ? '200 comprobantes' :
-                         service.name.includes('400') ? '400 comprobantes' :
-                         service.name.includes('600') ? '600 comprobantes' : 'Ilimitados'}
-                      </Badge>
-                      <div className="text-2xl font-bold text-primary">
-                        ${service.price}
-                      </div>
+        <div className="text-center">
+          <h4 className="text-xl font-semibold mb-2 text-primary">✍️ Firmas Electrónicas</h4>
+          <p className="text-muted-foreground">Certificados digitales con validez legal</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {firmasServices.map((service) => (
+            <Card key={service.id} className="relative hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20" data-testid={`card-firmas-${service.id}`}>
+              <CardHeader className="pb-3">
+                <div className="flex justify-between items-center mb-2">
+                  <Badge variant="outline" className="text-xs">
+                    {service.name.includes('30 días') ? '30 días' :
+                     service.name.includes('1 año') ? '1 año' :
+                     service.name.includes('2 años') ? '2 años' :
+                     service.name.includes('3 años') ? '3 años' : '4 años'} de vigencia
+                  </Badge>
+                  <div className="text-2xl font-bold text-primary">
+                    ${service.price}
+                  </div>
+                </div>
+                <CardTitle className="text-lg" data-testid={`text-firmas-name-${service.id}`}>
+                  {service.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-sm text-muted-foreground mb-3">
+                  {service.shortDescription}
+                </p>
+                <div className="space-y-1">
+                  {service.features.slice(0, 3).map((feature, idx) => (
+                    <div key={idx} className="flex items-start text-xs text-muted-foreground">
+                      <CheckCircle className="h-3 w-3 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                      {feature}
                     </div>
-                    <CardTitle className="text-lg" data-testid={`text-facturacion-name-${service.id}`}>
-                      {service.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-sm text-muted-foreground mb-3">
-                      {service.shortDescription}
+                  ))}
+                  {service.features.length > 3 && (
+                    <p className="text-xs text-muted-foreground">
+                      +{service.features.length - 3} beneficios más
                     </p>
-                    <div className="space-y-1">
-                      {service.features.slice(0, 3).map((feature, idx) => (
-                        <div key={idx} className="flex items-start text-xs text-muted-foreground">
-                          <CheckCircle className="h-3 w-3 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                          {feature}
-                        </div>
-                      ))}
-                      {service.features.length > 3 && (
-                        <p className="text-xs text-muted-foreground">
-                          +{service.features.length - 3} beneficios más
-                        </p>
-                      )}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="pt-0">
-                    <Button 
-                      className="w-full" 
-                      size="sm"
-                      onClick={() => onAddToCart(service)}
-                      data-testid={`button-add-facturacion-${service.id}`}
-                    >
-                      <ShoppingCart className="mr-2 h-3 w-3" />
-                      Agregar Plan
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {selectedCategory === 'firmas' && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h4 className="text-xl font-semibold mb-2 text-primary">✍️ Firmas Electrónicas</h4>
-              <p className="text-muted-foreground">Opciones de vigencia según tus necesidades</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {firmasServices.map((service) => (
-                <Card key={service.id} className="relative hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20" data-testid={`card-firmas-${service.id}`}>
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-center mb-2">
-                      <Badge variant="outline" className="text-xs">
-                        {service.name.includes('30 días') ? '30 días' :
-                         service.name.includes('1 año') ? '1 año' :
-                         service.name.includes('2 años') ? '2 años' :
-                         service.name.includes('3 años') ? '3 años' : '4 años'} de vigencia
-                      </Badge>
-                      <div className="text-2xl font-bold text-primary">
-                        ${service.price}
-                      </div>
-                    </div>
-                    <CardTitle className="text-lg" data-testid={`text-firmas-name-${service.id}`}>
-                      {service.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-sm text-muted-foreground mb-3">
-                      {service.shortDescription}
-                    </p>
-                    <div className="space-y-1">
-                      {service.features.slice(0, 3).map((feature, idx) => (
-                        <div key={idx} className="flex items-start text-xs text-muted-foreground">
-                          <CheckCircle className="h-3 w-3 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                          {feature}
-                        </div>
-                      ))}
-                      {service.features.length > 3 && (
-                        <p className="text-xs text-muted-foreground">
-                          +{service.features.length - 3} beneficios más
-                        </p>
-                      )}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="pt-0">
-                    <Button 
-                      className="w-full" 
-                      size="sm"
-                      onClick={() => onAddToCart(service)}
-                      data-testid={`button-add-firmas-${service.id}`}
-                    >
-                      <ShoppingCart className="mr-2 h-3 w-3" />
-                      Obtener Firma
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
+                  )}
+                </div>
+              </CardContent>
+              <CardFooter className="pt-0">
+                <Button 
+                  className="w-full" 
+                  size="sm"
+                  onClick={() => onAddToCart(service)}
+                  data-testid={`button-add-firmas-${service.id}`}
+                >
+                  <Edit className="mr-2 h-3 w-3" />
+                  Obtener Firma
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
