@@ -465,7 +465,7 @@ export class MemStorage implements IStorage {
         isActive: 1,
         imageUrl: null
       },
-      // SERVICIOS CORPORATIVOS - Como solicitó el usuario
+      // SERVICIOS CORPORATIVOS - Ordenados del más comprado al menos comprado
       {
         id: "cesion-acciones",
         name: "Cesión de Acciones",
@@ -485,44 +485,26 @@ export class MemStorage implements IStorage {
         imageUrl: null
       },
       {
-        id: "aumento-capital",
-        name: "Aumento de Capital",
-        description: "Incremento del capital social de tu empresa con todos los procedimientos legales y registrales correspondientes.",
-        shortDescription: "Aumento de capital social - Trámites completos",
-        price: "500.00",
+        id: "renovacion-nombramiento",
+        name: "Renovación - Cambio Nombramiento",
+        description: "Renovación de nombramientos de representantes legales y administradores con inscripción registral.",
+        shortDescription: "Renovación de nombramientos - Representantes legales",
+        price: "85.00",
         category: "Servicios Corporativos",
         features: [
-          "Junta general extraordinaria",
-          "Reforma de estatutos sociales",
+          "Junta general de accionistas",
+          "Actas de nombramiento",
           "Inscripción en Registro Mercantil",
-          "Actualización de documentos societarios",
-          "Emisión de nuevas acciones",
-          "Asesoría financiera y legal"
-        ],
-        isActive: 1,
-        imageUrl: null
-      },
-      {
-        id: "cambio-nombre",
-        name: "Cambio de Nombre Empresarial",
-        description: "Modificación de la razón social de tu empresa con todos los trámites legales y actualización de documentos.",
-        shortDescription: "Cambio de razón social - Trámites legales",
-        price: "170.00",
-        category: "Servicios Corporativos",
-        features: [
-          "Verificación de disponibilidad",
-          "Reforma de estatutos",
-          "Inscripción registral",
-          "Actualización RUC",
-          "Nuevos documentos societarios",
-          "Asesoría en proceso completo"
+          "Certificados actualizados",
+          "Poderes notariales si aplica",
+          "Asesoría en procedimientos"
         ],
         isActive: 1,
         imageUrl: null
       },
       {
         id: "aumento-actividad-economica",
-        name: "Aumento de Actividad Económica",
+        name: "Aumento/Retiro de Actividad Económica",
         description: "Ampliación del objeto social de tu empresa para incluir nuevas actividades económicas permitidas.",
         shortDescription: "Ampliación objeto social - Nuevas actividades",
         price: "170.00",
@@ -539,19 +521,19 @@ export class MemStorage implements IStorage {
         imageUrl: null
       },
       {
-        id: "renovacion-nombramiento",
-        name: "Renovación de Nombramiento",
-        description: "Renovación de nombramientos de representantes legales y administradores con inscripción registral.",
-        shortDescription: "Renovación de nombramientos - Representantes legales",
-        price: "85.00",
+        id: "cambio-nombre",
+        name: "Cambio de Denominación",
+        description: "Modificación de la razón social de tu empresa con todos los trámites legales y actualización de documentos.",
+        shortDescription: "Cambio de razón social - Trámites legales",
+        price: "170.00",
         category: "Servicios Corporativos",
         features: [
-          "Junta general de accionistas",
-          "Actas de nombramiento",
-          "Inscripción en Registro Mercantil",
-          "Certificados actualizados",
-          "Poderes notariales si aplica",
-          "Asesoría en procedimientos"
+          "Verificación de disponibilidad",
+          "Reforma de estatutos",
+          "Inscripción registral",
+          "Actualización RUC",
+          "Nuevos documentos societarios",
+          "Asesoría en proceso completo"
         ],
         isActive: 1,
         imageUrl: null
@@ -570,6 +552,24 @@ export class MemStorage implements IStorage {
           "Certificado de registro",
           "Asesoría en clasificación",
           "Protección legal garantizada"
+        ],
+        isActive: 1,
+        imageUrl: null
+      },
+      {
+        id: "aumento-capital",
+        name: "Aumento de Capital",
+        description: "Incremento del capital social de tu empresa con todos los procedimientos legales y registrales correspondientes.",
+        shortDescription: "Aumento de capital social - Trámites completos",
+        price: "500.00",
+        category: "Servicios Corporativos",
+        features: [
+          "Junta general extraordinaria",
+          "Reforma de estatutos sociales",
+          "Inscripción en Registro Mercantil",
+          "Actualización de documentos societarios",
+          "Emisión de nuevas acciones",
+          "Asesoría financiera y legal"
         ],
         isActive: 1,
         imageUrl: null
