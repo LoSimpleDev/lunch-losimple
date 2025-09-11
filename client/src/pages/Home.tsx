@@ -647,15 +647,6 @@ export default function Home() {
               <MessageCircle className="mr-2 h-5 w-5" />
               Contactar a un Asesor
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-lg px-8 py-6 bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-              onClick={() => window.open('https://sasecuador.com/blog', '_blank')}
-              data-testid="button-blog"
-            >
-              Ir al Blog
-            </Button>
           </div>
         </div>
       </section>
