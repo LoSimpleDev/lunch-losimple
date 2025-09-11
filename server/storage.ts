@@ -525,7 +525,7 @@ export class MemStorage implements IStorage {
         name: "Cambio de Denominación",
         description: "Modificación de la razón social de tu empresa con todos los trámites legales y actualización de documentos.",
         shortDescription: "Cambio de razón social - Trámites legales",
-        price: "170.00",
+        price: "245.00",
         category: "Servicios Corporativos",
         features: [
           "Verificación de disponibilidad",
@@ -543,7 +543,7 @@ export class MemStorage implements IStorage {
         name: "Registro de Marca",
         description: "Protección legal de tu marca comercial con registro oficial ante el IEPI para uso exclusivo y comercialización.",
         shortDescription: "Registro oficial de marca - Protección legal",
-        price: "300.00",
+        price: "350.00",
         category: "Servicios Corporativos",
         features: [
           "Búsqueda de antecedentes",
@@ -561,7 +561,7 @@ export class MemStorage implements IStorage {
         name: "Aumento de Capital",
         description: "Incremento del capital social de tu empresa con todos los procedimientos legales y registrales correspondientes.",
         shortDescription: "Aumento de capital social - Trámites completos",
-        price: "500.00",
+        price: "350.00",
         category: "Servicios Corporativos",
         features: [
           "Junta general extraordinaria",
