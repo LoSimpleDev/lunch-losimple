@@ -632,9 +632,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 px-4 bg-primary text-primary-foreground">
         <div className="container mx-auto text-center max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            ¿Listo para dar un paso en firme?
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">¿Todavía te quedan dudas?</h2>
           <p className="text-lg mb-8 opacity-90">Una de las ventajas de trabajar con Lo Simple es que puedes preguntar todo lo que quieras sobre nuestros productos en nuestro número de Whatsapp.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
