@@ -26,7 +26,7 @@ export function Header() {
             <Button 
               size="lg" 
               className="text-lg px-8 py-6 pt-[12px] pb-[12px] hidden sm:block"
-              onClick={() => window.open('https://www.facturacion.losimple.ai', '_blank')}
+              onClick={() => window.open('https://facturacion.losimple.ai', '_blank')}
               data-testid="button-billing"
             >
               Ir a Facturación Gratuita
