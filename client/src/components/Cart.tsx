@@ -38,7 +38,8 @@ export function Cart({ onCheckout }: CartProps) {
     if (onCheckout) {
       onCheckout();
     } else {
-      setShowCheckout(true);
+      // Redirect to checkout page
+      window.location.href = '/checkout';
     }
   };
   
