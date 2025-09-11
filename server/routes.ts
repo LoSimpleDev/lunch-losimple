@@ -8,9 +8,7 @@ import { z } from "zod";
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
 }
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2025-08-27.basil",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Validation schemas for API requests
 const createOrderRequestSchema = z.object({
@@ -149,31 +147,191 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Stripe payment intent endpoint
+  // Secure Stripe payment intent endpoint - creates server-side order first
   api.post("/create-payment-intent", async (req, res) => {
     try {
-      const { amount } = req.body;
+      const { items, customerName, customerEmail, customerPhone } = req.body;
       
-      if (!amount || amount <= 0) {
-        return res.status(400).json({ error: "Cantidad inválida" });
+      if (!items || !Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ error: "Items del carrito son requeridos" });
       }
 
+      // Prepare order data for server-side creation
+      const orderData = {
+        customerName: customerName || "Stripe Customer",
+        customerEmail: customerEmail || "customer@stripe.com", 
+        customerPhone: customerPhone || "0000000000",
+        items: items
+      };
+
+      // Use existing secure order creation endpoint
+      let totalAmount = 0;
+      const orderServices = [];
+
+      // Calculate and validate items server-side (replicating order logic)
+      for (const item of items) {
+        if (!item.serviceId || !item.quantity || item.quantity < 1) {
+          return res.status(400).json({ 
+            error: "Items inválidos en el carrito" 
+          });
+        }
+
+        const service = await storage.getService(item.serviceId);
+        if (!service) {
+          return res.status(400).json({ 
+            error: `Servicio con ID ${item.serviceId} no encontrado` 
+          });
+        }
+
+        const itemPrice = parseFloat(service.price);
+        const lineTotal = itemPrice * item.quantity;
+        
+        orderServices.push({
+          serviceId: item.serviceId,
+          quantity: item.quantity,
+          price: itemPrice.toFixed(2),
+        });
+
+        totalAmount += lineTotal;
+      }
+
+      if (totalAmount <= 0) {
+        return res.status(400).json({ error: "Total inválido" });
+      }
+
+      // Create server-side order first for security and integrity
+      const order = await storage.createOrder({
+        customerName: orderData.customerName,
+        customerEmail: orderData.customerEmail,
+        customerPhone: orderData.customerPhone,
+        services: orderServices,
+        totalAmount: totalAmount.toFixed(2),
+        status: "pending"
+      });
+
+      // Create PaymentIntent bound to the server order
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(amount * 100), // Convert to cents
+        amount: Math.round(totalAmount * 100), // Convert to cents
         currency: "usd",
+        automatic_payment_methods: {
+          enabled: true,
+        },
         metadata: {
-          marketplace: "Lo Simple"
+          marketplace: "Lo Simple",
+          orderId: order.id,
+          totalAmount: totalAmount.toFixed(2),
+          itemCount: items.length.toString()
         }
       });
 
       res.json({ 
         clientSecret: paymentIntent.client_secret,
-        paymentIntentId: paymentIntent.id
+        paymentIntentId: paymentIntent.id,
+        orderId: order.id,
+        totalAmount: totalAmount.toFixed(2),
+        items: orderServices
       });
     } catch (error: any) {
-      console.error("Error creating payment intent:", error);
+      console.error("Error creating payment intent with order:", error);
       res.status(500).json({ 
         error: "Error creando intención de pago: " + error.message 
+      });
+    }
+  });
+
+  // Create Stripe Checkout Session (primary method - bypasses CSP)
+  api.post("/create-checkout-session", async (req, res) => {
+    try {
+      const { items } = req.body;
+      
+      if (!items || !Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ error: "Items del carrito son requeridos" });
+      }
+
+      // Calculate line items server-side for security (reuse existing logic)
+      const lineItems = [];
+      let totalAmount = 0;
+      const orderServices = [];
+
+      for (const item of items) {
+        if (!item.serviceId || !item.quantity || item.quantity < 1) {
+          return res.status(400).json({ 
+            error: "Items inválidos en el carrito" 
+          });
+        }
+
+        const service = await storage.getService(item.serviceId);
+        if (!service) {
+          return res.status(400).json({ 
+            error: `Servicio con ID ${item.serviceId} no encontrado` 
+          });
+        }
+
+        const itemPrice = parseFloat(service.price);
+        const lineTotal = itemPrice * item.quantity;
+        
+        // Create line item for Stripe Checkout
+        lineItems.push({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: service.name,
+              description: service.category || 'Servicio legal Lo Simple'
+            },
+            unit_amount: Math.round(itemPrice * 100) // cents
+          },
+          quantity: item.quantity,
+        });
+        
+        orderServices.push({
+          serviceId: item.serviceId,
+          quantity: item.quantity,
+          price: itemPrice.toFixed(2),
+        });
+
+        totalAmount += lineTotal;
+      }
+
+      if (totalAmount <= 0) {
+        return res.status(400).json({ error: "Total inválido" });
+      }
+
+      // Create server-side order first for security
+      const order = await storage.createOrder({
+        customerName: "Stripe Checkout Customer",
+        customerEmail: "customer@checkout.stripe.com", 
+        customerPhone: "0000000000",
+        services: orderServices,
+        totalAmount: totalAmount.toFixed(2),
+        status: "pending"
+      });
+
+      // Build robust URLs for redirects
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: lineItems,
+        mode: 'payment',
+        success_url: `${baseUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/checkout`,
+        metadata: {
+          marketplace: "Lo Simple",
+          orderId: order.id,
+          totalAmount: totalAmount.toFixed(2),
+          itemCount: items.length.toString()
+        },
+      });
+      
+      res.json({
+        sessionId: session.id,
+        orderId: order.id,
+        totalAmount: totalAmount.toFixed(2)
+      });
+    } catch (error: any) {
+      console.error("Error creating checkout session:", error);
+      res.status(500).json({ 
+        error: "Error creando sesión de pago: " + error.message 
       });
     }
   });

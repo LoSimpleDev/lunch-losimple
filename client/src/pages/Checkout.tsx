@@ -19,48 +19,104 @@ const CheckoutForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const elements = useElements();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  // Debug logging for Stripe state
+  useEffect(() => {
+    console.log('CheckoutForm - Stripe:', !!stripe, 'Elements:', !!elements);
+    if (stripe && elements) {
+      setIsReady(true);
+      console.log('CheckoutForm - Ready to process payments');
+    }
+  }, [stripe, elements]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('CheckoutForm - Submit attempt, Stripe:', !!stripe, 'Elements:', !!elements);
 
     if (!stripe || !elements) {
+      console.error('CheckoutForm - Stripe not ready');
+      toast({
+        title: "Error",
+        description: "Sistema de pago no disponible. Recarga la página.",
+        variant: "destructive",
+      });
       return;
     }
 
     setIsProcessing(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/payment-success`,
-      },
-    });
+    try {
+      console.log('CheckoutForm - Confirming payment...');
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success`,
+        },
+      });
 
-    if (error) {
+      if (error) {
+        console.error('CheckoutForm - Payment error:', error);
+        toast({
+          title: "Error en el pago",
+          description: error.message || "Ocurrió un error procesando el pago",
+          variant: "destructive",
+        });
+        setIsProcessing(false);
+      } else {
+        console.log('CheckoutForm - Payment successful');
+        toast({
+          title: "¡Pago exitoso!",
+          description: "Tu pago ha sido procesado correctamente",
+        });
+        onSuccess();
+      }
+    } catch (err) {
+      console.error('CheckoutForm - Unexpected error:', err);
       toast({
-        title: "Error en el pago",
-        description: error.message || "Ocurrió un error procesando el pago",
+        title: "Error inesperado",
+        description: "Ocurrió un error inesperado. Intenta nuevamente.",
         variant: "destructive",
       });
       setIsProcessing(false);
-    } else {
-      toast({
-        title: "¡Pago exitoso!",
-        description: "Tu pago ha sido procesado correctamente",
-      });
-      onSuccess();
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="p-4 border rounded-lg bg-muted/30">
-        <PaymentElement />
+      <div className="p-4 border rounded-lg bg-muted/30 min-h-[200px]" data-testid="payment-container">
+        {!stripe || !elements ? (
+          <div className="flex items-center justify-center h-40">
+            <div className="text-center">
+              <div className="animate-spin w-6 h-6 border-2 border-primary border-t-transparent rounded-full mx-auto mb-2" />
+              <p className="text-sm text-muted-foreground">Cargando formulario de pago...</p>
+            </div>
+          </div>
+        ) : (
+          <PaymentElement 
+            options={{
+              layout: 'tabs'
+            }}
+            onReady={() => {
+              console.log('PaymentElement - Ready');
+              setIsReady(true);
+            }}
+            onLoadError={(error) => {
+              console.error('PaymentElement - Load error:', error);
+              // Trigger hosted checkout fallback immediately on load error
+              const cartItems = items.map(item => ({
+                serviceId: item.service.id,
+                quantity: item.quantity
+              }));
+              handleHostedCheckout(cartItems);
+            }}
+          />
+        )}
       </div>
       
       <Button 
         type="submit" 
-        disabled={!stripe || isProcessing} 
+        disabled={!stripe || !elements || !isReady || isProcessing} 
         className="w-full"
         size="lg"
         data-testid="button-complete-payment"
@@ -70,6 +126,11 @@ const CheckoutForm = ({ onSuccess }: { onSuccess: () => void }) => {
             <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
             Procesando...
           </div>
+        ) : !stripe || !elements || !isReady ? (
+          <>
+            <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2" />
+            Cargando...
+          </>
         ) : (
           <>
             <CreditCard className="mr-2 h-4 w-4" />
@@ -88,27 +149,68 @@ export default function Checkout() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    if (total > 0) {
-      apiRequest("POST", "/api/create-payment-intent", { amount: total })
+    // Try Elements first, fallback to hosted checkout if CSP blocks it
+    if (items.length > 0) {
+      console.log('Checkout - Creating PaymentIntent for items:', items.length);
+      // Send cart items to server for secure amount calculation
+      const cartItems = items.map(item => ({
+        serviceId: item.service.id,
+        quantity: item.quantity
+      }));
+
+      console.log('Checkout - Sending items to server:', cartItems);
+      apiRequest("POST", "/api/create-payment-intent", { items: cartItems })
         .then((res) => res.json())
         .then((data) => {
+          console.log('Checkout - PaymentIntent created:', !!data.clientSecret);
           setClientSecret(data.clientSecret);
           setIsLoading(false);
+          
+          // Set timeout to check if PaymentElement initializes within 3 seconds
+          setTimeout(() => {
+            // If no PaymentElement ready event has been fired, fallback to hosted checkout
+            const paymentContainer = document.querySelector('[data-testid="payment-container"]');
+            const stripeFrame = document.querySelector('iframe[name^="__privateStripeFrame"]');
+            
+            if (!stripeFrame || !paymentContainer) {
+              console.log('Checkout - PaymentElement not rendered, falling back to hosted checkout');
+              handleHostedCheckout(cartItems);
+            }
+          }, 3000);
         })
         .catch((error) => {
-          console.error("Error creating payment intent:", error);
-          toast({
-            title: "Error",
-            description: "No se pudo inicializar el pago. Intenta nuevamente.",
-            variant: "destructive",
-          });
-          setIsLoading(false);
+          console.error("Checkout - Error creating payment intent:", error);
+          console.log('Checkout - Falling back to hosted checkout');
+          handleHostedCheckout(cartItems);
         });
     } else {
+      console.log('Checkout - No items in cart');
       setIsLoading(false);
     }
-  }, [total, toast]);
+  }, [items, toast]);
+
+  const handleHostedCheckout = async (cartItems: any[]) => {
+    try {
+      console.log('Checkout - Creating hosted checkout session');
+      const response = await apiRequest("POST", "/api/create-checkout-session", { items: cartItems });
+      const { sessionId } = await response.json();
+      
+      // Load stripe and redirect to hosted checkout
+      const stripe = await import('@stripe/stripe-js').then(m => m.loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY));
+      if (stripe) {
+        console.log('Checkout - Redirecting to Stripe hosted checkout');
+        stripe.redirectToCheckout({ sessionId });
+      }
+    } catch (error) {
+      console.error('Checkout - Error with hosted checkout:', error);
+      toast({
+        title: "Error",
+        description: "No se pudo inicializar el pago. Intenta nuevamente.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    }
+  };
 
   const handlePaymentSuccess = () => {
     clearCart();
@@ -178,6 +280,15 @@ export default function Checkout() {
     );
   }
 
+  const appearance = {
+    theme: 'stripe' as const,
+  };
+
+  const elementsOptions = {
+    clientSecret,
+    appearance,
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container max-w-4xl mx-auto px-4 py-8">
@@ -222,7 +333,7 @@ export default function Checkout() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <Elements stripe={stripePromise} options={elementsOptions}>
                   <CheckoutForm onSuccess={handlePaymentSuccess} />
                 </Elements>
               </CardContent>
