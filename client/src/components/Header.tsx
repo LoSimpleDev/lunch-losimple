@@ -1,4 +1,5 @@
 import { Cart } from "@/components/Cart";
+import { Button } from "@/components/ui/button";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 
 export function Header() {
@@ -22,13 +23,14 @@ export function Header() {
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="flex items-center space-x-4">
-            <button 
-              onClick={() => window.open('https://sasecuador.com/facturacion', '_blank')}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors hidden sm:block"
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6 hidden sm:block"
+              onClick={() => window.open('https://www.facturacion.losimple.ai', '_blank')}
               data-testid="button-billing"
             >
               Ir a Facturación Gratuita
-            </button>
+            </Button>
             <Cart />
           </div>
         </div>
