@@ -1,22 +1,37 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { CheckoutForm } from "@/components/CheckoutForm";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
-import { ShoppingCart, Plus, Minus, Trash2, ArrowLeft } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Trash2, ArrowLeft, Tag, X } from "lucide-react";
 
 interface CartProps {
   onCheckout?: () => void;
 }
 
 export function Cart({ onCheckout }: CartProps) {
-  const { items, removeFromCart, updateQuantity, clearCart, total, itemCount } = useCart();
+  const { 
+    items, 
+    discounts, 
+    discountCode, 
+    subtotal, 
+    discountAmount, 
+    total, 
+    itemCount, 
+    removeFromCart, 
+    updateQuantity, 
+    clearCart, 
+    applyDiscountCode, 
+    removeDiscountCode 
+  } = useCart();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [couponInput, setCouponInput] = useState('');
 
   const handleQuantityChange = (serviceId: string, newQuantity: number) => {
     if (newQuantity < 1) {
@@ -54,6 +69,32 @@ export function Cart({ onCheckout }: CartProps) {
 
   const handleCancelCheckout = () => {
     setShowCheckout(false);
+  };
+
+  const handleApplyCoupon = () => {
+    if (!couponInput.trim()) return;
+    
+    if (applyDiscountCode(couponInput.trim().toUpperCase())) {
+      toast({
+        title: "¡Código aplicado!",
+        description: `Descuento ${couponInput} aplicado correctamente`,
+      });
+      setCouponInput('');
+    } else {
+      toast({
+        title: "Código inválido",
+        description: "El código de descuento no es válido",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    removeDiscountCode();
+    toast({
+      title: "Código removido",
+      description: "El código de descuento ha sido removido",
+    });
   };
 
   return (
@@ -163,11 +204,70 @@ export function Cart({ onCheckout }: CartProps) {
 
         {items.length > 0 && !showCheckout && (
           <div className="border-t pt-4 mt-6 space-y-4">
-            <div className="flex justify-between items-center text-lg font-bold">
-              <span>Total:</span>
-              <span className="text-primary" data-testid="cart-total">
-                ${total.toFixed(2)}
-              </span>
+            
+            {/* Código de descuento */}
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Código de descuento"
+                  value={couponInput}
+                  onChange={(e) => setCouponInput(e.target.value)}
+                  className="flex-1"
+                  data-testid="input-discount-code"
+                />
+                <Button 
+                  onClick={handleApplyCoupon}
+                  variant="outline"
+                  size="sm"
+                  disabled={!couponInput.trim()}
+                  data-testid="button-apply-discount"
+                >
+                  <Tag className="h-4 w-4 mr-1" />
+                  Aplicar
+                </Button>
+              </div>
+              
+              {/* Mostrar código aplicado */}
+              {discountCode && (
+                <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 p-2 rounded">
+                  <div className="flex items-center text-sm text-green-700 dark:text-green-300">
+                    <Tag className="h-3 w-3 mr-1" />
+                    Código {discountCode} aplicado
+                  </div>
+                  <Button
+                    onClick={handleRemoveCoupon}
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 w-6 p-0"
+                    data-testid="button-remove-discount"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {/* Resumen de totales */}
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span>Subtotal:</span>
+                <span data-testid="cart-subtotal">${subtotal.toFixed(2)}</span>
+              </div>
+              
+              {/* Mostrar descuentos */}
+              {discounts.map((discount) => (
+                <div key={discount.id} className="flex justify-between text-green-600 dark:text-green-400">
+                  <span>{discount.name}:</span>
+                  <span data-testid={`discount-${discount.id}`}>-${discount.amount.toFixed(2)}</span>
+                </div>
+              ))}
+              
+              <div className="flex justify-between items-center text-lg font-bold border-t pt-2">
+                <span>Total a pagar:</span>
+                <span className="text-primary" data-testid="cart-total">
+                  ${total.toFixed(2)}
+                </span>
+              </div>
             </div>
             
             <div className="flex gap-2">

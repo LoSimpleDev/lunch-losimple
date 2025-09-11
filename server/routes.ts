@@ -150,7 +150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Secure Stripe payment intent endpoint - creates server-side order first
   api.post("/create-payment-intent", async (req, res) => {
     try {
-      const { items, customerName, customerEmail, customerPhone } = req.body;
+      const { items, discountCode, customerName, customerEmail, customerPhone } = req.body;
       
       if (!items || !Array.isArray(items) || items.length === 0) {
         return res.status(400).json({ error: "Items del carrito son requeridos" });
@@ -199,19 +199,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Total inválido" });
       }
 
+      // Apply advance payment discount (50% automatic)
+      const subtotal = totalAmount;
+      const advanceDiscount = subtotal * 0.5;
+      let finalAmount = subtotal - advanceDiscount;
+
+      // Apply additional discount code if provided
+      let additionalDiscount = 0;
+      if (discountCode === 'NEWSDESAS') {
+        // 10% discount on the advance amount (50% of original total)
+        additionalDiscount = advanceDiscount * 0.1;
+        finalAmount -= additionalDiscount;
+      }
+
+      // Ensure minimum amount and round to cents
+      finalAmount = Math.max(Math.round(finalAmount * 100) / 100, 0.50);
+
       // Create server-side order first for security and integrity
       const order = await storage.createOrder({
         customerName: orderData.customerName,
         customerEmail: orderData.customerEmail,
         customerPhone: orderData.customerPhone,
         services: orderServices,
-        totalAmount: totalAmount.toFixed(2),
+        totalAmount: finalAmount.toFixed(2), // Store the discounted amount that user actually pays
         status: "pending"
       });
 
       // Create PaymentIntent bound to the server order
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(totalAmount * 100), // Convert to cents
+        amount: Math.round(finalAmount * 100), // Convert to cents
         currency: "usd",
         automatic_payment_methods: {
           enabled: true,
@@ -219,7 +235,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         metadata: {
           marketplace: "Lo Simple",
           orderId: order.id,
-          totalAmount: totalAmount.toFixed(2),
+          subtotal: subtotal.toFixed(2),
+          advanceDiscount: advanceDiscount.toFixed(2),
+          additionalDiscount: additionalDiscount.toFixed(2),
+          finalAmount: finalAmount.toFixed(2),
+          discountCode: discountCode || '',
           itemCount: items.length.toString()
         }
       });
@@ -228,7 +248,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         clientSecret: paymentIntent.client_secret,
         paymentIntentId: paymentIntent.id,
         orderId: order.id,
-        totalAmount: totalAmount.toFixed(2),
+        subtotal: subtotal.toFixed(2),
+        discounts: [
+          {
+            id: 'advance-50',
+            name: 'Descuento Anticipo 50%',
+            amount: advanceDiscount.toFixed(2)
+          },
+          ...(additionalDiscount > 0 ? [{
+            id: 'promo-newsdesas',
+            name: 'Descuento NEWSDESAS 10%',
+            amount: additionalDiscount.toFixed(2)
+          }] : [])
+        ],
+        finalAmount: finalAmount.toFixed(2),
         items: orderServices
       });
     } catch (error: any) {
@@ -242,17 +275,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create Stripe Checkout Session (primary method - bypasses CSP)
   api.post("/create-checkout-session", async (req, res) => {
     try {
-      const { items } = req.body;
+      const { items, discountCode } = req.body;
       
       if (!items || !Array.isArray(items) || items.length === 0) {
         return res.status(400).json({ error: "Items del carrito son requeridos" });
       }
 
-      // Calculate line items server-side for security (reuse existing logic)
-      const lineItems = [];
-      let totalAmount = 0;
+      // Calculate line items server-side for security
+      let subtotal = 0;
       const orderServices = [];
 
+      // First pass: calculate subtotal
       for (const item of items) {
         if (!item.serviceId || !item.quantity || item.quantity < 1) {
           return res.status(400).json({ 
@@ -270,31 +303,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const itemPrice = parseFloat(service.price);
         const lineTotal = itemPrice * item.quantity;
         
-        // Create line item for Stripe Checkout
-        lineItems.push({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: service.name,
-              description: service.category || 'Servicio legal Lo Simple'
-            },
-            unit_amount: Math.round(itemPrice * 100) // cents
-          },
-          quantity: item.quantity,
-        });
-        
         orderServices.push({
           serviceId: item.serviceId,
           quantity: item.quantity,
           price: itemPrice.toFixed(2),
         });
 
-        totalAmount += lineTotal;
+        subtotal += lineTotal;
       }
 
-      if (totalAmount <= 0) {
+      if (subtotal <= 0) {
         return res.status(400).json({ error: "Total inválido" });
       }
+
+      // Apply advance payment discount (50% automatic)
+      const advanceDiscount = subtotal * 0.5;
+      let finalAmount = subtotal - advanceDiscount;
+
+      // Apply additional discount code if provided
+      let additionalDiscount = 0;
+      if (discountCode === 'NEWSDESAS') {
+        additionalDiscount = advanceDiscount * 0.1;
+        finalAmount -= additionalDiscount;
+      }
+
+      // Ensure minimum amount and round to cents
+      finalAmount = Math.max(Math.round(finalAmount * 100) / 100, 0.50);
+
+      // Create single line item with the final discounted amount
+      const lineItems = [{
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'Servicios Lo Simple (Anticipo 50%)',
+            description: `${items.length} servicio(s) con descuento anticipo${additionalDiscount > 0 ? ' + código NEWSDESAS' : ''}`,
+          },
+          unit_amount: Math.round(finalAmount * 100) // cents
+        },
+        quantity: 1,
+      }];
 
       // Create server-side order first for security
       const order = await storage.createOrder({
@@ -302,7 +349,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         customerEmail: "customer@checkout.stripe.com", 
         customerPhone: "0000000000",
         services: orderServices,
-        totalAmount: totalAmount.toFixed(2),
+        totalAmount: finalAmount.toFixed(2),
         status: "pending"
       });
 
@@ -318,7 +365,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         metadata: {
           marketplace: "Lo Simple",
           orderId: order.id,
-          totalAmount: totalAmount.toFixed(2),
+          subtotal: subtotal.toFixed(2),
+          advanceDiscount: advanceDiscount.toFixed(2),
+          additionalDiscount: additionalDiscount.toFixed(2),
+          finalAmount: finalAmount.toFixed(2),
+          discountCode: discountCode || '',
           itemCount: items.length.toString()
         },
       });
@@ -326,7 +377,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         sessionId: session.id,
         orderId: order.id,
-        totalAmount: totalAmount.toFixed(2)
+        subtotal: subtotal.toFixed(2),
+        finalAmount: finalAmount.toFixed(2)
       });
     } catch (error: any) {
       console.error("Error creating checkout session:", error);
