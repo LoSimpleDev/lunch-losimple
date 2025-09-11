@@ -21,7 +21,14 @@ export function Header() {
         </div>
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => window.open('https://sasecuador.com/facturacion', '_blank')}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors hidden sm:block"
+              data-testid="button-billing"
+            >
+              Ir a Facturación Gratuita
+            </button>
             <Cart />
           </div>
         </div>
