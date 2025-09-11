@@ -430,11 +430,11 @@ export default function Home() {
                   </h3>
                   <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
                   <p className="text-muted-foreground max-w-xl mx-auto">
-                    Registro de marcas y desarrollo web profesional para impulsar tu negocio.
+                    Servicios especializados para el crecimiento y desarrollo corporativo de tu empresa.
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {services?.filter(service => service.category === "Registro de Marca" || service.category === "Página Web").map((service) => (
+                  {services?.filter(service => service.category === "Servicios Corporativos").map((service) => (
                     <Card key={service.id} className="h-full hover:shadow-lg transition-shadow duration-300" data-testid={`card-service-${service.id}`}>
                       <CardHeader>
                         <div className="flex justify-between items-start mb-2">
