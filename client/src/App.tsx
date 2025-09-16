@@ -8,6 +8,8 @@ import { Header } from "@/components/Header";
 import Home from "@/pages/Home";
 import Checkout from "@/pages/Checkout";
 import PaymentSuccess from "@/pages/PaymentSuccess";
+import TerminosCondiciones from "@/pages/TerminosCondiciones";
+import PoliticaPrivacidad from "@/pages/PoliticaPrivacidad";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +18,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/payment-success" component={PaymentSuccess} />
+      <Route path="/terminos-y-condiciones" component={TerminosCondiciones} />
+      <Route path="/politica-privacidad-datos-lo-simple" component={PoliticaPrivacidad} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

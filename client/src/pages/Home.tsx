@@ -617,8 +617,18 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm opacity-60">
-            © 2025 Lo Simple. Todos los derechos reservados.
+          <div className="border-t border-white/20 mt-8 pt-8 text-center">
+            <div className="flex justify-center gap-6 mb-4 text-sm">
+              <a href="/terminos-y-condiciones" className="hover:opacity-80 transition-opacity">
+                Términos y Condiciones
+              </a>
+              <a href="/politica-privacidad-datos-lo-simple" className="hover:opacity-80 transition-opacity">
+                Política de Privacidad
+              </a>
+            </div>
+            <div className="text-sm opacity-60">
+              © 2025 Lo Simple. Todos los derechos reservados.
+            </div>
           </div>
         </div>
       </footer>
