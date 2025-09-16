@@ -193,10 +193,18 @@ export default function Home() {
             Reconocidos por
           </h3>
           <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
-            <div className="text-xl font-bold">Forbes Ecuador</div>
-            <div className="text-xl font-bold">Endeavor</div>
-            <div className="text-xl font-bold">Impaqto</div>
-            <div className="text-xl font-bold">Strive Community</div>
+            <a href="https://www.forbes.com.ec/negocios/transformo-sus-derrotas-una-plataforma-medio-millon-dolares-n71419" target="_blank" rel="noopener noreferrer" className="text-xl font-bold hover:opacity-80 transition-opacity">
+              Forbes Ecuador
+            </a>
+            <a href="https://www.linkedin.com/posts/natassjaruybal_el-nuevo-programa-de-aceleraci%C3%B3n-de-endeavor-activity-7176238819048873986-sQUp/?originalSubdomain=es" target="_blank" rel="noopener noreferrer" className="text-xl font-bold hover:opacity-80 transition-opacity">
+              Endeavor
+            </a>
+            <a href="https://impaqto.net/cerramos-con-exito-kinesis-un-programa-de-aceleracion-de-impacto-transformador/" target="_blank" rel="noopener noreferrer" className="text-xl font-bold hover:opacity-80 transition-opacity">
+              Impaqto
+            </a>
+            <a href="https://strivecommunity.org/programs/viqtoria" target="_blank" rel="noopener noreferrer" className="text-xl font-bold hover:opacity-80 transition-opacity">
+              Strive Community
+            </a>
           </div>
         </div>
       </section>
@@ -558,7 +566,7 @@ export default function Home() {
         </div>
       </section>
       {/* Footer */}
-      <footer className="bg-secondary text-secondary-foreground py-12 px-4">
+      <footer className="bg-[#141464] text-white py-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
@@ -585,7 +593,7 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://comunidad.losimple.co" className="hover:opacity-100 transition-opacity">
+                  <a href="https://chat.whatsapp.com/Bq5HBYmLeEaAp2pKuonsqM" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">
                     Comunidad
                   </a>
                 </li>
@@ -602,12 +610,14 @@ export default function Home() {
                 </li>
                 <li className="flex items-center">
                   <Mail className="h-4 w-4 mr-2" />
-                  Consultas
+                  <a href="mailto:joseantonio@losimple.ai" className="hover:opacity-100 transition-opacity">
+                    Consultas
+                  </a>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-secondary-foreground/20 mt-8 pt-8 text-center text-sm opacity-60">
+          <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm opacity-60">
             © 2025 Lo Simple. Todos los derechos reservados.
           </div>
         </div>

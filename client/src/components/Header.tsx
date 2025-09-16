@@ -25,7 +25,7 @@ export function Header() {
           <div className="flex items-center space-x-4">
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6 pt-[12px] pb-[12px] hidden sm:block"
+              className="text-lg px-8 py-6 pt-[12px] pb-[12px] block"
               onClick={() => window.open('https://facturacion.losimple.ai', '_blank')}
               data-testid="button-billing"
             >
