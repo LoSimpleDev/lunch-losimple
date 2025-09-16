@@ -161,11 +161,11 @@ export default function Home() {
               variant="outline" 
               size="lg" 
               className="text-lg px-8 py-6 bg-green-500 text-white border-green-500 hover:bg-green-600 hover:border-green-600"
-              onClick={() => window.open('https://wa.me/593964274013', '_blank')}
+              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
               data-testid="button-contact-whatsapp"
             >
               <MessageCircle className="mr-2 h-5 w-5" />
-              Contactar Asesor
+              Contactar Asesora
             </Button>
           </div>
 
@@ -556,11 +556,11 @@ export default function Home() {
               variant="secondary" 
               size="lg" 
               className="text-lg px-8 py-6 bg-green-500 text-white border-green-500 hover:bg-green-600 hover:border-green-600"
-              onClick={() => window.open('https://wa.me/593964274013', '_blank')}
+              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
               data-testid="button-contact-advisor"
             >
               <MessageCircle className="mr-2 h-5 w-5" />
-              Contactar a un Asesor
+              Contactar a una Asesora
             </Button>
           </div>
         </div>
