@@ -140,7 +140,7 @@ export default function Home() {
         <div className="container mx-auto text-center max-w-4xl relative z-10">
           <div className="mb-6">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-              <span className="text-primary">Lo Simple</span>
+              <span className="text-primary">Lo Simple (antes simpleSAS)</span>
               <br />
               Servicios Empresariales
             </h1>
