@@ -23,6 +23,13 @@ export function Header() {
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="flex items-center space-x-4">
+            <a 
+              href="/membresia"
+              className="text-sm font-medium hover:text-primary transition-colors"
+              data-testid="link-membership"
+            >
+              Membresía
+            </a>
             <Button 
               size="lg" 
               className="text-lg px-8 py-6 pt-[12px] pb-[12px] block"
