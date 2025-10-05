@@ -50,23 +50,25 @@ export default function Membresia() {
           </div>
 
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-8">Elige la membresía que mejor se ajuste a ti</h2>
+            <h2 className="text-3xl font-bold text-center mb-8">La membresía de Lo Simple Legal+ para empresas SAS</h2>
             
             <div className="max-w-2xl mx-auto">
               <Card className="border-primary border-2">
                 <CardHeader className="text-center">
+                  <div className="text-muted-foreground mb-2">Precio Normal <span className="line-through">$500</span></div>
                   <div className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold mb-4">
                     50% DE DESCUENTO
                   </div>
                   <CardTitle className="text-4xl">
-                    <span className="text-5xl font-bold">$239.88</span>
+                    <span className="text-5xl font-bold">$249,99*</span>
                   </CardTitle>
                   <CardDescription className="text-lg">facturado anualmente</CardDescription>
                 </CardHeader>
-                <CardFooter className="flex justify-center pb-8">
+                <CardFooter className="flex flex-col items-center pb-8 gap-4">
                   <Button size="lg" className="text-lg px-12" data-testid="button-start-membership">
                     Sí, iniciar mi membresía
                   </Button>
+                  <p className="text-sm text-muted-foreground">*Precios no incluyen IVA</p>
                 </CardFooter>
               </Card>
             </div>
@@ -87,6 +89,21 @@ export default function Membresia() {
                   </tr>
                 </thead>
                 <tbody>
+                  <tr className="border-b">
+                    <td className="py-4 px-2">
+                      <div className="flex items-start gap-3">
+                        <Building className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                        <div>
+                          <div className="font-semibold">Registro de empresa</div>
+                          <div className="text-sm text-muted-foreground">Inicia tu primera SAS. ¡La primera es gratis y el resto tiene 50% de descuento!</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="text-center py-4 px-2">
+                      <Check className="w-6 h-6 text-green-500 inline-block" />
+                      <div className="text-xs text-muted-foreground line-through">($299)</div>
+                    </td>
+                  </tr>
                   <tr className="border-b">
                     <td className="py-4 px-2">
                       <div className="flex items-start gap-3">
@@ -207,26 +224,6 @@ export default function Membresia() {
                       <div className="font-semibold text-green-600">$199.99</div>
                       <div className="text-xs text-muted-foreground">/y más</div>
                       <div className="text-xs text-muted-foreground line-through">($399.99)</div>
-                    </td>
-                  </tr>
-                  <tr className="border-b">
-                    <td className="py-4 px-2">
-                      <div className="flex items-start gap-3">
-                        <Building className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                        <div>
-                          <div className="font-semibold">Registro de empresa</div>
-                          <div className="text-sm text-muted-foreground">Inicia tu primera SAS. ¡La primera es gratis y el resto tiene 50% de descuento!</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-center py-4 px-2">
-                      <div className="font-semibold">$99.99</div>
-                      <div className="text-xs text-muted-foreground">Más tasas estatales</div>
-                    </td>
-                    <td className="text-center py-4 px-2">
-                      <div className="font-semibold text-green-600">$0.00*</div>
-                      <div className="text-xs text-muted-foreground">Más tasas estatales</div>
-                      <div className="text-xs text-muted-foreground line-through">($99.99)</div>
                     </td>
                   </tr>
                   <tr className="border-b">
