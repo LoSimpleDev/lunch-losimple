@@ -573,7 +573,7 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-4">Lo Simple</h3>
               <p className="text-sm mb-4 opacity-80">
                 En Lo Simple ayudamos a construir patrimonios familiares sólidos 
-                una pequeña empresa a la vez. Somos el socio que necesitas y no, nos tienes que dar acciones.
+                una pequeña empresa a la vez. Somos el socio que necesitas y no nos tienes que dar acciones.
               </p>
               <p className="text-sm opacity-60">
                 Hecho en Ecuador con 💜
