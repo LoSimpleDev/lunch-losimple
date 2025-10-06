@@ -8,7 +8,7 @@ export function Header() {
       <div className="container flex h-14 max-w-screen-2xl items-center px-4">
         <div className="mr-4 flex">
           <a 
-            href="#" 
+            href="/" 
             className="mr-6 flex items-center space-x-2"
             data-testid="link-home"
           >
@@ -23,6 +23,13 @@ export function Header() {
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="flex items-center space-x-4">
+            <a 
+              href="/"
+              className="text-sm font-medium hover:text-primary transition-colors"
+              data-testid="link-inicio"
+            >
+              Inicio
+            </a>
             <a 
               href="/membresia"
               className="text-sm font-medium hover:text-primary transition-colors"
