@@ -55,12 +55,12 @@ export default function Membresia() {
             <div className="max-w-2xl mx-auto">
               <Card className="border-primary border-2">
                 <CardHeader className="text-center">
-                  <div className="text-muted-foreground mb-2">Precio Normal <span className="line-through">$500</span></div>
+                  <div className="text-muted-foreground mb-2">Precio Normal <span className="line-through">$650</span></div>
                   <div className="inline-block bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                    50% DE DESCUENTO
+                    62% DE DESCUENTO
                   </div>
                   <CardTitle className="text-4xl">
-                    <span className="text-5xl font-bold">$249,99*</span>
+                    <span className="text-5xl font-bold">$247*</span>
                   </CardTitle>
                   <CardDescription className="text-lg">facturado anualmente</CardDescription>
                 </CardHeader>
@@ -95,7 +95,7 @@ export default function Membresia() {
                         <Building className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                         <div>
                           <div className="font-semibold">Registro de empresa</div>
-                          <div className="text-sm text-muted-foreground">Inicia tu primera SAS. ¡La primera es gratis y el resto tiene 50% de descuento!</div>
+                          <div className="text-sm text-muted-foreground">Inicia tu primera SAS. No importa el número de socios, para ti, es gratis.</div>
                         </div>
                       </div>
                     </td>
@@ -110,7 +110,7 @@ export default function Membresia() {
                         <FileText className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                         <div>
                           <div className="font-semibold">Documentos</div>
-                          <div className="text-sm text-muted-foreground">Crea documentos ilimitados para uso personal y empresarial</div>
+                          <div className="text-sm text-muted-foreground">Solicita documentos ilimitados para uso personal y empresarial</div>
                         </div>
                       </div>
                     </td>
@@ -124,8 +124,8 @@ export default function Membresia() {
                       <div className="flex items-start gap-3">
                         <PenTool className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                         <div>
-                          <div className="font-semibold">Firma</div>
-                          <div className="text-sm text-muted-foreground">Firma tus documentos de forma rápida y segura</div>
+                          <div className="font-semibold">Firma Electrónica</div>
+                          <div className="text-sm text-muted-foreground">Firma tus documentos de forma rápida y segura con nuestra firma electrónica de persona natural incluida para ti.</div>
                         </div>
                       </div>
                     </td>
@@ -162,7 +162,7 @@ export default function Membresia() {
                   <tr className="border-b">
                     <th className="text-left py-4 px-2">Servicio</th>
                     <th className="text-center py-4 px-2">Precio completo</th>
-                    <th className="text-center py-4 px-2">50% DE DESCUENTO</th>
+                    <th className="text-center py-4 px-2">62% DE DESCUENTO</th>
                   </tr>
                 </thead>
                 <tbody>
