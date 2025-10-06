@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, X, FileText, PenTool, MessageCircle, Building, Scale, Calculator, Shield, UserCheck } from "lucide-react";
+import { Check, X, FileText, PenTool, MessageCircle, Building, Scale, Calculator, Shield, UserCheck, Mail } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -278,20 +278,17 @@ export default function Membresia() {
               <AccordionItem value="item-4" data-testid="faq-item-4">
                 <AccordionTrigger>¿Cuáles son los beneficios principales de Lo Simple Legal+?</AccordionTrigger>
                 <AccordionContent>
-                  Una membresía de Lo Simple Legal+ hace que Todo lo Legal para tu empresa sea asequible y simple con un año completo de protección por la mitad del precio de una membresía regular.
-                  <br /><br />
                   Tu membresía de Lo Simple Legal+ incluye:
                   <ul className="list-disc pl-6 mt-2 space-y-1">
                     <li>Documentos legales personalizados a tu situación única y leyes locales, garantizados ejecutables.</li>
-                    <li>Firmas electrónicas ilimitadas para hacer cada documento legal.</li>
+                    <li>Una firma de persona natural con validez de un año.</li>
                     <li>Fácil acceso a Asesores Legales para que puedas hacer cualquier pregunta en línea u obtener una consulta en vivo gratuita.</li>
                     <li>Registro gratuito de SAS (excluyendo tasas estatales).</li>
                   </ul>
                   <br />
-                  Más hasta 50% de descuento en:
+                  Descuento en:
                   <ul className="list-disc pl-6 mt-2 space-y-1">
                     <li>Trámites empresariales, incluidos servicios de marcas registradas.</li>
-                    <li>Preparación y presentación de impuestos.</li>
                     <li>Contratación de un Asesor Legal.</li>
                   </ul>
                 </AccordionContent>
@@ -330,7 +327,7 @@ export default function Membresia() {
           <div className="text-center py-12 bg-primary/5 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">¿Listo para comenzar?</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Únete a Lo Simple Legal+ y obtén acceso a todos los beneficios por solo $239.88 al año
+              Únete a Lo Simple Legal+ y obtén acceso a todos los beneficios por solo $247 al año
             </p>
             <Button size="lg" className="text-lg px-12" data-testid="button-start-membership-bottom">
               Iniciar mi membresía ahora
@@ -338,6 +335,74 @@ export default function Membresia() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-[#141464] text-white py-12 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <h3 className="text-xl font-bold mb-4">Lo Simple</h3>
+              <p className="text-sm mb-4 opacity-80">
+                En Lo Simple ayudamos a construir patrimonios familiares sólidos 
+                una pequeña empresa a la vez. Somos el socio que necesitas.
+              </p>
+              <p className="text-sm opacity-60">
+                Hecho en Ecuador con 💜
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Enlaces</h4>
+              <ul className="space-y-2 text-sm opacity-80">
+                <li>
+                  <a href="https://sasecuador.com" className="hover:opacity-100 transition-opacity">
+                    Sitio Principal
+                  </a>
+                </li>
+                <li>
+                  <a href="https://sasecuador.com/blog" className="hover:opacity-100 transition-opacity">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="https://chat.whatsapp.com/Bq5HBYmLeEaAp2pKuonsqM" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">
+                    Comunidad
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Contacto</h4>
+              <ul className="space-y-2 text-sm opacity-80">
+                <li className="flex items-center">
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  <a href="https://wa.me/593964274013" className="hover:opacity-100 transition-opacity">
+                    WhatsApp
+                  </a>
+                </li>
+                <li className="flex items-center">
+                  <Mail className="h-4 w-4 mr-2" />
+                  <a href="mailto:joseantonio@losimple.ai" className="hover:opacity-100 transition-opacity">
+                    Consultas
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-white/20 mt-8 pt-8 text-center">
+            <div className="flex justify-center gap-6 mb-4 text-sm">
+              <a href="/terminos-y-condiciones" className="hover:opacity-80 transition-opacity">
+                Términos y Condiciones
+              </a>
+              <a href="/politica-privacidad-datos-lo-simple" className="hover:opacity-80 transition-opacity">
+                Política de Privacidad
+              </a>
+            </div>
+            <div className="text-sm opacity-60">
+              © 2025 Lo Simple. Todos los derechos reservados.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
