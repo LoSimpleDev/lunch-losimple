@@ -65,7 +65,12 @@ export default function Membresia() {
                   <CardDescription className="text-lg">facturado anualmente</CardDescription>
                 </CardHeader>
                 <CardFooter className="flex flex-col items-center pb-8 gap-4">
-                  <Button size="lg" className="text-lg px-12" data-testid="button-start-membership">
+                  <Button 
+                    size="lg" 
+                    className="text-lg px-12" 
+                    data-testid="button-start-membership"
+                    onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                  >
                     Sí, iniciar mi membresía
                   </Button>
                   <p className="text-sm text-muted-foreground">*Precios no incluyen IVA</p>
@@ -329,7 +334,12 @@ export default function Membresia() {
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
               Únete a Lo Simple Legal+ y obtén acceso a todos los beneficios por solo $247 al año
             </p>
-            <Button size="lg" className="text-lg px-12" data-testid="button-start-membership-bottom">
+            <Button 
+              size="lg" 
+              className="text-lg px-12" 
+              data-testid="button-start-membership-bottom"
+              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+            >
               Iniciar mi membresía ahora
             </Button>
           </div>
