@@ -162,7 +162,7 @@ export default function Membresia() {
                   <tr className="border-b">
                     <th className="text-left py-4 px-2">Servicio</th>
                     <th className="text-center py-4 px-2">Precio completo</th>
-                    <th className="text-center py-4 px-2">62% DE DESCUENTO</th>
+                    <th className="text-center py-4 px-2">Precio con Membresía</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -171,19 +171,19 @@ export default function Membresia() {
                       <div className="flex items-start gap-3">
                         <UserCheck className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                         <div>
-                          <div className="font-semibold">Consulta con un Asesor Legal</div>
+                          <div className="font-semibold">Pide que un profesional legal revise tus documentos</div>
                           <div className="text-sm text-muted-foreground">Ten un profesional que revise tus documentos y avanza con confianza</div>
                         </div>
                       </div>
                     </td>
                     <td className="text-center py-4 px-2">
-                      <div className="font-semibold">$149.99</div>
+                      <div className="font-semibold">$80</div>
                       <div className="text-xs text-muted-foreground">por consulta</div>
                     </td>
                     <td className="text-center py-4 px-2">
-                      <div className="font-semibold text-green-600">$0.00</div>
+                      <div className="font-semibold text-green-600">$20,00</div>
                       <div className="text-xs text-muted-foreground">por consulta</div>
-                      <div className="text-xs text-muted-foreground line-through">($149.99)</div>
+                      <div className="text-xs text-muted-foreground line-through">($80)</div>
                     </td>
                   </tr>
                   <tr className="border-b">
@@ -198,11 +198,11 @@ export default function Membresia() {
                     </td>
                     <td className="text-center py-4 px-2">
                       <div className="font-semibold">$149.99*</div>
-                      <div className="text-xs text-muted-foreground">/y más</div>
+                      <div className="text-xs text-muted-foreground">por hora</div>
                     </td>
                     <td className="text-center py-4 px-2">
                       <div className="font-semibold text-green-600">$74.99*</div>
-                      <div className="text-xs text-muted-foreground">/y más</div>
+                      <div className="text-xs text-muted-foreground">por hora</div>
                       <div className="text-xs text-muted-foreground line-through">($149.99)</div>
                     </td>
                   </tr>
@@ -211,18 +211,18 @@ export default function Membresia() {
                       <div className="flex items-start gap-3">
                         <Calculator className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                         <div>
-                          <div className="font-semibold">Asesoría Tributaria</div>
-                          <div className="text-sm text-muted-foreground">Reduce el riesgo de errores y auditorías con un profesional tributario</div>
+                          <div className="font-semibold">Revisión Tributaria Anual</div>
+                          <div className="text-sm text-muted-foreground">Reduce el riesgo de errores con una revisión de tu declaración de renta previo a la presentación ante el SRI.</div>
                         </div>
                       </div>
                     </td>
                     <td className="text-center py-4 px-2">
                       <div className="font-semibold">$399.99</div>
-                      <div className="text-xs text-muted-foreground">/y más</div>
+                      <div className="text-xs text-muted-foreground">por declaración</div>
                     </td>
                     <td className="text-center py-4 px-2">
                       <div className="font-semibold text-green-600">$199.99</div>
-                      <div className="text-xs text-muted-foreground">/y más</div>
+                      <div className="text-xs text-muted-foreground">por declaración</div>
                       <div className="text-xs text-muted-foreground line-through">($399.99)</div>
                     </td>
                   </tr>
@@ -237,13 +237,13 @@ export default function Membresia() {
                       </div>
                     </td>
                     <td className="text-center py-4 px-2">
-                      <div className="font-semibold">$699.99</div>
-                      <div className="text-xs text-muted-foreground">Más tasas IEPI</div>
+                      <div className="font-semibold">$350</div>
+                      <div className="text-xs text-muted-foreground">Más tasas SENADI</div>
                     </td>
                     <td className="text-center py-4 px-2">
-                      <div className="font-semibold text-green-600">$349.99</div>
-                      <div className="text-xs text-muted-foreground">Más tasas IEPI</div>
-                      <div className="text-xs text-muted-foreground line-through">($699.99)</div>
+                      <div className="font-semibold text-green-600">$175,50</div>
+                      <div className="text-xs text-muted-foreground">Más tasas SENADI</div>
+                      <div className="text-xs text-muted-foreground line-through">($350)</div>
                     </td>
                   </tr>
                 </tbody>
@@ -257,7 +257,7 @@ export default function Membresia() {
               <AccordionItem value="item-1" data-testid="faq-item-1">
                 <AccordionTrigger>¿Cuánto cuesta Lo Simple Legal+?</AccordionTrigger>
                 <AccordionContent>
-                  Una membresía de Lo Simple Legal+ puede ser comprada al precio anual completo de $239.88, o en convenientes pagos a plazos sin intereses.
+                  Una membresía de Lo Simple Legal+ puede ser comprada al precio anual completo de $247 más IVA.
                 </AccordionContent>
               </AccordionItem>
 
