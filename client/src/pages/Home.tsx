@@ -63,11 +63,6 @@ function DigitalServicesSection({ services, onAddToCart }: {
                       {feature}
                     </div>
                   ))}
-                  {service.features.length > 3 && (
-                    <p className="text-xs text-muted-foreground">
-                      +{service.features.length - 3} beneficios más
-                    </p>
-                  )}
                 </div>
               </CardContent>
               <CardFooter className="pt-0">
@@ -565,11 +560,6 @@ export default function Home() {
                                 {feature}
                               </li>
                             ))}
-                            {service.features.length > 3 && (
-                              <li className="text-sm text-muted-foreground">
-                                +{service.features.length - 3} beneficios más
-                              </li>
-                            )}
                           </ul>
                         </div>
                       </CardContent>
