@@ -335,12 +335,13 @@ export class MemStorage implements IStorage {
         price: "65.00",
         category: "Servicios Corporativos",
         features: [
-          "Elaboración de contrato de cesión",
-          "Inscripción en Registro Mercantil",
-          "Actualización de libro de accionistas",
-          "Nuevos certificados de acciones",
-          "Asesoría legal especializada",
-          "Trámites registrales completos"
+          "Asesoría previa",
+          "Revisión de requisitos",
+          "Elaboración de documentación",
+          "Presentación y seguimiento de trámite en Superintendencia de Compañías",
+          "Entrega de Nómina de Accionistas Actualizada",
+          "Entrega de Nuevos Títulos Acción",
+          "Actualización de Libro de Acciones y Accionistas bajo requerimiento"
         ],
         isActive: 1,
         imageUrl: null
@@ -353,12 +354,11 @@ export class MemStorage implements IStorage {
         price: "85.00",
         category: "Servicios Corporativos",
         features: [
-          "Junta general de accionistas",
-          "Actas de nombramiento",
-          "Inscripción en Registro Mercantil",
-          "Certificados actualizados",
-          "Poderes notariales si aplica",
-          "Asesoría en procedimientos"
+          "Asesoría previa",
+          "Revisión de requisitos",
+          "Elaboración de documentación",
+          "Presentación y seguimiento de trámite en Superintendencia de Compañías",
+          "Actualización del RUC en el caso de cambio de representante"
         ],
         isActive: 1,
         imageUrl: null
@@ -371,12 +371,11 @@ export class MemStorage implements IStorage {
         price: "170.00",
         category: "Servicios Corporativos",
         features: [
-          "Análisis de actividades propuestas",
-          "Reforma de estatutos sociales",
-          "Trámites en Registro Mercantil",
-          "Actualización en SRI",
-          "Documentos actualizados",
-          "Asesoría en clasificación CIIU"
+          "Asesoría previa",
+          "Revisión de requisitos",
+          "Elaboración de documentación",
+          "Presentación y seguimiento de trámite en Superintendencia de Compañías",
+          "Actualización de RUC"
         ],
         isActive: 1,
         imageUrl: null
@@ -389,12 +388,11 @@ export class MemStorage implements IStorage {
         price: "245.00",
         category: "Servicios Corporativos",
         features: [
-          "Verificación de disponibilidad",
-          "Reforma de estatutos",
-          "Inscripción registral",
-          "Actualización RUC",
-          "Nuevos documentos societarios",
-          "Asesoría en proceso completo"
+          "Asesoría previa",
+          "Revisión de requisitos",
+          "Elaboración de documentación",
+          "Presentación y seguimiento de trámite en Superintendencia de Compañías",
+          "Actualización de RUC"
         ],
         isActive: 1,
         imageUrl: null

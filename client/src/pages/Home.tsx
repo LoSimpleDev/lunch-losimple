@@ -6,7 +6,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { Cart } from "@/components/Cart";
-import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail, FileText, Edit } from "lucide-react";
+import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail, FileText, Edit, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import isotipoUrl from "@assets/aArtboard 1@2x_1757538290957.png";
 import type { Service } from "@shared/schema";
 import { useState } from "react";
@@ -374,8 +380,28 @@ export default function Home() {
                               </li>
                             ))}
                             {service.features.length > 3 && (
-                              <li className="text-sm text-muted-foreground">
-                                +{service.features.length - 3} beneficios más
+                              <li className="text-sm text-muted-foreground flex items-center gap-1">
+                                <span>+{service.features.length - 3} beneficios más</span>
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <Info className="h-3 w-3 cursor-help inline-block" />
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-xs">
+                                      <div className="space-y-1">
+                                        <p className="font-semibold mb-2">Todas las inclusiones:</p>
+                                        <ul className="space-y-1">
+                                          {service.features.map((feature, idx) => (
+                                            <li key={idx} className="flex items-start text-xs">
+                                              <CheckCircle className="h-3 w-3 text-green-500 mr-1 mt-0.5 flex-shrink-0" />
+                                              {feature}
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
                               </li>
                             )}
                           </ul>
