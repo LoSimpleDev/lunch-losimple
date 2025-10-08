@@ -115,13 +115,13 @@ export default function Membresia() {
                         <FileText className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                         <div>
                           <div className="font-semibold">Documentos</div>
-                          <div className="text-sm text-muted-foreground">Solicita documentos ilimitados para uso personal y empresarial</div>
+                          <div className="text-sm text-muted-foreground">Solicita documentos ilimitados de una extensión de hasta 3 páginas para uso empresarial</div>
                         </div>
                       </div>
                     </td>
                     <td className="text-center py-4 px-2">
                       <Check className="w-6 h-6 text-green-500 inline-block" />
-                      <div className="text-xs text-muted-foreground line-through">($39.99)</div>
+                      <div className="text-xs text-muted-foreground line-through">($59.99 cada uno)</div>
                     </td>
                   </tr>
                   <tr className="border-b">
@@ -136,7 +136,7 @@ export default function Membresia() {
                     </td>
                     <td className="text-center py-4 px-2">
                       <Check className="w-6 h-6 text-green-500 inline-block" />
-                      <div className="text-xs text-muted-foreground line-through">($1.99)</div>
+                      <div className="text-xs text-muted-foreground line-through">($17.00)</div>
                     </td>
                   </tr>
                   <tr className="border-b">
@@ -145,7 +145,7 @@ export default function Membresia() {
                         <MessageCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                         <div>
                           <div className="font-semibold">Consulta</div>
-                          <div className="text-sm text-muted-foreground">Haz cualquier pregunta legal o tributaria y obtén una respuesta rápida en línea</div>
+                          <div className="text-sm text-muted-foreground">Haz cualquier pregunta legal o tributaria y obtén una respuesta rápida vía WhatsApp</div>
                         </div>
                       </div>
                     </td>
@@ -183,11 +183,11 @@ export default function Membresia() {
                     </td>
                     <td className="text-center py-4 px-2">
                       <div className="font-semibold">$80</div>
-                      <div className="text-xs text-muted-foreground">por consulta</div>
+                      <div className="text-xs text-muted-foreground">por documento de hasta 3 pags</div>
                     </td>
                     <td className="text-center py-4 px-2">
                       <div className="font-semibold text-green-600">$20,00</div>
-                      <div className="text-xs text-muted-foreground">por consulta</div>
+                      <div className="text-xs text-muted-foreground">por documento de hasta 3 pags</div>
                       <div className="text-xs text-muted-foreground line-through">($80)</div>
                     </td>
                   </tr>
