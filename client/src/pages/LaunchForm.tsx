@@ -528,6 +528,69 @@ export default function LaunchForm() {
             </div>
 
             <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <Label>Distribución de acciones</Label>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    const shares = formData.shareDistribution || [];
+                    updateFormData("shareDistribution", [...shares, { name: "", shares: 0 }]);
+                  }}
+                  size="sm"
+                  variant="outline"
+                  data-testid="button-add-share"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Agregar accionista
+                </Button>
+              </div>
+              {(formData.shareDistribution || []).map((share: any, index: number) => (
+                <div key={index} className="flex gap-2 items-end">
+                  <div className="flex-1 space-y-2">
+                    <Label className="text-xs">Nombre del accionista</Label>
+                    <Input
+                      value={share.name || ""}
+                      onChange={(e) => {
+                        const shares = [...(formData.shareDistribution || [])];
+                        shares[index].name = e.target.value;
+                        updateFormData("shareDistribution", shares);
+                      }}
+                      placeholder="Nombre"
+                      data-testid={`input-share-name-${index}`}
+                    />
+                  </div>
+                  <div className="w-32 space-y-2">
+                    <Label className="text-xs">Acciones</Label>
+                    <Input
+                      type="number"
+                      value={share.shares || ""}
+                      onChange={(e) => {
+                        const shares = [...(formData.shareDistribution || [])];
+                        shares[index].shares = parseInt(e.target.value) || 0;
+                        updateFormData("shareDistribution", shares);
+                      }}
+                      placeholder="100"
+                      data-testid={`input-share-amount-${index}`}
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      const shares = [...(formData.shareDistribution || [])];
+                      shares.splice(index, 1);
+                      updateFormData("shareDistribution", shares);
+                    }}
+                    data-testid={`button-remove-share-${index}`}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="fiscalAddress">Dirección domicilio fiscal</Label>
               <Input
                 id="fiscalAddress"
@@ -1007,6 +1070,14 @@ export default function LaunchForm() {
                     <p><strong>Actividades secundarias:</strong> {formData.secondaryActivities.join(", ")}</p>
                   )}
                   <p><strong>Capital inicial:</strong> ${formData.initialCapital}</p>
+                  {formData.shareDistribution && formData.shareDistribution.length > 0 && (
+                    <>
+                      <p><strong>Distribución de acciones:</strong></p>
+                      {formData.shareDistribution.map((share: any, idx: number) => (
+                        <p key={idx} className="pl-4">{share.name}: {share.shares} acciones</p>
+                      ))}
+                    </>
+                  )}
                   <p><strong>Domicilio fiscal:</strong> {formData.fiscalAddress}, {formData.fiscalCity}</p>
                   <p><strong>Tipo de administración:</strong> {formData.administratorType === "single" ? "Único" : "Conjunta"}</p>
                   {formData.hasExternalRep && (
