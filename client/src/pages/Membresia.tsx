@@ -15,7 +15,7 @@ export default function Membresia() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
-              La membresía que se paga sola
+              SASLegal+ que se paga sola
             </h1>
           </div>
 
@@ -50,7 +50,7 @@ export default function Membresia() {
           </div>
 
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-8">La membresía de Lo Simple Legal+ para empresas SAS</h2>
+            <h2 className="text-3xl font-bold text-center mb-8">Lo Simple Legal+ para empresas SAS</h2>
             
             <div className="max-w-2xl mx-auto">
               <Card className="border-primary border-2">
@@ -71,7 +71,7 @@ export default function Membresia() {
                     data-testid="button-start-membership"
                     onClick={() => window.open('https://wa.me/593958613237', '_blank')}
                   >
-                    Sí, iniciar mi membresía
+                    Sí, iniciar SASLegal+
                   </Button>
                   <p className="text-sm text-muted-foreground">*Precios no incluyen IVA</p>
                 </CardFooter>
@@ -80,7 +80,7 @@ export default function Membresia() {
           </div>
 
           <div className="mb-16">
-            <h3 className="text-2xl font-bold mb-6">Beneficios de la membresía</h3>
+            <h3 className="text-2xl font-bold mb-6">Beneficios de SASLegal+</h3>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
@@ -167,7 +167,7 @@ export default function Membresia() {
                   <tr className="border-b">
                     <th className="text-left py-4 px-2">Servicio</th>
                     <th className="text-center py-4 px-2">Precio completo</th>
-                    <th className="text-center py-4 px-2">Precio con Membresía</th>
+                    <th className="text-center py-4 px-2">Precio con SASLegal+</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -262,7 +262,7 @@ export default function Membresia() {
               <AccordionItem value="item-1" data-testid="faq-item-1">
                 <AccordionTrigger>¿Cuánto cuesta Lo Simple Legal+?</AccordionTrigger>
                 <AccordionContent>
-                  Una membresía de Lo Simple Legal+ puede ser comprada al precio anual completo de $247 más IVA.
+                  SASLegal+ de Lo Simple puede ser comprado al precio anual completo de $247 más IVA.
                 </AccordionContent>
               </AccordionItem>
 
@@ -276,14 +276,14 @@ export default function Membresia() {
               <AccordionItem value="item-3" data-testid="faq-item-3">
                 <AccordionTrigger>¿Cuánto pueden ahorrar las empresas con Lo Simple Legal+?</AccordionTrigger>
                 <AccordionContent>
-                  Las empresas pueden ahorrar hasta $2,500 por año con una membresía de Lo Simple Legal+. Este cálculo se basa en el ahorro total en un registro empresarial inicial, marcas registradas y servicios de presentación de impuestos comerciales para miembros de Lo Simple Legal+ (un costo total de $924.97) en comparación con miembros sin membresía (un costo total de $1,949.96). Esto es adicional al ahorro en el costo promedio de 5 horas para la preparación de documentos por un abogado sin red de Lo Simple a la tarifa horaria promedio de abogado en Ecuador de $300 (un costo estimado de $1,500 cuando se compra sin ninguna forma de membresía de Lo Simple) en comparación con el uso ilimitado de documentos empresariales personalizables tanto para miembros de Lo Simple Legal+ como de Lo Simple sin costo adicional.
+                  Las empresas pueden ahorrar hasta $2,500 por año con SASLegal+ de Lo Simple. Este cálculo se basa en el ahorro total en un registro empresarial inicial, marcas registradas y servicios de presentación de impuestos comerciales para miembros de Lo Simple Legal+ (un costo total de $924.97) en comparación con miembros sin SASLegal+ (un costo total de $1,949.96). Esto es adicional al ahorro en el costo promedio de 5 horas para la preparación de documentos por un abogado sin red de Lo Simple a la tarifa horaria promedio de abogado en Ecuador de $300 (un costo estimado de $1,500 cuando se compra sin SASLegal+ de Lo Simple) en comparación con el uso ilimitado de documentos empresariales personalizables tanto para miembros de Lo Simple Legal+ como de Lo Simple sin costo adicional.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="item-4" data-testid="faq-item-4">
                 <AccordionTrigger>¿Cuáles son los beneficios principales de Lo Simple Legal+?</AccordionTrigger>
                 <AccordionContent>
-                  Tu membresía de Lo Simple Legal+ incluye:
+                  Tu SASLegal+ de Lo Simple incluye:
                   <ul className="list-disc pl-6 mt-2 space-y-1">
                     <li>Documentos legales personalizados a tu situación única y leyes locales, garantizados ejecutables.</li>
                     <li>Una firma de persona natural con validez de un año.</li>
@@ -300,7 +300,7 @@ export default function Membresia() {
               </AccordionItem>
 
               <AccordionItem value="item-5" data-testid="faq-item-5">
-                <AccordionTrigger>¿Cuál es el descuento al contratar un Asesor Legal con una membresía de Lo Simple Legal+?</AccordionTrigger>
+                <AccordionTrigger>¿Cuál es el descuento al contratar un Asesor Legal con SASLegal+ de Lo Simple?</AccordionTrigger>
                 <AccordionContent>
                   Ofrecemos grandes ahorros para los miembros de Lo Simple Legal+. El descuento para los miembros de Lo Simple Legal+ es de hasta 50% DE DESCUENTO en la tarifa horaria de nuestros Asesores Legales. El descuento del 50% se aplica a servicios de marcas registradas. Los descuentos para otros servicios pueden variar según el área de práctica legal específica.
                 </AccordionContent>
@@ -314,9 +314,9 @@ export default function Membresia() {
               </AccordionItem>
 
               <AccordionItem value="item-7" data-testid="faq-item-7">
-                <AccordionTrigger>¿Cómo cancelo mi membresía de Lo Simple Legal+?</AccordionTrigger>
+                <AccordionTrigger>¿Cómo cancelo mi SASLegal+ de Lo Simple?</AccordionTrigger>
                 <AccordionContent>
-                  Puedes dar de baja tu membresía de Lo Simple Legal+ en cualquier momento a través de la configuración de tu cuenta en línea o llamando al 593-958-613-237. La baja será efectiva en tu próxima fecha de renovación programada, y serás libre de disfrutar los beneficios de la membresía hasta esa fecha.
+                  Puedes dar de baja tu SASLegal+ de Lo Simple en cualquier momento a través de la configuración de tu cuenta en línea o llamando al 593-958-613-237. La baja será efectiva en tu próxima fecha de renovación programada, y serás libre de disfrutar los beneficios de SASLegal+ hasta esa fecha.
                 </AccordionContent>
               </AccordionItem>
 
@@ -340,7 +340,7 @@ export default function Membresia() {
               data-testid="button-start-membership-bottom"
               onClick={() => window.open('https://wa.me/593958613237', '_blank')}
             >
-              Iniciar mi membresía ahora
+              Iniciar SASLegal+ ahora
             </Button>
           </div>
         </div>

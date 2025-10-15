@@ -31,11 +31,11 @@ export function Header() {
               Inicio
             </a>
             <a 
-              href="/membresia"
+              href="/saslegal+"
               className="text-sm font-medium hover:text-primary transition-colors"
               data-testid="link-membership"
             >
-              Membresía
+              SASLegal+
             </a>
             <Button 
               size="lg" 

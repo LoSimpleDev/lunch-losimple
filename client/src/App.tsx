@@ -21,7 +21,7 @@ function Router() {
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/terminos-y-condiciones" component={TerminosCondiciones} />
       <Route path="/politica-privacidad-datos-lo-simple" component={PoliticaPrivacidad} />
-      <Route path="/membresia" component={Membresia} />
+      <Route path="/saslegal+" component={Membresia} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
