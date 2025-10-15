@@ -15,7 +15,7 @@ export default function Membresia() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
-              SASLegal+ que se paga sola
+              SASLegal+ se paga sola
             </h1>
           </div>
 
@@ -50,7 +50,7 @@ export default function Membresia() {
           </div>
 
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-8">Lo Simple Legal+ para empresas SAS</h2>
+            <h2 className="text-3xl font-bold text-center mb-8">SASLegal+ by Lo Simple para empresas SAS</h2>
             
             <div className="max-w-2xl mx-auto">
               <Card className="border-primary border-2">
