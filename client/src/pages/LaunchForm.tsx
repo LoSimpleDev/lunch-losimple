@@ -83,8 +83,14 @@ export default function LaunchForm() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   
+  // Verificar sesión primero
+  const { data: sessionData, isLoading: isLoadingSession } = useQuery<{ user: any }>({
+    queryKey: ["/api/auth/session"],
+  });
+  
   const { data: launchRequest, isLoading } = useQuery<LaunchRequest>({
     queryKey: ["/api/launch/my-request"],
+    enabled: !!sessionData?.user,
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -106,6 +112,13 @@ export default function LaunchForm() {
     socialMedia: {},
     acceptedTerms: false,
   });
+
+  // Redirigir al login si no está autenticado
+  useEffect(() => {
+    if (!isLoadingSession && !sessionData) {
+      setLocation('/login');
+    }
+  }, [sessionData, isLoadingSession, setLocation]);
 
   useEffect(() => {
     if (launchRequest) {
@@ -184,12 +197,17 @@ export default function LaunchForm() {
     setFormData({ ...formData, [field]: value });
   };
 
-  if (isLoading) {
+  if (isLoadingSession || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-950">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
+  }
+
+  // Si no hay sesión, el useEffect redirigirá al login
+  if (!sessionData?.user) {
+    return null;
   }
 
   const progress = Math.round((currentStep / TOTAL_STEPS) * 100);
