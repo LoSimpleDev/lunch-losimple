@@ -12,6 +12,12 @@ import TerminosCondiciones from "@/pages/TerminosCondiciones";
 import PoliticaPrivacidad from "@/pages/PoliticaPrivacidad";
 import Membresia from "@/pages/Membresia";
 import Launch from "@/pages/Launch";
+import Login from "@/pages/Login";
+import Dashboard from "@/pages/Dashboard";
+import LaunchForm from "@/pages/LaunchForm";
+import LaunchPayment from "@/pages/LaunchPayment";
+import AdminLaunch from "@/pages/AdminLaunch";
+import AdminRequestDetail from "@/pages/AdminRequestDetail";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -24,6 +30,12 @@ function Router() {
       <Route path="/politica-privacidad-datos-lo-simple" component={PoliticaPrivacidad} />
       <Route path="/saslegal-plus" component={Membresia} />
       <Route path="/launch" component={Launch} />
+      <Route path="/login" component={Login} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/launch-form" component={LaunchForm} />
+      <Route path="/launch-payment" component={LaunchPayment} />
+      <Route path="/adminlaunch/:id" component={AdminRequestDetail} />
+      <Route path="/adminlaunch" component={AdminLaunch} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
