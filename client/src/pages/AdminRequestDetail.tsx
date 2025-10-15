@@ -89,7 +89,7 @@ export default function AdminRequestDetail() {
                 </div>
                 <div>
                   <span className="text-sm font-medium">Plan: </span>
-                  <span className="text-sm">{request.selectedPlan || 'No seleccionado'}</span>
+                  <span className="text-sm">Launch</span>
                 </div>
               </div>
             </CardContent>

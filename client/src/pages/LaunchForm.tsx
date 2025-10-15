@@ -72,7 +72,6 @@ interface LaunchRequest {
   websiteReference1?: string;
   websiteReference2?: string;
   websiteReference3?: string;
-  selectedPlan?: string;
   billingName?: string;
   billingIdNumber?: string;
   billingAddress?: string;

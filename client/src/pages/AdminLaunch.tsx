@@ -20,7 +20,6 @@ interface LaunchRequest {
   userId: string;
   fullName?: string;
   personalEmail?: string;
-  selectedPlan?: string;
   currentStep: number;
   isFormComplete: boolean;
   paymentStatus: string;
@@ -158,17 +157,15 @@ export default function AdminLaunch() {
                               {request.personalEmail || 'Sin email'}
                             </CardDescription>
                           </div>
-                          {request.selectedPlan && (
-                            <Badge variant="outline" className="ml-2">
-                              {request.selectedPlan === 'fundador' ? 'Fundador' : 'Pro'}
-                            </Badge>
-                          )}
+                          <Badge variant="outline" className="ml-2">
+                            Launch
+                          </Badge>
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-2">
                         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                           <FileText className="w-4 h-4" />
-                          <span>Paso {request.currentStep}/9</span>
+                          <span>Paso {request.currentStep}/8</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                           <Calendar className="w-4 h-4" />

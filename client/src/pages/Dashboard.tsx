@@ -22,7 +22,6 @@ interface LaunchRequest {
   isFormComplete: boolean;
   paymentStatus: string;
   isStarted: boolean;
-  selectedPlan?: string;
 }
 
 interface LaunchProgress {
@@ -114,7 +113,7 @@ export default function Dashboard() {
   const user = sessionData?.user;
   if (!user) return null;
 
-  const formProgress = launchRequest ? Math.round((launchRequest.currentStep / 9) * 100) : 0;
+  const formProgress = launchRequest ? Math.round((launchRequest.currentStep / 8) * 100) : 0;
   const isPaid = launchRequest?.paymentStatus === 'completed';
   const canStart = launchRequest?.isFormComplete && isPaid;
   const hasStarted = launchRequest?.isStarted;
@@ -142,8 +141,7 @@ export default function Dashboard() {
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Plan:</span>
                 <Badge variant="default" data-testid="badge-plan">
-                  {launchRequest.selectedPlan === 'fundador' ? 'Fundador' : 
-                   launchRequest.selectedPlan === 'pro' ? 'Pro' : 'No seleccionado'}
+                  Launch
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
@@ -193,7 +191,7 @@ export default function Dashboard() {
                 </CardTitle>
                 <CardDescription>
                   {launchRequest ? 
-                    `Paso ${launchRequest.currentStep} de 9 completado` : 
+                    `Paso ${launchRequest.currentStep} de 8 completado` : 
                     'Comienza llenando tu información'}
                 </CardDescription>
               </CardHeader>
