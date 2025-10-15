@@ -31,6 +31,13 @@ export function Header() {
               Inicio
             </a>
             <a 
+              href="/launch"
+              className="text-sm font-medium hover:text-primary transition-colors"
+              data-testid="link-launch"
+            >
+              Launch
+            </a>
+            <a 
               href="/saslegal-plus"
               className="text-sm font-medium hover:text-primary transition-colors"
               data-testid="link-membership"
@@ -44,6 +51,15 @@ export function Header() {
               data-testid="button-billing"
             >
               Ir a Facturación Gratuita
+            </Button>
+            <Button 
+              variant="outline"
+              size="lg" 
+              className="text-lg px-8 py-6 pt-[12px] pb-[12px] block"
+              onClick={() => window.location.href = '/login'}
+              data-testid="button-login"
+            >
+              Ingresar
             </Button>
             <Cart />
           </div>

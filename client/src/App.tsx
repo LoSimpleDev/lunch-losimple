@@ -11,6 +11,7 @@ import PaymentSuccess from "@/pages/PaymentSuccess";
 import TerminosCondiciones from "@/pages/TerminosCondiciones";
 import PoliticaPrivacidad from "@/pages/PoliticaPrivacidad";
 import Membresia from "@/pages/Membresia";
+import Launch from "@/pages/Launch";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/terminos-y-condiciones" component={TerminosCondiciones} />
       <Route path="/politica-privacidad-datos-lo-simple" component={PoliticaPrivacidad} />
       <Route path="/saslegal-plus" component={Membresia} />
+      <Route path="/launch" component={Launch} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
