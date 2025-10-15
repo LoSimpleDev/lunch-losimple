@@ -260,30 +260,30 @@ export default function Membresia() {
             <h3 className="text-2xl font-bold mb-6 text-center">Preguntas frecuentes</h3>
             <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
               <AccordionItem value="item-1" data-testid="faq-item-1">
-                <AccordionTrigger>¿Cuánto cuesta Lo Simple Legal+?</AccordionTrigger>
+                <AccordionTrigger>¿Cuánto cuesta SASLegal+ by Lo Simple?</AccordionTrigger>
                 <AccordionContent>
-                  SASLegal+ de Lo Simple puede ser comprado al precio anual completo de $247 más IVA.
+                  SASLegal+ by Lo Simple puede ser comprado al precio anual completo de $247 más IVA.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="item-2" data-testid="faq-item-2">
                 <AccordionTrigger>¿Qué es un Asesor Legal y qué obtengo en una consulta?</AccordionTrigger>
                 <AccordionContent>
-                  Obtén información rápida y experta de los asesores legales y abogados de Lo Simple. Las consultas con Asesores Legales proporcionan información legal, pero no asesoría legal profesional. Las conversaciones son privadas y seguras, pero no están cubiertas por el privilegio abogado-cliente. Las consultas están disponibles para un número limitado de documentos, con nuevos documentos que se planean agregar regularmente.
+                  Obtén información rápida y experta de los asesores legales y abogados de SASLegal+ by Lo Simple. Las consultas con Asesores Legales proporcionan información legal, pero no asesoría legal profesional. Las conversaciones son privadas y seguras, pero no están cubiertas por el privilegio abogado-cliente. Las consultas están disponibles para un número limitado de documentos, con nuevos documentos que se planean agregar regularmente.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="item-3" data-testid="faq-item-3">
-                <AccordionTrigger>¿Cuánto pueden ahorrar las empresas con Lo Simple Legal+?</AccordionTrigger>
+                <AccordionTrigger>¿Cuánto pueden ahorrar las empresas con SASLegal+ by Lo Simple?</AccordionTrigger>
                 <AccordionContent>
-                  Las empresas pueden ahorrar hasta $2,500 por año con SASLegal+ de Lo Simple. Este cálculo se basa en el ahorro total en un registro empresarial inicial, marcas registradas y servicios de presentación de impuestos comerciales para miembros de Lo Simple Legal+ (un costo total de $924.97) en comparación con miembros sin SASLegal+ (un costo total de $1,949.96). Esto es adicional al ahorro en el costo promedio de 5 horas para la preparación de documentos por un abogado sin red de Lo Simple a la tarifa horaria promedio de abogado en Ecuador de $300 (un costo estimado de $1,500 cuando se compra sin SASLegal+ de Lo Simple) en comparación con el uso ilimitado de documentos empresariales personalizables tanto para miembros de Lo Simple Legal+ como de Lo Simple sin costo adicional.
+                  Las empresas pueden ahorrar hasta $2,500 por año con SASLegal+ by Lo Simple. Este cálculo se basa en el ahorro total en un registro empresarial inicial, marcas registradas y servicios de presentación de impuestos comerciales para miembros de SASLegal+ by Lo Simple (un costo total de $924.97) en comparación con miembros sin SASLegal+ (un costo total de $1,949.96). Esto es adicional al ahorro en el costo promedio de 5 horas para la preparación de documentos por un abogado sin red de Lo Simple a la tarifa horaria promedio de abogado en Ecuador de $300 (un costo estimado de $1,500 cuando se compra sin SASLegal+ by Lo Simple) en comparación con el uso ilimitado de documentos empresariales personalizables tanto para miembros de SASLegal+ by Lo Simple como de Lo Simple sin costo adicional.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="item-4" data-testid="faq-item-4">
-                <AccordionTrigger>¿Cuáles son los beneficios principales de Lo Simple Legal+?</AccordionTrigger>
+                <AccordionTrigger>¿Cuáles son los beneficios principales de SASLegal+ by Lo Simple?</AccordionTrigger>
                 <AccordionContent>
-                  Tu SASLegal+ de Lo Simple incluye:
+                  Tu SASLegal+ by Lo Simple incluye:
                   <ul className="list-disc pl-6 mt-2 space-y-1">
                     <li>Documentos legales personalizados a tu situación única y leyes locales, garantizados ejecutables.</li>
                     <li>Una firma de persona natural con validez de un año.</li>
@@ -300,9 +300,9 @@ export default function Membresia() {
               </AccordionItem>
 
               <AccordionItem value="item-5" data-testid="faq-item-5">
-                <AccordionTrigger>¿Cuál es el descuento al contratar un Asesor Legal con SASLegal+ de Lo Simple?</AccordionTrigger>
+                <AccordionTrigger>¿Cuál es el descuento al contratar un Asesor Legal con SASLegal+ by Lo Simple?</AccordionTrigger>
                 <AccordionContent>
-                  Ofrecemos grandes ahorros para los miembros de Lo Simple Legal+. El descuento para los miembros de Lo Simple Legal+ es de hasta 50% DE DESCUENTO en la tarifa horaria de nuestros Asesores Legales. El descuento del 50% se aplica a servicios de marcas registradas. Los descuentos para otros servicios pueden variar según el área de práctica legal específica.
+                  Ofrecemos grandes ahorros para los miembros de SASLegal+ by Lo Simple. El descuento para los miembros de SASLegal+ by Lo Simple es de hasta 50% DE DESCUENTO en la tarifa horaria de nuestros Asesores Legales. El descuento del 50% se aplica a servicios de marcas registradas. Los descuentos para otros servicios pueden variar según el área de práctica legal específica.
                 </AccordionContent>
               </AccordionItem>
 
@@ -314,9 +314,9 @@ export default function Membresia() {
               </AccordionItem>
 
               <AccordionItem value="item-7" data-testid="faq-item-7">
-                <AccordionTrigger>¿Cómo cancelo mi SASLegal+ de Lo Simple?</AccordionTrigger>
+                <AccordionTrigger>¿Cómo cancelo mi SASLegal+ by Lo Simple?</AccordionTrigger>
                 <AccordionContent>
-                  Puedes dar de baja tu SASLegal+ de Lo Simple en cualquier momento a través de la configuración de tu cuenta en línea o llamando al 593-958-613-237. La baja será efectiva en tu próxima fecha de renovación programada, y serás libre de disfrutar los beneficios de SASLegal+ hasta esa fecha.
+                  Puedes dar de baja tu SASLegal+ by Lo Simple en cualquier momento a través de la configuración de tu cuenta en línea o llamando al 593-958-613-237. La baja será efectiva en tu próxima fecha de renovación programada, y serás libre de disfrutar los beneficios de SASLegal+ hasta esa fecha.
                 </AccordionContent>
               </AccordionItem>
 
@@ -332,7 +332,7 @@ export default function Membresia() {
           <div className="text-center py-12 bg-primary/5 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">¿Listo para comenzar?</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Únete a Lo Simple Legal+ y obtén acceso a todos los beneficios por solo $247 al año
+              Únete a SASLegal+ by Lo Simple y obtén acceso a todos los beneficios por solo $247 al año
             </p>
             <Button 
               size="lg" 
