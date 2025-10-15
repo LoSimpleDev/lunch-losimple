@@ -3,6 +3,10 @@ import { createServer, type Server } from "http";
 import Stripe from "stripe";
 import { storage } from "./storage";
 import { z } from "zod";
+import bcrypt from "bcryptjs";
+import session from "express-session";
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
 
 // Initialize Stripe
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -21,7 +25,73 @@ const createOrderRequestSchema = z.object({
   })).min(1, "Al menos un servicio es requerido"),
 });
 
+// Configure Passport
+passport.use(new LocalStrategy(
+  { usernameField: 'email' },
+  async (email, password, done) => {
+    try {
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return done(null, false, { message: 'Email o contraseña incorrectos' });
+      }
+      
+      const isValid = await bcrypt.compare(password, user.password);
+      if (!isValid) {
+        return done(null, false, { message: 'Email o contraseña incorrectos' });
+      }
+      
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
+
+passport.serializeUser((user: any, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id: string, done) => {
+  try {
+    const user = await storage.getUser(id);
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
+
+// Middleware to check if user is authenticated
+function isAuthenticated(req: express.Request, res: express.Response, next: express.NextFunction) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ error: 'No autenticado' });
+}
+
+// Middleware to check if user is admin
+function isAdmin(req: express.Request, res: express.Response, next: express.NextFunction) {
+  if (req.isAuthenticated() && (req.user as any).role === 'admin') {
+    return next();
+  }
+  res.status(403).json({ error: 'Acceso no autorizado' });
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Configure session
+  app.use(session({
+    secret: process.env.SESSION_SECRET || 'lo-simple-launch-secret-2024',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    }
+  }));
+  
+  app.use(passport.initialize());
+  app.use(passport.session());
+  
   // Create isolated API router
   const api = Router();
   
@@ -385,6 +455,375 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ 
         error: "Error creando sesión de pago: " + error.message 
       });
+    }
+  });
+
+  // ============ AUTHENTICATION ROUTES ============
+  
+  // POST /auth/register - Register new user
+  api.post("/auth/register", async (req, res) => {
+    try {
+      const { email, password, fullName } = req.body;
+      
+      if (!email || !password || !fullName) {
+        return res.status(400).json({ error: 'Email, contraseña y nombre completo son requeridos' });
+      }
+      
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ error: 'El email ya está registrado' });
+      }
+      
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      // Create user
+      const user = await storage.createUser({
+        email,
+        password: hashedPassword,
+        fullName,
+        role: 'client'
+      });
+      
+      // Log the user in automatically
+      req.login(user, (err) => {
+        if (err) {
+          return res.status(500).json({ error: 'Error al iniciar sesión' });
+        }
+        
+        // Return user without password
+        const { password: _, ...userWithoutPassword } = user;
+        res.status(201).json({ user: userWithoutPassword });
+      });
+    } catch (error) {
+      console.error('Error registering user:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /auth/login - Login user
+  api.post("/auth/login", (req, res, next) => {
+    passport.authenticate('local', (err: any, user: any, info: any) => {
+      if (err) {
+        return res.status(500).json({ error: 'Error interno del servidor' });
+      }
+      if (!user) {
+        return res.status(401).json({ error: info?.message || 'Credenciales inválidas' });
+      }
+      
+      req.login(user, (loginErr) => {
+        if (loginErr) {
+          return res.status(500).json({ error: 'Error al iniciar sesión' });
+        }
+        
+        // Return user without password
+        const { password: _, ...userWithoutPassword } = user;
+        res.json({ user: userWithoutPassword });
+      });
+    })(req, res, next);
+  });
+  
+  // POST /auth/logout - Logout user
+  api.post("/auth/logout", (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Error al cerrar sesión' });
+      }
+      res.json({ message: 'Sesión cerrada exitosamente' });
+    });
+  });
+  
+  // GET /auth/session - Check current session
+  api.get("/auth/session", (req, res) => {
+    if (req.isAuthenticated()) {
+      const { password: _, ...userWithoutPassword } = req.user as any;
+      res.json({ user: userWithoutPassword });
+    } else {
+      res.status(401).json({ error: 'No autenticado' });
+    }
+  });
+  
+  // ============ LAUNCH REQUEST ROUTES ============
+  
+  // GET /launch/my-request - Get current user's launch request
+  api.get("/launch/my-request", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const request = await storage.getLaunchRequestByUserId(userId);
+      res.json(request || null);
+    } catch (error) {
+      console.error('Error fetching launch request:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /launch/request - Create or update launch request
+  api.post("/launch/request", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const existingRequest = await storage.getLaunchRequestByUserId(userId);
+      
+      if (existingRequest) {
+        // Update existing request
+        const updated = await storage.updateLaunchRequest(existingRequest.id, req.body);
+        res.json(updated);
+      } else {
+        // Create new request
+        const request = await storage.createLaunchRequest({
+          userId,
+          ...req.body
+        });
+        res.status(201).json(request);
+      }
+    } catch (error) {
+      console.error('Error saving launch request:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /launch/start - Start the launch process (requires payment)
+  api.post("/launch/start", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const request = await storage.getLaunchRequestByUserId(userId);
+      
+      if (!request) {
+        return res.status(404).json({ error: 'Solicitud no encontrada' });
+      }
+      
+      if (request.paymentStatus !== 'completed') {
+        return res.status(400).json({ error: 'Debes completar el pago primero' });
+      }
+      
+      if (!request.isFormComplete) {
+        return res.status(400).json({ error: 'Debes completar el formulario primero' });
+      }
+      
+      // Mark as started and move to admin queue
+      const updated = await storage.updateLaunchRequest(request.id, {
+        isStarted: true,
+        adminStatus: 'new'
+      });
+      
+      // Create progress tracking
+      await storage.createLaunchProgress({
+        launchRequestId: request.id
+      });
+      
+      res.json(updated);
+    } catch (error) {
+      console.error('Error starting launch:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /launch/progress - Get launch progress
+  api.get("/launch/progress", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const request = await storage.getLaunchRequestByUserId(userId);
+      
+      if (!request) {
+        return res.status(404).json({ error: 'Solicitud no encontrada' });
+      }
+      
+      const progress = await storage.getLaunchProgress(request.id);
+      res.json(progress || null);
+    } catch (error) {
+      console.error('Error fetching progress:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // ============ ADMIN ROUTES ============
+  
+  // GET /admin/requests - Get all launch requests (Kanban view)
+  api.get("/admin/requests", isAdmin, async (req, res) => {
+    try {
+      const status = req.query.status as string;
+      let requests;
+      
+      if (status) {
+        requests = await storage.getLaunchRequestsByStatus(status);
+      } else {
+        requests = await storage.getAllLaunchRequests();
+      }
+      
+      res.json(requests);
+    } catch (error) {
+      console.error('Error fetching admin requests:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /admin/requests/:id - Get detailed launch request
+  api.get("/admin/requests/:id", isAdmin, async (req, res) => {
+    try {
+      const request = await storage.getLaunchRequest(req.params.id);
+      if (!request) {
+        return res.status(404).json({ error: 'Solicitud no encontrada' });
+      }
+      
+      const progress = await storage.getLaunchProgress(request.id);
+      const documents = await storage.getDocumentsByLaunchRequest(request.id);
+      const notes = await storage.getNotesByLaunchRequest(request.id);
+      
+      res.json({
+        request,
+        progress,
+        documents,
+        notes
+      });
+    } catch (error) {
+      console.error('Error fetching request details:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // PATCH /admin/requests/:id - Update request status
+  api.patch("/admin/requests/:id", isAdmin, async (req, res) => {
+    try {
+      const updated = await storage.updateLaunchRequest(req.params.id, req.body);
+      if (!updated) {
+        return res.status(404).json({ error: 'Solicitud no encontrada' });
+      }
+      res.json(updated);
+    } catch (error) {
+      console.error('Error updating request:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // PATCH /admin/progress/:requestId - Update launch progress
+  api.patch("/admin/progress/:requestId", isAdmin, async (req, res) => {
+    try {
+      const progress = await storage.getLaunchProgress(req.params.requestId);
+      if (!progress) {
+        return res.status(404).json({ error: 'Progreso no encontrado' });
+      }
+      
+      const updated = await storage.updateLaunchProgress(progress.id, req.body);
+      res.json(updated);
+    } catch (error) {
+      console.error('Error updating progress:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /admin/notes - Add admin note
+  api.post("/admin/notes", isAdmin, async (req, res) => {
+    try {
+      const { launchRequestId, noteText } = req.body;
+      const adminUserId = (req.user as any).id;
+      
+      const note = await storage.createAdminNote({
+        launchRequestId,
+        adminUserId,
+        noteText
+      });
+      
+      res.status(201).json(note);
+    } catch (error) {
+      console.error('Error creating note:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /launch/payment-intent - Create payment intent for Launch
+  api.post("/launch/payment-intent", isAuthenticated, async (req, res) => {
+    try {
+      const { plan } = req.body; // "fundador" or "pro"
+      const userId = (req.user as any).id;
+      
+      if (!plan || !['fundador', 'pro'].includes(plan)) {
+        return res.status(400).json({ error: 'Plan inválido' });
+      }
+      
+      const prices = {
+        fundador: 599,
+        pro: 699
+      };
+      
+      const baseAmount = prices[plan as 'fundador' | 'pro'];
+      const tax = baseAmount * 0.15; // 15% IVA
+      const totalAmount = baseAmount + tax;
+      
+      // Get or create launch request
+      let request = await storage.getLaunchRequestByUserId(userId);
+      if (!request) {
+        request = await storage.createLaunchRequest({
+          userId,
+          selectedPlan: plan
+        });
+      } else {
+        // Update plan selection
+        await storage.updateLaunchRequest(request.id, { selectedPlan: plan });
+      }
+      
+      // Create PaymentIntent
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(totalAmount * 100), // Convert to cents
+        currency: "usd",
+        automatic_payment_methods: {
+          enabled: true,
+        },
+        metadata: {
+          type: 'launch',
+          userId,
+          requestId: request.id,
+          plan,
+          baseAmount: baseAmount.toFixed(2),
+          tax: tax.toFixed(2),
+          totalAmount: totalAmount.toFixed(2)
+        }
+      });
+      
+      // Update request with payment intent
+      await storage.updateLaunchRequest(request.id, {
+        stripePaymentIntentId: paymentIntent.id,
+        paidAmount: totalAmount.toFixed(2)
+      });
+      
+      res.json({
+        clientSecret: paymentIntent.client_secret,
+        paymentIntentId: paymentIntent.id,
+        baseAmount: baseAmount.toFixed(2),
+        tax: tax.toFixed(2),
+        totalAmount: totalAmount.toFixed(2)
+      });
+    } catch (error: any) {
+      console.error('Error creating launch payment intent:', error);
+      res.status(500).json({ error: 'Error creando intención de pago: ' + error.message });
+    }
+  });
+  
+  // POST /launch/confirm-payment - Confirm Launch payment
+  api.post("/launch/confirm-payment", isAuthenticated, async (req, res) => {
+    try {
+      const { paymentIntentId } = req.body;
+      const userId = (req.user as any).id;
+      
+      // Verify payment with Stripe
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      
+      if (paymentIntent.status !== 'succeeded') {
+        return res.status(400).json({ error: 'El pago no se ha completado' });
+      }
+      
+      // Update request payment status
+      const request = await storage.getLaunchRequestByUserId(userId);
+      if (request) {
+        await storage.updateLaunchRequest(request.id, {
+          paymentStatus: 'completed',
+          stripePaymentIntentId: paymentIntentId
+        });
+      }
+      
+      res.json({ message: 'Pago confirmado exitosamente' });
+    } catch (error) {
+      console.error('Error confirming payment:', error);
+      res.status(500).json({ error: 'Error confirmando pago' });
     }
   });
 

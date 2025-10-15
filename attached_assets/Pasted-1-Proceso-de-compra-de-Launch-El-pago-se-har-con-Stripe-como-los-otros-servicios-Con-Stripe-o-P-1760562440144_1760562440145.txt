@@ -1,0 +1,95 @@
+1. Proceso de compra de Launch:
+¿El pago se hará con Stripe como los otros servicios?
+Con Stripe o Payphone
+¿Quieres que sea un pago único o recurrente?
+Un sólo pago
+¿Cuál es el precio de Launch?
+599 más IVA
+2. Creación de cuenta:
+Cuando alguien compra Launch, ¿se le crea automáticamente una cuenta?
+Primero se registra, puede ingresar todos los datos necesarios sin costo y luego pagar
+¿Qué datos necesitas del cliente? (nombre, email, teléfono, empresa, etc.)
+Necesito algo modo formulario que tenga:
+1) Bienvenida
+   - Texto: “¡Bienvenido al Plan Launch Lo Simple! Vamos a lanzar tu negocio. Este servicio incluye la creación legal de tu empresa, identidad visual, página web, configuración profesional de redes y acompañamiento anual. Te tomará aprox. 10 minutos.”
+   - Botón: “Comenzar”
+
+2) Datos personales
+   - Campos: nombres y apellidos, cédula/pasaporte, correo personal, celular, dirección domiciliaria, provincia y cantón
+   - Toggle: “¿Tienes socios?” (Sí/No) → si Sí, ir a paso 3; si No, saltar a paso 4
+   - Validaciones: requeridos, patrones básicos (cédula), email
+
+3) Datos de socios (condicional, lista repetible)
+   - Por cada socio: nombres y apellidos, cédula/pasaporte, % participación, correo, celular, subida de cédula (frente y reverso)
+   - Botones: “Agregar socio”, “Eliminar”
+   - Validaciones: % total ≤ 100
+
+4) Datos de la compañía
+   - Nombre propuesto 1/2/3 (texto)
+   - Actividad económica principal (texto) + secundarias (chips opcionales)
+   - Capital inicial (numérico) y distribución de acciones (tabla)
+   - Dirección fiscal (ciudad, calle)
+   - Tipo de administración: ( ) Administrador único ( ) Conjunta
+   - ¿Representante legal distinto al socio principal? (Sí/No) → si Sí: nombre, cédula, correo, teléfono
+   - Subidas: planilla servicio básico (≤3 meses), cédulas (si no se cargaron)
+   - Validación: archivos obligatorios
+
+5) Identidad visual (logo + moodboard)
+   - Nombre comercial, eslogan (opcional)
+   - Breve descripción (textarea)
+   - 3 palabras de personalidad (chips)
+   - Colores preferidos (selector + entrada hex opcional)
+   - Estilo preferido (checkboxes: Minimalista, Corporativo, Artesanal, Divertido, Otro)
+   - Tipografías que le gustan (texto)
+   - Referencias visuales (subida de imágenes o links)
+
+6) Página web 
+   - Objetivo del sitio (checkboxes): Presentar negocio / Conseguir leads / Mostrar productos/servicios / Agendar citas
+   - Dominio deseado (ej: www.miempresa.com.ec)
+   - ¿Ya tienes dominio? (Sí/No) → Si No, marcar opción “quiero comprar con Lo Simple”
+   - Redes sociales (links), correo corporativo deseado, dirección física (opcional)
+   - Textos iniciales: “Sobre nosotros”, “Servicios principales” (textarea)
+   - Imágenes del negocio (subida opcional)
+   - **NUEVO – Referencias web (obligatorio):** 3 sitios que te gusten (URL1, URL2, URL3) para usar como guía de diseño/estructura.
+   - Validaciones: las 3 URLs son requeridas y deben ser válidas
+
+7) Membresía y pago
+   - Plan: ( ) Plan Fundador Anual – US$ 599 + IVA  ( ) Plan Pro Anual – US$ 699 + IVA (incluye hosting y firma)
+   - Forma de pago: ( ) Tarjeta ( ) Transferencia ( ) PayPhone
+   - Si Transferencia: Mostrar instrucciones bancarias (placeholder)
+   - Si Tarjeta/PayPhone: dirigir a stub de pasarela y registrar resultado (success/failure)
+   - Checkbox T&C y política de privacidad (obligatorio)
+
+8) Facturación
+   - Razón social o nombres, RUC o cédula, dirección fiscal, correo para facturación
+   - Validaciones estándar
+
+9) Confirmación + Portal
+   - Pantalla final: “¡Listo! Recibimos tu información. Te contactaremos en 24 h. Revisa tu email.”
+   - Enviar email de confirmación + (opcional) WhatsApp con enlace a su **Portal del Cliente** (ruta protegida /dashboard/[id]) con:
+     - Estado de etapas: Constitución (barra), Logo (barra), Web (barra)
+     - Documentos cargados
+     - FAQs y micro-videos Loom
+     - Botón de soporte (chat embebido/WhatsApp link)
+   - Mostrar resumen descargable (PDF) con hash de referencia
+
+
+Preguntas sobre el Dashboard del cliente:
+
+
+3. ¿Qué debe ver/hacer el cliente en su panel?
+
+
+Ver el estado de su servicio Launch (en progreso, completado)
+Seguimiento de las 6 entregas (Logo, Web, Redes, Compañía, Facturación, Firma)
+Descargar archivos/documentos
+Solicitar reunión con el equipo
+Renovar o comprar servicios adicionales
+4. Gestión del progreso:
+¿Necesitas que el cliente suba información/documentos para procesar su Launch?
+si
+¿Quieres mostrar un timeline o checklist de progreso
+Si
+¿Notificaciones cuando algo esté listo?
+Por mail
+

@@ -1,4 +1,12 @@
-import { type Service, type InsertService, type Order, type InsertOrder } from "@shared/schema";
+import { 
+  type Service, type InsertService, 
+  type Order, type InsertOrder,
+  type User, type InsertUser,
+  type LaunchRequest, type InsertLaunchRequest,
+  type LaunchProgress, type InsertLaunchProgress,
+  type Document, type InsertDocument,
+  type AdminNote, type InsertAdminNote
+} from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -13,15 +21,54 @@ export interface IStorage {
   getOrder(id: string): Promise<Order | undefined>;
   createOrder(order: InsertOrder): Promise<Order>;
   updateOrder(id: string, order: Partial<InsertOrder>): Promise<Order | undefined>;
+  
+  // Users
+  getAllUsers(): Promise<User[]>;
+  getUser(id: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
+  updateUser(id: string, user: Partial<InsertUser>): Promise<User | undefined>;
+  
+  // Launch Requests
+  getAllLaunchRequests(): Promise<LaunchRequest[]>;
+  getLaunchRequest(id: string): Promise<LaunchRequest | undefined>;
+  getLaunchRequestByUserId(userId: string): Promise<LaunchRequest | undefined>;
+  createLaunchRequest(request: InsertLaunchRequest): Promise<LaunchRequest>;
+  updateLaunchRequest(id: string, request: Partial<InsertLaunchRequest>): Promise<LaunchRequest | undefined>;
+  getLaunchRequestsByStatus(status: string): Promise<LaunchRequest[]>;
+  
+  // Launch Progress
+  getLaunchProgress(launchRequestId: string): Promise<LaunchProgress | undefined>;
+  createLaunchProgress(progress: InsertLaunchProgress): Promise<LaunchProgress>;
+  updateLaunchProgress(id: string, progress: Partial<InsertLaunchProgress>): Promise<LaunchProgress | undefined>;
+  
+  // Documents
+  getDocumentsByLaunchRequest(launchRequestId: string): Promise<Document[]>;
+  createDocument(document: InsertDocument): Promise<Document>;
+  deleteDocument(id: string): Promise<boolean>;
+  
+  // Admin Notes
+  getNotesByLaunchRequest(launchRequestId: string): Promise<AdminNote[]>;
+  createAdminNote(note: InsertAdminNote): Promise<AdminNote>;
 }
 
 export class MemStorage implements IStorage {
   private services: Map<string, Service>;
   private orders: Map<string, Order>;
+  private users: Map<string, User>;
+  private launchRequests: Map<string, LaunchRequest>;
+  private launchProgress: Map<string, LaunchProgress>;
+  private documents: Map<string, Document>;
+  private adminNotes: Map<string, AdminNote>;
 
   constructor() {
     this.services = new Map();
     this.orders = new Map();
+    this.users = new Map();
+    this.launchRequests = new Map();
+    this.launchProgress = new Map();
+    this.documents = new Map();
+    this.adminNotes = new Map();
     this.initializeServices();
   }
 
@@ -77,6 +124,146 @@ export class MemStorage implements IStorage {
     const updated = { ...existing, ...orderUpdate } as Order;
     this.orders.set(id, updated);
     return updated;
+  }
+
+  // Users methods
+  async getAllUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
+  }
+
+  async getUser(id: string): Promise<User | undefined> {
+    return this.users.get(id);
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(user => user.email === email);
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const id = randomUUID();
+    const user: User = {
+      ...insertUser,
+      id,
+      createdAt: new Date()
+    } as User;
+    this.users.set(id, user);
+    return user;
+  }
+
+  async updateUser(id: string, userUpdate: Partial<InsertUser>): Promise<User | undefined> {
+    const existing = this.users.get(id);
+    if (!existing) return undefined;
+    
+    const updated = { ...existing, ...userUpdate } as User;
+    this.users.set(id, updated);
+    return updated;
+  }
+
+  // Launch Requests methods
+  async getAllLaunchRequests(): Promise<LaunchRequest[]> {
+    return Array.from(this.launchRequests.values());
+  }
+
+  async getLaunchRequest(id: string): Promise<LaunchRequest | undefined> {
+    return this.launchRequests.get(id);
+  }
+
+  async getLaunchRequestByUserId(userId: string): Promise<LaunchRequest | undefined> {
+    return Array.from(this.launchRequests.values()).find(req => req.userId === userId);
+  }
+
+  async createLaunchRequest(insertRequest: InsertLaunchRequest): Promise<LaunchRequest> {
+    const id = randomUUID();
+    const request: LaunchRequest = {
+      ...insertRequest,
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    } as LaunchRequest;
+    this.launchRequests.set(id, request);
+    return request;
+  }
+
+  async updateLaunchRequest(id: string, requestUpdate: Partial<InsertLaunchRequest>): Promise<LaunchRequest | undefined> {
+    const existing = this.launchRequests.get(id);
+    if (!existing) return undefined;
+    
+    const updated = { 
+      ...existing, 
+      ...requestUpdate,
+      updatedAt: new Date()
+    } as LaunchRequest;
+    this.launchRequests.set(id, updated);
+    return updated;
+  }
+
+  async getLaunchRequestsByStatus(status: string): Promise<LaunchRequest[]> {
+    return Array.from(this.launchRequests.values()).filter(req => req.adminStatus === status);
+  }
+
+  // Launch Progress methods
+  async getLaunchProgress(launchRequestId: string): Promise<LaunchProgress | undefined> {
+    return Array.from(this.launchProgress.values()).find(p => p.launchRequestId === launchRequestId);
+  }
+
+  async createLaunchProgress(insertProgress: InsertLaunchProgress): Promise<LaunchProgress> {
+    const id = randomUUID();
+    const progress: LaunchProgress = {
+      ...insertProgress,
+      id,
+      updatedAt: new Date()
+    } as LaunchProgress;
+    this.launchProgress.set(id, progress);
+    return progress;
+  }
+
+  async updateLaunchProgress(id: string, progressUpdate: Partial<InsertLaunchProgress>): Promise<LaunchProgress | undefined> {
+    const existing = this.launchProgress.get(id);
+    if (!existing) return undefined;
+    
+    const updated = {
+      ...existing,
+      ...progressUpdate,
+      updatedAt: new Date()
+    } as LaunchProgress;
+    this.launchProgress.set(id, updated);
+    return updated;
+  }
+
+  // Documents methods
+  async getDocumentsByLaunchRequest(launchRequestId: string): Promise<Document[]> {
+    return Array.from(this.documents.values()).filter(doc => doc.launchRequestId === launchRequestId);
+  }
+
+  async createDocument(insertDocument: InsertDocument): Promise<Document> {
+    const id = randomUUID();
+    const document: Document = {
+      ...insertDocument,
+      id,
+      uploadedAt: new Date()
+    } as Document;
+    this.documents.set(id, document);
+    return document;
+  }
+
+  async deleteDocument(id: string): Promise<boolean> {
+    return this.documents.delete(id);
+  }
+
+  // Admin Notes methods
+  async getNotesByLaunchRequest(launchRequestId: string): Promise<AdminNote[]> {
+    return Array.from(this.adminNotes.values()).filter(note => note.launchRequestId === launchRequestId);
+  }
+
+  async createAdminNote(insertNote: InsertAdminNote): Promise<AdminNote> {
+    const id = randomUUID();
+    const note: AdminNote = {
+      ...insertNote,
+      id,
+      createdAt: new Date()
+    } as AdminNote;
+    this.adminNotes.set(id, note);
+    return note;
   }
 
   // Initialize with sample services based on sasecuador.com
