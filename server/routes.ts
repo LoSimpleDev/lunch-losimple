@@ -733,32 +733,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // POST /launch/payment-intent - Create payment intent for Launch
   api.post("/launch/payment-intent", isAuthenticated, async (req, res) => {
     try {
-      const { plan } = req.body; // "fundador" or "pro"
       const userId = (req.user as any).id;
       
-      if (!plan || !['fundador', 'pro'].includes(plan)) {
-        return res.status(400).json({ error: 'Plan inválido' });
-      }
-      
-      const prices = {
-        fundador: 599,
-        pro: 699
-      };
-      
-      const baseAmount = prices[plan as 'fundador' | 'pro'];
+      // Plan Launch fijo: $599 + IVA
+      const baseAmount = 599;
       const tax = baseAmount * 0.15; // 15% IVA
       const totalAmount = baseAmount + tax;
       
-      // Get or create launch request
-      let request = await storage.getLaunchRequestByUserId(userId);
+      // Get launch request
+      const request = await storage.getLaunchRequestByUserId(userId);
       if (!request) {
-        request = await storage.createLaunchRequest({
-          userId,
-          selectedPlan: plan
-        });
-      } else {
-        // Update plan selection
-        await storage.updateLaunchRequest(request.id, { selectedPlan: plan });
+        return res.status(404).json({ error: 'Solicitud no encontrada' });
+      }
+      
+      if (!request.isFormComplete) {
+        return res.status(400).json({ error: 'Debes completar el formulario primero' });
       }
       
       // Create PaymentIntent
@@ -772,7 +761,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           type: 'launch',
           userId,
           requestId: request.id,
-          plan,
+          plan: 'launch',
           baseAmount: baseAmount.toFixed(2),
           tax: tax.toFixed(2),
           totalAmount: totalAmount.toFixed(2)
