@@ -106,14 +106,13 @@ export const launchRequests = pgTable("launch_requests", {
   websiteReference2: text("website_reference_2"),
   websiteReference3: text("website_reference_3"),
   
-  // Step 7: Plan selection and payment
-  selectedPlan: text("selected_plan"), // "fundador" or "pro"
+  // Payment info (Plan Launch fijo: $599 + IVA)
   paymentMethod: text("payment_method"), // "card", "transfer", or "payphone"
   paymentStatus: text("payment_status").notNull().default("pending"), // pending, completed, failed
   stripePaymentIntentId: text("stripe_payment_intent_id"),
   paidAmount: decimal("paid_amount", { precision: 10, scale: 2 }),
   
-  // Step 8: Billing
+  // Step 7: Billing
   billingName: text("billing_name"),
   billingIdNumber: text("billing_id_number"),
   billingAddress: text("billing_address"),
