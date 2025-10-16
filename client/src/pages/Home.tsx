@@ -6,7 +6,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { Cart } from "@/components/Cart";
-import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail, FileText, Edit, Info } from "lucide-react";
+import { ShoppingCart, Star, Users, Building, CheckCircle, MessageCircle, Phone, Mail, FileText, Edit, Info, Shield } from "lucide-react";
+import { Link } from "wouter";
 import {
   Tooltip,
   TooltipContent,
@@ -649,6 +650,12 @@ export default function Home() {
                   <a href="mailto:joseantonio@losimple.ai" className="hover:opacity-100 transition-opacity">
                     Consultas
                   </a>
+                </li>
+                <li className="flex items-center">
+                  <Shield className="h-4 w-4 mr-2" />
+                  <Link href="/adminlaunch" className="hover:opacity-100 transition-opacity" data-testid="link-admin-access-footer">
+                    Acceso Admin
+                  </Link>
                 </li>
               </ul>
             </div>
