@@ -88,6 +88,7 @@ export default function LaunchPayment() {
   const [, setLocation] = useLocation();
   const [clientSecret, setClientSecret] = useState("");
   const [paymentError, setPaymentError] = useState("");
+  const [isTestPaymentProcessing, setIsTestPaymentProcessing] = useState(false);
   const { toast } = useToast();
 
   // Verificar sesión
@@ -122,6 +123,36 @@ export default function LaunchPayment() {
         });
       });
   }, [sessionData, isLoadingSession, setLocation, toast]);
+
+  const handleTestPayment = async () => {
+    setIsTestPaymentProcessing(true);
+    
+    try {
+      // apiRequest throws if response is not ok (status >= 400)
+      const res = await apiRequest("POST", "/api/launch/test-complete-payment", {});
+      const data = await res.json();
+      
+      // Invalidate cache to refresh launch request data
+      await queryClient.invalidateQueries({ queryKey: ["/api/launch/my-request"] });
+      
+      toast({
+        title: "¡Pago de prueba completado!",
+        description: `Se ha registrado un pago de prueba de $${data.totalAmount}`,
+      });
+      
+      // Redirect to dashboard to see completed payment
+      setLocation('/dashboard');
+    } catch (error: any) {
+      // Handle errors from backend (e.g., form not complete, auth issues)
+      const errorMessage = error.message || "Error al completar pago de prueba";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      setIsTestPaymentProcessing(false);
+    }
+  };
 
   const plan = {
     name: 'Plan Launch',
@@ -233,6 +264,27 @@ export default function LaunchPayment() {
               <Elements stripe={stripePromise} options={{ clientSecret }}>
                 <CheckoutForm />
               </Elements>
+
+              {/* Test Payment Option */}
+              <div className="mt-6 pt-6 border-t">
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg mb-4">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200 font-medium mb-1">
+                    Modo de Prueba
+                  </p>
+                  <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                    Mientras no publiques, puedes simular el pago para verificar el dashboard y las funcionalidades.
+                  </p>
+                </div>
+                <Button 
+                  variant="outline"
+                  onClick={handleTestPayment}
+                  disabled={isTestPaymentProcessing}
+                  className="w-full"
+                  data-testid="button-test-payment"
+                >
+                  {isTestPaymentProcessing ? "Procesando..." : "Simular Pago de Prueba"}
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

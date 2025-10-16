@@ -816,6 +816,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // POST /launch/test-complete-payment - Complete payment without Stripe (TEST ONLY)
+  api.post("/launch/test-complete-payment", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      
+      // Get launch request
+      const request = await storage.getLaunchRequestByUserId(userId);
+      if (!request) {
+        return res.status(404).json({ error: 'Solicitud no encontrada' });
+      }
+      
+      if (!request.isFormComplete) {
+        return res.status(400).json({ error: 'Debes completar el formulario primero' });
+      }
+      
+      // Mark as paid (TEST MODE)
+      const baseAmount = 599;
+      const tax = baseAmount * 0.15;
+      const totalAmount = baseAmount + tax;
+      
+      await storage.updateLaunchRequest(request.id, {
+        paymentStatus: 'completed',
+        paidAmount: totalAmount.toFixed(2),
+        stripePaymentIntentId: 'test_' + Date.now()
+      });
+      
+      res.json({ 
+        message: 'Pago de prueba completado exitosamente',
+        totalAmount: totalAmount.toFixed(2)
+      });
+    } catch (error) {
+      console.error('Error completing test payment:', error);
+      res.status(500).json({ error: 'Error completando pago de prueba' });
+    }
+  });
+
   // Terminal 404 handler for API routes
   api.use((_req, res) => {
     res.status(404).json({ error: "API endpoint not found" });
