@@ -488,6 +488,50 @@ export default function LaunchForm() {
                 </CardContent>
               </Card>
             ))}
+
+            <Card className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+              <CardHeader>
+                <CardTitle className="text-base">Documentación Requerida</CardTitle>
+                <CardDescription>
+                  Sube los siguientes documentos para el proceso de constitución
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="shareholderIdUrls">Enlaces a cédulas de accionistas *</Label>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                    Sube las cédulas a Google Drive, Dropbox u otro servicio y pega los enlaces aquí (separados por coma).
+                  </p>
+                  <Input
+                    id="shareholderIdUrls"
+                    value={(formData.shareholderIdUrls || []).join(", ")}
+                    onChange={(e) => updateFormData("shareholderIdUrls", e.target.value.split(",").map((url: string) => url.trim()).filter((url: string) => url))}
+                    placeholder="https://drive.google.com/... , https://dropbox.com/..."
+                    data-testid="input-shareholder-ids"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="utilityBillUrl">Enlace a pago de servicio básico *</Label>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                    Sube el documento que muestre la dirección del negocio (planilla de luz, agua, teléfono) y pega el enlace aquí.
+                  </p>
+                  <Input
+                    id="utilityBillUrl"
+                    value={formData.utilityBillUrl || ""}
+                    onChange={(e) => updateFormData("utilityBillUrl", e.target.value)}
+                    placeholder="https://drive.google.com/file/..."
+                    data-testid="input-utility-bill"
+                  />
+                </div>
+
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+                  <p className="text-xs text-yellow-800 dark:text-yellow-200">
+                    <strong>Importante:</strong> Asegúrate de que los documentos sean legibles y estén vigentes. Puedes subir tus archivos a Google Drive o Dropbox y compartir el enlace aquí.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         );
 
@@ -719,50 +763,6 @@ export default function LaunchForm() {
                 </CardContent>
               </Card>
             )}
-
-            <Card className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
-              <CardHeader>
-                <CardTitle className="text-base">Documentación Requerida</CardTitle>
-                <CardDescription>
-                  Sube los siguientes documentos para el proceso de constitución
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="shareholderIdUrls">Enlaces a cédulas de accionistas *</Label>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                    Sube las cédulas a Google Drive, Dropbox u otro servicio y pega los enlaces aquí (separados por coma).
-                  </p>
-                  <Input
-                    id="shareholderIdUrls"
-                    value={(formData.shareholderIdUrls || []).join(", ")}
-                    onChange={(e) => updateFormData("shareholderIdUrls", e.target.value.split(",").map((url: string) => url.trim()).filter((url: string) => url))}
-                    placeholder="https://drive.google.com/... , https://dropbox.com/..."
-                    data-testid="input-shareholder-ids"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="utilityBillUrl">Enlace a pago de servicio básico *</Label>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                    Sube el documento que muestre la dirección del negocio (planilla de luz, agua, teléfono) y pega el enlace aquí.
-                  </p>
-                  <Input
-                    id="utilityBillUrl"
-                    value={formData.utilityBillUrl || ""}
-                    onChange={(e) => updateFormData("utilityBillUrl", e.target.value)}
-                    placeholder="https://drive.google.com/file/..."
-                    data-testid="input-utility-bill"
-                  />
-                </div>
-
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
-                  <p className="text-xs text-yellow-800 dark:text-yellow-200">
-                    <strong>Importante:</strong> Asegúrate de que los documentos sean legibles y estén vigentes. Puedes subir tus archivos a Google Drive o Dropbox y compartir el enlace aquí.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         );
 
