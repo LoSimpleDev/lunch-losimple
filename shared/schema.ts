@@ -138,26 +138,38 @@ export const launchProgress = pgTable("launch_progress", {
   logoStatus: text("logo_status").notNull().default("pending"), // pending, in_progress, completed
   logoProgress: integer("logo_progress").notNull().default(0), // 0-100
   logoDeliveryUrl: text("logo_delivery_url"),
+  logoCurrentStep: text("logo_current_step"),
+  logoNextStep: text("logo_next_step"),
   
   websiteStatus: text("website_status").notNull().default("pending"),
   websiteProgress: integer("website_progress").notNull().default(0),
   websiteDeliveryUrl: text("website_delivery_url"),
+  websiteCurrentStep: text("website_current_step"),
+  websiteNextStep: text("website_next_step"),
   
   socialMediaStatus: text("social_media_status").notNull().default("pending"),
   socialMediaProgress: integer("social_media_progress").notNull().default(0),
   socialMediaDeliveryUrl: text("social_media_delivery_url"),
+  socialMediaCurrentStep: text("social_media_current_step"),
+  socialMediaNextStep: text("social_media_next_step"),
   
   companyStatus: text("company_status").notNull().default("pending"),
   companyProgress: integer("company_progress").notNull().default(0),
   companyDeliveryUrl: text("company_delivery_url"),
+  companyCurrentStep: text("company_current_step"),
+  companyNextStep: text("company_next_step"),
   
   invoicingStatus: text("invoicing_status").notNull().default("pending"),
   invoicingProgress: integer("invoicing_progress").notNull().default(0),
   invoicingDeliveryUrl: text("invoicing_delivery_url"),
+  invoicingCurrentStep: text("invoicing_current_step"),
+  invoicingNextStep: text("invoicing_next_step"),
   
   signatureStatus: text("signature_status").notNull().default("pending"),
   signatureProgress: integer("signature_progress").notNull().default(0),
   signatureDeliveryUrl: text("signature_delivery_url"),
+  signatureCurrentStep: text("signature_current_step"),
+  signatureNextStep: text("signature_next_step"),
   
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
