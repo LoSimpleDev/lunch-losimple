@@ -11,7 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronLeft, ChevronRight, Plus, Trash2, Rocket } from "lucide-react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { ChevronLeft, ChevronRight, Plus, Trash2, Rocket, AlertTriangle } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -113,6 +114,9 @@ export default function LaunchForm() {
     acceptedTerms: false,
   });
 
+  const [showIncompleteWarning, setShowIncompleteWarning] = useState(false);
+  const [missingFields, setMissingFields] = useState<string[]>([]);
+
   // Redirigir al login si no está autenticado
   useEffect(() => {
     if (!isLoadingSession && !sessionData) {
@@ -138,6 +142,61 @@ export default function LaunchForm() {
     }
   });
 
+  const checkMissingFields = () => {
+    const missing: string[] = [];
+    
+    if (!formData.fullName) missing.push("Nombre completo");
+    if (!formData.idNumber) missing.push("Número de cédula");
+    if (!formData.personalEmail) missing.push("Email personal");
+    if (!formData.phone) missing.push("Teléfono");
+    if (!formData.companyName1) missing.push("Nombre de empresa");
+    if (!formData.mainActivity) missing.push("Actividad principal");
+    if (!formData.brandName) missing.push("Nombre de marca");
+    if (!formData.desiredDomain) missing.push("Dominio deseado");
+    if (!formData.billingName) missing.push("Nombre para facturación");
+    if (!formData.billingIdNumber) missing.push("RUC/Cédula para facturación");
+    if (!formData.billingEmail) missing.push("Email para factura");
+    
+    return missing;
+  };
+
+  const handleComplete = async () => {
+    const missing = checkMissingFields();
+    
+    if (missing.length > 0) {
+      setMissingFields(missing);
+      setShowIncompleteWarning(true);
+      return;
+    }
+    
+    await completeForm();
+  };
+
+  const completeForm = async () => {
+    try {
+      await saveMutation.mutateAsync({
+        ...formData,
+        currentStep: TOTAL_STEPS,
+        isFormComplete: true
+      });
+      
+      toast({
+        title: "Formulario completado",
+        description: "Redirigiendo al dashboard...",
+      });
+      
+      setTimeout(() => {
+        setLocation('/dashboard');
+      }, 1000);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Error al guardar",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleNext = async () => {
     if (currentStep < TOTAL_STEPS) {
       const nextStep = currentStep + 1;
@@ -161,6 +220,8 @@ export default function LaunchForm() {
           variant: "destructive",
         });
       }
+    } else if (currentStep === TOTAL_STEPS) {
+      await handleComplete();
     }
   };
 
@@ -1230,7 +1291,7 @@ export default function LaunchForm() {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={currentStep === TOTAL_STEPS || saveMutation.isPending}
+                disabled={saveMutation.isPending}
                 data-testid="button-next"
               >
                 {saveMutation.isPending ? "Guardando..." : currentStep === TOTAL_STEPS ? "Finalizar" : "Siguiente"}
@@ -1240,6 +1301,42 @@ export default function LaunchForm() {
           </CardContent>
         </Card>
       </div>
+
+      <AlertDialog open={showIncompleteWarning} onOpenChange={setShowIncompleteWarning}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-amber-500" />
+              Campos incompletos detectados
+            </AlertDialogTitle>
+            <AlertDialogDescription className="space-y-3">
+              <p>Algunos campos importantes no han sido completados:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm">
+                {missingFields.map((field, index) => (
+                  <li key={index}>{field}</li>
+                ))}
+              </ul>
+              <p className="pt-2">
+                ¿Deseas completar estos campos ahora o continuar sin ellos? Puedes agregar la información más tarde desde tu dashboard.
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel data-testid="button-go-back">
+              Volver a completar
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={() => {
+                setShowIncompleteWarning(false);
+                completeForm();
+              }}
+              data-testid="button-continue-anyway"
+            >
+              Continuar sin completar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
