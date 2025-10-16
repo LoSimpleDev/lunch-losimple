@@ -79,7 +79,9 @@ export const launchRequests = pgTable("launch_requests", {
   externalRepId: text("external_rep_id"),
   externalRepEmail: text("external_rep_email"),
   externalRepPhone: text("external_rep_phone"),
-  utilityBillUrl: text("utility_bill_url"),
+  // Company documents
+  shareholderIdUrls: text("shareholder_id_urls").array(), // Cédulas de accionistas
+  utilityBillUrl: text("utility_bill_url"), // Pago de servicio básico
   
   // Step 5: Visual identity
   brandName: text("brand_name"),
