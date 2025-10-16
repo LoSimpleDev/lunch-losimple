@@ -17,7 +17,7 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="w-4 h-4" />
-              <a href="mailto:hola@losimple.ai" className="hover:text-primary transition-colors">
+              <a href="mailto:hola@losimple.ai" className="hover:text-primary transition-colors" data-testid="link-footer-email">
                 hola@losimple.ai
               </a>
             </div>
