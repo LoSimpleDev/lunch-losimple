@@ -760,6 +760,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // GET /admin/requests/:id/messages - Get messages for a launch request (admin only)
+  api.get("/admin/requests/:id/messages", isAdmin, async (req, res) => {
+    try {
+      const messages = await storage.getMessagesByLaunchRequest(req.params.id);
+      res.json(messages);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
   // POST /admin/messages - Create team message (admin only)
   api.post("/admin/messages", isAdmin, async (req, res) => {
     try {

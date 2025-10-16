@@ -6,7 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, User, Mail, Phone, Save } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft, User, Mail, Phone, Save, MessageSquare, Send, Check } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -17,14 +18,35 @@ interface RequestDetail {
   notes: any[];
 }
 
+interface TeamMessage {
+  id: string;
+  launchRequestId: string;
+  message: string;
+  senderRole: string;
+  senderName: string;
+  clientResponse?: string;
+  isResolved: boolean;
+  createdAt: string;
+}
+
 export default function AdminRequestDetail() {
   const [, setLocation] = useLocation();
   const [match, params] = useRoute("/adminlaunch/:id");
   const { toast } = useToast();
   const [editedSteps, setEditedSteps] = useState<any>({});
+  const [newMessage, setNewMessage] = useState('');
   
   const { data, isLoading } = useQuery<RequestDetail>({
     queryKey: [`/api/admin/requests/${params?.id}`],
+    enabled: !!params?.id,
+  });
+  
+  const { data: messages = [] } = useQuery<TeamMessage[]>({
+    queryKey: [`/api/launch/messages`],
+    queryFn: async () => {
+      const res = await apiRequest("GET", `/api/admin/requests/${params?.id}/messages`);
+      return res.json();
+    },
     enabled: !!params?.id,
   });
 
@@ -45,6 +67,52 @@ export default function AdminRequestDetail() {
       toast({
         title: "Error",
         description: error.message || "Error al actualizar progreso",
+        variant: "destructive",
+      });
+    }
+  });
+  
+  const sendMessageMutation = useMutation({
+    mutationFn: async (message: string) => {
+      const res = await apiRequest("POST", "/api/admin/messages", {
+        launchRequestId: params?.id,
+        message
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/launch/messages`] });
+      toast({
+        title: "Mensaje enviado",
+        description: "El mensaje ha sido enviado al cliente",
+      });
+      setNewMessage('');
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Error al enviar mensaje",
+        variant: "destructive",
+      });
+    }
+  });
+  
+  const resolveMutation = useMutation({
+    mutationFn: async ({ messageId, isResolved }: { messageId: string; isResolved: boolean }) => {
+      const res = await apiRequest("PATCH", `/api/messages/${messageId}/resolve`, { isResolved });
+      return res.json();
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: [`/api/launch/messages`] });
+      toast({
+        title: variables.isResolved ? "Marcado como resuelto" : "Marcado como pendiente",
+        description: "El estado del mensaje ha sido actualizado",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Error al actualizar el estado",
         variant: "destructive",
       });
     }
@@ -134,6 +202,96 @@ export default function AdminRequestDetail() {
                 <p><strong>Marca:</strong> {request.brandName || 'No proporcionado'}</p>
                 <p><strong>Dominio:</strong> {request.desiredDomain || 'No proporcionado'}</p>
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Mensajes del Equipo Lo Simple */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquare className="w-5 h-5" />
+                Mensajes del Equipo Lo Simple
+              </CardTitle>
+              <CardDescription>
+                Envía mensajes al cliente sobre reuniones, correcciones o aclaraciones
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <Label htmlFor="newMessage">Enviar nuevo mensaje</Label>
+                <Textarea
+                  id="newMessage"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="Ej: Hola, te invitamos a una reunión el día jueves 20 de octubre a las 10:00 AM para la firma de documentos..."
+                  rows={3}
+                  data-testid="textarea-new-message"
+                />
+                <Button
+                  onClick={() => {
+                    if (newMessage.trim()) {
+                      sendMessageMutation.mutate(newMessage);
+                    }
+                  }}
+                  disabled={!newMessage.trim() || sendMessageMutation.isPending}
+                  data-testid="button-send-message"
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  {sendMessageMutation.isPending ? 'Enviando...' : 'Enviar mensaje'}
+                </Button>
+              </div>
+
+              {messages.length > 0 && (
+                <div className="space-y-3 pt-4 border-t">
+                  <h4 className="font-medium text-sm">Mensajes enviados</h4>
+                  {messages.map((msg) => (
+                    <div
+                      key={msg.id}
+                      className={`border rounded-lg p-3 ${msg.isResolved ? 'bg-gray-50 dark:bg-gray-800' : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'}`}
+                      data-testid={`admin-message-${msg.id}`}
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-sm">{msg.senderName}</span>
+                            <Badge variant={msg.isResolved ? 'outline' : 'default'} className="text-xs">
+                              {msg.isResolved ? 'Resuelto' : 'Pendiente'}
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {new Date(msg.createdAt).toLocaleDateString('es-EC', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </p>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant={msg.isResolved ? "outline" : "default"}
+                          onClick={() => resolveMutation.mutate({ messageId: msg.id, isResolved: !msg.isResolved })}
+                          disabled={resolveMutation.isPending}
+                          data-testid={`button-admin-resolve-${msg.id}`}
+                        >
+                          <Check className="w-4 h-4 mr-1" />
+                          {msg.isResolved ? 'Reabrir' : 'Resolver'}
+                        </Button>
+                      </div>
+                      
+                      <p className="text-sm mb-2 whitespace-pre-wrap">{msg.message}</p>
+                      
+                      {msg.clientResponse && (
+                        <div className="bg-white dark:bg-gray-700 rounded p-2 border-l-4 border-green-500">
+                          <p className="text-xs font-medium mb-1 text-gray-500 dark:text-gray-400">Respuesta del cliente:</p>
+                          <p className="text-sm">{msg.clientResponse}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
 
