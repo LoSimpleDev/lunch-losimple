@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { LogOut, FileText, User, Calendar } from "lucide-react";
+import { LogOut, FileText, Calendar, Users } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -12,7 +12,14 @@ interface User {
   id: string;
   email: string;
   fullName: string;
-  role: string;
+  role: 'client' | 'simplificador' | 'superadmin';
+}
+
+interface TeamUser {
+  id: string;
+  email: string;
+  fullName: string;
+  role: 'simplificador' | 'superadmin';
 }
 
 interface LaunchRequest {
@@ -25,6 +32,7 @@ interface LaunchRequest {
   paymentStatus: string;
   isStarted: boolean;
   adminStatus: string;
+  assignedTo?: string;
   createdAt: string;
 }
 
@@ -38,14 +46,26 @@ export default function AdminLaunch() {
     queryKey: ["/api/auth/session"],
   });
 
+  // Fetch team users (for superadmin assignment)
+  const { data: teamUsers } = useQuery<TeamUser[]>({
+    queryKey: ["/api/admin/team"],
+    enabled: !!sessionData?.user && sessionData.user.role === 'superadmin',
+  });
+
+  // Fetch unassigned requests (for simplificadores to take)
+  const { data: unassignedRequests } = useQuery<LaunchRequest[]>({
+    queryKey: ["/api/admin/unassigned"],
+    enabled: !!sessionData?.user && sessionData.user.role === 'simplificador',
+  });
+
   // Fetch launch requests
   const { data: requests, isLoading: isLoadingRequests } = useQuery<LaunchRequest[]>({
     queryKey: ["/api/admin/requests", selectedStatus],
-    enabled: !!sessionData?.user && sessionData.user.role === 'admin',
+    enabled: !!sessionData?.user && (sessionData.user.role === 'superadmin' || sessionData.user.role === 'simplificador'),
   });
 
   useEffect(() => {
-    if (!isLoadingSession && (!sessionData || sessionData.user.role !== 'admin')) {
+    if (!isLoadingSession && (!sessionData || (sessionData.user.role !== 'superadmin' && sessionData.user.role !== 'simplificador'))) {
       setLocation('/');
       toast({
         title: "Acceso denegado",
@@ -81,7 +101,17 @@ export default function AdminLaunch() {
   }
 
   const user = sessionData?.user;
-  if (!user || user.role !== 'admin') return null;
+  if (!user || (user.role !== 'superadmin' && user.role !== 'simplificador')) return null;
+
+  const isSuperadmin = user.role === 'superadmin';
+
+  // Find team member name for assigned requests
+  const getAssignedName = (assignedTo?: string) => {
+    if (!assignedTo) return null;
+    if (assignedTo === user.id) return 'Tú';
+    const assignee = teamUsers?.find(u => u.id === assignedTo);
+    return assignee?.fullName || 'Asignado';
+  };
 
   // Group requests by status
   const requestsByStatus = {
@@ -105,9 +135,21 @@ export default function AdminLaunch() {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold">Admin Launch</h1>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Panel de administración</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {isSuperadmin ? 'Superadmin' : 'Simplificador'} - Panel de administración
+            </p>
           </div>
           <div className="flex items-center gap-4">
+            {isSuperadmin && (
+              <Button 
+                variant="outline" 
+                onClick={() => setLocation('/admin-users')}
+                data-testid="button-admin-users"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Equipo
+              </Button>
+            )}
             <div className="text-right">
               <p className="text-sm font-medium">{user.fullName}</p>
               <p className="text-xs text-gray-600 dark:text-gray-400">{user.email}</p>
@@ -119,6 +161,58 @@ export default function AdminLaunch() {
           </div>
         </div>
       </header>
+
+      {/* Unassigned Requests for Simplificadores */}
+      {!isSuperadmin && unassignedRequests && unassignedRequests.length > 0 && (
+        <div className="p-6 pb-0">
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+            <h3 className="font-semibold text-lg mb-3 text-yellow-900 dark:text-yellow-100">
+              Solicitudes Disponibles ({unassignedRequests.length})
+            </h3>
+            <p className="text-sm text-yellow-800 dark:text-yellow-200 mb-3">
+              Estas solicitudes están sin asignar. Haz clic en "Tomar" para asignártela.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {unassignedRequests.map((request) => (
+                <Card key={request.id} data-testid={`card-unassigned-${request.id}`}>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm">{request.fullName || 'Sin nombre'}</CardTitle>
+                    <CardDescription className="text-xs truncate">
+                      {request.personalEmail || 'Sin email'}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      size="sm" 
+                      className="w-full"
+                      onClick={async () => {
+                        try {
+                          await apiRequest("PATCH", `/api/admin/requests/${request.id}/assign`, { assignedTo: user.id });
+                          await queryClient.invalidateQueries({ queryKey: ["/api/admin/requests"] });
+                          await queryClient.invalidateQueries({ queryKey: ["/api/admin/unassigned"] });
+                          toast({
+                            title: "Solicitud asignada",
+                            description: "La solicitud ha sido asignada a ti",
+                          });
+                        } catch (error) {
+                          toast({
+                            title: "Error",
+                            description: "No se pudo asignar la solicitud",
+                            variant: "destructive",
+                          });
+                        }
+                      }}
+                      data-testid={`button-take-${request.id}`}
+                    >
+                      Tomar
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Kanban Board */}
       <div className="p-6">
@@ -140,48 +234,57 @@ export default function AdminLaunch() {
                     </CardContent>
                   </Card>
                 ) : (
-                  statusRequests.map((request) => (
-                    <Card 
-                      key={request.id} 
-                      className="cursor-pointer hover:shadow-md transition-shadow"
-                      onClick={() => setLocation(`/adminlaunch/${request.id}`)}
-                      data-testid={`card-request-${request.id}`}
-                    >
-                      <CardHeader className="pb-3">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1 min-w-0">
-                            <CardTitle className="text-base truncate">
-                              {request.fullName || 'Sin nombre'}
-                            </CardTitle>
-                            <CardDescription className="truncate">
-                              {request.personalEmail || 'Sin email'}
-                            </CardDescription>
+                  statusRequests.map((request) => {
+                    const assignedName = getAssignedName(request.assignedTo);
+                    return (
+                      <Card 
+                        key={request.id} 
+                        className="cursor-pointer hover:shadow-md transition-shadow"
+                        onClick={() => setLocation(`/adminlaunch/${request.id}`)}
+                        data-testid={`card-request-${request.id}`}
+                      >
+                        <CardHeader className="pb-3">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1 min-w-0">
+                              <CardTitle className="text-base truncate">
+                                {request.fullName || 'Sin nombre'}
+                              </CardTitle>
+                              <CardDescription className="truncate">
+                                {request.personalEmail || 'Sin email'}
+                              </CardDescription>
+                            </div>
+                            <Badge variant="outline" className="ml-2">
+                              Launch
+                            </Badge>
                           </div>
-                          <Badge variant="outline" className="ml-2">
-                            Launch
-                          </Badge>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="space-y-2">
-                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                          <FileText className="w-4 h-4" />
-                          <span>Paso {request.currentStep}/8</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                          <Calendar className="w-4 h-4" />
-                          <span>{new Date(request.createdAt).toLocaleDateString()}</span>
-                        </div>
-                        <div className="flex gap-2">
-                          <Badge variant={request.isFormComplete ? "default" : "secondary"} className="text-xs">
-                            {request.isFormComplete ? 'Completo' : 'Incompleto'}
-                          </Badge>
-                          <Badge variant={request.paymentStatus === 'completed' ? "default" : "secondary"} className="text-xs">
-                            {request.paymentStatus === 'completed' ? 'Pagado' : 'Sin pagar'}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          {assignedName && (
+                            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                              <Users className="w-4 h-4" />
+                              <span>{assignedName}</span>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                            <FileText className="w-4 h-4" />
+                            <span>Paso {request.currentStep}/8</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                            <Calendar className="w-4 h-4" />
+                            <span>{new Date(request.createdAt).toLocaleDateString()}</span>
+                          </div>
+                          <div className="flex gap-2 flex-wrap">
+                            <Badge variant={request.isFormComplete ? "default" : "secondary"} className="text-xs">
+                              {request.isFormComplete ? 'Completo' : 'Incompleto'}
+                            </Badge>
+                            <Badge variant={request.paymentStatus === 'completed' ? "default" : "secondary"} className="text-xs">
+                              {request.paymentStatus === 'completed' ? 'Pagado' : 'Sin pagar'}
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    );
+                  })
                 )}
               </div>
             </div>
