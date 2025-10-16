@@ -35,6 +35,8 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
   fullName: text("full_name").notNull(),
   role: text("role").notNull().default("client"), // client, simplificador, superadmin
+  resetToken: text("reset_token"), // Token para recuperación de contraseña
+  resetTokenExpiry: timestamp("reset_token_expiry"), // Expiración del token
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
