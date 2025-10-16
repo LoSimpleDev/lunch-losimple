@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useRoute } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, User, Mail, Phone } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, User, Mail, Phone, Save } from "lucide-react";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface RequestDetail {
   request: any;
@@ -16,10 +20,34 @@ interface RequestDetail {
 export default function AdminRequestDetail() {
   const [, setLocation] = useLocation();
   const [match, params] = useRoute("/adminlaunch/:id");
+  const { toast } = useToast();
+  const [editedSteps, setEditedSteps] = useState<any>({});
   
   const { data, isLoading } = useQuery<RequestDetail>({
     queryKey: [`/api/admin/requests/${params?.id}`],
     enabled: !!params?.id,
+  });
+
+  const updateProgressMutation = useMutation({
+    mutationFn: async (updates: any) => {
+      const res = await apiRequest("PATCH", `/api/admin/progress/${params?.id}`, updates);
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/admin/requests/${params?.id}`] });
+      toast({
+        title: "Actualizado",
+        description: "El progreso se ha actualizado correctamente",
+      });
+      setEditedSteps({});
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Error al actualizar progreso",
+        variant: "destructive",
+      });
+    }
   });
 
   if (isLoading) {
@@ -111,24 +139,114 @@ export default function AdminRequestDetail() {
 
           {data.progress && (
             <Card>
-              <CardHeader>
-                <CardTitle>Progreso de Entregas</CardTitle>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Progreso de Entregas</CardTitle>
+                  <CardDescription>Actualiza el paso actual y siguiente para cada deliverable</CardDescription>
+                </div>
+                <Button 
+                  onClick={() => updateProgressMutation.mutate(editedSteps)}
+                  disabled={Object.keys(editedSteps).length === 0 || updateProgressMutation.isPending}
+                  data-testid="button-save-progress"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  {updateProgressMutation.isPending ? "Guardando..." : "Guardar Cambios"}
+                </Button>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
+                <div className="space-y-6">
                   {[
-                    { name: 'Logo', status: data.progress.logoStatus, progress: data.progress.logoProgress },
-                    { name: 'Sitio Web', status: data.progress.websiteStatus, progress: data.progress.websiteProgress },
-                    { name: 'Redes Sociales', status: data.progress.socialMediaStatus, progress: data.progress.socialMediaProgress },
-                    { name: 'Compañía', status: data.progress.companyStatus, progress: data.progress.companyProgress },
-                    { name: 'Facturación', status: data.progress.invoicingStatus, progress: data.progress.invoicingProgress },
-                    { name: 'Firma', status: data.progress.signatureStatus, progress: data.progress.signatureProgress },
+                    { 
+                      name: 'Logo', 
+                      status: data.progress.logoStatus, 
+                      progress: data.progress.logoProgress,
+                      currentStepKey: 'logoCurrentStep',
+                      nextStepKey: 'logoNextStep',
+                      currentStep: data.progress.logoCurrentStep,
+                      nextStep: data.progress.logoNextStep
+                    },
+                    { 
+                      name: 'Sitio Web', 
+                      status: data.progress.websiteStatus, 
+                      progress: data.progress.websiteProgress,
+                      currentStepKey: 'websiteCurrentStep',
+                      nextStepKey: 'websiteNextStep',
+                      currentStep: data.progress.websiteCurrentStep,
+                      nextStep: data.progress.websiteNextStep
+                    },
+                    { 
+                      name: 'Redes Sociales', 
+                      status: data.progress.socialMediaStatus, 
+                      progress: data.progress.socialMediaProgress,
+                      currentStepKey: 'socialMediaCurrentStep',
+                      nextStepKey: 'socialMediaNextStep',
+                      currentStep: data.progress.socialMediaCurrentStep,
+                      nextStep: data.progress.socialMediaNextStep
+                    },
+                    { 
+                      name: 'Compañía', 
+                      status: data.progress.companyStatus, 
+                      progress: data.progress.companyProgress,
+                      currentStepKey: 'companyCurrentStep',
+                      nextStepKey: 'companyNextStep',
+                      currentStep: data.progress.companyCurrentStep,
+                      nextStep: data.progress.companyNextStep
+                    },
+                    { 
+                      name: 'Facturación', 
+                      status: data.progress.invoicingStatus, 
+                      progress: data.progress.invoicingProgress,
+                      currentStepKey: 'invoicingCurrentStep',
+                      nextStepKey: 'invoicingNextStep',
+                      currentStep: data.progress.invoicingCurrentStep,
+                      nextStep: data.progress.invoicingNextStep
+                    },
+                    { 
+                      name: 'Firma', 
+                      status: data.progress.signatureStatus, 
+                      progress: data.progress.signatureProgress,
+                      currentStepKey: 'signatureCurrentStep',
+                      nextStepKey: 'signatureNextStep',
+                      currentStep: data.progress.signatureCurrentStep,
+                      nextStep: data.progress.signatureNextStep
+                    },
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <span className="text-sm">{item.name}</span>
-                      <Badge variant={item.status === 'completed' ? 'default' : 'secondary'}>
-                        {item.status || 'pending'}
-                      </Badge>
+                    <div key={index} className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-medium">{item.name}</h4>
+                        <Badge variant={item.status === 'completed' ? 'default' : 'secondary'}>
+                          {item.status || 'pending'} - {item.progress || 0}%
+                        </Badge>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor={`${item.currentStepKey}-${index}`}>Paso Actual</Label>
+                          <Input
+                            id={`${item.currentStepKey}-${index}`}
+                            value={editedSteps[item.currentStepKey] ?? item.currentStep ?? ''}
+                            onChange={(e) => setEditedSteps({
+                              ...editedSteps,
+                              [item.currentStepKey]: e.target.value
+                            })}
+                            placeholder="Describe el paso actual..."
+                            data-testid={`input-${item.currentStepKey}`}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor={`${item.nextStepKey}-${index}`}>Paso Siguiente</Label>
+                          <Input
+                            id={`${item.nextStepKey}-${index}`}
+                            value={editedSteps[item.nextStepKey] ?? item.nextStep ?? ''}
+                            onChange={(e) => setEditedSteps({
+                              ...editedSteps,
+                              [item.nextStepKey]: e.target.value
+                            })}
+                            placeholder="Describe el paso siguiente..."
+                            data-testid={`input-${item.nextStepKey}`}
+                          />
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
