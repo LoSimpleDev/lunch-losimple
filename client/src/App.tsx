@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/contexts/CartContext";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import Home from "@/pages/Home";
 import Checkout from "@/pages/Checkout";
 import PaymentSuccess from "@/pages/PaymentSuccess";
@@ -50,6 +51,7 @@ function App() {
           <Header />
           <Toaster />
           <Router />
+          <Footer />
         </CartProvider>
       </TooltipProvider>
     </QueryClientProvider>
