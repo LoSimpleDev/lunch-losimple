@@ -591,6 +591,96 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // POST /auth/forgot-password - Request password reset
+  api.post("/auth/forgot-password", async (req, res) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: 'Email es requerido' });
+      }
+      
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        // Por seguridad, no revelamos si el email existe
+        return res.json({ message: 'Si el email existe, recibirás instrucciones para resetear tu contraseña' });
+      }
+      
+      // Generate reset token (6 digit code)
+      const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
+      const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutos
+      
+      await storage.updateUser(user.id, {
+        resetToken,
+        resetTokenExpiry
+      });
+      
+      // TODO: Send email with token
+      // Por ahora solo lo mostramos en consola para desarrollo
+      console.log('='.repeat(50));
+      console.log('CÓDIGO DE RECUPERACIÓN DE CONTRASEÑA');
+      console.log('='.repeat(50));
+      console.log(`Email: ${email}`);
+      console.log(`Código: ${resetToken}`);
+      console.log(`Expira en: 15 minutos`);
+      console.log('='.repeat(50));
+      
+      res.json({ 
+        message: 'Si el email existe, recibirás instrucciones para resetear tu contraseña',
+        // En desarrollo, devolvemos el token
+        ...(process.env.NODE_ENV === 'development' && { resetToken })
+      });
+    } catch (error) {
+      console.error('Error forgot password:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /auth/reset-password - Reset password with token
+  api.post("/auth/reset-password", async (req, res) => {
+    try {
+      const { email, token, newPassword } = req.body;
+      
+      if (!email || !token || !newPassword) {
+        return res.status(400).json({ error: 'Email, token y nueva contraseña son requeridos' });
+      }
+      
+      if (newPassword.length < 8) {
+        return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres' });
+      }
+      
+      const user = await storage.getUserByEmail(email);
+      if (!user || !user.resetToken || !user.resetTokenExpiry) {
+        return res.status(400).json({ error: 'Token inválido o expirado' });
+      }
+      
+      // Verify token
+      if (user.resetToken !== token) {
+        return res.status(400).json({ error: 'Token inválido o expirado' });
+      }
+      
+      // Check expiry
+      if (new Date() > new Date(user.resetTokenExpiry)) {
+        return res.status(400).json({ error: 'Token inválido o expirado' });
+      }
+      
+      // Hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      
+      // Update password and clear reset token
+      await storage.updateUser(user.id, {
+        password: hashedPassword,
+        resetToken: null,
+        resetTokenExpiry: null
+      });
+      
+      res.json({ message: 'Contraseña actualizada exitosamente' });
+    } catch (error) {
+      console.error('Error reset password:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
   // ============ LAUNCH REQUEST ROUTES ============
   
   // GET /launch/my-request - Get current user's launch request
