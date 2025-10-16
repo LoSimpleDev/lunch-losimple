@@ -192,6 +192,17 @@ export const adminNotes = pgTable("admin_notes", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+export const teamMessages = pgTable("team_messages", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  launchRequestId: varchar("launch_request_id").notNull().references(() => launchRequests.id),
+  message: text("message").notNull(),
+  senderRole: text("sender_role").notNull(), // "admin" or "client"
+  senderName: text("sender_name").notNull(),
+  clientResponse: text("client_response"),
+  isResolved: boolean("is_resolved").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Schemas for existing marketplace
 export const insertServiceSchema = createInsertSchema(services).omit({
   id: true,
@@ -233,6 +244,11 @@ export const insertAdminNoteSchema = createInsertSchema(adminNotes).omit({
   createdAt: true,
 });
 
+export const insertTeamMessageSchema = createInsertSchema(teamMessages).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types for existing marketplace
 export type Service = typeof services.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
@@ -250,3 +266,5 @@ export type Document = typeof documents.$inferSelect;
 export type InsertDocument = z.infer<typeof insertDocumentSchema>;
 export type AdminNote = typeof adminNotes.$inferSelect;
 export type InsertAdminNote = z.infer<typeof insertAdminNoteSchema>;
+export type TeamMessage = typeof teamMessages.$inferSelect;
+export type InsertTeamMessage = z.infer<typeof insertTeamMessageSchema>;

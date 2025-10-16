@@ -5,7 +5,8 @@ import {
   type LaunchRequest, type InsertLaunchRequest,
   type LaunchProgress, type InsertLaunchProgress,
   type Document, type InsertDocument,
-  type AdminNote, type InsertAdminNote
+  type AdminNote, type InsertAdminNote,
+  type TeamMessage, type InsertTeamMessage
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -50,6 +51,11 @@ export interface IStorage {
   // Admin Notes
   getNotesByLaunchRequest(launchRequestId: string): Promise<AdminNote[]>;
   createAdminNote(note: InsertAdminNote): Promise<AdminNote>;
+  
+  // Team Messages
+  getMessagesByLaunchRequest(launchRequestId: string): Promise<TeamMessage[]>;
+  createTeamMessage(message: InsertTeamMessage): Promise<TeamMessage>;
+  updateTeamMessage(id: string, message: Partial<InsertTeamMessage>): Promise<TeamMessage | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -60,6 +66,7 @@ export class MemStorage implements IStorage {
   private launchProgress: Map<string, LaunchProgress>;
   private documents: Map<string, Document>;
   private adminNotes: Map<string, AdminNote>;
+  private teamMessages: Map<string, TeamMessage>;
 
   constructor() {
     this.services = new Map();
@@ -69,6 +76,7 @@ export class MemStorage implements IStorage {
     this.launchProgress = new Map();
     this.documents = new Map();
     this.adminNotes = new Map();
+    this.teamMessages = new Map();
     this.initializeServices();
   }
 
@@ -264,6 +272,33 @@ export class MemStorage implements IStorage {
     } as AdminNote;
     this.adminNotes.set(id, note);
     return note;
+  }
+
+  // Team Messages methods
+  async getMessagesByLaunchRequest(launchRequestId: string): Promise<TeamMessage[]> {
+    return Array.from(this.teamMessages.values())
+      .filter(msg => msg.launchRequestId === launchRequestId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async createTeamMessage(insertMessage: InsertTeamMessage): Promise<TeamMessage> {
+    const id = randomUUID();
+    const message: TeamMessage = {
+      ...insertMessage,
+      id,
+      createdAt: new Date()
+    } as TeamMessage;
+    this.teamMessages.set(id, message);
+    return message;
+  }
+
+  async updateTeamMessage(id: string, messageUpdate: Partial<InsertTeamMessage>): Promise<TeamMessage | undefined> {
+    const existing = this.teamMessages.get(id);
+    if (!existing) return undefined;
+    
+    const updated = { ...existing, ...messageUpdate } as TeamMessage;
+    this.teamMessages.set(id, updated);
+    return updated;
   }
 
   // Initialize with sample services based on sasecuador.com
