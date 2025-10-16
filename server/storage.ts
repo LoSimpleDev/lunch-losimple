@@ -29,6 +29,7 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: string, user: Partial<InsertUser>): Promise<User | undefined>;
+  getTeamUsers(): Promise<User[]>; // Get all simplificador and superadmin users
   
   // Launch Requests
   getAllLaunchRequests(): Promise<LaunchRequest[]>;
@@ -37,6 +38,8 @@ export interface IStorage {
   createLaunchRequest(request: InsertLaunchRequest): Promise<LaunchRequest>;
   updateLaunchRequest(id: string, request: Partial<InsertLaunchRequest>): Promise<LaunchRequest | undefined>;
   getLaunchRequestsByStatus(status: string): Promise<LaunchRequest[]>;
+  getLaunchRequestsByAssignedTo(userId: string): Promise<LaunchRequest[]>; // Get requests assigned to user
+  getUnassignedLaunchRequests(): Promise<LaunchRequest[]>; // Get unassigned requests
   
   // Launch Progress
   getLaunchProgress(launchRequestId: string): Promise<LaunchProgress | undefined>;
@@ -167,6 +170,12 @@ export class MemStorage implements IStorage {
     return updated;
   }
 
+  async getTeamUsers(): Promise<User[]> {
+    return Array.from(this.users.values()).filter(user => 
+      user.role === 'simplificador' || user.role === 'superadmin'
+    );
+  }
+
   // Launch Requests methods
   async getAllLaunchRequests(): Promise<LaunchRequest[]> {
     return Array.from(this.launchRequests.values());
@@ -222,6 +231,14 @@ export class MemStorage implements IStorage {
 
   async getLaunchRequestsByStatus(status: string): Promise<LaunchRequest[]> {
     return Array.from(this.launchRequests.values()).filter(req => req.adminStatus === status);
+  }
+
+  async getLaunchRequestsByAssignedTo(userId: string): Promise<LaunchRequest[]> {
+    return Array.from(this.launchRequests.values()).filter(req => req.assignedTo === userId);
+  }
+
+  async getUnassignedLaunchRequests(): Promise<LaunchRequest[]> {
+    return Array.from(this.launchRequests.values()).filter(req => !req.assignedTo);
   }
 
   // Launch Progress methods
