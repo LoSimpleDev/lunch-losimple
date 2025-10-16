@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -51,9 +52,21 @@ interface LaunchProgress {
   signatureNextStep?: string;
 }
 
+interface TeamMessage {
+  id: string;
+  launchRequestId: string;
+  message: string;
+  senderRole: string;
+  senderName: string;
+  clientResponse?: string;
+  isResolved: boolean;
+  createdAt: string;
+}
+
 export default function Dashboard() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const [responses, setResponses] = useState<{ [key: string]: string }>({});
 
   // Fetch user session
   const { data: sessionData, isLoading: isLoadingSession } = useQuery<{ user: User }>({
@@ -69,6 +82,12 @@ export default function Dashboard() {
   // Fetch launch progress
   const { data: progress } = useQuery<LaunchProgress>({
     queryKey: ["/api/launch/progress"],
+    enabled: !!launchRequest?.isStarted,
+  });
+  
+  // Fetch team messages
+  const { data: messages = [] } = useQuery<TeamMessage[]>({
+    queryKey: ["/api/launch/messages"],
     enabled: !!launchRequest?.isStarted,
   });
 
@@ -110,6 +129,49 @@ export default function Dashboard() {
       });
     }
   };
+  
+  const respondMutation = useMutation({
+    mutationFn: async ({ messageId, response }: { messageId: string; response: string }) => {
+      const res = await apiRequest("PATCH", `/api/messages/${messageId}/respond`, { response });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/launch/messages"] });
+      toast({
+        title: "Respuesta enviada",
+        description: "Tu respuesta ha sido registrada",
+      });
+      setResponses({});
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Error al enviar respuesta",
+        variant: "destructive",
+      });
+    }
+  });
+  
+  const resolveMutation = useMutation({
+    mutationFn: async ({ messageId, isResolved }: { messageId: string; isResolved: boolean }) => {
+      const res = await apiRequest("PATCH", `/api/messages/${messageId}/resolve`, { isResolved });
+      return res.json();
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/launch/messages"] });
+      toast({
+        title: variables.isResolved ? "Marcado como resuelto" : "Marcado como pendiente",
+        description: "El estado del mensaje ha sido actualizado",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Error al actualizar el estado",
+        variant: "destructive",
+      });
+    }
+  });
 
   if (isLoadingSession || isLoadingRequest) {
     return (
@@ -389,6 +451,101 @@ export default function Dashboard() {
                       </div>
                     ))}
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* Mensajes del Equipo Lo Simple */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <MessageSquare className="w-5 h-5" />
+                    Mensajes del Equipo Lo Simple
+                  </CardTitle>
+                  <CardDescription>
+                    Comunicación directa con el equipo de Lo Simple
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {messages.length > 0 ? (
+                    <div className="space-y-4">
+                      {messages.map((msg) => (
+                        <div 
+                          key={msg.id} 
+                          className={`border rounded-lg p-4 ${msg.isResolved ? 'bg-gray-50 dark:bg-gray-800' : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'}`}
+                          data-testid={`message-${msg.id}`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-medium text-sm">{msg.senderName}</span>
+                                <Badge variant={msg.senderRole === 'admin' ? 'default' : 'secondary'} className="text-xs">
+                                  {msg.senderRole === 'admin' ? 'Equipo' : 'Tú'}
+                                </Badge>
+                              </div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">
+                                {new Date(msg.createdAt).toLocaleDateString('es-EC', { 
+                                  year: 'numeric', 
+                                  month: 'long', 
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </p>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant={msg.isResolved ? "outline" : "default"}
+                              onClick={() => resolveMutation.mutate({ messageId: msg.id, isResolved: !msg.isResolved })}
+                              disabled={resolveMutation.isPending}
+                              data-testid={`button-resolve-${msg.id}`}
+                            >
+                              <Check className="w-4 h-4 mr-1" />
+                              {msg.isResolved ? 'Resuelto' : 'Marcar resuelto'}
+                            </Button>
+                          </div>
+                          
+                          <p className="text-sm mb-3 whitespace-pre-wrap">{msg.message}</p>
+                          
+                          {msg.clientResponse && (
+                            <div className="bg-white dark:bg-gray-700 rounded p-3 mb-3 border-l-4 border-primary">
+                              <p className="text-xs font-medium mb-1 text-gray-500 dark:text-gray-400">Tu respuesta:</p>
+                              <p className="text-sm">{msg.clientResponse}</p>
+                            </div>
+                          )}
+                          
+                          {!msg.clientResponse && !msg.isResolved && (
+                            <div className="space-y-2">
+                              <Textarea
+                                value={responses[msg.id] || ''}
+                                onChange={(e) => setResponses({ ...responses, [msg.id]: e.target.value })}
+                                placeholder="Escribe tu respuesta..."
+                                className="text-sm"
+                                rows={2}
+                                data-testid={`textarea-response-${msg.id}`}
+                              />
+                              <Button 
+                                size="sm" 
+                                onClick={() => {
+                                  if (responses[msg.id]?.trim()) {
+                                    respondMutation.mutate({ messageId: msg.id, response: responses[msg.id] });
+                                  }
+                                }}
+                                disabled={!responses[msg.id]?.trim() || respondMutation.isPending}
+                                data-testid={`button-send-response-${msg.id}`}
+                              >
+                                <Send className="w-4 h-4 mr-2" />
+                                Enviar respuesta
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-600 dark:text-gray-400" data-testid="text-no-messages">
+                      No hay mensajes del equipo aún
+                    </p>
+                  )}
                 </CardContent>
               </Card>
 
