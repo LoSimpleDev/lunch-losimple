@@ -202,6 +202,21 @@ export class MemStorage implements IStorage {
       updatedAt: new Date()
     } as LaunchRequest;
     this.launchRequests.set(id, updated);
+    
+    // Create sample message when isStarted changes to true if no messages exist
+    if (requestUpdate.isStarted === true && !existing.isStarted) {
+      const existingMessages = await this.getMessagesByLaunchRequest(id);
+      if (existingMessages.length === 0) {
+        await this.createTeamMessage({
+          launchRequestId: id,
+          message: `Hola ${updated.fullName || 'estimado cliente'},\n\nNos complace informarte que tu solicitud de constitución de empresa está en proceso. Te convocamos a una reunión virtual para la firma de documentos:\n\n📅 Fecha: Jueves, 20 de octubre de 2025\n🕐 Hora: 10:00 AM (hora de Ecuador)\n📍 Plataforma: Zoom (enlace será enviado 24h antes)\n\nEn esta reunión:\n✓ Firmarás digitalmente el acto constitutivo\n✓ Revisaremos los documentos finales\n✓ Resolveremos cualquier duda que tengas\n\nPor favor, confirma tu asistencia respondiendo a este mensaje.\n\nSaludos cordiales,\nEquipo Lo Simple`,
+          senderRole: 'admin',
+          senderName: 'Equipo Lo Simple',
+          isResolved: false
+        });
+      }
+    }
+    
     return updated;
   }
 
