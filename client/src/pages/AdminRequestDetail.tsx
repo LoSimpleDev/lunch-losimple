@@ -144,30 +144,6 @@ export default function AdminRequestDetail() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-medium mb-2 text-sm">Cédulas de accionistas</h4>
-                {request.shareholderIdUrls && request.shareholderIdUrls.length > 0 ? (
-                  <div className="space-y-1">
-                    {request.shareholderIdUrls.map((url: string, index: number) => (
-                      <div key={index} className="flex items-center gap-2 text-sm">
-                        <span className="text-gray-500">{index + 1}.</span>
-                        <a 
-                          href={url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-blue-600 dark:text-blue-400 hover:underline truncate"
-                          data-testid={`link-shareholder-id-${index}`}
-                        >
-                          {url}
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-sm text-gray-500" data-testid="text-no-shareholder-ids">No se han cargado cédulas</p>
-                )}
-              </div>
-
-              <div>
                 <h4 className="font-medium mb-2 text-sm">Pago de servicio básico</h4>
                 {request.utilityBillUrl ? (
                   <a 
@@ -183,6 +159,55 @@ export default function AdminRequestDetail() {
                   <p className="text-sm text-gray-500" data-testid="text-no-utility-bill">No se ha cargado documento</p>
                 )}
               </div>
+
+              {request.numberOfShareholders > 1 && (
+                <div>
+                  <h4 className="font-medium mb-3 text-sm">Accionistas ({request.numberOfShareholders})</h4>
+                  {request.shareholders && request.shareholders.length > 0 ? (
+                    <div className="space-y-3">
+                      {request.shareholders.map((shareholder: any, index: number) => (
+                        <div key={index} className="border rounded-lg p-3 space-y-2">
+                          <div className="flex items-center justify-between">
+                            <p className="font-medium text-sm">{shareholder.fullName || `Accionista ${index + 1}`}</p>
+                            <span className="text-xs text-gray-500">{shareholder.participation}%</span>
+                          </div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                            <p>Cédula: {shareholder.idNumber || 'No proporcionado'}</p>
+                            {shareholder.email && <p>Email: {shareholder.email}</p>}
+                            {shareholder.phone && <p>Teléfono: {shareholder.phone}</p>}
+                          </div>
+                          <div className="flex gap-2 pt-2">
+                            {shareholder.idCardUrl && (
+                              <a 
+                                href={shareholder.idCardUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                data-testid={`link-shareholder-id-card-${index}`}
+                              >
+                                Ver cédula
+                              </a>
+                            )}
+                            {shareholder.votingCardUrl && (
+                              <a 
+                                href={shareholder.votingCardUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                data-testid={`link-shareholder-voting-card-${index}`}
+                              >
+                                Ver papeleta
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500" data-testid="text-no-shareholders">No se ha cargado información de accionistas</p>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
 
