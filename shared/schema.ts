@@ -50,17 +50,17 @@ export const launchRequests = pgTable("launch_requests", {
   address: text("address"),
   province: text("province"),
   canton: text("canton"),
-  hasPartners: boolean("has_partners"),
+  numberOfShareholders: integer("number_of_shareholders"), // Número total de accionistas
   
-  // Step 3: Partners data (JSON array)
-  partners: json("partners").$type<Array<{
+  // Step 3: Shareholders data (JSON array)
+  shareholders: json("shareholders").$type<Array<{
     fullName: string;
     idNumber: string;
     participation: number;
     email: string;
     phone: string;
-    idFrontUrl?: string;
-    idBackUrl?: string;
+    idCardUrl?: string; // Cédula
+    votingCardUrl?: string; // Papeleta de votación
   }>>(),
   
   // Step 4: Company data
@@ -79,8 +79,7 @@ export const launchRequests = pgTable("launch_requests", {
   externalRepId: text("external_rep_id"),
   externalRepEmail: text("external_rep_email"),
   externalRepPhone: text("external_rep_phone"),
-  // Company documents
-  shareholderIdUrls: text("shareholder_id_urls").array(), // Cédulas de accionistas
+  // Company documents  
   utilityBillUrl: text("utility_bill_url"), // Pago de servicio básico
   
   // Step 5: Visual identity

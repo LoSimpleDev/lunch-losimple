@@ -29,13 +29,15 @@ interface LaunchRequest {
   address?: string;
   province?: string;
   canton?: string;
-  hasPartners?: boolean;
-  partners?: Array<{
+  numberOfShareholders?: number;
+  shareholders?: Array<{
     fullName: string;
     idNumber: string;
     participation: number;
     email: string;
     phone: string;
+    idCardUrl?: string;
+    votingCardUrl?: string;
   }>;
   companyName1?: string;
   companyName2?: string;
@@ -100,8 +102,8 @@ export default function LaunchForm() {
   });
 
   const [formData, setFormData] = useState<any>({
-    hasPartners: false,
-    partners: [],
+    numberOfShareholders: 1,
+    shareholders: [],
     secondaryActivities: [],
     shareDistribution: [],
     personalityWords: [],
@@ -154,12 +156,12 @@ export default function LaunchForm() {
     if (!formData.province) missing.push("Provincia");
     if (!formData.canton) missing.push("Cantón");
     
-    // Paso 3: Documentos (solo si tiene socios)
-    if (formData.hasPartners) {
-      if (!formData.shareholderIdUrls || formData.shareholderIdUrls.length === 0) {
-        missing.push("Enlaces a cédulas de accionistas");
-      }
-      if (!formData.utilityBillUrl) missing.push("Enlace a pago de servicio básico");
+    // Paso 3: Documentos (siempre requerido)
+    if (!formData.utilityBillUrl) missing.push("Enlace a pago de servicio básico");
+    
+    const numShareholders = parseInt(formData.numberOfShareholders) || 1;
+    if (numShareholders > 1 && (!formData.shareholders || formData.shareholders.length === 0)) {
+      missing.push("Información de accionistas");
     }
     
     // Paso 4: Datos de empresa
@@ -434,147 +436,30 @@ export default function LaunchForm() {
             </div>
 
             <div className="space-y-2 pt-4">
-              <Label>¿Tendrás socios en tu empresa? *</Label>
-              <RadioGroup value={formData.hasPartners ? "yes" : "no"} onValueChange={(value) => updateFormData("hasPartners", value === "yes")}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="hasPartners-yes" data-testid="radio-partners-yes" />
-                  <Label htmlFor="hasPartners-yes">Sí, tendré socios</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="hasPartners-no" data-testid="radio-partners-no" />
-                  <Label htmlFor="hasPartners-no">No, seré el único accionista</Label>
-                </div>
-              </RadioGroup>
+              <Label htmlFor="numberOfShareholders">¿Cuántos accionistas son en total? (incluyéndote) *</Label>
+              <Input
+                id="numberOfShareholders"
+                type="number"
+                min="1"
+                value={formData.numberOfShareholders || 1}
+                onChange={(e) => updateFormData("numberOfShareholders", e.target.value)}
+                placeholder="1"
+                data-testid="input-number-of-shareholders"
+              />
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Si eres el único accionista, ingresa 1. Si hay más accionistas, indica el número total.
+              </p>
             </div>
           </div>
         );
 
       case 3:
-        if (!formData.hasPartners) {
-          return (
-            <div className="text-center py-8">
-              <p className="text-gray-600 dark:text-gray-400">No necesitas agregar socios. Continúa al siguiente paso.</p>
-            </div>
-          );
-        }
+        const numShareholders = parseInt(formData.numberOfShareholders) || 1;
+        const hasMultipleShareholders = numShareholders > 1;
         
         return (
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="font-semibold text-gray-900 dark:text-white">Información de socios</h3>
-              <Button
-                type="button"
-                onClick={() => {
-                  const partners = formData.partners || [];
-                  updateFormData("partners", [...partners, { fullName: "", idNumber: "", participation: 0, email: "", phone: "" }]);
-                }}
-                size="sm"
-                data-testid="button-add-partner"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Agregar socio
-              </Button>
-            </div>
-
-            {(formData.partners || []).map((partner: any, index: number) => (
-              <Card key={index}>
-                <CardContent className="pt-6">
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <h4 className="font-medium">Socio {index + 1}</h4>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          const partners = [...(formData.partners || [])];
-                          partners.splice(index, 1);
-                          updateFormData("partners", partners);
-                        }}
-                        data-testid={`button-remove-partner-${index}`}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label>Nombre completo</Label>
-                        <Input
-                          value={partner.fullName || ""}
-                          onChange={(e) => {
-                            const partners = [...(formData.partners || [])];
-                            partners[index].fullName = e.target.value;
-                            updateFormData("partners", partners);
-                          }}
-                          placeholder="Nombre del socio"
-                          data-testid={`input-partner-name-${index}`}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Cédula</Label>
-                        <Input
-                          value={partner.idNumber || ""}
-                          onChange={(e) => {
-                            const partners = [...(formData.partners || [])];
-                            partners[index].idNumber = e.target.value;
-                            updateFormData("partners", partners);
-                          }}
-                          placeholder="1234567890"
-                          data-testid={`input-partner-id-${index}`}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="space-y-2">
-                        <Label>Participación (%)</Label>
-                        <Input
-                          type="number"
-                          value={partner.participation || ""}
-                          onChange={(e) => {
-                            const partners = [...(formData.partners || [])];
-                            partners[index].participation = parseFloat(e.target.value);
-                            updateFormData("partners", partners);
-                          }}
-                          placeholder="50"
-                          data-testid={`input-partner-participation-${index}`}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Email</Label>
-                        <Input
-                          type="email"
-                          value={partner.email || ""}
-                          onChange={(e) => {
-                            const partners = [...(formData.partners || [])];
-                            partners[index].email = e.target.value;
-                            updateFormData("partners", partners);
-                          }}
-                          placeholder="socio@email.com"
-                          data-testid={`input-partner-email-${index}`}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Teléfono</Label>
-                        <Input
-                          value={partner.phone || ""}
-                          onChange={(e) => {
-                            const partners = [...(formData.partners || [])];
-                            partners[index].phone = e.target.value;
-                            updateFormData("partners", partners);
-                          }}
-                          placeholder="0999123456"
-                          data-testid={`input-partner-phone-${index}`}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-
-            <Card className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+            <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
               <CardHeader>
                 <CardTitle className="text-base">Documentación Requerida</CardTitle>
                 <CardDescription>
@@ -582,20 +467,6 @@ export default function LaunchForm() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="shareholderIdUrls">Enlaces a cédulas de accionistas *</Label>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                    Sube las cédulas a Google Drive, Dropbox u otro servicio y pega los enlaces aquí (separados por coma).
-                  </p>
-                  <Input
-                    id="shareholderIdUrls"
-                    value={(formData.shareholderIdUrls || []).join(", ")}
-                    onChange={(e) => updateFormData("shareholderIdUrls", e.target.value.split(",").map((url: string) => url.trim()).filter((url: string) => url))}
-                    placeholder="https://drive.google.com/... , https://dropbox.com/..."
-                    data-testid="input-shareholder-ids"
-                  />
-                </div>
-
                 <div className="space-y-2">
                   <Label htmlFor="utilityBillUrl">Enlace a pago de servicio básico *</Label>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
@@ -617,6 +488,153 @@ export default function LaunchForm() {
                 </div>
               </CardContent>
             </Card>
+
+            {hasMultipleShareholders && (
+              <>
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Información de accionistas</h3>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      const shareholders = formData.shareholders || [];
+                      updateFormData("shareholders", [...shareholders, { fullName: "", idNumber: "", participation: 0, email: "", phone: "", idCardUrl: "", votingCardUrl: "" }]);
+                    }}
+                    size="sm"
+                    data-testid="button-add-shareholder"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Agregar accionista
+                  </Button>
+                </div>
+
+                {(formData.shareholders || []).map((shareholder: any, index: number) => (
+                  <Card key={index}>
+                    <CardContent className="pt-6">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center mb-2">
+                          <h4 className="font-medium">Accionista {index + 1}</h4>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              const shareholders = [...(formData.shareholders || [])];
+                              shareholders.splice(index, 1);
+                              updateFormData("shareholders", shareholders);
+                            }}
+                            data-testid={`button-remove-shareholder-${index}`}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label>Nombre completo</Label>
+                            <Input
+                              value={shareholder.fullName || ""}
+                              onChange={(e) => {
+                                const shareholders = [...(formData.shareholders || [])];
+                                shareholders[index].fullName = e.target.value;
+                                updateFormData("shareholders", shareholders);
+                              }}
+                              placeholder="Nombre del accionista"
+                              data-testid={`input-shareholder-name-${index}`}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Cédula</Label>
+                            <Input
+                              value={shareholder.idNumber || ""}
+                              onChange={(e) => {
+                                const shareholders = [...(formData.shareholders || [])];
+                                shareholders[index].idNumber = e.target.value;
+                                updateFormData("shareholders", shareholders);
+                              }}
+                              placeholder="1234567890"
+                              data-testid={`input-shareholder-id-${index}`}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="space-y-2">
+                            <Label>Participación (%)</Label>
+                            <Input
+                              type="number"
+                              value={shareholder.participation || ""}
+                              onChange={(e) => {
+                                const shareholders = [...(formData.shareholders || [])];
+                                shareholders[index].participation = parseFloat(e.target.value);
+                                updateFormData("shareholders", shareholders);
+                              }}
+                              placeholder="50"
+                              data-testid={`input-shareholder-participation-${index}`}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Email</Label>
+                            <Input
+                              type="email"
+                              value={shareholder.email || ""}
+                              onChange={(e) => {
+                                const shareholders = [...(formData.shareholders || [])];
+                                shareholders[index].email = e.target.value;
+                                updateFormData("shareholders", shareholders);
+                              }}
+                              placeholder="accionista@email.com"
+                              data-testid={`input-shareholder-email-${index}`}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Teléfono</Label>
+                            <Input
+                              value={shareholder.phone || ""}
+                              onChange={(e) => {
+                                const shareholders = [...(formData.shareholders || [])];
+                                shareholders[index].phone = e.target.value;
+                                updateFormData("shareholders", shareholders);
+                              }}
+                              placeholder="0999123456"
+                              data-testid={`input-shareholder-phone-${index}`}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                          <div className="space-y-2">
+                            <Label>Enlace a cédula *</Label>
+                            <Input
+                              value={shareholder.idCardUrl || ""}
+                              onChange={(e) => {
+                                const shareholders = [...(formData.shareholders || [])];
+                                shareholders[index].idCardUrl = e.target.value;
+                                updateFormData("shareholders", shareholders);
+                              }}
+                              placeholder="https://drive.google.com/..."
+                              data-testid={`input-shareholder-id-card-${index}`}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Enlace a papeleta de votación actualizada *</Label>
+                            <Input
+                              value={shareholder.votingCardUrl || ""}
+                              onChange={(e) => {
+                                const shareholders = [...(formData.shareholders || [])];
+                                shareholders[index].votingCardUrl = e.target.value;
+                                updateFormData("shareholders", shareholders);
+                              }}
+                              placeholder="https://drive.google.com/..."
+                              data-testid={`input-shareholder-voting-card-${index}`}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </>
+            )}
           </div>
         );
 
@@ -1143,17 +1161,17 @@ export default function LaunchForm() {
                 </CardContent>
               </Card>
 
-              {formData.hasPartners && formData.partners && formData.partners.length > 0 && (
+              {formData.shareholders && formData.shareholders.length > 0 && (
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-base">Socios</CardTitle>
+                    <CardTitle className="text-base">Accionistas</CardTitle>
                   </CardHeader>
                   <CardContent className="text-sm space-y-2">
-                    {formData.partners.map((partner: any, index: number) => (
+                    {formData.shareholders.map((shareholder: any, index: number) => (
                       <div key={index} className="border-l-2 border-primary pl-3">
-                        <p><strong>{partner.fullName}</strong></p>
-                        <p>Participación: {partner.participation}%</p>
-                        <p>Email: {partner.email}</p>
+                        <p><strong>{shareholder.fullName}</strong></p>
+                        <p>Participación: {shareholder.participation}%</p>
+                        <p>Email: {shareholder.email}</p>
                       </div>
                     ))}
                   </CardContent>
@@ -1187,14 +1205,12 @@ export default function LaunchForm() {
                   {formData.hasExternalRep && (
                     <p><strong>Rep. legal externo:</strong> {formData.externalRepName}</p>
                   )}
-                  {(formData.shareholderIdUrls && formData.shareholderIdUrls.length > 0) || formData.utilityBillUrl ? (
+                  {formData.utilityBillUrl ? (
                     <>
                       <p className="pt-2"><strong>Documentos:</strong></p>
-                      {formData.shareholderIdUrls && formData.shareholderIdUrls.length > 0 && (
-                        <p className="pl-4 text-xs">✓ {formData.shareholderIdUrls.length} cédula(s) de accionistas</p>
-                      )}
-                      {formData.utilityBillUrl && (
-                        <p className="pl-4 text-xs">✓ Pago de servicio básico</p>
+                      <p className="pl-4 text-xs">✓ Pago de servicio básico</p>
+                      {formData.shareholders && formData.shareholders.length > 0 && (
+                        <p className="pl-4 text-xs">✓ {formData.shareholders.length} accionista(s) con documentos</p>
                       )}
                     </>
                   ) : null}
@@ -1285,7 +1301,7 @@ export default function LaunchForm() {
             <CardTitle>
               {currentStep === 1 && "Bienvenida"}
               {currentStep === 2 && "Datos Personales"}
-              {currentStep === 3 && "Datos de Socios"}
+              {currentStep === 3 && "Documentación y Accionistas"}
               {currentStep === 4 && "Datos de la Compañía"}
               {currentStep === 5 && "Identidad Visual"}
               {currentStep === 6 && "Página Web"}
