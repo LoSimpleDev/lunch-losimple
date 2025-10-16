@@ -159,6 +159,11 @@ export default function Login() {
                   >
                     {isLoggingIn ? "Iniciando..." : "Iniciar Sesión"}
                   </Button>
+                  <div className="text-center">
+                    <Link href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" data-testid="link-forgot-password">
+                      ¿Olvidaste tu contraseña?
+                    </Link>
+                  </div>
                 </form>
               </TabsContent>
               

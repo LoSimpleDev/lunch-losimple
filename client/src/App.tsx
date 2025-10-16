@@ -20,6 +20,8 @@ import AdminLogin from "@/pages/AdminLogin";
 import AdminLaunch from "@/pages/AdminLaunch";
 import AdminRequestDetail from "@/pages/AdminRequestDetail";
 import AdminUsers from "@/pages/AdminUsers";
+import ForgotPassword from "@/pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -40,6 +42,8 @@ function Router() {
       <Route path="/adminlaunch/:id" component={AdminRequestDetail} />
       <Route path="/adminlaunch" component={AdminLaunch} />
       <Route path="/admin-users" component={AdminUsers} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/reset-password" component={ResetPassword} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
