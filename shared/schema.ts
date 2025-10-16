@@ -34,13 +34,14 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
   fullName: text("full_name").notNull(),
-  role: text("role").notNull().default("client"), // client or admin
+  role: text("role").notNull().default("client"), // client, simplificador, superadmin
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 export const launchRequests = pgTable("launch_requests", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").notNull().references(() => users.id),
+  assignedTo: varchar("assigned_to").references(() => users.id), // Usuario del equipo asignado
   
   // Step 2: Personal data
   fullName: text("full_name"),
