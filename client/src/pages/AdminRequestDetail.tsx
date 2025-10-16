@@ -7,9 +7,24 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, User, Mail, Phone, Save, MessageSquare, Send, Check } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowLeft, User, Mail, Phone, Save, MessageSquare, Send, Check, Users as UsersIcon } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+
+interface SessionUser {
+  id: string;
+  email: string;
+  fullName: string;
+  role: 'client' | 'simplificador' | 'superadmin';
+}
+
+interface TeamUser {
+  id: string;
+  email: string;
+  fullName: string;
+  role: 'simplificador' | 'superadmin';
+}
 
 interface RequestDetail {
   request: any;
@@ -35,6 +50,15 @@ export default function AdminRequestDetail() {
   const { toast } = useToast();
   const [editedSteps, setEditedSteps] = useState<any>({});
   const [newMessage, setNewMessage] = useState('');
+  
+  const { data: sessionData } = useQuery<{ user: SessionUser }>({
+    queryKey: ["/api/auth/session"],
+  });
+
+  const { data: teamUsers } = useQuery<TeamUser[]>({
+    queryKey: ["/api/admin/team"],
+    enabled: !!sessionData?.user && sessionData.user.role === 'superadmin',
+  });
   
   const { data, isLoading } = useQuery<RequestDetail>({
     queryKey: [`/api/admin/requests/${params?.id}`],
@@ -118,6 +142,28 @@ export default function AdminRequestDetail() {
     }
   });
 
+  const assignMutation = useMutation({
+    mutationFn: async (assignedTo: string | null) => {
+      const res = await apiRequest("PATCH", `/api/admin/requests/${params?.id}/assign`, { assignedTo });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/admin/requests/${params?.id}`] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/requests"] });
+      toast({
+        title: "Asignación actualizada",
+        description: "La solicitud ha sido reasignada correctamente",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Error al actualizar la asignación",
+        variant: "destructive",
+      });
+    }
+  });
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -137,6 +183,16 @@ export default function AdminRequestDetail() {
       </div>
     );
   }
+
+  const user = sessionData?.user;
+  const isSuperadmin = user?.role === 'superadmin';
+  
+  const getAssignedName = (assignedTo?: string) => {
+    if (!assignedTo) return 'Sin asignar';
+    if (assignedTo === user?.id) return 'Tú';
+    const assignee = teamUsers?.find(u => u.id === assignedTo);
+    return assignee?.fullName || 'Asignado';
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
@@ -170,6 +226,52 @@ export default function AdminRequestDetail() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Assignment section for superadmin */}
+              {isSuperadmin && (
+                <div className="pb-4 border-b">
+                  <Label className="text-sm font-medium mb-2 block">
+                    <UsersIcon className="w-4 h-4 inline mr-1" />
+                    Asignado a
+                  </Label>
+                  <div className="flex gap-2 items-center">
+                    <Select
+                      value={request.assignedTo || "unassigned"}
+                      onValueChange={(value) => {
+                        const assignedTo = value === "unassigned" ? null : value;
+                        assignMutation.mutate(assignedTo);
+                      }}
+                      disabled={assignMutation.isPending}
+                    >
+                      <SelectTrigger className="w-64" data-testid="select-assign">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="unassigned">Sin asignar</SelectItem>
+                        {teamUsers?.map((member) => (
+                          <SelectItem key={member.id} value={member.id}>
+                            {member.fullName} ({member.role === 'superadmin' ? 'Superadmin' : 'Simplificador'})
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      Actualmente: {getAssignedName(request.assignedTo)}
+                    </span>
+                  </div>
+                </div>
+              )}
+              
+              {/* Assignment display for simplificador */}
+              {!isSuperadmin && (
+                <div className="pb-4 border-b">
+                  <div className="flex items-center gap-2 text-sm">
+                    <UsersIcon className="w-4 h-4 text-gray-500" />
+                    <span className="font-medium">Asignado a:</span>
+                    <span>{getAssignedName(request.assignedTo)}</span>
+                  </div>
+                </div>
+              )}
+              
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4 text-gray-500" />
