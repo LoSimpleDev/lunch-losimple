@@ -81,6 +81,7 @@ export class MemStorage implements IStorage {
     this.adminNotes = new Map();
     this.teamMessages = new Map();
     this.initializeServices();
+    this.initializeDefaultAdmin();
   }
 
   // Services methods
@@ -769,6 +770,22 @@ export class MemStorage implements IStorage {
     sampleServices.forEach(service => {
       this.services.set(service.id, service);
     });
+  }
+
+  // Initialize default superadmin user
+  private initializeDefaultAdmin() {
+    const adminId = randomUUID();
+    const defaultAdmin: User = {
+      id: adminId,
+      email: 'joseantonio@losimple.co',
+      password: '$2b$10$GoG9LyVBI2s74l9WnLp11uzbDsMFvlHzRRbCM5HzvvmjnPUrqJ2WO', // z0*3$9&ErC
+      fullName: 'José Antonio',
+      role: 'superadmin',
+      createdAt: new Date(),
+      resetToken: null,
+      resetTokenExpiry: null
+    };
+    this.users.set(adminId, defaultAdmin);
   }
 }
 
