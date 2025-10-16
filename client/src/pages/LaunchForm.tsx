@@ -145,16 +145,40 @@ export default function LaunchForm() {
   const checkMissingFields = () => {
     const missing: string[] = [];
     
+    // Paso 2: Datos personales
     if (!formData.fullName) missing.push("Nombre completo");
     if (!formData.idNumber) missing.push("Número de cédula");
     if (!formData.personalEmail) missing.push("Email personal");
     if (!formData.phone) missing.push("Teléfono");
+    if (!formData.address) missing.push("Dirección");
+    if (!formData.province) missing.push("Provincia");
+    if (!formData.canton) missing.push("Cantón");
+    
+    // Paso 3: Documentos (solo si tiene socios)
+    if (formData.hasPartners) {
+      if (!formData.shareholderIdUrls || formData.shareholderIdUrls.length === 0) {
+        missing.push("Enlaces a cédulas de accionistas");
+      }
+      if (!formData.utilityBillUrl) missing.push("Enlace a pago de servicio básico");
+    }
+    
+    // Paso 4: Datos de empresa
     if (!formData.companyName1) missing.push("Nombre de empresa");
     if (!formData.mainActivity) missing.push("Actividad principal");
+    if (!formData.fiscalAddress) missing.push("Domicilio fiscal");
+    if (!formData.fiscalCity) missing.push("Ciudad domicilio fiscal");
+    
+    // Paso 5: Marca
     if (!formData.brandName) missing.push("Nombre de marca");
+    
+    // Paso 6: Sitio web
     if (!formData.desiredDomain) missing.push("Dominio deseado");
+    if (!formData.corporateEmail) missing.push("Email corporativo");
+    
+    // Paso 7: Facturación
     if (!formData.billingName) missing.push("Nombre para facturación");
     if (!formData.billingIdNumber) missing.push("RUC/Cédula para facturación");
+    if (!formData.billingAddress) missing.push("Dirección de facturación");
     if (!formData.billingEmail) missing.push("Email para factura");
     
     return missing;
