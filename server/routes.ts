@@ -742,6 +742,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // GET /launch/messages - Get messages for user's launch request
+  api.get("/launch/messages", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const request = await storage.getLaunchRequestByUserId(userId);
+      
+      if (!request) {
+        return res.status(404).json({ error: 'Solicitud no encontrada' });
+      }
+      
+      const messages = await storage.getMessagesByLaunchRequest(request.id);
+      res.json(messages);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /admin/messages - Create team message (admin only)
+  api.post("/admin/messages", isAdmin, async (req, res) => {
+    try {
+      const { launchRequestId, message } = req.body;
+      const senderName = (req.user as any).fullName || 'Equipo Lo Simple';
+      
+      const teamMessage = await storage.createTeamMessage({
+        launchRequestId,
+        message,
+        senderRole: 'admin',
+        senderName,
+        isResolved: false
+      });
+      
+      res.status(201).json(teamMessage);
+    } catch (error) {
+      console.error('Error creating message:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // PATCH /messages/:id/respond - Respond to a message (client only)
+  api.patch("/messages/:id/respond", isAuthenticated, async (req, res) => {
+    try {
+      const { response } = req.body;
+      
+      const updated = await storage.updateTeamMessage(req.params.id, {
+        clientResponse: response
+      });
+      
+      if (!updated) {
+        return res.status(404).json({ error: 'Mensaje no encontrado' });
+      }
+      
+      res.json(updated);
+    } catch (error) {
+      console.error('Error responding to message:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // PATCH /messages/:id/resolve - Toggle resolved status
+  api.patch("/messages/:id/resolve", isAuthenticated, async (req, res) => {
+    try {
+      const { isResolved } = req.body;
+      
+      const updated = await storage.updateTeamMessage(req.params.id, {
+        isResolved
+      });
+      
+      if (!updated) {
+        return res.status(404).json({ error: 'Mensaje no encontrado' });
+      }
+      
+      res.json(updated);
+    } catch (error) {
+      console.error('Error updating message:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
   // POST /launch/payment-intent - Create payment intent for Launch
   api.post("/launch/payment-intent", isAuthenticated, async (req, res) => {
     try {
