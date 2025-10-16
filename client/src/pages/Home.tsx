@@ -653,7 +653,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-center">
                   <Shield className="h-4 w-4 mr-2" />
-                  <Link href="/adminlaunch" className="hover:opacity-100 transition-opacity" data-testid="link-admin-access-footer">
+                  <Link href="/admin-login" className="hover:opacity-100 transition-opacity" data-testid="link-admin-access-footer">
                     Acceso Admin
                   </Link>
                 </li>
