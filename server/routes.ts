@@ -68,12 +68,21 @@ function isAuthenticated(req: express.Request, res: express.Response, next: expr
   res.status(401).json({ error: 'No autenticado' });
 }
 
-// Middleware to check if user is admin
+// Middleware to check if user is admin (legacy, now checks for team roles)
 function isAdmin(req: express.Request, res: express.Response, next: express.NextFunction) {
-  if (req.isAuthenticated() && (req.user as any).role === 'admin') {
+  const userRole = (req.user as any)?.role;
+  if (req.isAuthenticated() && (userRole === 'superadmin' || userRole === 'simplificador')) {
     return next();
   }
   res.status(403).json({ error: 'Acceso no autorizado' });
+}
+
+// Middleware to check if user is superadmin
+function isSuperadmin(req: express.Request, res: express.Response, next: express.NextFunction) {
+  if (req.isAuthenticated() && (req.user as any).role === 'superadmin') {
+    return next();
+  }
+  res.status(403).json({ error: 'Solo superadmin puede realizar esta acción' });
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -524,6 +533,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     })(req, res, next);
   });
   
+  // POST /auth/admin-login - Admin team login
+  api.post("/auth/admin-login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ error: 'Email y contraseña son requeridos' });
+      }
+      
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(401).json({ error: 'Credenciales inválidas' });
+      }
+      
+      // Check if user is part of the team
+      if (user.role !== 'superadmin' && user.role !== 'simplificador') {
+        return res.status(403).json({ error: 'Acceso solo para equipo Lo Simple' });
+      }
+      
+      const isValid = await bcrypt.compare(password, user.password);
+      if (!isValid) {
+        return res.status(401).json({ error: 'Credenciales inválidas' });
+      }
+      
+      req.login(user, (err) => {
+        if (err) {
+          return res.status(500).json({ error: 'Error al iniciar sesión' });
+        }
+        
+        const { password: _, ...userWithoutPassword } = user;
+        res.json({ user: userWithoutPassword });
+      });
+    } catch (error) {
+      console.error('Error admin login:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
   // POST /auth/logout - Logout user
   api.post("/auth/logout", (req, res) => {
     req.logout((err) => {
@@ -654,12 +701,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   api.get("/admin/requests", isAdmin, async (req, res) => {
     try {
       const status = req.query.status as string;
+      const userId = (req.user as any).id;
+      const userRole = (req.user as any).role;
       let requests;
       
-      if (status) {
-        requests = await storage.getLaunchRequestsByStatus(status);
+      if (userRole === 'superadmin') {
+        // Superadmin sees all requests
+        if (status) {
+          requests = await storage.getLaunchRequestsByStatus(status);
+        } else {
+          requests = await storage.getAllLaunchRequests();
+        }
       } else {
-        requests = await storage.getAllLaunchRequests();
+        // Simplificador sees only assigned requests
+        requests = await storage.getLaunchRequestsByAssignedTo(userId);
       }
       
       res.json(requests);
@@ -828,6 +883,97 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(updated);
     } catch (error) {
       console.error('Error updating message:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // ============ TEAM MANAGEMENT ROUTES ============
+  
+  // GET /admin/team - Get all team users (superadmin only)
+  api.get("/admin/team", isSuperadmin, async (req, res) => {
+    try {
+      const teamUsers = await storage.getTeamUsers();
+      // Return users without passwords
+      const usersWithoutPasswords = teamUsers.map(({ password, ...user }) => user);
+      res.json(usersWithoutPasswords);
+    } catch (error) {
+      console.error('Error fetching team users:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /admin/team - Create new team user (superadmin only)
+  api.post("/admin/team", isSuperadmin, async (req, res) => {
+    try {
+      const { email, password, fullName, role } = req.body;
+      
+      if (!email || !password || !fullName || !role) {
+        return res.status(400).json({ error: 'Todos los campos son requeridos' });
+      }
+      
+      if (role !== 'simplificador' && role !== 'superadmin') {
+        return res.status(400).json({ error: 'Rol inválido' });
+      }
+      
+      // Check if email already exists
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ error: 'El email ya está registrado' });
+      }
+      
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      // Create user
+      const user = await storage.createUser({
+        email,
+        password: hashedPassword,
+        fullName,
+        role
+      });
+      
+      const { password: _, ...userWithoutPassword } = user;
+      res.status(201).json(userWithoutPassword);
+    } catch (error) {
+      console.error('Error creating team user:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // PATCH /admin/requests/:id/assign - Assign/Take request
+  api.patch("/admin/requests/:id/assign", isAdmin, async (req, res) => {
+    try {
+      const requestId = req.params.id;
+      const { assignedTo } = req.body; // Can be userId or null
+      const userId = (req.user as any).id;
+      const userRole = (req.user as any).role;
+      
+      // Simplificadores can only take unassigned requests for themselves
+      if (userRole === 'simplificador') {
+        if (assignedTo && assignedTo !== userId) {
+          return res.status(403).json({ error: 'Solo puedes tomar solicitudes para ti mismo' });
+        }
+        // Simplificador is "taking" the request
+        const updated = await storage.updateLaunchRequest(requestId, { assignedTo: userId });
+        return res.json(updated);
+      }
+      
+      // Superadmin can assign to anyone or unassign
+      const updated = await storage.updateLaunchRequest(requestId, { assignedTo });
+      res.json(updated);
+    } catch (error) {
+      console.error('Error assigning request:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /admin/unassigned - Get unassigned requests (for simplificadores to take)
+  api.get("/admin/unassigned", isAdmin, async (req, res) => {
+    try {
+      const requests = await storage.getUnassignedLaunchRequests();
+      res.json(requests);
+    } catch (error) {
+      console.error('Error fetching unassigned requests:', error);
       res.status(500).json({ error: 'Error interno del servidor' });
     }
   });
