@@ -1,8 +1,11 @@
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, Palette, Globe, Share2, Building2, FileText, PenTool, ShieldCheck } from "lucide-react";
 
 export default function Launch() {
+  const [, setLocation] = useLocation();
+  
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12">
@@ -171,7 +174,7 @@ export default function Launch() {
               size="lg" 
               className="text-lg px-12" 
               data-testid="button-start-launch"
-              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+              onClick={() => setLocation('/login')}
             >
               Solicitar Launch
             </Button>
