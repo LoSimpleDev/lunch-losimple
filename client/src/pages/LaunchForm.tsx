@@ -729,9 +729,9 @@ export default function LaunchForm() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="shareholderIdUrls">Cédulas de accionistas *</Label>
+                  <Label htmlFor="shareholderIdUrls">Enlaces a cédulas de accionistas *</Label>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                    Ingresa las URLs o enlaces de las cédulas de los accionistas (separadas por coma). Puedes usar servicios como Google Drive, Dropbox, etc.
+                    Sube las cédulas a Google Drive, Dropbox u otro servicio y pega los enlaces aquí (separados por coma).
                   </p>
                   <Input
                     id="shareholderIdUrls"
@@ -743,9 +743,9 @@ export default function LaunchForm() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="utilityBillUrl">Pago de servicio básico *</Label>
+                  <Label htmlFor="utilityBillUrl">Enlace a pago de servicio básico *</Label>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                    Sube el documento que muestre la dirección donde funcionará el negocio (planilla de luz, agua, teléfono, etc.)
+                    Sube el documento que muestre la dirección del negocio (planilla de luz, agua, teléfono) y pega el enlace aquí.
                   </p>
                   <Input
                     id="utilityBillUrl"
@@ -1102,6 +1102,17 @@ export default function LaunchForm() {
                   {formData.hasExternalRep && (
                     <p><strong>Rep. legal externo:</strong> {formData.externalRepName}</p>
                   )}
+                  {(formData.shareholderIdUrls && formData.shareholderIdUrls.length > 0) || formData.utilityBillUrl ? (
+                    <>
+                      <p className="pt-2"><strong>Documentos:</strong></p>
+                      {formData.shareholderIdUrls && formData.shareholderIdUrls.length > 0 && (
+                        <p className="pl-4 text-xs">✓ {formData.shareholderIdUrls.length} cédula(s) de accionistas</p>
+                      )}
+                      {formData.utilityBillUrl && (
+                        <p className="pl-4 text-xs">✓ Pago de servicio básico</p>
+                      )}
+                    </>
+                  ) : null}
                 </CardContent>
               </Card>
 

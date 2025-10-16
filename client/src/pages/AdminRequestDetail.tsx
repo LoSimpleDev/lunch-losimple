@@ -137,6 +137,55 @@ export default function AdminRequestDetail() {
             </CardContent>
           </Card>
 
+          <Card>
+            <CardHeader>
+              <CardTitle>Documentos de Constitución</CardTitle>
+              <CardDescription>Documentos necesarios para el proceso legal</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-medium mb-2 text-sm">Cédulas de accionistas</h4>
+                {request.shareholderIdUrls && request.shareholderIdUrls.length > 0 ? (
+                  <div className="space-y-1">
+                    {request.shareholderIdUrls.map((url: string, index: number) => (
+                      <div key={index} className="flex items-center gap-2 text-sm">
+                        <span className="text-gray-500">{index + 1}.</span>
+                        <a 
+                          href={url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-600 dark:text-blue-400 hover:underline truncate"
+                          data-testid={`link-shareholder-id-${index}`}
+                        >
+                          {url}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500" data-testid="text-no-shareholder-ids">No se han cargado cédulas</p>
+                )}
+              </div>
+
+              <div>
+                <h4 className="font-medium mb-2 text-sm">Pago de servicio básico</h4>
+                {request.utilityBillUrl ? (
+                  <a 
+                    href={request.utilityBillUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 hover:underline text-sm truncate block"
+                    data-testid="link-utility-bill"
+                  >
+                    {request.utilityBillUrl}
+                  </a>
+                ) : (
+                  <p className="text-sm text-gray-500" data-testid="text-no-utility-bill">No se ha cargado documento</p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
           {data.progress && (
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
