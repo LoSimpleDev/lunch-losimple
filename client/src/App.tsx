@@ -16,8 +16,10 @@ import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import LaunchForm from "@/pages/LaunchForm";
 import LaunchPayment from "@/pages/LaunchPayment";
+import AdminLogin from "@/pages/AdminLogin";
 import AdminLaunch from "@/pages/AdminLaunch";
 import AdminRequestDetail from "@/pages/AdminRequestDetail";
+import AdminUsers from "@/pages/AdminUsers";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -34,8 +36,10 @@ function Router() {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/launch-form" component={LaunchForm} />
       <Route path="/launch-payment" component={LaunchPayment} />
+      <Route path="/admin-login" component={AdminLogin} />
       <Route path="/adminlaunch/:id" component={AdminRequestDetail} />
       <Route path="/adminlaunch" component={AdminLaunch} />
+      <Route path="/admin-users" component={AdminUsers} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
