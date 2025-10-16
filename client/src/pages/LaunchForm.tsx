@@ -807,7 +807,7 @@ export default function LaunchForm() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="no" id="externalRep-no" data-testid="radio-external-rep-no" />
-                  <Label htmlFor="externalRep-no">No, seré yo o uno de los socios</Label>
+                  <Label htmlFor="externalRep-no">No, seré yo o uno de los accionistas</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -1349,16 +1349,18 @@ export default function LaunchForm() {
               <AlertTriangle className="w-5 h-5 text-amber-500" />
               Campos incompletos detectados
             </AlertDialogTitle>
-            <AlertDialogDescription className="space-y-3">
-              <p>Algunos campos importantes no han sido completados:</p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                {missingFields.map((field, index) => (
-                  <li key={index}>{field}</li>
-                ))}
-              </ul>
-              <p className="pt-2">
-                ¿Deseas completar estos campos ahora o continuar sin ellos? Puedes agregar la información más tarde desde tu dashboard.
-              </p>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3">
+                <p>Algunos campos importantes no han sido completados:</p>
+                <ul className="list-disc list-inside space-y-1 text-sm">
+                  {missingFields.map((field, index) => (
+                    <li key={index}>{field}</li>
+                  ))}
+                </ul>
+                <p className="pt-2">
+                  ¿Deseas completar estos campos ahora o continuar sin ellos? Puedes agregar la información más tarde desde tu dashboard.
+                </p>
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
