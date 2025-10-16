@@ -27,16 +27,28 @@ interface LaunchRequest {
 interface LaunchProgress {
   logoStatus: string;
   logoProgress: number;
+  logoCurrentStep?: string;
+  logoNextStep?: string;
   websiteStatus: string;
   websiteProgress: number;
+  websiteCurrentStep?: string;
+  websiteNextStep?: string;
   socialMediaStatus: string;
   socialMediaProgress: number;
+  socialMediaCurrentStep?: string;
+  socialMediaNextStep?: string;
   companyStatus: string;
   companyProgress: number;
+  companyCurrentStep?: string;
+  companyNextStep?: string;
   invoicingStatus: string;
   invoicingProgress: number;
+  invoicingCurrentStep?: string;
+  invoicingNextStep?: string;
   signatureStatus: string;
   signatureProgress: number;
+  signatureCurrentStep?: string;
+  signatureNextStep?: string;
 }
 
 export default function Dashboard() {
@@ -267,31 +279,113 @@ export default function Dashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {[
-                      { name: 'Logo', status: progress?.logoStatus, progress: progress?.logoProgress },
-                      { name: 'Sitio Web', status: progress?.websiteStatus, progress: progress?.websiteProgress },
-                      { name: 'Redes Sociales', status: progress?.socialMediaStatus, progress: progress?.socialMediaProgress },
-                      { name: 'Constitución de Compañía', status: progress?.companyStatus, progress: progress?.companyProgress },
-                      { name: 'Facturación Electrónica', status: progress?.invoicingStatus, progress: progress?.invoicingProgress },
-                      { name: 'Firma Electrónica', status: progress?.signatureStatus, progress: progress?.signatureProgress },
+                      { 
+                        name: 'Logo', 
+                        status: progress?.logoStatus, 
+                        progress: progress?.logoProgress,
+                        currentStep: progress?.logoCurrentStep || 'Revisión inicial de brief',
+                        nextStep: progress?.logoNextStep || 'Desarrollo de conceptos creativos'
+                      },
+                      { 
+                        name: 'Sitio Web', 
+                        status: progress?.websiteStatus, 
+                        progress: progress?.websiteProgress,
+                        currentStep: progress?.websiteCurrentStep || 'Análisis de requerimientos',
+                        nextStep: progress?.websiteNextStep || 'Diseño de wireframes'
+                      },
+                      { 
+                        name: 'Redes Sociales', 
+                        status: progress?.socialMediaStatus, 
+                        progress: progress?.socialMediaProgress,
+                        currentStep: progress?.socialMediaCurrentStep || 'Configuración de perfiles',
+                        nextStep: progress?.socialMediaNextStep || 'Estrategia de contenido'
+                      },
+                      { 
+                        name: 'Constitución de Compañía', 
+                        status: progress?.companyStatus, 
+                        progress: progress?.companyProgress,
+                        currentStep: progress?.companyCurrentStep || 'Revisión de documentación',
+                        nextStep: progress?.companyNextStep || 'Preparación de estatutos'
+                      },
+                      { 
+                        name: 'Facturación Electrónica', 
+                        status: progress?.invoicingStatus, 
+                        progress: progress?.invoicingProgress,
+                        currentStep: progress?.invoicingCurrentStep || 'Registro en SRI',
+                        nextStep: progress?.invoicingNextStep || 'Configuración del sistema'
+                      },
+                      { 
+                        name: 'Firma Electrónica', 
+                        status: progress?.signatureStatus, 
+                        progress: progress?.signatureProgress,
+                        currentStep: progress?.signatureCurrentStep || 'Solicitud de certificado',
+                        nextStep: progress?.signatureNextStep || 'Instalación y activación'
+                      },
                     ].map((item, index) => (
-                      <div key={index} className="space-y-2" data-testid={`delivery-${index}`}>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm font-medium">{item.name}</span>
-                          <Badge 
-                            variant={
-                              item.status === 'completed' ? 'default' : 
-                              item.status === 'in_progress' ? 'secondary' : 
-                              'outline'
-                            }
-                          >
-                            {item.status === 'completed' ? 'Completado' : 
-                             item.status === 'in_progress' ? 'En progreso' : 
-                             'Pendiente'}
-                          </Badge>
+                      <div key={index} className="border rounded-lg p-4" data-testid={`delivery-${index}`}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {/* Columna 1: Progreso */}
+                          <div className="space-y-3">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm font-medium">{item.name}</span>
+                              <Badge 
+                                variant={
+                                  item.status === 'completed' ? 'default' : 
+                                  item.status === 'in_progress' ? 'secondary' : 
+                                  'outline'
+                                }
+                              >
+                                {item.status === 'completed' ? 'Completado' : 
+                                 item.status === 'in_progress' ? 'En progreso' : 
+                                 'Pendiente'}
+                              </Badge>
+                            </div>
+                            
+                            {/* Progress bar with checkpoints */}
+                            <div className="space-y-1">
+                              <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400">
+                                <span>0%</span>
+                                <span>25%</span>
+                                <span>50%</span>
+                                <span>75%</span>
+                                <span>100%</span>
+                              </div>
+                              <div className="relative">
+                                <Progress value={item.progress || 0} className="h-3" />
+                                {/* Checkpoint markers */}
+                                <div className="absolute top-0 left-0 right-0 flex justify-between px-[1px]">
+                                  {[0, 25, 50, 75, 100].map((checkpoint) => (
+                                    <div 
+                                      key={checkpoint}
+                                      className={`w-1 h-3 ${
+                                        (item.progress || 0) >= checkpoint 
+                                          ? 'bg-primary' 
+                                          : 'bg-gray-300 dark:bg-gray-600'
+                                      }`}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <span className="text-sm font-semibold">{item.progress || 0}%</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Columna 2: Pasos */}
+                          <div className="space-y-3">
+                            <div>
+                              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Paso Actual</p>
+                              <p className="text-sm">{item.currentStep}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Paso Siguiente</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">{item.nextStep}</p>
+                            </div>
+                          </div>
                         </div>
-                        <Progress value={item.progress || 0} />
                       </div>
                     ))}
                   </div>

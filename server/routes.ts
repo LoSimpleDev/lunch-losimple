@@ -606,9 +606,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         adminStatus: 'new'
       });
       
-      // Create progress tracking
+      // Create progress tracking with initial steps
       await storage.createLaunchProgress({
-        launchRequestId: request.id
+        launchRequestId: request.id,
+        logoCurrentStep: 'Revisión inicial de brief',
+        logoNextStep: 'Desarrollo de conceptos creativos',
+        websiteCurrentStep: 'Análisis de requerimientos',
+        websiteNextStep: 'Diseño de wireframes',
+        socialMediaCurrentStep: 'Configuración de perfiles',
+        socialMediaNextStep: 'Estrategia de contenido',
+        companyCurrentStep: 'Revisión de documentación',
+        companyNextStep: 'Preparación de estatutos',
+        invoicingCurrentStep: 'Registro en SRI',
+        invoicingNextStep: 'Configuración del sistema',
+        signatureCurrentStep: 'Solicitud de certificado',
+        signatureNextStep: 'Instalación y activación'
       });
       
       res.json(updated);
