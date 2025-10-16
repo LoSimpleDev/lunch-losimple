@@ -160,8 +160,20 @@ export default function LaunchForm() {
     if (!formData.utilityBillUrl) missing.push("Enlace a pago de servicio básico");
     
     const numShareholders = parseInt(formData.numberOfShareholders) || 1;
-    if (numShareholders > 1 && (!formData.shareholders || formData.shareholders.length === 0)) {
-      missing.push("Información de accionistas");
+    if (numShareholders > 1) {
+      if (!formData.shareholders || formData.shareholders.length === 0) {
+        missing.push("Información de accionistas");
+      } else {
+        // Validar que cada accionista tenga sus documentos
+        formData.shareholders.forEach((shareholder: any, index: number) => {
+          if (!shareholder.idCardUrl) {
+            missing.push(`Cédula del accionista ${index + 1}`);
+          }
+          if (!shareholder.votingCardUrl) {
+            missing.push(`Papeleta de votación del accionista ${index + 1}`);
+          }
+        });
+      }
     }
     
     // Paso 4: Datos de empresa
