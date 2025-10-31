@@ -22,6 +22,7 @@ import AdminRequestDetail from "@/pages/AdminRequestDetail";
 import AdminUsers from "@/pages/AdminUsers";
 import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
+import Benefits from "@/pages/Benefits";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -44,6 +45,7 @@ function Router() {
       <Route path="/admin-users" component={AdminUsers} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/reset-password" component={ResetPassword} />
+      <Route path="/beneficios" component={Benefits} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
