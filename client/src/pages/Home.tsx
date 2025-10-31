@@ -17,6 +17,8 @@ import {
 import isotipoUrl from "@assets/aArtboard 1@2x_1757538290957.png";
 import type { Service } from "@shared/schema";
 import { useState } from "react";
+import { SchemaMarkup } from "@/components/SchemaMarkup";
+import { FAQSection } from "@/components/FAQSection";
 
 // Componente interactivo para Servicios Digitales
 function DigitalServicesSection({ services, onAddToCart }: { 
@@ -114,6 +116,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SchemaMarkup />
+      
       {/* Hero Section - Lo Simple Brand Design */}
       <section className="bg-gradient-to-br from-primary/15 via-background to-accent/10 py-20 px-4 relative overflow-hidden">
         {/* Abstract Brand Elements - Inspired by Lo Simple isotipo */}
@@ -583,6 +587,10 @@ export default function Home() {
           )}
         </div>
       </section>
+      
+      {/* FAQ Section - Optimizado para IA */}
+      <FAQSection />
+      
       {/* CTA Section */}
       <section className="py-20 px-4 bg-[#FEC817] text-[#ffffff]">
         <div className="container mx-auto text-center max-w-4xl">
