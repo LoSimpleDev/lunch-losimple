@@ -1190,6 +1190,112 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ============ BENEFITS ROUTES ============
+  
+  // GET /benefits - Get all active benefits
+  api.get("/benefits", isAuthenticated, async (req, res) => {
+    try {
+      const benefits = await storage.getAllBenefits();
+      res.json(benefits);
+    } catch (error) {
+      console.error('Error fetching benefits:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /benefits/generate-code - Generate benefit code
+  api.post("/benefits/generate-code", isAuthenticated, async (req, res) => {
+    try {
+      const { benefitId } = req.body;
+      const userId = (req.user as any).id;
+      
+      if (!benefitId) {
+        return res.status(400).json({ error: 'benefitId es requerido' });
+      }
+      
+      // Get benefit
+      const benefit = await storage.getBenefit(benefitId);
+      if (!benefit) {
+        return res.status(404).json({ error: 'Beneficio no encontrado' });
+      }
+      
+      // Check if user has paid (has completed launch request)
+      const launchRequest = await storage.getLaunchRequestByUserId(userId);
+      if (!launchRequest || launchRequest.paymentStatus !== 'completed') {
+        return res.status(403).json({ error: 'Debes completar el pago para acceder a beneficios' });
+      }
+      
+      // Generate unique code: LoSimple + 5 random digits
+      let code: string;
+      let codeExists = true;
+      
+      while (codeExists) {
+        const randomDigits = Math.floor(10000 + Math.random() * 90000); // 5 digits between 10000-99999
+        code = `LoSimple${randomDigits}`;
+        const existing = await storage.getBenefitCodeByCode(code);
+        codeExists = !!existing;
+      }
+      
+      // Create benefit code
+      const benefitCode = await storage.createBenefitCode({
+        benefitId: benefit.id,
+        userId,
+        code: code!,
+        companyName: launchRequest.companyName1 || 'Empresa',
+        isUsed: false,
+        emailSent: false
+      });
+      
+      // TODO: Send email to partner
+      // For now, log to console (will be replaced with email integration)
+      console.log('='.repeat(50));
+      console.log('NUEVO CÓDIGO DE BENEFICIO GENERADO');
+      console.log('='.repeat(50));
+      console.log(`Beneficio: ${benefit.name}`);
+      console.log(`Aliado: ${benefit.partnerName}`);
+      console.log(`Email: ${benefit.partnerEmail}`);
+      console.log(`Cliente: ${launchRequest.companyName1}`);
+      console.log(`Código: ${code}`);
+      console.log('='.repeat(50));
+      console.log(`Asunto: ${benefit.partnerName} nuevo código de descuento`);
+      console.log(`Contenido: Para tu información el Cliente ${launchRequest.companyName1} ha generado un código de descuento con el código ${code}, seguramente se acercará a tu punto de contacto.`);
+      console.log('='.repeat(50));
+      
+      res.json({ 
+        code: benefitCode.code,
+        benefit: benefit.name
+      });
+    } catch (error) {
+      console.error('Error generating benefit code:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /benefits/my-codes - Get user's generated codes
+  api.get("/benefits/my-codes", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const codes = await storage.getBenefitCodesByUser(userId);
+      
+      // Enrich with benefit info
+      const enrichedCodes = await Promise.all(
+        codes.map(async (code) => {
+          const benefit = await storage.getBenefit(code.benefitId);
+          return {
+            ...code,
+            benefitName: benefit?.name,
+            benefitPartner: benefit?.partnerName
+          };
+        })
+      );
+      
+      res.json(enrichedCodes);
+    } catch (error) {
+      console.error('Error fetching benefit codes:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+
   // Terminal 404 handler for API routes
   api.use((_req, res) => {
     res.status(404).json({ error: "API endpoint not found" });
