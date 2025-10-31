@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check } from "lucide-react";
+import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check, Gift } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -234,15 +234,29 @@ export default function Dashboard() {
           )}
         </div>
 
-        <Button 
-          variant="outline" 
-          className="w-full" 
-          onClick={handleLogout}
-          data-testid="button-logout"
-        >
-          <LogOut className="w-4 h-4 mr-2" />
-          Cerrar Sesión
-        </Button>
+        <div className="space-y-3">
+          {isPaid && (
+            <Button 
+              className="w-full" 
+              style={{ backgroundColor: '#FEC817' }}
+              onClick={() => setLocation('/beneficios')}
+              data-testid="button-benefits"
+            >
+              <Gift className="w-4 h-4 mr-2" />
+              Canje Beneficios
+            </Button>
+          )}
+          
+          <Button 
+            variant="outline" 
+            className="w-full" 
+            onClick={handleLogout}
+            data-testid="button-logout"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Cerrar Sesión
+          </Button>
+        </div>
       </aside>
 
       {/* Main Content */}

@@ -1226,7 +1226,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Generate unique code: LoSimple + 5 random digits
-      let code: string;
+      let code = '';
       let codeExists = true;
       
       while (codeExists) {
@@ -1240,7 +1240,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const benefitCode = await storage.createBenefitCode({
         benefitId: benefit.id,
         userId,
-        code: code!,
+        code,
         companyName: launchRequest.companyName1 || 'Empresa',
         isUsed: false,
         emailSent: false
