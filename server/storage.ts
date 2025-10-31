@@ -6,7 +6,9 @@ import {
   type LaunchProgress, type InsertLaunchProgress,
   type Document, type InsertDocument,
   type AdminNote, type InsertAdminNote,
-  type TeamMessage, type InsertTeamMessage
+  type TeamMessage, type InsertTeamMessage,
+  type Benefit, type InsertBenefit,
+  type BenefitCode, type InsertBenefitCode
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -59,6 +61,16 @@ export interface IStorage {
   getMessagesByLaunchRequest(launchRequestId: string): Promise<TeamMessage[]>;
   createTeamMessage(message: InsertTeamMessage): Promise<TeamMessage>;
   updateTeamMessage(id: string, message: Partial<InsertTeamMessage>): Promise<TeamMessage | undefined>;
+  
+  // Benefits
+  getAllBenefits(): Promise<Benefit[]>;
+  getBenefit(id: string): Promise<Benefit | undefined>;
+  createBenefit(benefit: InsertBenefit): Promise<Benefit>;
+  
+  // Benefit Codes
+  getBenefitCodesByUser(userId: string): Promise<BenefitCode[]>;
+  createBenefitCode(code: InsertBenefitCode): Promise<BenefitCode>;
+  getBenefitCodeByCode(code: string): Promise<BenefitCode | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -70,6 +82,8 @@ export class MemStorage implements IStorage {
   private documents: Map<string, Document>;
   private adminNotes: Map<string, AdminNote>;
   private teamMessages: Map<string, TeamMessage>;
+  private benefits: Map<string, Benefit>;
+  private benefitCodes: Map<string, BenefitCode>;
 
   constructor() {
     this.services = new Map();
@@ -80,8 +94,11 @@ export class MemStorage implements IStorage {
     this.documents = new Map();
     this.adminNotes = new Map();
     this.teamMessages = new Map();
+    this.benefits = new Map();
+    this.benefitCodes = new Map();
     this.initializeServices();
     this.initializeDefaultAdmin();
+    this.initializeBenefits();
   }
 
   // Services methods
@@ -786,6 +803,98 @@ export class MemStorage implements IStorage {
       resetTokenExpiry: null
     };
     this.users.set(adminId, defaultAdmin);
+  }
+
+  // Benefits methods
+  async getAllBenefits(): Promise<Benefit[]> {
+    return Array.from(this.benefits.values()).filter(benefit => benefit.isActive);
+  }
+
+  async getBenefit(id: string): Promise<Benefit | undefined> {
+    return this.benefits.get(id);
+  }
+
+  async createBenefit(insertBenefit: InsertBenefit): Promise<Benefit> {
+    const id = randomUUID();
+    const benefit: Benefit = {
+      ...insertBenefit,
+      id,
+      createdAt: new Date()
+    } as Benefit;
+    this.benefits.set(id, benefit);
+    return benefit;
+  }
+
+  // Benefit Codes methods
+  async getBenefitCodesByUser(userId: string): Promise<BenefitCode[]> {
+    return Array.from(this.benefitCodes.values())
+      .filter(code => code.userId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async createBenefitCode(insertCode: InsertBenefitCode): Promise<BenefitCode> {
+    const id = randomUUID();
+    const code: BenefitCode = {
+      ...insertCode,
+      id,
+      createdAt: new Date()
+    } as BenefitCode;
+    this.benefitCodes.set(id, code);
+    return code;
+  }
+
+  async getBenefitCodeByCode(code: string): Promise<BenefitCode | undefined> {
+    return Array.from(this.benefitCodes.values()).find(bc => bc.code === code);
+  }
+
+  // Initialize benefits
+  private initializeBenefits() {
+    const defaultBenefits: Benefit[] = [
+      {
+        id: randomUUID(),
+        name: 'Descuento ToSellMore',
+        description: 'Obtén un descuento especial en servicios de ToSellMore',
+        partnerName: 'ToSellMore',
+        partnerEmail: 'beneficios@tosellmore.com',
+        iconName: 'Percent',
+        isActive: true,
+        createdAt: new Date()
+      },
+      {
+        id: randomUUID(),
+        name: 'Horas de Coworking Impaqto',
+        description: 'Disfruta horas gratis de coworking en Impaqto',
+        partnerName: 'Impaqto',
+        partnerEmail: 'hola@impaqto.com',
+        iconName: 'Building2',
+        isActive: true,
+        createdAt: new Date()
+      },
+      {
+        id: randomUUID(),
+        name: 'Créditos para uso de Sassi',
+        description: 'Recibe créditos para usar la plataforma Sassi',
+        partnerName: 'Sassi',
+        partnerEmail: 'info@sassi.com',
+        iconName: 'Coins',
+        isActive: true,
+        createdAt: new Date()
+      },
+      {
+        id: randomUUID(),
+        name: 'Descuento en Asesoría Legal',
+        description: 'Descuento especial en servicios de asesoría legal',
+        partnerName: 'Asesoría Legal',
+        partnerEmail: 'contacto@asesorialegal.com',
+        iconName: 'Scale',
+        isActive: true,
+        createdAt: new Date()
+      }
+    ];
+
+    defaultBenefits.forEach(benefit => {
+      this.benefits.set(benefit.id, benefit);
+    });
   }
 }
 
