@@ -115,13 +115,13 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <SchemaMarkup />
-      
-      {/* Hero Section - Lo Simple Brand Design */}
-      <section className="bg-gradient-to-br from-primary/15 via-background to-accent/10 py-20 px-4 relative overflow-hidden">
+      <div className="min-h-screen bg-background">
+        {/* Hero Section - Lo Simple Brand Design */}
+        <header className="bg-gradient-to-br from-primary/15 via-background to-accent/10 py-20 px-4 relative overflow-hidden" role="banner">
         {/* Abstract Brand Elements - Inspired by Lo Simple isotipo */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           {/* Official Lo Simple S Isotipo */}
           <div className="absolute top-20 -right-32 w-64 h-64 opacity-20">
             <img 
@@ -148,10 +148,9 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
               <span className="text-primary">Lo Simple (antes simpleSAS)</span>
               <br />
-              Servicios Empresariales
+              Servicios Empresariales para SAS en Ecuador
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">En Lo Simple puedes encontrar todo lo que una empresa SAS en Ecuador necesita. 
-            Nuestro proceso es sencillo, escoges el trámite, pagas el 50%, envías el comprobante a nuestro Whatsapp y empezamos. </p>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">Constituye tu empresa SAS en Ecuador en 5 días. Todo incluido: logo, página web, redes sociales, trámites legales, facturación electrónica y firma digital por $688.85.</p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -191,7 +190,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </header>
       {/* Trust Section */}
       <section className="py-12 px-4 bg-muted/50">
         <div className="container mx-auto text-center">
@@ -215,7 +214,7 @@ export default function Home() {
         </div>
       </section>
       {/* Testimonios Section */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-20 px-4 bg-muted/30" itemScope itemType="https://schema.org/Organization">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -227,59 +226,59 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-1">
-              <div className="flex items-center mb-4">
+            <article className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-1" itemScope itemType="https://schema.org/Review">
+              <div className="flex items-center mb-4" itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
                 <div className="flex text-yellow-500">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+                <span className="ml-2 text-sm text-muted-foreground" itemProp="ratingValue">5.0</span>
               </div>
-              <p className="text-sm mb-4 italic">
+              <p className="text-sm mb-4 italic" itemProp="reviewBody">
                 "Excelente servicio, muy profesionales y rápidos. Me ayudaron a constituir mi SAS en tiempo record."
               </p>
-              <div className="text-sm">
-                <div className="font-semibold">María González</div>
+              <div className="text-sm" itemProp="author" itemScope itemType="https://schema.org/Person">
+                <div className="font-semibold" itemProp="name">María González</div>
                 <div className="text-muted-foreground">Fundadora, Tech Solutions</div>
               </div>
-            </div>
+            </article>
 
-            <div className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-2">
-              <div className="flex items-center mb-4">
+            <article className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-2" itemScope itemType="https://schema.org/Review">
+              <div className="flex items-center mb-4" itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
                 <div className="flex text-yellow-500">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+                <span className="ml-2 text-sm text-muted-foreground" itemProp="ratingValue">5.0</span>
               </div>
-              <p className="text-sm mb-4 italic">
+              <p className="text-sm mb-4 italic" itemProp="reviewBody">
                 "El proceso fue súper simple y transparente. Recomiendo 100% los servicios de Lo Simple."
               </p>
-              <div className="text-sm">
-                <div className="font-semibold">Carlos Mendoza</div>
+              <div className="text-sm" itemProp="author" itemScope itemType="https://schema.org/Person">
+                <div className="font-semibold" itemProp="name">Carlos Mendoza</div>
                 <div className="text-muted-foreground">CEO, Mendoza Consulting</div>
               </div>
-            </div>
+            </article>
 
-            <div className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-3">
-              <div className="flex items-center mb-4">
+            <article className="bg-background rounded-lg p-6 shadow-sm" data-testid="testimonial-card-3" itemScope itemType="https://schema.org/Review">
+              <div className="flex items-center mb-4" itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
                 <div className="flex text-yellow-500">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <span className="ml-2 text-sm text-muted-foreground">5.0</span>
+                <span className="ml-2 text-sm text-muted-foreground" itemProp="ratingValue">5.0</span>
               </div>
-              <p className="text-sm mb-4 italic">
+              <p className="text-sm mb-4 italic" itemProp="reviewBody">
                 "Asesoría especializada y seguimiento personalizado. Definitivamente los mejores."
               </p>
-              <div className="text-sm">
-                <div className="font-semibold">Ana Rodriguez</div>
+              <div className="text-sm" itemProp="author" itemScope itemType="https://schema.org/Person">
+                <div className="font-semibold" itemProp="name">Ana Rodriguez</div>
                 <div className="text-muted-foreground">Directora, Digital Marketing Pro</div>
               </div>
-            </div>
+            </article>
           </div>
 
           <div className="text-center">
@@ -297,15 +296,17 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Services Section */}
-      <section id="services" className="py-20 px-4">
+      
+      <main role="main">
+        {/* Services Section */}
+        <section id="services" className="py-20 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Nuestros Servicios
+              Nuestros Servicios Legales para SAS en Ecuador
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Servicios profesionales para formalizar y hacer crecer tu empresa. 
+              Servicios profesionales para constituir y hacer crecer tu empresa SAS. 
               Todos incluyen asesoría personalizada y garantía de satisfacción.
             </p>
           </div>
@@ -585,11 +586,12 @@ export default function Home() {
               </div>
             </div>
           )}
-        </div>
-      </section>
-      
-      {/* FAQ Section - Optimizado para IA */}
-      <FAQSection />
+          </div>
+        </section>
+        
+        {/* FAQ Section - Optimizado para IA */}
+        <FAQSection />
+      </main>
       
       {/* CTA Section */}
       <section className="py-20 px-4 bg-[#FEC817] text-[#ffffff]">
@@ -683,6 +685,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

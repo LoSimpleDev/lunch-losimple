@@ -17,7 +17,8 @@ export function SchemaMarkup() {
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "addressCountry": "EC"
+        "latitude": "-0.1807",
+        "longitude": "-78.4678"
       },
       "telephone": "+593958613237",
       "priceRange": "$$",
