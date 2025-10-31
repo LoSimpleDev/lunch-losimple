@@ -206,6 +206,29 @@ export const teamMessages = pgTable("team_messages", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+export const benefits = pgTable("benefits", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  partnerName: text("partner_name").notNull(), // Nombre del aliado (ToSellMore, Impaqto, etc.)
+  partnerEmail: text("partner_email").notNull(), // Email del aliado para notificaciones
+  iconName: text("icon_name").notNull(), // Nombre del ícono de lucide-react
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const benefitCodes = pgTable("benefit_codes", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  benefitId: varchar("benefit_id").notNull().references(() => benefits.id),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  code: text("code").notNull().unique(), // El código generado (ej: LoSimple12345)
+  companyName: text("company_name"), // Nombre de la empresa del cliente
+  isUsed: boolean("is_used").notNull().default(false),
+  usedAt: timestamp("used_at"),
+  emailSent: boolean("email_sent").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Schemas for existing marketplace
 export const insertServiceSchema = createInsertSchema(services).omit({
   id: true,
@@ -252,6 +275,16 @@ export const insertTeamMessageSchema = createInsertSchema(teamMessages).omit({
   createdAt: true,
 });
 
+export const insertBenefitSchema = createInsertSchema(benefits).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBenefitCodeSchema = createInsertSchema(benefitCodes).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types for existing marketplace
 export type Service = typeof services.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
@@ -271,3 +304,7 @@ export type AdminNote = typeof adminNotes.$inferSelect;
 export type InsertAdminNote = z.infer<typeof insertAdminNoteSchema>;
 export type TeamMessage = typeof teamMessages.$inferSelect;
 export type InsertTeamMessage = z.infer<typeof insertTeamMessageSchema>;
+export type Benefit = typeof benefits.$inferSelect;
+export type InsertBenefit = z.infer<typeof insertBenefitSchema>;
+export type BenefitCode = typeof benefitCodes.$inferSelect;
+export type InsertBenefitCode = z.infer<typeof insertBenefitCodeSchema>;
