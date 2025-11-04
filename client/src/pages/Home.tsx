@@ -641,65 +641,6 @@ export default function Home() {
                   onAddToCart={handleAddToCart}
                 />
               </div>
-
-              {/* Otros - Servicios Contables y Legales */}
-              <div className="space-y-8">
-                <div className="text-center">
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-primary">
-                    Otros Servicios
-                  </h3>
-                  <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
-                  <p className="text-muted-foreground max-w-xl mx-auto">
-                    Servicios complementarios de contabilidad y consultoría legal especializados.
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                  {services?.filter(service => service.category === "Otros" || service.category === "Servicios Contables" || service.category === "Servicios Legales").map((service) => (
-                    <Card key={service.id} className="h-full hover:shadow-lg transition-shadow duration-300" data-testid={`card-service-${service.id}`}>
-                      <CardHeader>
-                        <div className="flex justify-between items-start mb-2">
-                          <Badge variant="secondary" className="mb-2">
-                            {service.category}
-                          </Badge>
-                          <div className="text-2xl font-bold text-primary">
-                            ${service.price}
-                          </div>
-                        </div>
-                        <CardTitle className="text-xl" data-testid={`text-service-name-${service.id}`}>
-                          {service.name}
-                        </CardTitle>
-                        <CardDescription data-testid={`text-service-description-${service.id}`}>
-                          {service.shortDescription}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="flex-1">
-                        <div className="space-y-2">
-                          <h4 className="font-semibold text-sm">Incluye:</h4>
-                          <ul className="space-y-1">
-                            {service.features.slice(0, 3).map((feature, idx) => (
-                              <li key={idx} className="flex items-start text-sm text-muted-foreground">
-                                <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </CardContent>
-                      <CardFooter className="pt-4">
-                        <Button 
-                          className="w-full" 
-                          size="lg"
-                          onClick={() => handleAddToCart(service)}
-                          data-testid={`button-add-to-cart-${service.id}`}
-                        >
-                          <ShoppingCart className="mr-2 h-4 w-4" />
-                          Agregar al Carrito
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </div>
             </div>
           )}
           </div>
