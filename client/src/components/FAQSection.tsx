@@ -24,10 +24,6 @@ const faqs = [
     answer: "No, una SAS en Ecuador no requiere capital mínimo. Puedes empezar con el monto que tengas disponible."
   },
   {
-    question: "¿Cómo hago seguimiento de mi solicitud?",
-    answer: "Tienes acceso a un dashboard donde ves el progreso en tiempo real de cada etapa. También recibes notificaciones por WhatsApp."
-  },
-  {
     question: "¿Qué es una SAS?",
     answer: "Es una Sociedad por Acciones Simplificada. Te permite formalizar tu negocio de manera rápida y protege tu patrimonio personal."
   },
