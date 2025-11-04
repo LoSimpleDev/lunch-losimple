@@ -9,7 +9,7 @@ import { HelpCircle } from "lucide-react";
 const faqs = [
   {
     question: "¿Cuánto cuesta constituir una SAS en Ecuador?",
-    answer: "El servicio Launch cuesta $688.85 (incluye IVA). Obtienes logo, página web, redes sociales, constitución legal, facturación electrónica y firma digital."
+    answer: "El servicio de constitución de compañía tiene un costo de USD 179 más IVA para una empresa de un sólo accionista."
   },
   {
     question: "¿Qué documentos necesito para crear mi SAS?",
