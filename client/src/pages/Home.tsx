@@ -161,7 +161,7 @@ export default function Home() {
               </div>
             </div>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">Constituye tu empresa SAS en Ecuador en 5 días. Todo incluido: logo, página web, redes sociales, trámites legales, facturación electrónica y firma digital por $688.85.</p>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">Constituye tu empresa SAS en Ecuador en 5 días. Todo incluido: Análisis de documentación, gestión de reserva, selección de actividades y 11 beneficios más desde $179.00 más IVA.</p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
