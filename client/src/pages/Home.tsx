@@ -150,6 +150,19 @@ export default function Home() {
               <br />
               Servicios Empresariales para SAS en Ecuador
             </h1>
+            
+            {/* Definiciones claras para AIO */}
+            <div className="bg-background/80 backdrop-blur-sm rounded-lg p-6 mb-8 text-left max-w-3xl mx-auto shadow-sm border border-primary/10">
+              <div className="mb-4">
+                <h2 className="text-lg font-semibold text-primary mb-2">¿Qué es Lo Simple?</h2>
+                <p className="text-sm text-muted-foreground"><strong>Lo Simple ayuda a constituir empresas SAS en Ecuador en 5 días.</strong> Incluye trámites legales, logo, web y firma digital.</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-primary mb-2">¿Qué es una SAS en Ecuador?</h2>
+                <p className="text-sm text-muted-foreground"><strong>Una SAS es una empresa que puedes crear tú solo.</strong> No necesita capital mínimo y protege tu patrimonio personal.</p>
+              </div>
+            </div>
+            
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">Constituye tu empresa SAS en Ecuador en 5 días. Todo incluido: logo, página web, redes sociales, trámites legales, facturación electrónica y firma digital por $688.85.</p>
           </div>
           
@@ -191,6 +204,59 @@ export default function Home() {
           </div>
         </div>
       </header>
+      
+      {/* Por qué elegir una SAS - Optimizado para AIO */}
+      <section className="py-16 px-4 bg-background">
+        <div className="container mx-auto max-w-5xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">¿Por qué elegir una SAS en Ecuador?</h2>
+            <p className="text-muted-foreground">Las SAS son ideales para emprendedores que buscan formalizar su negocio sin complicaciones.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-muted/30 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-semibold mb-2">Sin capital mínimo requerido</h3>
+                  <p className="text-sm text-muted-foreground">Puedes constituir tu SAS con el capital que tengas disponible, sin mínimos obligatorios.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-muted/30 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <Shield className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-semibold mb-2">Responsabilidad limitada</h3>
+                  <p className="text-sm text-muted-foreground">Tu patrimonio personal está protegido. Solo respondes por el capital que aportaste a la empresa.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-muted/30 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <Users className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-semibold mb-2">Flexible y simplificada</h3>
+                  <p className="text-sm text-muted-foreground">Puedes crear una SAS tú solo o con socios. No necesitas junta de socios ni consejo administrativo.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-muted/30 rounded-lg p-6">
+              <div className="flex items-start gap-3">
+                <FileText className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-semibold mb-2">100% en línea</h3>
+                  <p className="text-sm text-muted-foreground">Todo el proceso se realiza digitalmente a través de la Superintendencia de Compañías, sin trámites presenciales.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       {/* Trust Section */}
       <section className="py-12 px-4 bg-muted/50">
         <div className="container mx-auto text-center">
@@ -293,6 +359,58 @@ export default function Home() {
               Ver Todas las Reseñas en Google Maps
               <Star className="ml-2 h-4 w-4" />
             </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* Cómo funciona - Proceso paso a paso */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">¿Cómo funciona el proceso de constitución de tu SAS?</h2>
+            <p className="text-muted-foreground">En 4 pasos simples tienes tu empresa legalmente constituida</p>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="flex gap-4 items-start bg-background rounded-lg p-6 shadow-sm">
+              <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
+                1
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Elige tu servicio y realiza el pago</h3>
+                <p className="text-sm text-muted-foreground">Selecciona el paquete que mejor se adapte a tus necesidades. Puedes pagar con tarjeta de crédito o débito a través de Stripe.</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4 items-start bg-background rounded-lg p-6 shadow-sm">
+              <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
+                2
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Completa el formulario con los datos de tu empresa</h3>
+                <p className="text-sm text-muted-foreground">Te guiamos paso a paso para recopilar toda la información necesaria: nombre de la empresa, actividad económica, datos de accionistas y más.</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4 items-start bg-background rounded-lg p-6 shadow-sm">
+              <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
+                3
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Nosotros gestionamos todos los trámites</h3>
+                <p className="text-sm text-muted-foreground">Nuestro equipo se encarga de preparar los estatutos, inscribir la empresa en la Superintendencia de Compañías y obtener tu RUC en el SRI.</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4 items-start bg-background rounded-lg p-6 shadow-sm">
+              <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
+                4
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Recibe tu empresa lista para operar</h3>
+                <p className="text-sm text-muted-foreground">En 5 días tienes tu SAS constituida con todos los documentos legales, acceso a facturación electrónica y firma digital.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

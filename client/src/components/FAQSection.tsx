@@ -9,35 +9,35 @@ import { HelpCircle } from "lucide-react";
 const faqs = [
   {
     question: "¿Cuánto cuesta constituir una SAS en Ecuador?",
-    answer: "El servicio Launch de Lo Simple cuesta $599 + IVA (15%), total $688.85. Este paquete todo incluido contiene logo profesional, página web, manejo de redes sociales, constitución de la SAS, facturación electrónica y firma electrónica por 1 año."
+    answer: "El servicio Launch cuesta $688.85 (incluye IVA). Obtienes logo, página web, redes sociales, constitución legal, facturación electrónica y firma digital."
   },
   {
-    question: "¿Qué documentos necesito para constituir una SAS en Ecuador?",
-    answer: "Para constituir una SAS necesitas: cédula de identidad de los accionistas, información del objeto social de la empresa, definición del capital social, y datos de contacto. Lo Simple te guía en un formulario de 8 pasos para recopilar toda la información necesaria."
+    question: "¿Qué documentos necesito para crear mi SAS?",
+    answer: "Solo necesitas tu cédula de identidad y completar nuestro formulario en línea. Te guiamos paso a paso para recopilar toda la información."
   },
   {
-    question: "¿Cuánto tiempo toma constituir una SAS con Lo Simple?",
-    answer: "El tiempo promedio de entrega es de 5 días hábiles. El proceso incluye diseño de logo, desarrollo web, trámites legales ante la Superintendencia de Compañías y activación de facturación electrónica."
+    question: "¿Cuánto tiempo demora el proceso?",
+    answer: "En promedio 5 días hábiles. Recibes tu empresa completamente lista para operar con todos los trámites legales completos."
   },
   {
-    question: "¿Qué incluye el servicio Launch de Lo Simple?",
-    answer: "El servicio Launch incluye: diseño de logo profesional, página web corporativa, manejo de redes sociales, constitución legal de la SAS, facturación electrónica SRI, firma electrónica válida por 1 año, y asesoría personalizada durante todo el proceso."
+    question: "¿Qué incluye el servicio Launch?",
+    answer: "Incluye logo profesional, página web, redes sociales, constitución de la SAS, RUC, facturación electrónica y firma digital por 1 año."
   },
   {
-    question: "¿Cómo funciona el proceso de pago en Lo Simple?",
-    answer: "El proceso es simple: escoges el servicio Launch, completas el formulario de 8 pasos con la información de tu empresa, realizas el pago de $688.85 mediante tarjeta de crédito o débito con Stripe, y nuestro equipo inicia inmediatamente el proceso de constitución."
+    question: "¿Necesito capital mínimo para crear una SAS?",
+    answer: "No, una SAS en Ecuador no requiere capital mínimo. Puedes empezar con el monto que tengas disponible."
   },
   {
-    question: "¿Puedo hacer seguimiento del avance de mi constitución SAS?",
-    answer: "Sí, Lo Simple ofrece un dashboard personalizado donde puedes ver en tiempo real el progreso de cada etapa: diseño de logo, desarrollo web, redes sociales, trámites legales, facturación electrónica y firma electrónica. Recibes actualizaciones constantes del equipo."
+    question: "¿Cómo hago seguimiento de mi solicitud?",
+    answer: "Tienes acceso a un dashboard donde ves el progreso en tiempo real de cada etapa. También recibes notificaciones por WhatsApp."
   },
   {
-    question: "¿Qué es una SAS en Ecuador?",
-    answer: "Una Sociedad por Acciones Simplificada (SAS) es un tipo de compañía en Ecuador que permite formalizar un negocio de manera simple y con menos requisitos que otras figuras legales. Es ideal para emprendedores y pequeñas empresas que buscan operar legalmente."
+    question: "¿Qué es una SAS?",
+    answer: "Es una Sociedad por Acciones Simplificada. Te permite formalizar tu negocio de manera rápida y protege tu patrimonio personal."
   },
   {
-    question: "¿Qué beneficios obtengo al contratar el servicio Launch?",
-    answer: "Al contratar Launch obtienes beneficios exclusivos con aliados de Lo Simple, incluyendo descuentos en servicios de ToSellMore, horas gratis de coworking en Impaqto, créditos para Sassi y descuentos en asesoría legal. Cada beneficio se canjea mediante códigos únicos."
+    question: "¿Puedo crear una SAS yo solo?",
+    answer: "Sí, puedes constituir una SAS con un solo accionista. No necesitas socios para empezar tu empresa."
   }
 ];
 
