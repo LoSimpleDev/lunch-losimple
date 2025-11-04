@@ -153,7 +153,7 @@ export default function Home() {
             <div className="bg-background/80 backdrop-blur-sm rounded-lg p-6 mb-8 text-left max-w-3xl mx-auto shadow-sm border border-primary/10">
               <div className="mb-4">
                 <h2 className="text-lg font-semibold text-primary mb-2">¿Qué es Lo Simple?</h2>
-                <p className="text-sm text-muted-foreground"><strong>Lo Simple ayuda a constituir empresas SAS en Ecuador en 5 días.</strong> Incluye trámites legales, logo, web y firma digital.</p>
+                <p className="text-sm text-muted-foreground"><strong>Lo Simple ayuda a constituir empresas SAS en Ecuador en 5 días.</strong> Incluye trámites legales, libros sociales, títulos acción.</p>
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-primary mb-2">¿Qué es una SAS en Ecuador?</h2>
