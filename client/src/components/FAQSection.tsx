@@ -20,10 +20,6 @@ const faqs = [
     answer: "En promedio 5 días hábiles. Recibes tu empresa completamente lista para operar con todos los trámites legales completos."
   },
   {
-    question: "¿Qué incluye el servicio Launch?",
-    answer: "Incluye logo profesional, página web, redes sociales, constitución de la SAS, RUC, facturación electrónica y firma digital por 1 año."
-  },
-  {
     question: "¿Necesito capital mínimo para crear una SAS?",
     answer: "No, una SAS en Ecuador no requiere capital mínimo. Puedes empezar con el monto que tengas disponible."
   },
