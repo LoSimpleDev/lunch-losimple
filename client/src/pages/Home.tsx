@@ -406,7 +406,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-2">Recibe tu empresa lista para operar</h3>
-                <p className="text-sm text-muted-foreground">En 5 días tienes tu SAS constituida con todos los documentos legales, acceso a facturación electrónica y firma digital.</p>
+                <p className="text-sm text-muted-foreground">En 5 días tienes tu SAS constituida con todos los documentos legales, solicita facturación electrónica y firma digital (opcional).</p>
               </div>
             </div>
           </div>
