@@ -30,6 +30,13 @@ export function Header() {
               Inicio
             </a>
             <a 
+              href="/launch"
+              className="text-sm font-medium hover:text-primary transition-colors"
+              data-testid="link-launch"
+            >
+              Launch
+            </a>
+            <a 
               href="/saslegal-plus"
               className="text-sm font-medium hover:text-primary transition-colors"
               data-testid="link-membership"
