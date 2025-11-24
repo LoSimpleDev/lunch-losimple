@@ -148,12 +148,12 @@ export default function Home2() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 py-32 md:py-40 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-16">
             {/* Animated Tagline */}
-            <div className="mb-6">
-              <h1 className="text-5xl md:text-7xl font-bold mb-4">
+            <div className="mb-8">
+              <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold mb-6 leading-tight">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={currentWordIndex}
@@ -171,47 +171,47 @@ export default function Home2() {
               </h1>
             </div>
 
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="text-xl md:text-3xl text-muted-foreground max-w-4xl mx-auto mb-12 leading-relaxed">
               La puerta de entrada para constituir y operar empresas en Ecuador. 
               Todo lo que necesitas en un solo lugar.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
               <Button 
                 size="lg" 
-                className="text-lg px-8 py-6"
+                className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
                 onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
                 data-testid="button-get-started"
               >
                 Comenzar Ahora
-                <ChevronRight className="ml-2 h-5 w-5" />
+                <ChevronRight className="ml-2 h-6 w-6" />
               </Button>
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="text-lg px-8 py-6"
+                className="text-xl px-12 py-8 font-semibold border-2"
                 onClick={() => window.open('https://wa.me/593958613237', '_blank')}
                 data-testid="button-contact-advisor"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
+                <MessageCircle className="mr-2 h-6 w-6" />
                 Hablar con Asesora
               </Button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-muted-foreground">
+            <div className="flex flex-wrap justify-center items-center gap-12 text-base text-muted-foreground">
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>5 días de entrega</span>
+                <CheckCircle className="h-6 w-6 text-green-500" />
+                <span className="font-medium">5 días de entrega</span>
               </div>
               <div className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-green-500" />
-                <span>100% Legal</span>
+                <Shield className="h-6 w-6 text-green-500" />
+                <span className="font-medium">100% Legal</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-green-500" />
-                <span>500+ Empresas</span>
+                <Users className="h-6 w-6 text-green-500" />
+                <span className="font-medium">500+ Empresas</span>
               </div>
             </div>
           </div>
@@ -219,67 +219,73 @@ export default function Home2() {
       </section>
 
       {/* Backed By Section */}
-      <section className="py-12 px-4 border-b">
+      <section className="py-16 px-4 border-b border-border/50 bg-muted/20">
         <div className="container mx-auto max-w-6xl">
-          <p className="text-center text-sm text-muted-foreground mb-6">
+          <p className="text-center text-sm font-semibold tracking-wider uppercase text-muted-foreground mb-8">
             Servicios verificados y respaldados
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            <div className="flex items-center gap-2">
-              <Shield className="h-6 w-6" />
-              <span className="font-medium">Superintendencia de Compañías</span>
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16 opacity-70 hover:opacity-100 transition-opacity">
+            <div className="flex items-center gap-3 group">
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Shield className="h-7 w-7 text-primary" />
+              </div>
+              <span className="font-semibold text-sm md:text-base">Superintendencia de Compañías</span>
             </div>
-            <div className="flex items-center gap-2">
-              <FileText className="h-6 w-6" />
-              <span className="font-medium">SRI Ecuador</span>
+            <div className="flex items-center gap-3 group">
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <FileText className="h-7 w-7 text-primary" />
+              </div>
+              <span className="font-semibold text-sm md:text-base">SRI Ecuador</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Building className="h-6 w-6" />
-              <span className="font-medium">BCE</span>
+            <div className="flex items-center gap-3 group">
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Building className="h-7 w-7 text-primary" />
+              </div>
+              <span className="font-semibold text-sm md:text-base">BCE</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Services Tabs Section */}
-      <section id="servicios" className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section id="servicios" className="py-32 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
               Todos tus servicios empresariales
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Desde constituir tu empresa hasta mantenerla operando. Todo en una plataforma.
             </p>
           </div>
 
           <Tabs defaultValue="launch" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-8">
-              <TabsTrigger value="launch" className="text-sm md:text-base" data-testid="tab-launch">
-                <Rocket className="h-4 w-4 mr-2" />
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-12 p-2 h-auto bg-muted/50 rounded-xl">
+              <TabsTrigger value="launch" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-launch">
+                <Rocket className="h-5 w-5 mr-2" />
                 Launch
               </TabsTrigger>
-              <TabsTrigger value="legal" className="text-sm md:text-base" data-testid="tab-legal">
-                <Scale className="h-4 w-4 mr-2" />
+              <TabsTrigger value="legal" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-legal">
+                <Scale className="h-5 w-5 mr-2" />
                 Legal
               </TabsTrigger>
-              <TabsTrigger value="firma" className="text-sm md:text-base" data-testid="tab-firma">
-                <PenTool className="h-4 w-4 mr-2" />
+              <TabsTrigger value="firma" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-firma">
+                <PenTool className="h-5 w-5 mr-2" />
                 Firma Electrónica
               </TabsTrigger>
-              <TabsTrigger value="facturacion" className="text-sm md:text-base" data-testid="tab-facturacion">
-                <FileText className="h-4 w-4 mr-2" />
+              <TabsTrigger value="facturacion" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-facturacion">
+                <FileText className="h-5 w-5 mr-2" />
                 Facturación
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="launch" className="mt-8">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+            <TabsContent value="launch" className="mt-12">
+              <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                  <h3 className="text-3xl font-bold mb-4">
+                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
                     Lanza tu negocio en 2 semanas
                   </h3>
-                  <p className="text-lg text-muted-foreground mb-6">
+                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                     Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, 
                     constitución legal, facturación electrónica y firma digital.
                   </p>
@@ -463,34 +469,32 @@ export default function Home2() {
       </section>
 
       {/* Why Lo Simple - Benefits Section */}
-      <section className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="py-32 px-4 bg-gradient-to-b from-background to-muted/20">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
               ¿Por qué Lo Simple?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               No solo configuramos tu empresa, te preparamos para el éxito
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
             {benefits.map((benefit, index) => {
               const IconComponent = benefit.icon;
               return (
-                <Card key={index} className="border-2" data-testid={`card-benefit-${index}`}>
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                      <IconComponent className="h-6 w-6 text-primary" />
+                <div key={index} className="group" data-testid={`card-benefit-${index}`}>
+                  <div className="mb-6">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors mb-6">
+                      <IconComponent className="h-8 w-8 text-primary" />
                     </div>
-                    <CardTitle className="text-xl mb-2">{benefit.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      {benefit.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">{benefit.title}</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {benefit.description}
+                  </p>
+                </div>
               );
             })}
           </div>
@@ -498,55 +502,51 @@ export default function Home2() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="py-32 px-4 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
               Construido para emprendedores. Amado por emprendedores.
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-xl md:text-2xl text-muted-foreground">
               Miles de empresas confían en Lo Simple
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border-2 flex flex-col" data-testid={`card-testimonial-${index}`}>
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                      <Users className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                    </div>
+              <div key={index} className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:shadow-xl transition-all hover:border-primary/30" data-testid={`card-testimonial-${index}`}>
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-lg text-foreground mb-8 leading-relaxed">
+                  "{testimonial.content}"
+                </p>
+                <div className="flex items-center gap-4 border-t border-border/50 pt-6">
+                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Users className="h-7 w-7 text-primary" />
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex gap-1 mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+                  <div>
+                    <p className="font-bold text-lg">{testimonial.name}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.title}</p>
                   </div>
-                  <p className="text-muted-foreground">
-                    "{testimonial.content}"
-                  </p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Resources/Blog Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="py-32 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
               Recursos para emprendedores
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Guías prácticas para ayudarte a construir y hacer crecer tu negocio
             </p>
           </div>
@@ -596,21 +596,21 @@ export default function Home2() {
       </section>
 
       {/* Marketplace de Aliados */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
-              <Package className="h-8 w-8 text-primary" />
+      <section className="py-32 px-4 bg-gradient-to-b from-muted/20 to-background">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-8">
+              <Package className="h-10 w-10 text-primary" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
               Red de Aliados Verificados
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Accede a servicios complementarios de calidad. Continúa tu crecimiento con aliados de confianza.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {aliadosCategories.map((category) => {
               const IconComponent = category.icon;
               const colorClasses = {
@@ -634,36 +634,32 @@ export default function Home2() {
               const colors = colorClasses[category.color as keyof typeof colorClasses] || colorClasses.blue;
               
               return (
-                <Card key={category.title} className="hover:shadow-lg transition-all hover:border-primary/50" data-testid={`card-aliado-${category.title.toLowerCase()}`}>
-                  <CardHeader>
-                    <div className={`w-12 h-12 ${colors.bg} rounded-lg flex items-center justify-center mb-3`}>
-                      <IconComponent className={`h-6 w-6 ${colors.text}`} />
-                    </div>
-                    <CardTitle className="text-lg">{category.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {category.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <div key={category.title} className="group" data-testid={`card-aliado-${category.title.toLowerCase()}`}>
+                  <div className={`w-16 h-16 ${colors.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                    <IconComponent className={`h-8 w-8 ${colors.text}`} />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">{category.title}</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {category.description}
+                  </p>
+                </div>
               );
             })}
           </div>
 
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-8 text-center">
-            <Star className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-3">
+          <div className="bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 rounded-3xl p-12 md:p-16 text-center border border-primary/10">
+            <Star className="h-16 w-16 text-primary mx-auto mb-6" />
+            <h3 className="text-3xl md:text-4xl font-bold mb-6">
               Beneficios y descuentos exclusivos
             </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
               Como cliente de Lo Simple, accedes a descuentos especiales y condiciones preferenciales 
               con nuestros aliados. Ahorra dinero mientras haces crecer tu negocio.
             </p>
             <Link href="/beneficios">
-              <Button size="lg" variant="outline" data-testid="button-explore-benefits">
+              <Button size="lg" className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all" data-testid="button-explore-benefits">
                 Explorar Beneficios
-                <ChevronRight className="ml-2 h-5 w-5" />
+                <ChevronRight className="ml-2 h-6 w-6" />
               </Button>
             </Link>
           </div>
@@ -671,28 +667,28 @@ export default function Home2() {
       </section>
 
       {/* FAQs Section */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-32 px-4 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
               Preguntas Frecuentes
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-xl md:text-2xl text-muted-foreground">
               Todo lo que necesitas saber
             </p>
           </div>
           <FAQSection />
-          <div className="text-center mt-8">
-            <p className="text-muted-foreground mb-4">
+          <div className="text-center mt-12">
+            <p className="text-lg text-muted-foreground mb-6">
               ¿Tienes más preguntas?
             </p>
             <Button 
               size="lg"
-              variant="outline"
+              className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
               onClick={() => window.open('https://wa.me/593958613237', '_blank')}
               data-testid="button-schedule-consultation"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-6 w-6" />
               Agenda una consulta gratuita
             </Button>
           </div>
@@ -700,32 +696,32 @@ export default function Home2() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      <section className="py-32 md:py-40 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+        <div className="container mx-auto max-w-5xl text-center">
+          <h2 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight">
             Menos trámites. Más acción.
           </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-2xl md:text-3xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
             Únete a Lo Simple y comienza a construir el negocio de tus sueños hoy mismo.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button 
               size="lg" 
-              className="text-lg px-12 py-6"
+              className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
               onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
               data-testid="button-final-cta"
             >
               Comenzar Ahora
-              <ChevronRight className="ml-2 h-5 w-5" />
+              <ChevronRight className="ml-2 h-6 w-6" />
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-12 py-6"
+              className="text-xl px-12 py-8 font-semibold border-2"
               onClick={() => window.open('https://wa.me/593958613237', '_blank')}
               data-testid="button-final-contact"
             >
-              <MessageCircle className="mr-2 h-5 w-5" />
+              <MessageCircle className="mr-2 h-6 w-6" />
               Hablar con Asesora
             </Button>
           </div>
