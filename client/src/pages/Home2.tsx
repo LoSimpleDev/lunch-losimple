@@ -324,13 +324,13 @@ export default function Home2() {
               </div>
             </TabsContent>
 
-            <TabsContent value="legal" className="mt-8">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+            <TabsContent value="legal" className="mt-12">
+              <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                  <h3 className="text-3xl font-bold mb-4">
+                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
                     Constituye tu SAS en 5 días
                   </h3>
-                  <p className="text-lg text-muted-foreground mb-6">
+                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                     Servicio completo de constitución de empresas SAS. Trámites legales, 
                     libros sociales y títulos de acción listos para operar.
                   </p>
@@ -371,13 +371,13 @@ export default function Home2() {
               </div>
             </TabsContent>
 
-            <TabsContent value="firma" className="mt-8">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+            <TabsContent value="firma" className="mt-12">
+              <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                  <h3 className="text-3xl font-bold mb-4">
+                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
                     Firma Electrónica con validez legal
                   </h3>
-                  <p className="text-lg text-muted-foreground mb-6">
+                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                     Certificados digitales de persona natural y jurídica. 
                     Firma documentos, facturas y contratos con total seguridad.
                   </p>
@@ -418,13 +418,13 @@ export default function Home2() {
               </div>
             </TabsContent>
 
-            <TabsContent value="facturacion" className="mt-8">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+            <TabsContent value="facturacion" className="mt-12">
+              <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                  <h3 className="text-3xl font-bold mb-4">
+                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
                     Sistema de Facturación Electrónica
                   </h3>
-                  <p className="text-lg text-muted-foreground mb-6">
+                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                     Plataforma completa de facturación autorizada por el SRI. 
                     Emite facturas, notas de crédito y más desde cualquier dispositivo.
                   </p>
