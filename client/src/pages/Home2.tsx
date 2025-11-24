@@ -28,6 +28,10 @@ import launchImage from "@assets/stock_images/modern_business_laun_4f912675.jpg"
 import legalImage from "@assets/stock_images/legal_documents_cont_84ea744a.jpg";
 import firmaImage from "@assets/stock_images/digital_signature_el_96b790f1.jpg";
 import facturacionImage from "@assets/stock_images/electronic_invoicing_3458f773.jpg";
+import forbesLogo from "@assets/forbes ecuador_1764020045377.png";
+import kinesisLogo from "@assets/Logo KINESIS_1764020056113.png";
+import impaqtoLogo from "@assets/impaqto logo_1764020086029.png";
+import bidLabLogo from "@assets/RETO BID LAB LOGO_1764020098244.avif";
 
 // Data structures for repeated sections
 const benefits = [
@@ -176,7 +180,7 @@ export default function Home2() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20">
               <Button 
                 size="lg" 
                 className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
@@ -196,6 +200,67 @@ export default function Home2() {
                 <MessageCircle className="mr-2 h-6 w-6" />
                 Hablar con Asesora
               </Button>
+            </div>
+
+            {/* Featured In Section */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 opacity-70">
+              <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                Nos viste en:
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-8 md:gap-10">
+                <a 
+                  href="https://www.forbes.com.ec/negocios/transformo-sus-derrotas-una-plataforma-medio-millon-dolares-n71419"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-100 opacity-70"
+                  data-testid="link-forbes"
+                >
+                  <img 
+                    src={forbesLogo} 
+                    alt="Forbes Ecuador" 
+                    className="h-6 md:h-7 w-auto grayscale hover:grayscale-0 transition-all"
+                  />
+                </a>
+                <a 
+                  href="https://impaqto.net/cerramos-con-exito-kinesis-un-programa-de-aceleracion-de-impacto-transformador/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-100 opacity-70"
+                  data-testid="link-kinesis"
+                >
+                  <img 
+                    src={kinesisLogo} 
+                    alt="Kinesis" 
+                    className="h-8 md:h-9 w-auto grayscale hover:grayscale-0 transition-all"
+                  />
+                </a>
+                <a 
+                  href="https://www.youtube.com/shorts/L3MLSx1ga4I"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-100 opacity-70"
+                  data-testid="link-impaqto"
+                >
+                  <img 
+                    src={impaqtoLogo} 
+                    alt="Impaqto" 
+                    className="h-8 md:h-9 w-auto grayscale hover:grayscale-0 transition-all"
+                  />
+                </a>
+                <a 
+                  href="https://impaqto.net/reto-de-innovacion-digitalizacion-y-sostenibilidad/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-100 opacity-70"
+                  data-testid="link-bidlab"
+                >
+                  <img 
+                    src={bidLabLogo} 
+                    alt="Reto BID Lab" 
+                    className="h-8 md:h-9 w-auto grayscale hover:grayscale-0 transition-all"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
