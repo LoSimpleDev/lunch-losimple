@@ -291,25 +291,84 @@ export default function Home2() {
             </p>
           </div>
 
-          <Tabs defaultValue="launch" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-12 p-2 h-auto bg-muted/50 rounded-xl">
-              <TabsTrigger value="launch" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-launch">
-                <Rocket className="h-5 w-5 mr-2" />
-                Launch
-              </TabsTrigger>
-              <TabsTrigger value="legal" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-legal">
-                <Scale className="h-5 w-5 mr-2" />
-                Legal
-              </TabsTrigger>
-              <TabsTrigger value="firma" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-firma">
-                <PenTool className="h-5 w-5 mr-2" />
-                Firma Electrónica
-              </TabsTrigger>
-              <TabsTrigger value="facturacion" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-facturacion">
-                <FileText className="h-5 w-5 mr-2" />
-                Facturación
-              </TabsTrigger>
-            </TabsList>
+          <Tabs defaultValue="losimple" className="w-full">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12">
+              <TabsList className="grid grid-cols-2 lg:grid-cols-5 p-2 h-auto bg-muted/50 rounded-xl">
+                <TabsTrigger value="losimple" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-losimple">
+                  Lo Simple
+                </TabsTrigger>
+                <TabsTrigger value="launch" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-launch">
+                  <Rocket className="h-5 w-5 mr-2" />
+                  Launch
+                </TabsTrigger>
+                <TabsTrigger value="legal" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-legal">
+                  <Scale className="h-5 w-5 mr-2" />
+                  Legal
+                </TabsTrigger>
+                <TabsTrigger value="firma" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-firma">
+                  <PenTool className="h-5 w-5 mr-2" />
+                  Firma Electrónica
+                </TabsTrigger>
+                <TabsTrigger value="facturacion" className="text-base md:text-lg py-4 px-6 data-[state=active]:shadow-md" data-testid="tab-facturacion">
+                  <FileText className="h-5 w-5 mr-2" />
+                  Facturación
+                </TabsTrigger>
+              </TabsList>
+              <div className="flex gap-4">
+                <Link href="/launch">
+                  <Button 
+                    size="lg" 
+                    className="bg-purple-600 hover:bg-purple-700"
+                    data-testid="button-launch-main"
+                  >
+                    Launch
+                  </Button>
+                </Link>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                  data-testid="button-schedule-main"
+                >
+                  Agendemos
+                </Button>
+              </div>
+            </div>
+
+            <TabsContent value="losimple" className="mt-8">
+              <div className="space-y-8">
+                {/* Lo Simple - Mix of Launch colors */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Lo Simple</p>
+                    <h3 className="text-2xl font-bold mb-4">Asesoría integral</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Expertos dedicados a guiar tu camino empresarial</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Lo Simple</p>
+                    <h3 className="text-2xl font-bold mb-4">Soluciones integradas</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Todo lo que necesitas en un solo lugar</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Lo Simple</p>
+                    <h3 className="text-2xl font-bold mb-4">Éxito empresarial</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Herramientas para crecer y prosperar</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                </div>
+
+                {/* Image Space */}
+                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-bold">¿Por qué Lo Simple?</h3>
+                    <p className="text-lg text-muted-foreground">Tu puerta de entrada a la formalización empresarial. Constituye tu empresa y accede a todos los servicios que necesitas para operar con confianza en Ecuador.</p>
+                  </div>
+                  <div className="bg-muted/30 rounded-2xl h-96"></div>
+                </div>
+              </div>
+            </TabsContent>
 
             <TabsContent value="launch" className="mt-8">
               <div className="space-y-8">
@@ -335,26 +394,11 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* CTA Buttons and Image Space */}
+                {/* Description and Image Space */}
                 <div className="grid md:grid-cols-2 gap-8 items-center py-8">
                   <div className="space-y-4">
                     <h3 className="text-3xl font-bold">Lanza tu negocio en 2 semanas</h3>
                     <p className="text-lg text-muted-foreground">Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, constitución legal, facturación electrónica y firma digital.</p>
-                    <div className="flex gap-4">
-                      <Link href="/launch">
-                        <Button size="lg" className="bg-purple-600 hover:bg-purple-700" data-testid="button-launch-service">
-                          Launch
-                        </Button>
-                      </Link>
-                      <Button 
-                        size="lg" 
-                        variant="outline"
-                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
-                        data-testid="button-schedule-launch"
-                      >
-                        Agendemos
-                      </Button>
-                    </div>
                   </div>
                   <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
@@ -385,28 +429,11 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* CTA Buttons and Image Space */}
+                {/* Description and Image Space */}
                 <div className="grid md:grid-cols-2 gap-8 items-center py-8">
                   <div className="space-y-4">
                     <h3 className="text-3xl font-bold">Constituye tu SAS en 5 días</h3>
                     <p className="text-lg text-muted-foreground">Servicio completo de constitución de empresas SAS. Trámites legales, libros sociales y títulos de acción listos para operar.</p>
-                    <div className="flex gap-4">
-                      <Button 
-                        size="lg" 
-                        className="bg-cyan-600 hover:bg-cyan-700"
-                        data-testid="button-legal-service"
-                      >
-                        Legal
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline"
-                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
-                        data-testid="button-schedule-legal"
-                      >
-                        Agendemos
-                      </Button>
-                    </div>
                   </div>
                   <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
@@ -437,28 +464,11 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* CTA Buttons and Image Space */}
+                {/* Description and Image Space */}
                 <div className="grid md:grid-cols-2 gap-8 items-center py-8">
                   <div className="space-y-4">
                     <h3 className="text-3xl font-bold">Firma Electrónica con validez legal</h3>
                     <p className="text-lg text-muted-foreground">Certificados digitales de persona natural y jurídica. Firma documentos, facturas y contratos con total seguridad.</p>
-                    <div className="flex gap-4">
-                      <Button 
-                        size="lg" 
-                        className="bg-green-600 hover:bg-green-700"
-                        data-testid="button-firma-service"
-                      >
-                        Firma Electrónica
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline"
-                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
-                        data-testid="button-schedule-firma"
-                      >
-                        Agendemos
-                      </Button>
-                    </div>
                   </div>
                   <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
@@ -489,29 +499,11 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* CTA Buttons and Image Space */}
+                {/* Description and Image Space */}
                 <div className="grid md:grid-cols-2 gap-8 items-center py-8">
                   <div className="space-y-4">
                     <h3 className="text-3xl font-bold">Sistema de Facturación Electrónica</h3>
                     <p className="text-lg text-muted-foreground">Plataforma completa de facturación autorizada por el SRI. Emite facturas, notas de crédito y más desde cualquier dispositivo.</p>
-                    <div className="flex gap-4">
-                      <Button 
-                        size="lg" 
-                        className="bg-yellow-600 hover:bg-yellow-700"
-                        onClick={() => window.open('https://facturacion.losimple.ai', '_blank')}
-                        data-testid="button-facturacion-service"
-                      >
-                        Facturación
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline"
-                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
-                        data-testid="button-schedule-facturacion"
-                      >
-                        Agendemos
-                      </Button>
-                    </div>
                   </div>
                   <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
