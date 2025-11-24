@@ -336,9 +336,9 @@ export default function Home2() {
             </div>
 
             <TabsContent value="losimple" className="mt-8">
-              <div className="space-y-8">
+              <div className="space-y-0">
                 {/* Lo Simple - Mix of Launch colors */}
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Lo Simple</p>
                     <h3 className="text-2xl font-bold mb-4">Asesoría integral</h3>
@@ -359,13 +359,15 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* Image Space */}
-                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
-                  <div className="space-y-4">
-                    <h3 className="text-3xl font-bold">¿Por qué Lo Simple?</h3>
-                    <p className="text-lg text-muted-foreground">Tu puerta de entrada a la formalización empresarial. Constituye tu empresa y accede a todos los servicios que necesitas para operar con confianza en Ecuador.</p>
+                {/* Description with Border Frame */}
+                <div className="border-2 border-purple-600 rounded-2xl p-8">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                      <h3 className="text-3xl font-bold">¿Por qué Lo Simple?</h3>
+                      <p className="text-lg text-foreground">Tu puerta de entrada a la formalización empresarial. Constituye tu empresa y accede a todos los servicios que necesitas para operar con confianza en Ecuador.</p>
+                    </div>
+                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
-                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
@@ -395,7 +397,7 @@ export default function Home2() {
                 </div>
 
                 {/* Description with Border Frame */}
-                <div className="border-2 border-purple-600 bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-8">
+                <div className="border-2 border-purple-600 rounded-2xl p-8">
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                       <h3 className="text-3xl font-bold">Lanza tu negocio en 2 semanas</h3>
@@ -432,7 +434,7 @@ export default function Home2() {
                 </div>
 
                 {/* Description with Border Frame */}
-                <div className="border-2 border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 rounded-2xl p-8">
+                <div className="border-2 border-cyan-600 rounded-2xl p-8">
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                       <h3 className="text-3xl font-bold">Constituye tu SAS en 5 días</h3>
@@ -469,7 +471,7 @@ export default function Home2() {
                 </div>
 
                 {/* Description with Border Frame */}
-                <div className="border-2 border-green-600 bg-green-50 dark:bg-green-900/20 rounded-2xl p-8">
+                <div className="border-2 border-green-600 rounded-2xl p-8">
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                       <h3 className="text-3xl font-bold">Firma Electrónica con validez legal</h3>
@@ -506,7 +508,7 @@ export default function Home2() {
                 </div>
 
                 {/* Description with Border Frame */}
-                <div className="border-2 border-yellow-600 bg-yellow-50 dark:bg-yellow-900/20 rounded-2xl p-8">
+                <div className="border-2 border-yellow-600 rounded-2xl p-8">
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                       <h3 className="text-3xl font-bold">Sistema de Facturación Electrónica</h3>
