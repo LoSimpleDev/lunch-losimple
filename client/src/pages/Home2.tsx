@@ -371,87 +371,91 @@ export default function Home2() {
             </TabsContent>
 
             <TabsContent value="launch" className="mt-8">
-              <div className="space-y-8">
+              <div className="space-y-0">
                 {/* Partial View - 3 Cards */}
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
                     <h3 className="text-2xl font-bold mb-4">Identidad de marca</h3>
                     <p className="text-sm text-muted-foreground mb-6">Logo, paleta de colores y guía de marca profesional</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
-                  <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Launch</p>
+                  <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
                     <h3 className="text-2xl font-bold mb-4">Presencia digital</h3>
                     <p className="text-sm text-muted-foreground mb-6">Sitio web profesional, redes sociales configuradas</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
-                  <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Launch</p>
+                  <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
                     <h3 className="text-2xl font-bold mb-4">Legalidad y operación</h3>
                     <p className="text-sm text-muted-foreground mb-6">Constitución, firma digital, facturación lista</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
 
-                {/* Description and Image Space */}
-                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
-                  <div className="space-y-4">
-                    <h3 className="text-3xl font-bold">Lanza tu negocio en 2 semanas</h3>
-                    <p className="text-lg text-muted-foreground">Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, constitución legal, facturación electrónica y firma digital.</p>
+                {/* Description with Border Frame */}
+                <div className="border-2 border-purple-600 bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-8">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                      <h3 className="text-3xl font-bold">Lanza tu negocio en 2 semanas</h3>
+                      <p className="text-lg text-foreground">Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, constitución legal, facturación electrónica y firma digital.</p>
+                    </div>
+                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
-                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
 
             <TabsContent value="legal" className="mt-8">
-              <div className="space-y-8">
+              <div className="space-y-0">
                 {/* Partial View - 3 Cards */}
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
                     <h3 className="text-2xl font-bold mb-4">Constitución de SAS</h3>
                     <p className="text-sm text-muted-foreground mb-6">Trámites legales completos ante la Superintendencia en 5 días</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
-                  <div className="bg-blue-100 dark:bg-blue-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-3">Legal</p>
+                  <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
                     <h3 className="text-2xl font-bold mb-4">Documentos legales</h3>
                     <p className="text-sm text-muted-foreground mb-6">Libros sociales, títulos de acción, estatutos listos</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
-                  <div className="bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mb-3">Legal</p>
+                  <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
                     <h3 className="text-2xl font-bold mb-4">Protección patrimonial</h3>
                     <p className="text-sm text-muted-foreground mb-6">Separa tus bienes personales de la empresa</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
 
-                {/* Description and Image Space */}
-                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
-                  <div className="space-y-4">
-                    <h3 className="text-3xl font-bold">Constituye tu SAS en 5 días</h3>
-                    <p className="text-lg text-muted-foreground">Servicio completo de constitución de empresas SAS. Trámites legales, libros sociales y títulos de acción listos para operar.</p>
+                {/* Description with Border Frame */}
+                <div className="border-2 border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 rounded-2xl p-8">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                      <h3 className="text-3xl font-bold">Constituye tu SAS en 5 días</h3>
+                      <p className="text-lg text-foreground">Servicio completo de constitución de empresas SAS. Trámites legales, libros sociales y títulos de acción listos para operar.</p>
+                    </div>
+                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
-                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
 
             <TabsContent value="firma" className="mt-8">
-              <div className="space-y-8">
+              <div className="space-y-0">
                 {/* Partial View - 3 Cards */}
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mb-3">Firma Electrónica</p>
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
+                  <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Certificados digitales</h3>
                     <p className="text-sm text-muted-foreground mb-6">Persona natural y jurídica con validez legal</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
-                  <div className="bg-teal-100 dark:bg-teal-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-teal-700 dark:text-teal-300 mb-3">Firma Electrónica</p>
+                  <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Firma segura</h3>
                     <p className="text-sm text-muted-foreground mb-6">Token USB y activación inmediata incluidos</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
@@ -464,48 +468,52 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* Description and Image Space */}
-                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
-                  <div className="space-y-4">
-                    <h3 className="text-3xl font-bold">Firma Electrónica con validez legal</h3>
-                    <p className="text-lg text-muted-foreground">Certificados digitales de persona natural y jurídica. Firma documentos, facturas y contratos con total seguridad.</p>
+                {/* Description with Border Frame */}
+                <div className="border-2 border-green-600 bg-green-50 dark:bg-green-900/20 rounded-2xl p-8">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                      <h3 className="text-3xl font-bold">Firma Electrónica con validez legal</h3>
+                      <p className="text-lg text-foreground">Certificados digitales de persona natural y jurídica. Firma documentos, facturas y contratos con total seguridad.</p>
+                    </div>
+                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
-                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
 
             <TabsContent value="facturacion" className="mt-8">
-              <div className="space-y-8">
+              <div className="space-y-0">
                 {/* Partial View - 3 Cards */}
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Facturación electrónica</h3>
                     <p className="text-sm text-muted-foreground mb-6">100% cumplimiento SRI, autorizado y confiable</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
-                  <div className="bg-amber-100 dark:bg-amber-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-amber-700 dark:text-amber-300 mb-3">Facturación</p>
+                  <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Reportes automáticos</h3>
                     <p className="text-sm text-muted-foreground mb-6">Genera reportes listos para el SRI automaticamente</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
-                  <div className="bg-orange-100 dark:bg-orange-900/30 rounded-2xl p-8">
-                    <p className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-3">Facturación</p>
+                  <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Acceso multiplataforma</h3>
                     <p className="text-sm text-muted-foreground mb-6">Desde web, móvil o escritorio en cualquier momento</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
 
-                {/* Description and Image Space */}
-                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
-                  <div className="space-y-4">
-                    <h3 className="text-3xl font-bold">Sistema de Facturación Electrónica</h3>
-                    <p className="text-lg text-muted-foreground">Plataforma completa de facturación autorizada por el SRI. Emite facturas, notas de crédito y más desde cualquier dispositivo.</p>
+                {/* Description with Border Frame */}
+                <div className="border-2 border-yellow-600 bg-yellow-50 dark:bg-yellow-900/20 rounded-2xl p-8">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                      <h3 className="text-3xl font-bold">Sistema de Facturación Electrónica</h3>
+                      <p className="text-lg text-foreground">Plataforma completa de facturación autorizada por el SRI. Emite facturas, notas de crédito y más desde cualquier dispositivo.</p>
+                    </div>
+                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
-                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
