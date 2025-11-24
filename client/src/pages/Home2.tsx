@@ -277,7 +277,7 @@ export default function Home2() {
       </section>
 
       {/* Services Tabs Section */}
-      <section id="servicios" className="py-32 px-4">
+      <section id="servicios" className="py-[35px] px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
