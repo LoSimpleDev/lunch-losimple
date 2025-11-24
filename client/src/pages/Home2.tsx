@@ -167,9 +167,19 @@ export default function Home2() {
         
         <div className="container mx-auto max-w-7xl relative z-10">
           <div className="text-center mb-16">
+            {/* Lo Simple Logo */}
+            <div className="mb-8 flex justify-center">
+              <img 
+                src={logoUrl} 
+                alt="Lo Simple" 
+                className="h-16 md:h-20 w-auto"
+                data-testid="img-logo-losimple"
+              />
+            </div>
+
             {/* Main Headline */}
             <div className="mb-8">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold mb-6 leading-tight">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
                 Empezar negocios en Ecuador
               </h1>
             </div>
