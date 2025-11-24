@@ -149,7 +149,32 @@ export default function Home2() {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 py-32 md:py-40 px-4">
-        <div className="container mx-auto max-w-7xl">
+        {/* Decorative Geometric Shapes */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Top Left - Angular shapes */}
+          <div className="absolute -top-20 -left-20 w-64 h-64 md:w-96 md:h-96">
+            <div className="absolute top-0 left-0 w-40 h-40 bg-[#6C5CE7] opacity-90 rounded-br-full transform rotate-45"></div>
+            <div className="absolute top-20 left-20 w-32 h-32 bg-[#00D4FF] opacity-80 rounded-lg transform rotate-12"></div>
+            <div className="absolute top-10 left-40 w-24 h-2 bg-[#FFB800] opacity-90"></div>
+            <div className="absolute top-32 left-12 w-8 h-8 bg-white opacity-60 rounded-full"></div>
+          </div>
+          
+          {/* Top Right - Circular shapes */}
+          <div className="absolute -top-32 -right-32 w-80 h-80 md:w-[500px] md:h-[500px]">
+            <div className="absolute top-20 right-0 w-64 h-64 bg-[#6C5CE7] opacity-80 rounded-full"></div>
+            <div className="absolute top-40 right-32 w-40 h-40 bg-[#00D4FF] opacity-70 rounded-full"></div>
+            <div className="absolute top-10 right-20 w-12 h-12 bg-white opacity-50 rounded-full"></div>
+            <div className="absolute bottom-20 right-40 w-6 h-6 bg-white opacity-60 rounded-full"></div>
+          </div>
+          
+          {/* Bottom Left - Small accents */}
+          <div className="absolute bottom-20 left-10 w-16 h-16 bg-[#FFB800] opacity-70 rounded-lg transform rotate-45 hidden md:block"></div>
+          
+          {/* Bottom Right - Small accents */}
+          <div className="absolute bottom-32 right-20 w-20 h-20 bg-[#00D4FF] opacity-60 rounded-full hidden md:block"></div>
+        </div>
+        
+        <div className="container mx-auto max-w-7xl relative z-10">
           <div className="text-center mb-16">
             {/* Animated Tagline */}
             <div className="mb-8">
