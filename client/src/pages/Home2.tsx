@@ -266,35 +266,6 @@ export default function Home2() {
         </div>
       </section>
 
-      {/* Backed By Section */}
-      <section className="py-16 px-4 border-b border-border/50 bg-muted/20">
-        <div className="container mx-auto max-w-6xl">
-          <p className="text-center text-sm font-semibold tracking-wider uppercase text-muted-foreground mb-8">
-            Servicios verificados y respaldados
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16 opacity-70 hover:opacity-100 transition-opacity">
-            <div className="flex items-center gap-3 group">
-              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Shield className="h-7 w-7 text-primary" />
-              </div>
-              <span className="font-semibold text-sm md:text-base">Superintendencia de Compañías</span>
-            </div>
-            <div className="flex items-center gap-3 group">
-              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <FileText className="h-7 w-7 text-primary" />
-              </div>
-              <span className="font-semibold text-sm md:text-base">SRI Ecuador</span>
-            </div>
-            <div className="flex items-center gap-3 group">
-              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Building className="h-7 w-7 text-primary" />
-              </div>
-              <span className="font-semibold text-sm md:text-base">BCE</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Services Tabs Section */}
       <section id="servicios" className="py-32 px-4">
         <div className="container mx-auto max-w-7xl">
