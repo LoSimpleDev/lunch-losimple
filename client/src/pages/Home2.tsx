@@ -279,12 +279,15 @@ export default function Home2() {
       {/* Services Tabs Section */}
       <section id="servicios" className="py-[35px] px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
+            <p className="text-sm font-semibold tracking-wider uppercase text-muted-foreground mb-4">
+              Nuestra Oferta
+            </p>
             <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
-              Todos tus servicios empresariales
+              Todo lo que necesitas para empezar un negocio en Ecuador
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Desde constituir tu empresa hasta mantenerla operando. Todo en una plataforma.
+              Constituye tu empresa y conecta con todos los servicios que necesitas en un solo lugar.
             </p>
           </div>
 
@@ -308,188 +311,209 @@ export default function Home2() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="launch" className="mt-12">
-              <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
-                    Lanza tu negocio en 2 semanas
-                  </h3>
-                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                    Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, 
-                    constitución legal, facturación electrónica y firma digital.
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Identidad de marca completa</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Presencia digital profesional</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>100% legal desde el día uno</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Listo para facturar</span>
-                    </li>
-                  </ul>
-                  <Link href="/launch">
-                    <Button size="lg" data-testid="button-launch-service">
-                      Conocer Launch
-                      <ChevronRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
+            <TabsContent value="launch" className="mt-8">
+              <div className="space-y-8">
+                {/* Partial View - 3 Cards */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
+                    <h3 className="text-2xl font-bold mb-4">Identidad de marca</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Logo, paleta de colores y guía de marca profesional</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Launch</p>
+                    <h3 className="text-2xl font-bold mb-4">Presencia digital</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Sitio web profesional, redes sociales configuradas</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Launch</p>
+                    <h3 className="text-2xl font-bold mb-4">Legalidad y operación</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Constitución, firma digital, facturación lista</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
                 </div>
-                <div className="relative">
-                  <img 
-                    src={launchImage} 
-                    alt="Launch Service" 
-                    className="rounded-lg shadow-2xl"
-                  />
+
+                {/* CTA Buttons and Image Space */}
+                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-bold">Lanza tu negocio en 2 semanas</h3>
+                    <p className="text-lg text-muted-foreground">Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, constitución legal, facturación electrónica y firma digital.</p>
+                    <div className="flex gap-4">
+                      <Link href="/launch">
+                        <Button size="lg" className="bg-purple-600 hover:bg-purple-700" data-testid="button-launch-service">
+                          Launch
+                        </Button>
+                      </Link>
+                      <Button 
+                        size="lg" 
+                        variant="outline"
+                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                        data-testid="button-schedule-launch"
+                      >
+                        Agendemos
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="legal" className="mt-12">
-              <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
-                    Constituye tu SAS en 5 días
-                  </h3>
-                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                    Servicio completo de constitución de empresas SAS. Trámites legales, 
-                    libros sociales y títulos de acción listos para operar.
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Desde USD $179 + IVA</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Sin capital mínimo requerido</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Protege tu patrimonio personal</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Seguimiento en tiempo real</span>
-                    </li>
-                  </ul>
-                  <Button 
-                    size="lg"
-                    onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
-                    data-testid="button-legal-service"
-                  >
-                    Ver Servicios Legales
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
+            <TabsContent value="legal" className="mt-8">
+              <div className="space-y-8">
+                {/* Partial View - 3 Cards */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
+                    <h3 className="text-2xl font-bold mb-4">Constitución de SAS</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Trámites legales completos ante la Superintendencia en 5 días</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-blue-100 dark:bg-blue-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-3">Legal</p>
+                    <h3 className="text-2xl font-bold mb-4">Documentos legales</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Libros sociales, títulos de acción, estatutos listos</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mb-3">Legal</p>
+                    <h3 className="text-2xl font-bold mb-4">Protección patrimonial</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Separa tus bienes personales de la empresa</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
                 </div>
-                <div className="relative">
-                  <img 
-                    src={legalImage} 
-                    alt="Legal Services" 
-                    className="rounded-lg shadow-2xl"
-                  />
+
+                {/* CTA Buttons and Image Space */}
+                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-bold">Constituye tu SAS en 5 días</h3>
+                    <p className="text-lg text-muted-foreground">Servicio completo de constitución de empresas SAS. Trámites legales, libros sociales y títulos de acción listos para operar.</p>
+                    <div className="flex gap-4">
+                      <Button 
+                        size="lg" 
+                        className="bg-cyan-600 hover:bg-cyan-700"
+                        data-testid="button-legal-service"
+                      >
+                        Legal
+                      </Button>
+                      <Button 
+                        size="lg" 
+                        variant="outline"
+                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                        data-testid="button-schedule-legal"
+                      >
+                        Agendemos
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="firma" className="mt-12">
-              <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
-                    Firma Electrónica con validez legal
-                  </h3>
-                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                    Certificados digitales de persona natural y jurídica. 
-                    Firma documentos, facturas y contratos con total seguridad.
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Token USB incluido</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Vigencia de 30 días hasta 4 años</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Activación inmediata</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Soporte técnico incluido</span>
-                    </li>
-                  </ul>
-                  <Button 
-                    size="lg"
-                    onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
-                    data-testid="button-firma-service"
-                  >
-                    Obtener Firma Digital
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
+            <TabsContent value="firma" className="mt-8">
+              <div className="space-y-8">
+                {/* Partial View - 3 Cards */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mb-3">Firma Electrónica</p>
+                    <h3 className="text-2xl font-bold mb-4">Certificados digitales</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Persona natural y jurídica con validez legal</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-teal-100 dark:bg-teal-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-teal-700 dark:text-teal-300 mb-3">Firma Electrónica</p>
+                    <h3 className="text-2xl font-bold mb-4">Firma segura</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Token USB y activación inmediata incluidos</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
+                    <h3 className="text-2xl font-bold mb-4">Soporte técnico</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Vigencia hasta 4 años con asistencia completa</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
                 </div>
-                <div className="relative">
-                  <img 
-                    src={firmaImage} 
-                    alt="Digital Signature" 
-                    className="rounded-lg shadow-2xl"
-                  />
+
+                {/* CTA Buttons and Image Space */}
+                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-bold">Firma Electrónica con validez legal</h3>
+                    <p className="text-lg text-muted-foreground">Certificados digitales de persona natural y jurídica. Firma documentos, facturas y contratos con total seguridad.</p>
+                    <div className="flex gap-4">
+                      <Button 
+                        size="lg" 
+                        className="bg-green-600 hover:bg-green-700"
+                        data-testid="button-firma-service"
+                      >
+                        Firma Electrónica
+                      </Button>
+                      <Button 
+                        size="lg" 
+                        variant="outline"
+                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                        data-testid="button-schedule-firma"
+                      >
+                        Agendemos
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="facturacion" className="mt-12">
-              <div className="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
-                    Sistema de Facturación Electrónica
-                  </h3>
-                  <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                    Plataforma completa de facturación autorizada por el SRI. 
-                    Emite facturas, notas de crédito y más desde cualquier dispositivo.
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>100% cumplimiento SRI</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Facturación ilimitada</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Reportes automáticos</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span>Acceso desde web y móvil</span>
-                    </li>
-                  </ul>
-                  <Button 
-                    size="lg"
-                    onClick={() => window.open('https://facturacion.losimple.ai', '_blank')}
-                    data-testid="button-facturacion-service"
-                  >
-                    Ir a Facturación
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
+            <TabsContent value="facturacion" className="mt-8">
+              <div className="space-y-8">
+                {/* Partial View - 3 Cards */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
+                    <h3 className="text-2xl font-bold mb-4">Facturación electrónica</h3>
+                    <p className="text-sm text-muted-foreground mb-6">100% cumplimiento SRI, autorizado y confiable</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-amber-100 dark:bg-amber-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-amber-700 dark:text-amber-300 mb-3">Facturación</p>
+                    <h3 className="text-2xl font-bold mb-4">Reportes automáticos</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Genera reportes listos para el SRI automaticamente</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  <div className="bg-orange-100 dark:bg-orange-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-3">Facturación</p>
+                    <h3 className="text-2xl font-bold mb-4">Acceso multiplataforma</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Desde web, móvil o escritorio en cualquier momento</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
                 </div>
-                <div className="relative">
-                  <img 
-                    src={facturacionImage} 
-                    alt="Electronic Invoicing" 
-                    className="rounded-lg shadow-2xl"
-                  />
+
+                {/* CTA Buttons and Image Space */}
+                <div className="grid md:grid-cols-2 gap-8 items-center py-8">
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-bold">Sistema de Facturación Electrónica</h3>
+                    <p className="text-lg text-muted-foreground">Plataforma completa de facturación autorizada por el SRI. Emite facturas, notas de crédito y más desde cualquier dispositivo.</p>
+                    <div className="flex gap-4">
+                      <Button 
+                        size="lg" 
+                        className="bg-yellow-600 hover:bg-yellow-700"
+                        onClick={() => window.open('https://facturacion.losimple.ai', '_blank')}
+                        data-testid="button-facturacion-service"
+                      >
+                        Facturación
+                      </Button>
+                      <Button 
+                        size="lg" 
+                        variant="outline"
+                        onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                        data-testid="button-schedule-facturacion"
+                      >
+                        Agendemos
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="bg-muted/30 rounded-2xl h-96"></div>
                 </div>
               </div>
             </TabsContent>
