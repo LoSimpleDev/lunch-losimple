@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -30,8 +28,6 @@ import launchImage from "@assets/stock_images/modern_business_laun_4f912675.jpg"
 import legalImage from "@assets/stock_images/legal_documents_cont_84ea744a.jpg";
 import firmaImage from "@assets/stock_images/digital_signature_el_96b790f1.jpg";
 import facturacionImage from "@assets/stock_images/electronic_invoicing_3458f773.jpg";
-
-const rotatingWords = ["Somos", "Pensamos", "Hacemos", "Vivimos"];
 
 // Data structures for repeated sections
 const benefits = [
@@ -136,15 +132,6 @@ const recursos = [
 ];
 
 export default function Home2() {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % rotatingWords.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -176,33 +163,20 @@ export default function Home2() {
         
         <div className="container mx-auto max-w-7xl relative z-10">
           <div className="text-center mb-16">
-            {/* Animated Tagline */}
+            {/* Main Headline */}
             <div className="mb-8">
               <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold mb-6 leading-tight">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={currentWordIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-primary inline-block"
-                  >
-                    {rotatingWords[currentWordIndex]}
-                  </motion.span>
-                </AnimatePresence>
-                {" "}
-                <span className="text-foreground">formalización</span>
+                Empezar negocios en Ecuador
               </h1>
             </div>
 
             <p className="text-xl md:text-3xl text-muted-foreground max-w-4xl mx-auto mb-12 leading-relaxed">
-              La puerta de entrada para constituir y operar empresas en Ecuador. 
+              La puerta de entrada para constituir y operar negocios en Ecuador. 
               Todo lo que necesitas en un solo lugar.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button 
                 size="lg" 
                 className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
@@ -222,22 +196,6 @@ export default function Home2() {
                 <MessageCircle className="mr-2 h-6 w-6" />
                 Hablar con Asesora
               </Button>
-            </div>
-
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-12 text-base text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                <span className="font-medium">5 días de entrega</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="h-6 w-6 text-green-500" />
-                <span className="font-medium">100% Legal</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-6 w-6 text-green-500" />
-                <span className="font-medium">500+ Empresas</span>
-              </div>
             </div>
           </div>
         </div>
