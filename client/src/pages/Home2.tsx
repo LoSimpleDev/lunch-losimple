@@ -1,0 +1,803 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  Rocket, 
+  Scale, 
+  PenTool, 
+  FileText, 
+  CheckCircle, 
+  Building, 
+  Calculator, 
+  Globe, 
+  MessageCircle,
+  ChevronRight,
+  Shield,
+  Users,
+  Zap,
+  Megaphone,
+  Laptop,
+  TrendingUp,
+  Package,
+  Star
+} from "lucide-react";
+import { Link } from "wouter";
+import { FAQSection } from "@/components/FAQSection";
+import logoUrl from "@assets/aArtboard 1_1757538311500.png";
+import launchImage from "@assets/stock_images/modern_business_laun_4f912675.jpg";
+import legalImage from "@assets/stock_images/legal_documents_cont_84ea744a.jpg";
+import firmaImage from "@assets/stock_images/digital_signature_el_96b790f1.jpg";
+import facturacionImage from "@assets/stock_images/electronic_invoicing_3458f773.jpg";
+
+const rotatingWords = ["Somos", "Pensamos", "Hacemos", "Vivimos"];
+
+// Data structures for repeated sections
+const benefits = [
+  {
+    icon: Zap,
+    title: "Todo en un lugar",
+    description: "Desde la constitución hasta la operación diaria. No necesitas coordinar con múltiples proveedores."
+  },
+  {
+    icon: Shield,
+    title: "100% Legal y Seguro",
+    description: "Cumplimiento total con la Superintendencia de Compañías y SRI. Tu empresa protegida desde el día uno."
+  },
+  {
+    icon: Users,
+    title: "Soporte Experto",
+    description: "Asesores especializados disponibles para guiarte en cada paso. No estás solo en este camino."
+  },
+  {
+    icon: CheckCircle,
+    title: "Entregas Rápidas",
+    description: "Tu empresa constituida en 5 días. Servicio Launch completo en 2 semanas. Comienza a operar pronto."
+  },
+  {
+    icon: Globe,
+    title: "Digital Primero",
+    description: "Accede a todo desde tu computadora o celular. Dashboard en tiempo real para ver el progreso de tus trámites."
+  },
+  {
+    icon: Building,
+    title: "Red de Aliados",
+    description: "Acceso a servicios verificados: contabilidad, oficinas, marketing y más. Todo lo que necesitas para crecer."
+  }
+];
+
+const testimonials = [
+  {
+    name: "María González",
+    title: "CEO, EcoTienda SAS",
+    content: "Lo Simple hizo que constituir mi empresa fuera súper fácil. En menos de una semana ya estaba operando legalmente. El seguimiento fue excelente."
+  },
+  {
+    name: "Carlos Mendoza",
+    title: "Fundador, TechSolutions",
+    content: "El servicio Launch fue increíble. Tener logo, web y todo lo legal en 2 semanas me permitió lanzar mi negocio mucho más rápido de lo que pensaba."
+  },
+  {
+    name: "Ana Pérez",
+    title: "Directora, Consultora Legal",
+    content: "Recomiendo Lo Simple a todos mis clientes. Son profesionales, rápidos y tienen excelente atención. Todo digital y transparente."
+  }
+];
+
+const aliadosCategories = [
+  {
+    icon: Building,
+    title: "Oficinas",
+    description: "Espacios de coworking y oficinas virtuales para tu empresa",
+    color: "blue"
+  },
+  {
+    icon: Calculator,
+    title: "Contabilidad",
+    description: "Servicios contables profesionales para mantener tu empresa al día",
+    color: "green"
+  },
+  {
+    icon: Megaphone,
+    title: "Marketing",
+    description: "Agencias especializadas en hacer crecer tu negocio digitalmente",
+    color: "purple"
+  },
+  {
+    icon: Laptop,
+    title: "Tecnología",
+    description: "Desarrollo de software y soluciones tecnológicas para tu empresa",
+    color: "orange"
+  }
+];
+
+const recursos = [
+  {
+    icon: Scale,
+    title: "Guía completa para constituir una SAS en Ecuador",
+    description: "Todo lo que necesitas saber sobre Sociedades por Acciones Simplificadas",
+    gradient: "from-primary/20 to-accent/20"
+  },
+  {
+    icon: FileText,
+    title: "Facturación electrónica: Guía paso a paso",
+    description: "Aprende cómo implementar facturación electrónica en tu negocio",
+    gradient: "from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20",
+    iconColor: "text-blue-600 dark:text-blue-400"
+  },
+  {
+    icon: TrendingUp,
+    title: "Cómo hacer crecer tu empresa en Ecuador",
+    description: "Estrategias probadas para escalar tu negocio",
+    gradient: "from-green-100 to-teal-100 dark:from-green-900/20 dark:to-teal-900/20",
+    iconColor: "text-green-600 dark:text-green-400"
+  }
+];
+
+export default function Home2() {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            {/* Animated Tagline */}
+            <div className="mb-6">
+              <h1 className="text-5xl md:text-7xl font-bold mb-4">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={currentWordIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-primary inline-block"
+                  >
+                    {rotatingWords[currentWordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+                {" "}
+                <span className="text-foreground">formalización</span>
+              </h1>
+            </div>
+
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
+              La puerta de entrada para constituir y operar empresas en Ecuador. 
+              Todo lo que necesitas en un solo lugar.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-6"
+                onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
+                data-testid="button-get-started"
+              >
+                Comenzar Ahora
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-lg px-8 py-6"
+                onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                data-testid="button-contact-advisor"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Hablar con Asesora
+              </Button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                <span>5 días de entrega</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-green-500" />
+                <span>100% Legal</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-green-500" />
+                <span>500+ Empresas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Backed By Section */}
+      <section className="py-12 px-4 border-b">
+        <div className="container mx-auto max-w-6xl">
+          <p className="text-center text-sm text-muted-foreground mb-6">
+            Servicios verificados y respaldados
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            <div className="flex items-center gap-2">
+              <Shield className="h-6 w-6" />
+              <span className="font-medium">Superintendencia de Compañías</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FileText className="h-6 w-6" />
+              <span className="font-medium">SRI Ecuador</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Building className="h-6 w-6" />
+              <span className="font-medium">BCE</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Tabs Section */}
+      <section id="servicios" className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Todos tus servicios empresariales
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Desde constituir tu empresa hasta mantenerla operando. Todo en una plataforma.
+            </p>
+          </div>
+
+          <Tabs defaultValue="launch" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-8">
+              <TabsTrigger value="launch" className="text-sm md:text-base" data-testid="tab-launch">
+                <Rocket className="h-4 w-4 mr-2" />
+                Launch
+              </TabsTrigger>
+              <TabsTrigger value="legal" className="text-sm md:text-base" data-testid="tab-legal">
+                <Scale className="h-4 w-4 mr-2" />
+                Legal
+              </TabsTrigger>
+              <TabsTrigger value="firma" className="text-sm md:text-base" data-testid="tab-firma">
+                <PenTool className="h-4 w-4 mr-2" />
+                Firma Electrónica
+              </TabsTrigger>
+              <TabsTrigger value="facturacion" className="text-sm md:text-base" data-testid="tab-facturacion">
+                <FileText className="h-4 w-4 mr-2" />
+                Facturación
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="launch" className="mt-8">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-3xl font-bold mb-4">
+                    Lanza tu negocio en 2 semanas
+                  </h3>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, 
+                    constitución legal, facturación electrónica y firma digital.
+                  </p>
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Identidad de marca completa</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Presencia digital profesional</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>100% legal desde el día uno</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Listo para facturar</span>
+                    </li>
+                  </ul>
+                  <Link href="/launch">
+                    <Button size="lg" data-testid="button-launch-service">
+                      Conocer Launch
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                </div>
+                <div className="relative">
+                  <img 
+                    src={launchImage} 
+                    alt="Launch Service" 
+                    className="rounded-lg shadow-2xl"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="legal" className="mt-8">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-3xl font-bold mb-4">
+                    Constituye tu SAS en 5 días
+                  </h3>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Servicio completo de constitución de empresas SAS. Trámites legales, 
+                    libros sociales y títulos de acción listos para operar.
+                  </p>
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Desde USD $179 + IVA</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Sin capital mínimo requerido</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Protege tu patrimonio personal</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Seguimiento en tiempo real</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    size="lg"
+                    onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
+                    data-testid="button-legal-service"
+                  >
+                    Ver Servicios Legales
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+                <div className="relative">
+                  <img 
+                    src={legalImage} 
+                    alt="Legal Services" 
+                    className="rounded-lg shadow-2xl"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="firma" className="mt-8">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-3xl font-bold mb-4">
+                    Firma Electrónica con validez legal
+                  </h3>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Certificados digitales de persona natural y jurídica. 
+                    Firma documentos, facturas y contratos con total seguridad.
+                  </p>
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Token USB incluido</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Vigencia de 30 días hasta 4 años</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Activación inmediata</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Soporte técnico incluido</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    size="lg"
+                    onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
+                    data-testid="button-firma-service"
+                  >
+                    Obtener Firma Digital
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+                <div className="relative">
+                  <img 
+                    src={firmaImage} 
+                    alt="Digital Signature" 
+                    className="rounded-lg shadow-2xl"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="facturacion" className="mt-8">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-3xl font-bold mb-4">
+                    Sistema de Facturación Electrónica
+                  </h3>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Plataforma completa de facturación autorizada por el SRI. 
+                    Emite facturas, notas de crédito y más desde cualquier dispositivo.
+                  </p>
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>100% cumplimiento SRI</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Facturación ilimitada</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Reportes automáticos</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      <span>Acceso desde web y móvil</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    size="lg"
+                    onClick={() => window.open('https://facturacion.losimple.ai', '_blank')}
+                    data-testid="button-facturacion-service"
+                  >
+                    Ir a Facturación
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+                <div className="relative">
+                  <img 
+                    src={facturacionImage} 
+                    alt="Electronic Invoicing" 
+                    className="rounded-lg shadow-2xl"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
+
+      {/* Why Lo Simple - Benefits Section */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              ¿Por qué Lo Simple?
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              No solo configuramos tu empresa, te preparamos para el éxito
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => {
+              const IconComponent = benefit.icon;
+              return (
+                <Card key={index} className="border-2" data-testid={`card-benefit-${index}`}>
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                      <IconComponent className="h-6 w-6 text-primary" />
+                    </div>
+                    <CardTitle className="text-xl mb-2">{benefit.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      {benefit.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-primary/5 to-background">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Construido para emprendedores. Amado por emprendedores.
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Miles de empresas confían en Lo Simple
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="border-2 flex flex-col" data-testid={`card-testimonial-${index}`}>
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                      <Users className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.title}</p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-1 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground">
+                    "{testimonial.content}"
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Resources/Blog Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Recursos para emprendedores
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Guías prácticas para ayudarte a construir y hacer crecer tu negocio
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            {recursos.map((recurso, index) => {
+              const IconComponent = recurso.icon;
+              return (
+                <Card key={index} className="hover:shadow-lg transition-shadow overflow-hidden p-2 md:p-0" data-testid={`card-resource-${index}`}>
+                  <div className={`h-48 bg-gradient-to-br ${recurso.gradient} flex items-center justify-center`}>
+                    <IconComponent className={`h-16 w-16 ${recurso.iconColor || 'text-primary'}`} />
+                  </div>
+                  <CardHeader className="p-4 md:p-6">
+                    <CardTitle className="text-base md:text-lg">{recurso.title}</CardTitle>
+                    <CardDescription>
+                      {recurso.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-4 md:p-6 pt-0">
+                    <Button 
+                      variant="ghost" 
+                      className="w-full" 
+                      onClick={() => window.open('https://sasecuador.com/blog', '_blank')}
+                      data-testid={`button-resource-${index}`}
+                    >
+                      Leer más
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          <div className="text-center">
+            <Button 
+              size="lg" 
+              variant="outline"
+              onClick={() => window.open('https://sasecuador.com/blog', '_blank')}
+              data-testid="button-view-all-resources"
+            >
+              Ver todos los recursos
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Marketplace de Aliados */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+              <Package className="h-8 w-8 text-primary" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Red de Aliados Verificados
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Accede a servicios complementarios de calidad. Continúa tu crecimiento con aliados de confianza.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {aliadosCategories.map((category) => {
+              const IconComponent = category.icon;
+              const colorClasses = {
+                blue: {
+                  bg: 'bg-blue-100 dark:bg-blue-900/20',
+                  text: 'text-blue-600 dark:text-blue-400'
+                },
+                green: {
+                  bg: 'bg-green-100 dark:bg-green-900/20',
+                  text: 'text-green-600 dark:text-green-400'
+                },
+                purple: {
+                  bg: 'bg-purple-100 dark:bg-purple-900/20',
+                  text: 'text-purple-600 dark:text-purple-400'
+                },
+                orange: {
+                  bg: 'bg-orange-100 dark:bg-orange-900/20',
+                  text: 'text-orange-600 dark:text-orange-400'
+                }
+              };
+              const colors = colorClasses[category.color as keyof typeof colorClasses] || colorClasses.blue;
+              
+              return (
+                <Card key={category.title} className="hover:shadow-lg transition-all hover:border-primary/50" data-testid={`card-aliado-${category.title.toLowerCase()}`}>
+                  <CardHeader>
+                    <div className={`w-12 h-12 ${colors.bg} rounded-lg flex items-center justify-center mb-3`}>
+                      <IconComponent className={`h-6 w-6 ${colors.text}`} />
+                    </div>
+                    <CardTitle className="text-lg">{category.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      {category.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-8 text-center">
+            <Star className="h-12 w-12 text-primary mx-auto mb-4" />
+            <h3 className="text-2xl font-bold mb-3">
+              Beneficios y descuentos exclusivos
+            </h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Como cliente de Lo Simple, accedes a descuentos especiales y condiciones preferenciales 
+              con nuestros aliados. Ahorra dinero mientras haces crecer tu negocio.
+            </p>
+            <Link href="/beneficios">
+              <Button size="lg" variant="outline" data-testid="button-explore-benefits">
+                Explorar Beneficios
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs Section */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Preguntas Frecuentes
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Todo lo que necesitas saber
+            </p>
+          </div>
+          <FAQSection />
+          <div className="text-center mt-8">
+            <p className="text-muted-foreground mb-4">
+              ¿Tienes más preguntas?
+            </p>
+            <Button 
+              size="lg"
+              variant="outline"
+              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+              data-testid="button-schedule-consultation"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Agenda una consulta gratuita
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Menos trámites. Más acción.
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Únete a Lo Simple y comienza a construir el negocio de tus sueños hoy mismo.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="text-lg px-12 py-6"
+              onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
+              data-testid="button-final-cta"
+            >
+              Comenzar Ahora
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="text-lg px-12 py-6"
+              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+              data-testid="button-final-contact"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Hablar con Asesora
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer - Simple version for now */}
+      <footer className="bg-[#141464] text-white py-12 px-4 mt-16">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <img src={logoUrl} alt="Lo Simple" className="h-8 w-auto mb-4 brightness-0 invert" />
+              <p className="text-sm mb-4 opacity-80">
+                La puerta de entrada a la formalización en Ecuador. 
+                Construimos patrimonios familiares sólidos una pequeña empresa a la vez.
+              </p>
+              <p className="text-sm opacity-60">
+                Hecho en Ecuador con 💜
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Enlaces</h4>
+              <ul className="space-y-2 text-sm opacity-80">
+                <li>
+                  <Link href="/" className="hover:opacity-100 transition-opacity" data-testid="link-footer-inicio">
+                    Inicio
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/launch" className="hover:opacity-100 transition-opacity" data-testid="link-footer-launch">
+                    Launch
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/saslegal-plus" className="hover:opacity-100 transition-opacity" data-testid="link-footer-membresia">
+                    Membresía
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Contacto</h4>
+              <ul className="space-y-2 text-sm opacity-80">
+                <li>Ecuador</li>
+                <li>
+                  <a href="mailto:hola@losimple.ai" className="hover:opacity-100 transition-opacity" data-testid="link-footer-email">
+                    hola@losimple.ai
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+593958613237" className="hover:opacity-100 transition-opacity" data-testid="link-footer-phone">
+                    +593 958 613 237
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-white/20 mt-8 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-60">
+              <p>© 2024 Lo Simple. Todos los derechos reservados.</p>
+              <div className="flex gap-6">
+                <Link href="/terminos-y-condiciones" className="hover:opacity-100 transition-opacity" data-testid="link-footer-terminos">
+                  Términos y Condiciones
+                </Link>
+                <Link href="/politica-privacidad-datos-lo-simple" className="hover:opacity-100 transition-opacity" data-testid="link-footer-privacidad">
+                  Política de Privacidad
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/contexts/CartContext";
 import { Header } from "@/components/Header";
 import Home from "@/pages/Home";
+import Home2 from "@/pages/Home2";
 import Checkout from "@/pages/Checkout";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import TerminosCondiciones from "@/pages/TerminosCondiciones";
@@ -29,6 +30,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/home-2" component={Home2} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/terminos-y-condiciones" component={TerminosCondiciones} />
