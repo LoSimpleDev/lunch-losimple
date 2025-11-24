@@ -1,7 +1,7 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Palette, Globe, Share2, Building2, FileText, PenTool, ShieldCheck } from "lucide-react";
+import { Check, Palette, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, MessageCircle } from "lucide-react";
 
 export default function Launch() {
   const [, setLocation] = useLocation();
@@ -106,6 +106,20 @@ export default function Launch() {
                 <p className="text-muted-foreground">Firma digital con validez legal</p>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Contactar Asesora Button */}
+          <div className="flex justify-center mb-12">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="text-lg px-8 py-6 bg-green-500 text-white border-green-500 hover:bg-green-600 hover:border-green-600"
+              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+              data-testid="button-contact-whatsapp"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Contactar Asesora
+            </Button>
           </div>
 
           {/* Beneficios Section */}
