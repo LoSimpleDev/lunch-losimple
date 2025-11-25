@@ -327,7 +327,7 @@ export default function Home2() {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                  onClick={() => window.open('https://calendly.com/veronica-losimple/30min', '_blank')}
                   data-testid="button-schedule-main"
                 >
                   Agendemos
@@ -341,20 +341,20 @@ export default function Home2() {
                 <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Lo Simple</p>
-                    <h3 className="text-2xl font-bold mb-4">Asesoría integral</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Expertos dedicados a guiar tu camino empresarial</p>
+                    <h3 className="text-2xl font-bold mb-4">Inicio Llave en Mano</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Con Launch obtén todo lo que necesitas para empezar en sólo 2 días.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Lo Simple</p>
-                    <h3 className="text-2xl font-bold mb-4">Soluciones integradas</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Todo lo que necesitas en un solo lugar</p>
+                    <h3 className="text-2xl font-bold mb-4">Firma Electrónica Simple</h3>
+                    <p className="text-sm text-muted-foreground mb-6">La forma más sencilla de obtener tu firma electrónica está aquí.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Lo Simple</p>
-                    <h3 className="text-2xl font-bold mb-4">Éxito empresarial</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Herramientas para crecer y prosperar</p>
+                    <h3 className="text-2xl font-bold mb-4">Facturación Electrónica</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Empieza facturando de forma gratuita hoy.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
@@ -364,7 +364,7 @@ export default function Home2() {
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                       <h3 className="text-3xl font-bold">¿Por qué Lo Simple?</h3>
-                      <p className="text-lg text-foreground">Tu puerta de entrada a la formalización empresarial. Constituye tu empresa y accede a todos los servicios que necesitas para operar con confianza en Ecuador.</p>
+                      <p className="text-lg text-foreground">Somos la empresa que estabas buscando para empezar un negocio en Ecuador. Trabajar con nosotros significa acceder a todos nuestros aliados desde el principio y generar confianza y seriedad para tu negocio.</p>
                     </div>
                     <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
