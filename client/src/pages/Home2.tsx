@@ -60,7 +60,7 @@ const benefits = [
   {
     icon: CheckCircle,
     title: "Entregas Rápidas",
-    description: "Tu empresa constituida en 5 días. Servicio Launch completo en 2 semanas. Comienza a operar pronto."
+    description: "Tu empresa constituida en 5 días. Servicio Launch completo en 2 días. Comienza a operar pronto."
   },
   {
     icon: Globe,
