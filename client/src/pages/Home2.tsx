@@ -487,13 +487,13 @@ export default function Home2() {
                   <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Firma segura</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Token USB y activación inmediata incluidos</p>
+                    <p className="text-sm text-muted-foreground mb-6">Valida la autenticidad e integridad de documentos y contratos en el entorno digital.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                   <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
-                    <h3 className="text-2xl font-bold mb-4">Soporte técnico</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Vigencia hasta 4 años con asistencia completa</p>
+                    <h3 className="text-2xl font-bold mb-4">Todo incluido</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Adquiere tu firma con la vigencia que necesites con el proceso más rápido del mercado.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
@@ -504,6 +504,11 @@ export default function Home2() {
                     <div className="space-y-4">
                       <h3 className="text-3xl font-bold">Firma Electrónica con validez legal</h3>
                       <p className="text-lg text-foreground">Certificados digitales de persona natural y jurídica. Firma documentos, facturas y contratos con total seguridad.</p>
+                      <a href="https://ecuadorfirmasimple.com/" target="_blank" rel="noopener noreferrer">
+                        <Button className="bg-green-600 hover:bg-green-700 mt-2" data-testid="button-firma-info">
+                          Más Información
+                        </Button>
+                      </a>
                     </div>
                     <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
