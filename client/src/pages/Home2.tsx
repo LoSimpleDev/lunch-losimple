@@ -374,7 +374,7 @@ export default function Home2() {
 
             <TabsContent value="launch" className="mt-8">
               <div className="space-y-0">
-                {/* Partial View - 3 Cards */}
+                {/* Top Row - 3 Cards */}
                 <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
@@ -396,14 +396,23 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* Description with Border Frame */}
-                <div className="border-2 border-purple-600 rounded-2xl p-8">
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div className="space-y-4">
-                      <h3 className="text-3xl font-bold">Lanza tu negocio en 2 semanas</h3>
-                      <p className="text-lg text-foreground">Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, constitución legal, facturación electrónica y firma digital.</p>
+                {/* Bottom Row - 4th Card + Description Frame side by side */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
+                    <h3 className="text-2xl font-bold mb-4">Soporte continuo</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Acompañamiento y asesoría durante todo el proceso</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                  </div>
+                  {/* Description with Border Frame - spans 2 columns */}
+                  <div className="md:col-span-2 border-2 border-purple-600 rounded-2xl p-6">
+                    <div className="flex flex-col md:flex-row gap-6 items-center h-full">
+                      <div className="space-y-3 flex-1">
+                        <h3 className="text-2xl font-bold">Lanza tu negocio en 2 semanas</h3>
+                        <p className="text-base text-foreground">Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, constitución legal, facturación electrónica y firma digital.</p>
+                      </div>
+                      <div className="bg-white/50 dark:bg-black/20 rounded-lg h-48 w-full md:w-48 flex-shrink-0"></div>
                     </div>
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
                 </div>
               </div>
