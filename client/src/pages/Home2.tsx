@@ -32,6 +32,7 @@ import forbesLogo from "@assets/forbes ecuador_1764020045377.png";
 import kinesisLogo from "@assets/Logo KINESIS_1764020056113.png";
 import impaqtoLogo from "@assets/impaqto logo_1764020086029.png";
 import bidLabLogo from "@assets/RETO BID LAB LOGO_1764020098244.avif";
+import launchDashboardSAS from "@assets/Screenshot 2025-11-25 at 11.06.51_1764086813530.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -380,7 +381,9 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
                     <h3 className="text-2xl font-bold mb-4">Compañía SAS</h3>
                     <p className="text-sm text-muted-foreground mb-6">Creamos la SAS que necesitas para empezar de forma simple y sin errores.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={launchDashboardSAS} alt="Dashboard Compañía SAS" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
