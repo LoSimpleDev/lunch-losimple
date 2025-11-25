@@ -378,20 +378,20 @@ export default function Home2() {
                 <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
-                    <h3 className="text-2xl font-bold mb-4">Identidad de marca</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Logo, paleta de colores y guía de marca profesional</p>
+                    <h3 className="text-2xl font-bold mb-4">Compañía SAS</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Creamos la SAS que necesitas para empezar de forma simple y sin errores.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
-                    <h3 className="text-2xl font-bold mb-4">Presencia digital</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Sitio web profesional, redes sociales configuradas</p>
+                    <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Sitio web profesional en una experiencia que te hará alucinar.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
-                    <h3 className="text-2xl font-bold mb-4">Legalidad y operación</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Constitución, firma digital, facturación lista</p>
+                    <h3 className="text-2xl font-bold mb-4">Facturación y Firma</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Habilitamos tu facturación y firma electrónicas por un año en el mismo paquete.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
@@ -400,16 +400,21 @@ export default function Home2() {
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
-                    <h3 className="text-2xl font-bold mb-4">Soporte continuo</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Acompañamiento y asesoría durante todo el proceso</p>
+                    <h3 className="text-2xl font-bold mb-4">Soporte Continuo</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Soporte Continuo en consultas legales por un año.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                   {/* Description with Border Frame - spans 2 columns */}
                   <div className="md:col-span-2 border-2 border-purple-600 rounded-2xl p-6">
                     <div className="flex flex-col md:flex-row gap-6 items-center h-full">
                       <div className="space-y-3 flex-1">
-                        <h3 className="text-2xl font-bold">Lanza tu negocio en 2 semanas</h3>
-                        <p className="text-base text-foreground">Todo lo que necesitas para empezar: Logo, sitio web, redes sociales, constitución legal, facturación electrónica y firma digital.</p>
+                        <h3 className="text-2xl font-bold">Lanza tu negocio en 2 días</h3>
+                        <p className="text-base text-foreground">Todo lo que necesitas para empezar: sitio web, asistencia en verificación de redes sociales en cuentas de meta, constitución legal, facturación electrónica y firma digital.</p>
+                        <Link href="/launch">
+                          <Button className="bg-purple-600 hover:bg-purple-700 mt-2" data-testid="button-launch-info">
+                            Más Información
+                          </Button>
+                        </Link>
                       </div>
                       <div className="bg-white/50 dark:bg-black/20 rounded-lg h-48 w-full md:w-48 flex-shrink-0"></div>
                     </div>
