@@ -39,6 +39,7 @@ import launchDashboardSoporte from "@assets/Screenshot 2025-11-25 at 11.11.13_17
 import loSimpleLlaveMano from "@assets/Screenshot 2025-11-25 at 11.06.51_1764086813530.png";
 import loSimpleFirma from "@assets/Screenshot 2025-11-25 at 11.22.10_1764087734934.png";
 import loSimpleFacturacion from "@assets/Screenshot 2025-11-25 at 11.14.52_1764087296521.png";
+import loSimpleReviews from "@assets/Image web Lo Simple_1764090068017.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -373,13 +374,20 @@ export default function Home2() {
                 </div>
 
                 {/* Description with Border Frame */}
-                <div className="border-2 border-purple-600 rounded-2xl p-8">
+                <div className="border-2 border-purple-600 rounded-2xl p-8 relative overflow-visible">
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
-                      <h3 className="text-3xl font-bold">¿Qué hace Lo Simple?</h3>
-                      <p className="text-lg text-foreground">Somos un aliado para la formalización de negocios en Ecuador, nuestros servicios permiten que los negocios empiecen con seguridad y seriedad.</p>
+                      <h3 className="text-3xl font-bold">¿Por qué Lo Simple?</h3>
+                      <p className="text-lg text-foreground">Lo Simple te brinda una experiencia confiable respaldada por más de 2000 clientes satisfechos en Ecuador.</p>
                     </div>
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
+                    <div className="relative h-64 flex items-center justify-center">
+                      <img 
+                        src={loSimpleReviews} 
+                        alt="Reseñas de clientes satisfechos" 
+                        className="absolute w-[120%] max-w-none h-auto object-contain transform translate-x-4 -translate-y-2 drop-shadow-2xl rounded-lg"
+                        style={{ filter: 'drop-shadow(0 25px 50px rgba(108, 92, 231, 0.3))' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
