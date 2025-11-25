@@ -33,6 +33,9 @@ import kinesisLogo from "@assets/Logo KINESIS_1764020056113.png";
 import impaqtoLogo from "@assets/impaqto logo_1764020086029.png";
 import bidLabLogo from "@assets/RETO BID LAB LOGO_1764020098244.avif";
 import launchDashboardSAS from "@assets/Screenshot 2025-11-25 at 11.06.51_1764086813530.png";
+import launchDashboardLanding from "@assets/Screenshot 2025-11-25 at 11.13.59_1764087244847.png";
+import launchDashboardFacturacion from "@assets/Screenshot 2025-11-25 at 11.14.52_1764087296521.png";
+import launchDashboardSoporte from "@assets/Screenshot 2025-11-25 at 11.11.13_1764087078790.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -389,13 +392,17 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
                     <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
                     <p className="text-sm text-muted-foreground mb-6">Sitio web profesional en una experiencia que te hará alucinar.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={launchDashboardLanding} alt="Dashboard Landing Page" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
                     <h3 className="text-2xl font-bold mb-4">Facturación y Firma</h3>
                     <p className="text-sm text-muted-foreground mb-6">Habilitamos tu facturación y firma electrónicas por un año en el mismo paquete.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={launchDashboardFacturacion} alt="Dashboard Facturación y Firma" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                 </div>
 
@@ -405,7 +412,9 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
                     <h3 className="text-2xl font-bold mb-4">Soporte Continuo</h3>
                     <p className="text-sm text-muted-foreground mb-6">Soporte Continuo en consultas legales por un año.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={launchDashboardSoporte} alt="Dashboard Soporte Continuo" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                   {/* Description with Border Frame - spans 2 columns */}
                   <div className="md:col-span-2 border-2 border-purple-600 rounded-2xl p-6">
