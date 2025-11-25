@@ -36,6 +36,9 @@ import launchDashboardSAS from "@assets/Screenshot 2025-11-25 at 11.06.51_176408
 import launchDashboardLanding from "@assets/Screenshot 2025-11-25 at 11.13.59_1764087244847.png";
 import launchDashboardFacturacion from "@assets/Screenshot 2025-11-25 at 11.14.52_1764087296521.png";
 import launchDashboardSoporte from "@assets/Screenshot 2025-11-25 at 11.11.13_1764087078790.png";
+import loSimpleLlaveMano from "@assets/Screenshot 2025-11-25 at 11.06.51_1764086813530.png";
+import loSimpleFirma from "@assets/Screenshot 2025-11-25 at 11.22.10_1764087734934.png";
+import loSimpleFacturacion from "@assets/Screenshot 2025-11-25 at 11.14.52_1764087296521.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -347,19 +350,25 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Lo Simple</p>
                     <h3 className="text-2xl font-bold mb-4">Inicio Llave en Mano</h3>
                     <p className="text-sm text-muted-foreground mb-6">Con Launch obtén todo lo que necesitas para empezar en sólo 2 días.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={loSimpleLlaveMano} alt="Dashboard Inicio Llave en Mano" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Lo Simple</p>
                     <h3 className="text-2xl font-bold mb-4">Firma Electrónica Simple</h3>
                     <p className="text-sm text-muted-foreground mb-6">La forma más sencilla de obtener tu firma electrónica está aquí.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={loSimpleFirma} alt="Dashboard Firma Electrónica Simple" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Lo Simple</p>
                     <h3 className="text-2xl font-bold mb-4">Facturación Electrónica</h3>
                     <p className="text-sm text-muted-foreground mb-6">Empieza facturando de forma gratuita hoy.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={loSimpleFacturacion} alt="Dashboard Facturación Electrónica" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                 </div>
 
