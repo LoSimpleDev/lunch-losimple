@@ -39,7 +39,7 @@ import launchDashboardSoporte from "@assets/Screenshot 2025-11-25 at 11.11.13_17
 import loSimpleLlaveMano from "@assets/Screenshot 2025-11-25 at 11.06.51_1764086813530.png";
 import loSimpleFirma from "@assets/Screenshot 2025-11-25 at 11.22.10_1764087734934.png";
 import loSimpleFacturacion from "@assets/Screenshot 2025-11-25 at 11.14.52_1764087296521.png";
-import loSimpleReviews from "@assets/Image web Lo Simple_1764090068017.png";
+import loSimpleReviews from "@assets/Image web Lo Simple (1)_1764090599190.png";
 
 // Data structures for repeated sections
 const benefits = [
