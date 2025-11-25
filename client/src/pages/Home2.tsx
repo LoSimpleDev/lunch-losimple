@@ -363,8 +363,8 @@ export default function Home2() {
                 <div className="border-2 border-purple-600 rounded-2xl p-8">
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
-                      <h3 className="text-3xl font-bold">¿Por qué Lo Simple?</h3>
-                      <p className="text-lg text-foreground">Somos la empresa que estabas buscando para empezar un negocio en Ecuador. Trabajar con nosotros significa acceder a todos nuestros aliados desde el principio y generar confianza y seriedad para tu negocio.</p>
+                      <h3 className="text-3xl font-bold">¿Qué hace Lo Simple?</h3>
+                      <p className="text-lg text-foreground">Somos un aliado para la formalización de negocios en Ecuador, nuestros servicios permiten que los negocios empiecen con seguridad y seriedad.</p>
                     </div>
                     <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
                   </div>
@@ -575,10 +575,10 @@ export default function Home2() {
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
-              ¿Por qué Lo Simple?
+              ¿Qué hace Lo Simple?
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              No solo configuramos tu empresa, te preparamos para el éxito
+              Somos un aliado para la formalización de negocios en Ecuador, nuestros servicios permiten que los negocios empiecen con seguridad y seriedad.
             </p>
           </div>
 
