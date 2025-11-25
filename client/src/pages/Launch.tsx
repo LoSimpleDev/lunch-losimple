@@ -1,7 +1,34 @@
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Palette, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, MessageCircle } from "lucide-react";
+import { Check, Palette, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, MessageCircle, Package, Star, Building, Calculator, Megaphone, Laptop } from "lucide-react";
+
+const aliadosCategories = [
+  {
+    icon: Building,
+    title: "Oficinas",
+    description: "Espacios de coworking y oficinas virtuales para tu empresa",
+    color: "blue"
+  },
+  {
+    icon: Calculator,
+    title: "Contabilidad",
+    description: "Servicios contables profesionales para mantener tu empresa al día",
+    color: "green"
+  },
+  {
+    icon: Megaphone,
+    title: "Marketing",
+    description: "Agencias especializadas en hacer crecer tu negocio digitalmente",
+    color: "purple"
+  },
+  {
+    icon: Laptop,
+    title: "Tecnología",
+    description: "Desarrollo de software y soluciones tecnológicas para tu empresa",
+    color: "orange"
+  }
+];
 
 export default function Launch() {
   const [, setLocation] = useLocation();
@@ -177,6 +204,74 @@ export default function Launch() {
               </p>
             </CardContent>
           </Card>
+
+          {/* Marketplace de Aliados */}
+          <div className="bg-gradient-to-b from-muted/20 to-background rounded-lg py-20 px-8 mb-16">
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-8">
+                <Package className="h-10 w-10 text-primary" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+                Red de Aliados Verificados
+              </h2>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Accede a servicios complementarios de calidad. Continúa tu crecimiento con aliados de confianza.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+              {aliadosCategories.map((category) => {
+                const IconComponent = category.icon;
+                const colorClasses = {
+                  blue: {
+                    bg: 'bg-blue-100 dark:bg-blue-900/20',
+                    text: 'text-blue-600 dark:text-blue-400'
+                  },
+                  green: {
+                    bg: 'bg-green-100 dark:bg-green-900/20',
+                    text: 'text-green-600 dark:text-green-400'
+                  },
+                  purple: {
+                    bg: 'bg-purple-100 dark:bg-purple-900/20',
+                    text: 'text-purple-600 dark:text-purple-400'
+                  },
+                  orange: {
+                    bg: 'bg-orange-100 dark:bg-orange-900/20',
+                    text: 'text-orange-600 dark:text-orange-400'
+                  }
+                };
+                const colors = colorClasses[category.color as keyof typeof colorClasses] || colorClasses.blue;
+                
+                return (
+                  <div key={category.title} className="group" data-testid={`card-aliado-${category.title.toLowerCase()}`}>
+                    <div className={`w-16 h-16 ${colors.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                      <IconComponent className={`h-8 w-8 ${colors.text}`} />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-3">{category.title}</h3>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      {category.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 rounded-3xl p-12 md:p-16 text-center border border-primary/10">
+              <Star className="h-16 w-16 text-primary mx-auto mb-6" />
+              <h3 className="text-3xl md:text-4xl font-bold mb-6">
+                Beneficios y descuentos exclusivos
+              </h3>
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+                Como cliente de Lo Simple, accedes a descuentos especiales y condiciones preferenciales 
+                con nuestros aliados. Ahorra dinero mientras haces crecer tu negocio.
+              </p>
+              <Link href="/beneficios">
+                <Button size="lg" className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all" data-testid="button-explore-benefits">
+                  Explorar Beneficios
+                </Button>
+              </Link>
+            </div>
+          </div>
 
           {/* CTA Section */}
           <div className="text-center py-12 bg-primary/5 rounded-lg">
