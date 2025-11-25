@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { 
   Rocket, 
   Scale, 
@@ -22,7 +23,6 @@ import {
   Star
 } from "lucide-react";
 import { Link } from "wouter";
-import { FAQSection } from "@/components/FAQSection";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import launchImage from "@assets/stock_images/modern_business_laun_4f912675.jpg";
 import legalImage from "@assets/stock_images/legal_documents_cont_84ea744a.jpg";
@@ -140,6 +140,41 @@ const recursos = [
     description: "Estrategias probadas para escalar tu negocio",
     gradient: "from-green-100 to-teal-100 dark:from-green-900/20 dark:to-teal-900/20",
     iconColor: "text-green-600 dark:text-green-400"
+  }
+];
+
+const home2Faqs = [
+  {
+    question: "¿Qué incluye el servicio Launch?",
+    answer: "Launch es nuestro paquete completo que incluye: constitución de tu SAS, landing page profesional, facturación electrónica y firma electrónica por un año, más soporte continuo. Todo listo en solo 2 días."
+  },
+  {
+    question: "¿Cuánto tiempo toma constituir una SAS?",
+    answer: "Con nuestro servicio de constitución, tu SAS estará lista en 5 días hábiles. Si eliges el paquete Launch, tendrás todo operativo en solo 2 días."
+  },
+  {
+    question: "¿Qué es la firma electrónica y para qué la necesito?",
+    answer: "La firma electrónica es un certificado digital con validez legal que te permite firmar documentos, contratos y facturas de forma segura desde cualquier dispositivo. Es indispensable para facturar electrónicamente."
+  },
+  {
+    question: "¿La facturación electrónica es obligatoria?",
+    answer: "Sí, en Ecuador la facturación electrónica es obligatoria para empresas. Nuestro sistema está 100% autorizado por el SRI y puedes empezar a facturar gratis desde el primer día."
+  },
+  {
+    question: "¿Puedo crear una SAS siendo una sola persona?",
+    answer: "Sí, puedes constituir una SAS con un solo accionista. No necesitas socios y no se requiere capital mínimo para empezar."
+  },
+  {
+    question: "¿Qué documentos necesito para empezar?",
+    answer: "Solo necesitas tu cédula de identidad. Nosotros te guiamos paso a paso con un formulario en línea para recopilar toda la información necesaria."
+  },
+  {
+    question: "¿Ofrecen soporte después de crear mi empresa?",
+    answer: "Sí, con el paquete Launch tienes un año de soporte continuo para consultas legales. Además, nuestra red de aliados te conecta con servicios de contabilidad, marketing y más."
+  },
+  {
+    question: "¿Cuánto cuesta el servicio de constitución?",
+    answer: "El servicio de constitución de SAS tiene un costo desde USD 179 más IVA para empresas de un solo accionista. El paquete Launch con todo incluido tiene un precio especial que puedes consultar con nuestras asesoras."
   }
 ];
 
@@ -737,7 +772,39 @@ export default function Home2() {
               Todo lo que necesitas saber
             </p>
           </div>
-          <FAQSection />
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            {home2Faqs.map((faq, index) => (
+              <AccordionItem 
+                key={index} 
+                value={`item-${index}`}
+                className="bg-background rounded-lg px-6 border"
+                itemScope 
+                itemProp="mainEntity" 
+                itemType="https://schema.org/Question"
+                data-testid={`faq-item-${index}`}
+              >
+                <AccordionTrigger 
+                  className="hover:no-underline py-4 text-left"
+                  data-testid={`faq-trigger-${index}`}
+                >
+                  <span className="font-semibold" itemProp="name">
+                    {faq.question}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent 
+                  className="text-muted-foreground pb-4"
+                  itemScope 
+                  itemProp="acceptedAnswer" 
+                  itemType="https://schema.org/Answer"
+                  data-testid={`faq-content-${index}`}
+                >
+                  <div itemProp="text">
+                    {faq.answer}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
           <div className="text-center mt-12">
             <p className="text-lg text-muted-foreground mb-6">
               ¿Tienes más preguntas?
