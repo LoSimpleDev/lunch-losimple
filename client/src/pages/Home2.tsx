@@ -540,14 +540,28 @@ export default function Home2() {
                   </div>
                 </div>
 
-                {/* Description with Border Frame */}
-                <div className="border-2 border-yellow-600 rounded-2xl p-8">
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div className="space-y-4">
-                      <h3 className="text-3xl font-bold">Sistema de Facturación Electrónica</h3>
-                      <p className="text-lg text-foreground">Plataforma completa de facturación autorizada por el SRI. Emite facturas, notas de crédito y más desde cualquier dispositivo.</p>
+                {/* Bottom Row - Description Frame + New Card side by side */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* Description with Border Frame - spans 2 columns */}
+                  <div className="md:col-span-2 border-2 border-yellow-600 rounded-2xl p-6">
+                    <div className="flex flex-col md:flex-row gap-6 items-center h-full">
+                      <div className="space-y-3 flex-1">
+                        <h3 className="text-2xl font-bold">Sistema de Facturación Electrónica</h3>
+                        <p className="text-base text-foreground">Plataforma completa de facturación autorizada por el SRI. Emite facturas, notas de crédito y más desde cualquier dispositivo.</p>
+                        <a href="https://facturacion.losimple.ai/" target="_blank" rel="noopener noreferrer">
+                          <Button className="bg-yellow-600 hover:bg-yellow-700 mt-2" data-testid="button-facturacion-info">
+                            Más Información
+                          </Button>
+                        </a>
+                      </div>
+                      <div className="bg-white/50 dark:bg-black/20 rounded-lg h-48 w-full md:w-48 flex-shrink-0"></div>
                     </div>
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
+                  </div>
+                  <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
+                    <h3 className="text-2xl font-bold mb-4">Empieza Gratis</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Genera un usuario y usa las facturas que te damos de cortesía sin necesidad de ingresar forma de pago.</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
               </div>
