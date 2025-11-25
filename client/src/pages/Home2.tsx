@@ -435,26 +435,40 @@ export default function Home2() {
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
-                    <h3 className="text-2xl font-bold mb-4">Documentos legales</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Libros sociales, títulos de acción, estatutos listos</p>
+                    <h3 className="text-2xl font-bold mb-4">Reforma de Estatuto</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Todo el proceso para añadir o quitar actividades de tu SAS de forma ágil.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
-                    <h3 className="text-2xl font-bold mb-4">Protección patrimonial</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Separa tus bienes personales de la empresa</p>
+                    <h3 className="text-2xl font-bold mb-4">Cesión de Acciones</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Te acompañamos en la cesión de una parte de tu empresa con asesoría completa.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
 
-                {/* Description with Border Frame */}
-                <div className="border-2 border-cyan-600 rounded-2xl p-8">
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div className="space-y-4">
-                      <h3 className="text-3xl font-bold">Constituye tu SAS en 5 días</h3>
-                      <p className="text-lg text-foreground">Servicio completo de constitución de empresas SAS. Trámites legales, libros sociales y títulos de acción listos para operar.</p>
+                {/* Bottom Row - Description Frame + 4th Card side by side */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* Description with Border Frame - spans 2 columns */}
+                  <div className="md:col-span-2 border-2 border-cyan-600 rounded-2xl p-6">
+                    <div className="flex flex-col md:flex-row gap-6 items-center h-full">
+                      <div className="space-y-3 flex-1">
+                        <h3 className="text-2xl font-bold">Constituye tu SAS en 5 días</h3>
+                        <p className="text-base text-foreground">Servicio completo de constitución de empresas en 5 días, Nuestro servicio estrella con más de 2000 compañías creadas</p>
+                        <Link href="/launch">
+                          <Button className="bg-cyan-600 hover:bg-cyan-700 mt-2" data-testid="button-legal-info">
+                            Más Información
+                          </Button>
+                        </Link>
+                      </div>
+                      <div className="bg-white/50 dark:bg-black/20 rounded-lg h-48 w-full md:w-48 flex-shrink-0"></div>
                     </div>
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg h-64"></div>
+                  </div>
+                  <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
+                    <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
+                    <h3 className="text-2xl font-bold mb-4">Liquidación de Empresa</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Cierra tu compañía SAS a tiempo, no incrementes obligaciones innecesarias.</p>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
                   </div>
                 </div>
               </div>
