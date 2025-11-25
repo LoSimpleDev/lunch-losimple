@@ -374,18 +374,17 @@ export default function Home2() {
                 </div>
 
                 {/* Description with Border Frame */}
-                <div className="border-2 border-purple-600 rounded-2xl p-8 relative overflow-visible">
+                <div className="border-2 border-purple-600 rounded-2xl p-8">
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                       <h3 className="text-3xl font-bold">¿Por qué Lo Simple?</h3>
                       <p className="text-lg text-foreground">Lo Simple te brinda una experiencia confiable respaldada por más de 2000 clientes satisfechos en Ecuador.</p>
                     </div>
-                    <div className="relative h-64 flex items-center justify-center">
+                    <div className="h-64 rounded-lg overflow-hidden">
                       <img 
                         src={loSimpleReviews} 
                         alt="Reseñas de clientes satisfechos" 
-                        className="absolute w-[120%] max-w-none h-auto object-contain transform translate-x-4 -translate-y-2 drop-shadow-2xl rounded-lg"
-                        style={{ filter: 'drop-shadow(0 25px 50px rgba(108, 92, 231, 0.3))' }}
+                        className="w-full h-full object-cover rounded-lg"
                       />
                     </div>
                   </div>
