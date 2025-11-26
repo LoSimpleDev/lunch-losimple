@@ -774,16 +774,17 @@ export default function Home2() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-4 md:p-6 pt-0">
-                    <Link href="/blog">
-                      <Button 
-                        variant="ghost" 
-                        className="w-full text-purple-600 hover:text-purple-700 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/30" 
-                        data-testid={`button-resource-${index}`}
-                      >
+                    <Button 
+                      variant="ghost" 
+                      className="w-full text-purple-600 hover:text-purple-700 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/30" 
+                      data-testid={`button-resource-${index}`}
+                      asChild
+                    >
+                      <Link href="/blog">
                         Leer más
                         <ChevronRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
+                      </Link>
+                    </Button>
                   </CardContent>
                 </Card>
               );
@@ -791,16 +792,17 @@ export default function Home2() {
           </div>
 
           <div className="text-center">
-            <Link href="/blog">
-              <Button 
-                size="lg" 
-                className="bg-purple-600 hover:bg-purple-700 text-white"
-                data-testid="button-view-all-resources"
-              >
+            <Button 
+              size="lg" 
+              className="bg-purple-600 hover:bg-purple-700 text-white"
+              data-testid="button-view-all-resources"
+              asChild
+            >
+              <Link href="/blog">
                 Ver todos los recursos
                 <ChevronRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
