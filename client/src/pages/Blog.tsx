@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CalendarDays, ArrowRight, Rocket, CheckCircle } from "lucide-react";
+import { CalendarDays, ArrowRight, Rocket, CheckCircle, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import type { BlogPost } from "@shared/schema";
 
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
-import decoratorLines from "@assets/blog-decorator-lines.png";
 import decoratorFolder from "@assets/blog-decorator-folder.png";
+
+const POSTS_PER_PAGE = 6;
 
 const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
   "SAS": { bg: "bg-purple-100 dark:bg-purple-900/30", text: "text-purple-700 dark:text-purple-300", border: "border-purple-600" },
@@ -139,8 +140,62 @@ function LaunchCTACard() {
   );
 }
 
+function Pagination({ 
+  currentPage, 
+  totalPages, 
+  onPageChange 
+}: { 
+  currentPage: number; 
+  totalPages: number; 
+  onPageChange: (page: number) => void;
+}) {
+  if (totalPages <= 1) return null;
+  
+  return (
+    <div className="flex items-center justify-center gap-2 mt-10" data-testid="pagination">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        data-testid="pagination-prev"
+      >
+        <ChevronLeft className="w-4 h-4 mr-1" />
+        Anterior
+      </Button>
+      
+      <div className="flex items-center gap-1">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <Button
+            key={page}
+            variant={currentPage === page ? "default" : "outline"}
+            size="sm"
+            onClick={() => onPageChange(page)}
+            className={currentPage === page ? "bg-[#6C5CE7] hover:bg-[#5a4bd1]" : ""}
+            data-testid={`pagination-page-${page}`}
+          >
+            {page}
+          </Button>
+        ))}
+      </div>
+      
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        data-testid="pagination-next"
+      >
+        Siguiente
+        <ChevronRight className="w-4 h-4 ml-1" />
+      </Button>
+    </div>
+  );
+}
+
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   
   const { data: posts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog/posts", selectedCategory],
@@ -157,6 +212,22 @@ export default function Blog() {
   const { data: categories } = useQuery<string[]>({
     queryKey: ["/api/blog/categories"]
   });
+
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const totalPosts = posts?.length || 0;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE) || 1;
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const paginatedPosts = posts?.slice(startIndex, startIndex + POSTS_PER_PAGE) || [];
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(Math.max(1, totalPages));
+    }
+  }, [posts, totalPages, currentPage]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -202,7 +273,7 @@ export default function Blog() {
                   <Button
                     variant={selectedCategory === null ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setSelectedCategory(null)}
+                    onClick={() => handleCategoryChange(null)}
                     className={selectedCategory === null ? "bg-[#6C5CE7] hover:bg-[#5a4bd1]" : ""}
                     data-testid="filter-all"
                   >
@@ -215,7 +286,7 @@ export default function Blog() {
                         key={category}
                         variant={selectedCategory === category ? "default" : "outline"}
                         size="sm"
-                        onClick={() => setSelectedCategory(category)}
+                        onClick={() => handleCategoryChange(category)}
                         className={selectedCategory === category ? `${style.bg} ${style.text} border ${style.border}` : ""}
                         data-testid={`filter-${category.toLowerCase().replace(/\s+/g, '-')}`}
                       >
@@ -233,12 +304,21 @@ export default function Blog() {
                     <BlogPostCardSkeleton key={i} />
                   ))}
                 </div>
-              ) : posts && posts.length > 0 ? (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {posts.map((post) => (
-                    <BlogPostCard key={post.id} post={post} />
-                  ))}
-                </div>
+              ) : paginatedPosts.length > 0 ? (
+                <>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {paginatedPosts.map((post) => (
+                      <BlogPostCard key={post.id} post={post} />
+                    ))}
+                  </div>
+                  
+                  {/* Pagination */}
+                  <Pagination 
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
+                </>
               ) : (
                 <div className="text-center py-16">
                   <div className="w-24 h-24 mx-auto mb-6 opacity-50">
@@ -254,7 +334,7 @@ export default function Blog() {
                     <Button 
                       variant="outline" 
                       className="mt-4"
-                      onClick={() => setSelectedCategory(null)}
+                      onClick={() => handleCategoryChange(null)}
                     >
                       Ver todos los artículos
                     </Button>
@@ -271,8 +351,26 @@ export default function Blog() {
         </div>
       </section>
       
-      {/* Footer spacer */}
-      <div className="py-8 bg-white dark:bg-gray-950"></div>
+      {/* Full Width CTA Banner */}
+      <section className="py-24 md:py-32 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+        <div className="container mx-auto max-w-5xl text-center">
+          <h2 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            Menos trámites. Más acción.
+          </h2>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+            Agenda una llamada con nuestro equipo y descubre cómo podemos ayudarte a lanzar tu negocio.
+          </p>
+          <Button 
+            size="lg" 
+            className="text-lg px-10 py-6 font-semibold shadow-lg hover:shadow-xl transition-all bg-[#6C5CE7] hover:bg-[#5a4bd1]"
+            onClick={() => window.open('https://calendly.com/veronica-losimple/30min', '_blank')}
+            data-testid="button-schedule-blog"
+          >
+            <Calendar className="w-5 h-5 mr-2" />
+            Agendar cita
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
