@@ -85,7 +85,7 @@ function LaunchCTACard() {
   return (
     <div 
       className="rounded-2xl p-8 sticky top-24"
-      style={{ backgroundColor: '#FFF3CD' }}
+      style={{ backgroundColor: '#FFEAA7' }}
       data-testid="cta-launch-card"
     >
       <div className="text-center">
@@ -94,29 +94,33 @@ function LaunchCTACard() {
         </div>
         
         <h3 className="text-2xl font-bold text-gray-900 mb-4">
-          Constituye tu SAS con Lo Simple
+          Lanza tu negocio con todo incluido
         </h3>
         
         <p className="text-gray-700 mb-6">
-          Formaliza tu empresa en Ecuador en solo 5 días. Te acompañamos en cada paso del proceso.
+          En 2 semanas tendrás tu empresa lista para operar con presencia digital profesional.
         </p>
         
         <ul className="text-left space-y-3 mb-8">
           <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Proceso 100% en línea</span>
+            <span>Compañía SAS constituida</span>
           </li>
           <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Firma electrónica incluida</span>
+            <span>Landing page profesional</span>
           </li>
           <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>RUC y permisos gestionados</span>
+            <span>Redes sociales verificadas</span>
           </li>
           <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Soporte legal personalizado</span>
+            <span>Facturación y firma electrónica</span>
+          </li>
+          <li className="flex items-start gap-2 text-gray-800">
+            <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
+            <span>Soporte por 1 año</span>
           </li>
         </ul>
         
