@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import isotipoUrl from "@assets/aArtboard 1@2x_1757538290957.png";
+import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import type { Service } from "@shared/schema";
 import { useState } from "react";
 import { SchemaMarkup } from "@/components/SchemaMarkup";
@@ -674,10 +675,9 @@ export default function Home() {
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
-              <h3 className="text-xl font-bold mb-4">Lo Simple</h3>
+              <img src={logoUrl} alt="Lo Simple" className="h-8 w-auto mb-4 brightness-0 invert" />
               <p className="text-sm mb-4 opacity-80">
-                En Lo Simple ayudamos a construir patrimonios familiares sólidos 
-                una pequeña empresa a la vez. Somos el socio que necesitas y no nos tienes que dar acciones.
+                La puerta de entrada a la formalización en Ecuador.
               </p>
               <p className="text-sm opacity-60">
                 Hecho en Ecuador con 💜
