@@ -712,9 +712,11 @@ export default function Home2() {
                   "{testimonial.content}"
                 </p>
                 <div className="flex items-center gap-4 border-t border-border/50 pt-6">
-                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Users className="h-7 w-7 text-primary" />
-                  </div>
+                  <img 
+                    src={testimonial.avatar} 
+                    alt={testimonial.name}
+                    className="w-14 h-14 rounded-full object-cover"
+                  />
                   <div>
                     <p className="font-bold text-lg">{testimonial.name}</p>
                     <p className="text-sm text-muted-foreground">{testimonial.title}</p>
