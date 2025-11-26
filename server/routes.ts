@@ -199,6 +199,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // GET /orders/my-orders - Get user's order history
+  api.get("/my-orders", isAuthenticated, async (req, res) => {
+    try {
+      const user = req.user as any;
+      
+      // Get orders by userId first, then by email as fallback
+      let orders = await storage.getOrdersByUserId(user.id);
+      
+      // Also include orders made with the same email (before registration)
+      const emailOrders = await storage.getOrdersByEmail(user.email);
+      
+      // Merge and deduplicate orders
+      const orderIds = new Set(orders.map(o => o.id));
+      for (const order of emailOrders) {
+        if (!orderIds.has(order.id)) {
+          orders.push(order);
+        }
+      }
+      
+      // Sort by date descending (most recent first)
+      orders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      
+      res.json(orders);
+    } catch (error) {
+      console.error("Error fetching user orders:", error);
+      res.status(500).json({ error: "Error interno del servidor" });
+    }
+  });
+
   // PATCH /orders/:id - Restricted order updates (will be replaced by Stripe webhook)
   api.patch("/orders/:id", async (req, res) => {
     try {
