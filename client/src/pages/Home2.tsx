@@ -542,7 +542,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Liquidación de Empresa</h3>
                     <p className="text-sm text-muted-foreground mb-6">Cierra tu compañía SAS a tiempo, no incrementes obligaciones innecesarias.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={legalLiquidacion} alt="Liquidación de Empresa" className="w-full h-full object-cover object-top" />
+                      <img src={legalLiquidacion} alt="Liquidación de Empresa" className="w-full h-full object-cover object-center" />
                     </div>
                   </div>
                 </div>
