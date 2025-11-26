@@ -106,10 +106,7 @@ export default function Login() {
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 flex items-start gap-3" data-testid="banner-launch-info">
           <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
           <p className="text-sm text-blue-900 dark:text-blue-100">
-            Si quieres saber qué incluye nuestro servicio de Launch puedes revisar las inclusiones{" "}
-            <Link href="/launch" className="font-semibold underline hover:text-blue-700 dark:hover:text-blue-300 transition-colors" data-testid="link-to-launch">
-              aquí
-            </Link>
+            Para revisar las inclusiones completas del servicio Lo Simple Launch regístrate con tu correo electrónico.
           </p>
         </div>
         
