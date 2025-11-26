@@ -49,6 +49,9 @@ import facturacionReportes from "@assets/facturacion_reportes.png";
 import facturacionConfiguracion from "@assets/facturacion_configuracion.png";
 import facturacionIndicadores from "@assets/facturacion_indicadores.png";
 import facturacionEmpiezaGratis from "@assets/facturacion_empieza_gratis.png";
+import avatarMariaGonzalez from "@assets/Image web Lo Simple (3)_1764129726261.png";
+import avatarCarlosMendoza from "@assets/Image web Lo Simple (4)_1764129710184.png";
+import avatarAnaPerez from "@assets/Image web Lo Simple (5)_1764129694505.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -88,17 +91,20 @@ const testimonials = [
   {
     name: "María González",
     title: "CEO, EcoTienda SAS",
-    content: "Lo Simple hizo que constituir mi empresa fuera súper fácil. En menos de una semana ya estaba operando legalmente. El seguimiento fue excelente."
+    content: "Lo Simple hizo que constituir mi empresa fuera súper fácil. En menos de una semana ya estaba operando legalmente. El seguimiento fue excelente.",
+    avatar: avatarMariaGonzalez
   },
   {
     name: "Carlos Mendoza",
     title: "Fundador, TechSolutions",
-    content: "El servicio Launch fue increíble. Tener logo, web y todo lo legal en 2 semanas me permitió lanzar mi negocio mucho más rápido de lo que pensaba."
+    content: "El servicio Launch fue increíble. Tener logo, web y todo lo legal en 2 semanas me permitió lanzar mi negocio mucho más rápido de lo que pensaba.",
+    avatar: avatarCarlosMendoza
   },
   {
     name: "Ana Pérez",
     title: "Directora, Consultora Legal",
-    content: "Recomiendo Lo Simple a todos mis clientes. Son profesionales, rápidos y tienen excelente atención. Todo digital y transparente."
+    content: "Recomiendo Lo Simple a todos mis clientes. Son profesionales, rápidos y tienen excelente atención. Todo digital y transparente.",
+    avatar: avatarAnaPerez
   }
 ];
 
