@@ -98,7 +98,7 @@ function LaunchCTACard() {
         </h3>
         
         <p className="text-gray-700 mb-6">
-          En 2 semanas tendrás tu empresa lista para operar con presencia digital profesional.
+          En 2 días tendrás tu empresa lista para operar con presencia digital profesional.
         </p>
         
         <ul className="text-left space-y-3 mb-8">
