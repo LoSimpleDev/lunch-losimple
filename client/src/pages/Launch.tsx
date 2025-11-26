@@ -1,7 +1,7 @@
 import { useLocation, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Package, Star, Building, Calculator, Megaphone, Laptop, BadgeCheck } from "lucide-react";
+import { Check, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Package, Star, Building, Calculator, Megaphone, Laptop, BadgeCheck, Headphones } from "lucide-react";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
@@ -139,6 +139,20 @@ export default function Launch() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Firma digital con validez legal por un año</p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow" data-testid="card-support">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Headphones className="w-6 h-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl">Soporte Anual</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Nuestro equipo resuelve tus dudas legales y las relacionadas con inclusiones, por un año</p>
               </CardContent>
             </Card>
           </div>
