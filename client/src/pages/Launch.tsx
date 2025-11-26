@@ -254,7 +254,7 @@ export default function Launch() {
           {/* CTA Section - Yellow Card */}
           <div 
             className="text-center py-12 px-8 rounded-2xl"
-            style={{ backgroundColor: '#FFEAA7' }}
+            style={{ backgroundColor: '#FEF9C3' }}
           >
             <h3 className="text-2xl font-bold mb-4 text-gray-900">¿Listo para lanzar tu negocio?</h3>
             <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
