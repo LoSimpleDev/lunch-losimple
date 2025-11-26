@@ -1296,6 +1296,189 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ============ BLOG ROUTES ============
+  
+  // GET /blog/posts - Get all published blog posts (public)
+  api.get("/blog/posts", async (req, res) => {
+    try {
+      const { category } = req.query;
+      
+      let posts;
+      if (category && typeof category === 'string') {
+        posts = await storage.getBlogPostsByCategory(category);
+      } else {
+        posts = await storage.getPublishedBlogPosts();
+      }
+      
+      res.json(posts);
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /blog/posts/:slug - Get a blog post by slug (public)
+  api.get("/blog/posts/:slug", async (req, res) => {
+    try {
+      const post = await storage.getBlogPostBySlug(req.params.slug);
+      
+      if (!post) {
+        return res.status(404).json({ error: 'Artículo no encontrado' });
+      }
+      
+      // Only return published posts for public access
+      if (!post.isPublished) {
+        return res.status(404).json({ error: 'Artículo no encontrado' });
+      }
+      
+      res.json(post);
+    } catch (error) {
+      console.error('Error fetching blog post:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /blog/categories - Get unique categories from published posts
+  api.get("/blog/categories", async (req, res) => {
+    try {
+      const posts = await storage.getPublishedBlogPosts();
+      const categorySet = new Set(posts.map(post => post.category));
+      const categories = Array.from(categorySet);
+      res.json(categories);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // ============ BLOG ADMIN ROUTES ============
+  
+  // GET /blog/admin/posts - Get all blog posts (admin only)
+  api.get("/blog/admin/posts", isAdmin, async (req, res) => {
+    try {
+      const posts = await storage.getAllBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error('Error fetching all blog posts:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /blog/admin/posts/:id - Get a blog post by ID (admin only)
+  api.get("/blog/admin/posts/:id", isAdmin, async (req, res) => {
+    try {
+      const post = await storage.getBlogPost(req.params.id);
+      
+      if (!post) {
+        return res.status(404).json({ error: 'Artículo no encontrado' });
+      }
+      
+      res.json(post);
+    } catch (error) {
+      console.error('Error fetching blog post:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /blog/admin/posts - Create a new blog post (admin only)
+  api.post("/blog/admin/posts", isAdmin, async (req, res) => {
+    try {
+      const { title, slug, excerpt, content, category, imageUrl, metaTitle, metaDescription, author, isPublished } = req.body;
+      
+      if (!title || !slug || !excerpt || !content || !category) {
+        return res.status(400).json({ error: 'Título, slug, extracto, contenido y categoría son requeridos' });
+      }
+      
+      // Check if slug already exists
+      const existingPost = await storage.getBlogPostBySlug(slug);
+      if (existingPost) {
+        return res.status(400).json({ error: 'Ya existe un artículo con ese slug' });
+      }
+      
+      const post = await storage.createBlogPost({
+        title,
+        slug,
+        excerpt,
+        content,
+        category,
+        imageUrl: imageUrl || null,
+        metaTitle: metaTitle || null,
+        metaDescription: metaDescription || null,
+        author: author || 'Lo Simple',
+        isPublished: isPublished || false,
+        publishedAt: isPublished ? new Date() : null
+      });
+      
+      res.status(201).json(post);
+    } catch (error) {
+      console.error('Error creating blog post:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // PATCH /blog/admin/posts/:id - Update a blog post (admin only)
+  api.patch("/blog/admin/posts/:id", isAdmin, async (req, res) => {
+    try {
+      const existingPost = await storage.getBlogPost(req.params.id);
+      
+      if (!existingPost) {
+        return res.status(404).json({ error: 'Artículo no encontrado' });
+      }
+      
+      const { title, slug, excerpt, content, category, imageUrl, metaTitle, metaDescription, author, isPublished } = req.body;
+      
+      // Check if new slug conflicts with another post
+      if (slug && slug !== existingPost.slug) {
+        const conflictingPost = await storage.getBlogPostBySlug(slug);
+        if (conflictingPost && conflictingPost.id !== existingPost.id) {
+          return res.status(400).json({ error: 'Ya existe un artículo con ese slug' });
+        }
+      }
+      
+      // Set publishedAt when publishing for the first time
+      let publishedAt = existingPost.publishedAt;
+      if (isPublished && !existingPost.isPublished && !existingPost.publishedAt) {
+        publishedAt = new Date();
+      }
+      
+      const updatedPost = await storage.updateBlogPost(req.params.id, {
+        title: title !== undefined ? title : existingPost.title,
+        slug: slug !== undefined ? slug : existingPost.slug,
+        excerpt: excerpt !== undefined ? excerpt : existingPost.excerpt,
+        content: content !== undefined ? content : existingPost.content,
+        category: category !== undefined ? category : existingPost.category,
+        imageUrl: imageUrl !== undefined ? imageUrl : existingPost.imageUrl,
+        metaTitle: metaTitle !== undefined ? metaTitle : existingPost.metaTitle,
+        metaDescription: metaDescription !== undefined ? metaDescription : existingPost.metaDescription,
+        author: author !== undefined ? author : existingPost.author,
+        isPublished: isPublished !== undefined ? isPublished : existingPost.isPublished,
+        publishedAt
+      });
+      
+      res.json(updatedPost);
+    } catch (error) {
+      console.error('Error updating blog post:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // DELETE /blog/admin/posts/:id - Delete a blog post (admin only)
+  api.delete("/blog/admin/posts/:id", isAdmin, async (req, res) => {
+    try {
+      const existingPost = await storage.getBlogPost(req.params.id);
+      
+      if (!existingPost) {
+        return res.status(404).json({ error: 'Artículo no encontrado' });
+      }
+      
+      await storage.deleteBlogPost(req.params.id);
+      res.json({ message: 'Artículo eliminado correctamente' });
+    } catch (error) {
+      console.error('Error deleting blog post:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+
   // Terminal 404 handler for API routes
   api.use((_req, res) => {
     res.status(404).json({ error: "API endpoint not found" });

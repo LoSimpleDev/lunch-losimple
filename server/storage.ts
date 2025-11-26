@@ -8,7 +8,8 @@ import {
   type AdminNote, type InsertAdminNote,
   type TeamMessage, type InsertTeamMessage,
   type Benefit, type InsertBenefit,
-  type BenefitCode, type InsertBenefitCode
+  type BenefitCode, type InsertBenefitCode,
+  type BlogPost, type InsertBlogPost
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -71,6 +72,16 @@ export interface IStorage {
   getBenefitCodesByUser(userId: string): Promise<BenefitCode[]>;
   createBenefitCode(code: InsertBenefitCode): Promise<BenefitCode>;
   getBenefitCodeByCode(code: string): Promise<BenefitCode | undefined>;
+  
+  // Blog Posts
+  getAllBlogPosts(): Promise<BlogPost[]>;
+  getPublishedBlogPosts(): Promise<BlogPost[]>;
+  getBlogPost(id: string): Promise<BlogPost | undefined>;
+  getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
+  getBlogPostsByCategory(category: string): Promise<BlogPost[]>;
+  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: string, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
+  deleteBlogPost(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -84,6 +95,7 @@ export class MemStorage implements IStorage {
   private teamMessages: Map<string, TeamMessage>;
   private benefits: Map<string, Benefit>;
   private benefitCodes: Map<string, BenefitCode>;
+  private blogPosts: Map<string, BlogPost>;
 
   constructor() {
     this.services = new Map();
@@ -96,9 +108,11 @@ export class MemStorage implements IStorage {
     this.teamMessages = new Map();
     this.benefits = new Map();
     this.benefitCodes = new Map();
+    this.blogPosts = new Map();
     this.initializeServices();
     this.initializeDefaultAdmin();
     this.initializeBenefits();
+    this.initializeBlogPosts();
   }
 
   // Services methods
@@ -847,6 +861,61 @@ export class MemStorage implements IStorage {
     return Array.from(this.benefitCodes.values()).find(bc => bc.code === code);
   }
 
+  // Blog Post methods
+  async getAllBlogPosts(): Promise<BlogPost[]> {
+    return Array.from(this.blogPosts.values())
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getPublishedBlogPosts(): Promise<BlogPost[]> {
+    return Array.from(this.blogPosts.values())
+      .filter(post => post.isPublished)
+      .sort((a, b) => (b.publishedAt?.getTime() || 0) - (a.publishedAt?.getTime() || 0));
+  }
+
+  async getBlogPost(id: string): Promise<BlogPost | undefined> {
+    return this.blogPosts.get(id);
+  }
+
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    return Array.from(this.blogPosts.values()).find(post => post.slug === slug);
+  }
+
+  async getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
+    return Array.from(this.blogPosts.values())
+      .filter(post => post.isPublished && post.category === category)
+      .sort((a, b) => (b.publishedAt?.getTime() || 0) - (a.publishedAt?.getTime() || 0));
+  }
+
+  async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
+    const id = randomUUID();
+    const post: BlogPost = {
+      ...insertPost,
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    } as BlogPost;
+    this.blogPosts.set(id, post);
+    return post;
+  }
+
+  async updateBlogPost(id: string, postUpdate: Partial<InsertBlogPost>): Promise<BlogPost | undefined> {
+    const existing = this.blogPosts.get(id);
+    if (!existing) return undefined;
+    
+    const updated = {
+      ...existing,
+      ...postUpdate,
+      updatedAt: new Date()
+    } as BlogPost;
+    this.blogPosts.set(id, updated);
+    return updated;
+  }
+
+  async deleteBlogPost(id: string): Promise<boolean> {
+    return this.blogPosts.delete(id);
+  }
+
   // Initialize benefits
   private initializeBenefits() {
     const defaultBenefits: Benefit[] = [
@@ -894,6 +963,272 @@ export class MemStorage implements IStorage {
 
     defaultBenefits.forEach(benefit => {
       this.benefits.set(benefit.id, benefit);
+    });
+  }
+
+  // Initialize blog posts with sample articles
+  private initializeBlogPosts() {
+    const samplePosts: BlogPost[] = [
+      {
+        id: randomUUID(),
+        title: "¿Qué es una SAS y por qué es la mejor opción para emprendedores en Ecuador?",
+        slug: "que-es-sas-ecuador-emprendedores",
+        excerpt: "Descubre las ventajas de constituir una Sociedad por Acciones Simplificada (SAS) en Ecuador: proceso rápido, bajo costo y flexibilidad total para tu negocio.",
+        content: `<h2>¿Qué es una SAS?</h2>
+<p>La Sociedad por Acciones Simplificada (SAS) es un tipo de empresa creada en Ecuador mediante la Ley Orgánica de Emprendimiento e Innovación (LOEI) del año 2020. Esta figura jurídica fue diseñada específicamente para facilitar la formalización de emprendimientos.</p>
+
+<h2>Ventajas de constituir una SAS</h2>
+<ul>
+<li><strong>Constitución 100% digital:</strong> Todo el proceso se realiza en línea, sin necesidad de notaría.</li>
+<li><strong>Capital mínimo de $1:</strong> No necesitas un capital elevado para iniciar.</li>
+<li><strong>Un solo accionista:</strong> Puedes ser el único dueño de tu empresa.</li>
+<li><strong>Proceso rápido:</strong> En Lo Simple lo hacemos en 5 días.</li>
+<li><strong>Responsabilidad limitada:</strong> Tu patrimonio personal está protegido.</li>
+</ul>
+
+<h2>¿Para quién es ideal una SAS?</h2>
+<p>La SAS es perfecta para freelancers, consultores, emprendedores digitales, startups y cualquier persona que quiera formalizar su actividad económica de manera simple y económica.</p>
+
+<h2>Requisitos para constituir una SAS</h2>
+<ol>
+<li>Cédula de identidad vigente</li>
+<li>Papeleta de votación</li>
+<li>Firma electrónica (te ayudamos a obtenerla)</li>
+<li>Definir el nombre de tu empresa</li>
+<li>Determinar las actividades económicas</li>
+</ol>
+
+<p>En Lo Simple te acompañamos en todo el proceso. <strong>Constituye tu SAS en solo 5 días</strong> con nuestro equipo de expertos.</p>`,
+        category: "SAS",
+        imageUrl: null,
+        metaTitle: "¿Qué es una SAS en Ecuador? Guía Completa 2025 | Lo Simple",
+        metaDescription: "Aprende qué es una SAS (Sociedad por Acciones Simplificada) en Ecuador, sus ventajas, requisitos y cómo constituirla en solo 5 días. Guía actualizada 2025.",
+        author: "Lo Simple",
+        isPublished: true,
+        publishedAt: new Date("2025-11-01"),
+        createdAt: new Date("2025-11-01"),
+        updatedAt: new Date("2025-11-01")
+      },
+      {
+        id: randomUUID(),
+        title: "Facturación Electrónica en Ecuador: Todo lo que necesitas saber en 2025",
+        slug: "facturacion-electronica-ecuador-2025",
+        excerpt: "Guía completa sobre facturación electrónica en Ecuador: obligaciones, beneficios, cómo implementarla y evitar multas del SRI.",
+        content: `<h2>¿Qué es la facturación electrónica?</h2>
+<p>La facturación electrónica es un sistema digital autorizado por el Servicio de Rentas Internas (SRI) que permite emitir comprobantes de venta con validez legal de forma digital.</p>
+
+<h2>¿Quiénes están obligados a facturar electrónicamente?</h2>
+<p>Desde 2022, todas las empresas y personas naturales obligadas a llevar contabilidad deben emitir comprobantes electrónicos. Esto incluye:</p>
+<ul>
+<li>Sociedades (SAS, Compañías Limitadas, S.A.)</li>
+<li>Personas naturales con ingresos mayores a $300,000 anuales</li>
+<li>Contribuyentes especiales</li>
+</ul>
+
+<h2>Beneficios de la facturación electrónica</h2>
+<ul>
+<li><strong>Ahorro de costos:</strong> No más impresiones ni papel.</li>
+<li><strong>Mayor control:</strong> Registro automático de todas las transacciones.</li>
+<li><strong>Cumplimiento tributario:</strong> Evita multas y sanciones del SRI.</li>
+<li><strong>Profesionalismo:</strong> Proyecta una imagen moderna de tu negocio.</li>
+</ul>
+
+<h2>¿Cómo implementar la facturación electrónica?</h2>
+<ol>
+<li>Obtener firma electrónica</li>
+<li>Registrarse en el SRI como emisor electrónico</li>
+<li>Contratar un sistema de facturación autorizado</li>
+<li>Realizar pruebas en ambiente de producción</li>
+<li>Iniciar la emisión de comprobantes</li>
+</ol>
+
+<p>En Lo Simple te ayudamos con todo el proceso. Visita <strong>facturacion.losimple.ai</strong> para conocer nuestro sistema de facturación electrónica.</p>`,
+        category: "Facturación",
+        imageUrl: null,
+        metaTitle: "Facturación Electrónica Ecuador 2025: Guía Completa SRI | Lo Simple",
+        metaDescription: "Todo sobre facturación electrónica en Ecuador 2025: obligaciones SRI, cómo implementarla, beneficios y evitar multas. Guía paso a paso.",
+        author: "Lo Simple",
+        isPublished: true,
+        publishedAt: new Date("2025-10-15"),
+        createdAt: new Date("2025-10-15"),
+        updatedAt: new Date("2025-10-15")
+      },
+      {
+        id: randomUUID(),
+        title: "Firma Electrónica en Ecuador: Cómo obtenerla y para qué sirve",
+        slug: "firma-electronica-ecuador-como-obtenerla",
+        excerpt: "Aprende qué es la firma electrónica, cómo obtenerla en Ecuador, sus usos legales y por qué es indispensable para tu empresa.",
+        content: `<h2>¿Qué es una firma electrónica?</h2>
+<p>La firma electrónica es un mecanismo digital que permite validar la identidad de una persona y garantizar la autenticidad e integridad de un documento electrónico. En Ecuador, tiene la misma validez legal que una firma manuscrita.</p>
+
+<h2>¿Para qué necesitas una firma electrónica?</h2>
+<ul>
+<li><strong>Constituir una SAS:</strong> Es requisito obligatorio para firmar el acto constitutivo.</li>
+<li><strong>Facturación electrónica:</strong> Necesaria para firmar comprobantes electrónicos.</li>
+<li><strong>Trámites en el SRI:</strong> Presentar declaraciones y realizar gestiones.</li>
+<li><strong>Contratos digitales:</strong> Firmar acuerdos con validez legal.</li>
+<li><strong>Trámites bancarios:</strong> Algunas instituciones la requieren.</li>
+</ul>
+
+<h2>Tipos de firma electrónica</h2>
+<p>En Ecuador existen dos tipos principales:</p>
+<ul>
+<li><strong>Firma tipo archivo:</strong> Se almacena en tu computadora. Más económica y práctica.</li>
+<li><strong>Firma tipo token:</strong> Se almacena en un dispositivo USB físico. Mayor seguridad.</li>
+</ul>
+
+<h2>¿Cómo obtener tu firma electrónica?</h2>
+<ol>
+<li>Elegir una entidad certificadora autorizada</li>
+<li>Completar la solicitud en línea</li>
+<li>Realizar el pago correspondiente</li>
+<li>Verificar tu identidad (puede ser presencial o virtual)</li>
+<li>Descargar e instalar tu certificado</li>
+</ol>
+
+<p>En <strong>ecuadorfirmasimple.com</strong> puedes obtener tu firma electrónica de forma rápida y sencilla con el proceso más ágil del mercado.</p>`,
+        category: "Firma Electrónica",
+        imageUrl: null,
+        metaTitle: "Firma Electrónica Ecuador: Cómo Obtenerla Paso a Paso | Lo Simple",
+        metaDescription: "Guía completa para obtener tu firma electrónica en Ecuador. Requisitos, tipos, costos y proceso paso a paso. Obtén la tuya hoy.",
+        author: "Lo Simple",
+        isPublished: true,
+        publishedAt: new Date("2025-10-01"),
+        createdAt: new Date("2025-10-01"),
+        updatedAt: new Date("2025-10-01")
+      },
+      {
+        id: randomUUID(),
+        title: "Reforma de Estatutos SAS: Cuándo y cómo hacerla correctamente",
+        slug: "reforma-estatutos-sas-ecuador",
+        excerpt: "¿Necesitas agregar o quitar actividades de tu SAS? Aprende cuándo es necesario reformar los estatutos y cómo hacerlo de forma legal.",
+        content: `<h2>¿Qué es una reforma de estatutos?</h2>
+<p>La reforma de estatutos es un proceso legal que permite modificar las características de tu empresa SAS, como sus actividades económicas, nombre, capital social, o estructura administrativa.</p>
+
+<h2>¿Cuándo necesitas reformar los estatutos?</h2>
+<ul>
+<li><strong>Agregar actividades económicas:</strong> Si tu negocio se expande a nuevas áreas.</li>
+<li><strong>Eliminar actividades:</strong> Si dejas de realizar ciertas operaciones.</li>
+<li><strong>Cambiar el nombre:</strong> Actualizar la denominación de tu empresa.</li>
+<li><strong>Modificar el capital:</strong> Aumentar o reducir el capital social.</li>
+<li><strong>Cambiar la administración:</strong> Modificar quién puede representar la empresa.</li>
+</ul>
+
+<h2>Proceso de reforma de estatutos</h2>
+<ol>
+<li>Realizar una junta de accionistas y aprobar las modificaciones</li>
+<li>Elaborar el acta de reforma correspondiente</li>
+<li>Inscribir la reforma en la Superintendencia de Compañías</li>
+<li>Actualizar el RUC en el SRI si corresponde</li>
+<li>Obtener los nuevos documentos actualizados</li>
+</ol>
+
+<h2>Documentos necesarios</h2>
+<ul>
+<li>Estatutos actuales de la empresa</li>
+<li>Acta de junta de accionistas</li>
+<li>Firma electrónica del representante legal</li>
+<li>Copia del RUC vigente</li>
+</ul>
+
+<p>En Lo Simple te ayudamos con todo el proceso de reforma de estatutos de manera ágil y profesional.</p>`,
+        category: "Legal",
+        imageUrl: null,
+        metaTitle: "Reforma de Estatutos SAS Ecuador: Guía Completa | Lo Simple",
+        metaDescription: "Aprende cuándo y cómo reformar los estatutos de tu SAS en Ecuador. Proceso, requisitos y documentos necesarios. Asesoría profesional.",
+        author: "Lo Simple",
+        isPublished: true,
+        publishedAt: new Date("2025-09-15"),
+        createdAt: new Date("2025-09-15"),
+        updatedAt: new Date("2025-09-15")
+      },
+      {
+        id: randomUUID(),
+        title: "5 errores comunes al constituir una empresa en Ecuador y cómo evitarlos",
+        slug: "errores-comunes-constituir-empresa-ecuador",
+        excerpt: "Evita los errores más frecuentes que cometen los emprendedores al crear su empresa. Consejos prácticos para una constitución exitosa.",
+        content: `<h2>Error #1: No verificar la disponibilidad del nombre</h2>
+<p>Muchos emprendedores eligen un nombre sin verificar si está disponible en la Superintendencia de Compañías. Esto puede retrasar el proceso semanas.</p>
+<p><strong>Solución:</strong> Siempre consulta la disponibilidad del nombre antes de iniciar cualquier trámite. En Lo Simple hacemos esto por ti.</p>
+
+<h2>Error #2: Elegir actividades económicas incorrectas</h2>
+<p>Seleccionar actividades que no corresponden con tu negocio puede generar problemas tributarios y limitaciones operativas.</p>
+<p><strong>Solución:</strong> Asesórate con expertos para elegir las actividades correctas según tu modelo de negocio.</p>
+
+<h2>Error #3: No obtener la firma electrónica a tiempo</h2>
+<p>La firma electrónica es requisito obligatorio y obtenerla puede tomar días. Dejarlo para último momento retrasa todo.</p>
+<p><strong>Solución:</strong> Inicia el proceso de firma electrónica al mismo tiempo que comienzas la constitución.</p>
+
+<h2>Error #4: Documentos personales vencidos o con errores</h2>
+<p>Cédulas vencidas, papeletas de votación incorrectas o direcciones desactualizadas son problemas frecuentes.</p>
+<p><strong>Solución:</strong> Revisa que todos tus documentos estén vigentes y actualizados antes de empezar.</p>
+
+<h2>Error #5: No planificar la estructura societaria</h2>
+<p>Definir incorrectamente la distribución de acciones o la administración puede generar conflictos futuros.</p>
+<p><strong>Solución:</strong> Define claramente los porcentajes de participación y quién tendrá la representación legal.</p>
+
+<p>En Lo Simple te guiamos paso a paso para evitar todos estos errores y constituir tu empresa correctamente.</p>`,
+        category: "SAS",
+        imageUrl: null,
+        metaTitle: "5 Errores al Constituir Empresa en Ecuador: Cómo Evitarlos | Lo Simple",
+        metaDescription: "Descubre los 5 errores más comunes al crear una empresa en Ecuador y cómo evitarlos. Consejos de expertos para emprendedores.",
+        author: "Lo Simple",
+        isPublished: true,
+        publishedAt: new Date("2025-09-01"),
+        createdAt: new Date("2025-09-01"),
+        updatedAt: new Date("2025-09-01")
+      },
+      {
+        id: randomUUID(),
+        title: "Cesión de Acciones en una SAS: Guía paso a paso",
+        slug: "cesion-acciones-sas-ecuador",
+        excerpt: "¿Necesitas vender o transferir acciones de tu SAS? Conoce el proceso legal, los documentos necesarios y cómo hacerlo correctamente.",
+        content: `<h2>¿Qué es una cesión de acciones?</h2>
+<p>La cesión de acciones es el proceso legal mediante el cual un accionista transfiere total o parcialmente su participación en una SAS a otra persona, ya sea un accionista existente o un tercero.</p>
+
+<h2>¿Cuándo se realiza una cesión de acciones?</h2>
+<ul>
+<li><strong>Venta de participación:</strong> Un socio desea vender su parte del negocio.</li>
+<li><strong>Ingreso de nuevos socios:</strong> Se incorporan inversionistas o partners.</li>
+<li><strong>Herencia:</strong> Transferencia por fallecimiento de un accionista.</li>
+<li><strong>Donación:</strong> Transferencia gratuita entre familiares.</li>
+<li><strong>Reorganización societaria:</strong> Reestructuración de la empresa.</li>
+</ul>
+
+<h2>Proceso de cesión de acciones</h2>
+<ol>
+<li>Verificar el estatuto social (posibles restricciones o derechos de preferencia)</li>
+<li>Negociar términos entre cedente y cesionario</li>
+<li>Elaborar el contrato de cesión de acciones</li>
+<li>Realizar junta de accionistas para aprobar la cesión</li>
+<li>Inscribir en el Libro de Acciones y Accionistas</li>
+<li>Notificar a la Superintendencia de Compañías</li>
+<li>Actualizar información ante el SRI si corresponde</li>
+</ol>
+
+<h2>Documentos necesarios</h2>
+<ul>
+<li>Contrato de cesión firmado electrónicamente</li>
+<li>Acta de junta de accionistas</li>
+<li>Identificación del cedente y cesionario</li>
+<li>Libro de Acciones y Accionistas actualizado</li>
+</ul>
+
+<p>En Lo Simple te acompañamos en todo el proceso de cesión de acciones con asesoría legal completa.</p>`,
+        category: "Legal",
+        imageUrl: null,
+        metaTitle: "Cesión de Acciones SAS Ecuador: Guía Paso a Paso | Lo Simple",
+        metaDescription: "Cómo transferir acciones de una SAS en Ecuador. Proceso legal, documentos y requisitos para cesión de acciones. Asesoría especializada.",
+        author: "Lo Simple",
+        isPublished: true,
+        publishedAt: new Date("2025-08-15"),
+        createdAt: new Date("2025-08-15"),
+        updatedAt: new Date("2025-08-15")
+      }
+    ];
+
+    samplePosts.forEach(post => {
+      this.blogPosts.set(post.id, post);
     });
   }
 }

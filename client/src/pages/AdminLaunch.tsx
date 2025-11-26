@@ -140,6 +140,14 @@ export default function AdminLaunch() {
             </p>
           </div>
           <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              onClick={() => setLocation('/admin-blog')}
+              data-testid="button-admin-blog"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Blog
+            </Button>
             {isSuperadmin && (
               <Button 
                 variant="outline" 

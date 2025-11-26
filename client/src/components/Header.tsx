@@ -44,6 +44,13 @@ export function Header() {
               Membresía
             </a>
             <a 
+              href="/blog"
+              className="text-sm font-medium hover:text-primary transition-colors"
+              data-testid="link-blog"
+            >
+              Blog
+            </a>
+            <a 
               href="https://facturacion.losimple.ai"
               target="_blank"
               rel="noopener noreferrer"

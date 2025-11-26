@@ -229,6 +229,24 @@ export const benefitCodes = pgTable("benefit_codes", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+// Blog system
+export const blogPosts = pgTable("blog_posts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt").notNull(), // Short description for cards
+  content: text("content").notNull(), // Full article content (HTML/Markdown)
+  category: text("category").notNull(), // SAS, Facturación, Firma Electrónica, Legal
+  imageUrl: text("image_url"), // Featured image
+  metaTitle: text("meta_title"), // SEO title (optional, falls back to title)
+  metaDescription: text("meta_description"), // SEO description
+  author: text("author").notNull().default("Lo Simple"),
+  isPublished: boolean("is_published").notNull().default(false),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 // Schemas for existing marketplace
 export const insertServiceSchema = createInsertSchema(services).omit({
   id: true,
@@ -285,6 +303,12 @@ export const insertBenefitCodeSchema = createInsertSchema(benefitCodes).omit({
   createdAt: true,
 });
 
+export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types for existing marketplace
 export type Service = typeof services.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
@@ -308,3 +332,7 @@ export type Benefit = typeof benefits.$inferSelect;
 export type InsertBenefit = z.infer<typeof insertBenefitSchema>;
 export type BenefitCode = typeof benefitCodes.$inferSelect;
 export type InsertBenefitCode = z.infer<typeof insertBenefitCodeSchema>;
+
+// Types for Blog system
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
