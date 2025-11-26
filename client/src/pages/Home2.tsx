@@ -634,7 +634,6 @@ export default function Home2() {
                           </Button>
                         </a>
                       </div>
-                      <img src={facturacionEmpiezaGratis} alt="Dashboard de facturación" className="rounded-lg h-48 w-full md:w-64 flex-shrink-0 object-cover object-left shadow-md" />
                     </div>
                   </div>
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
