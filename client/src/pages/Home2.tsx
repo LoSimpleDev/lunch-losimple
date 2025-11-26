@@ -891,7 +891,7 @@ export default function Home2() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button 
                 size="lg" 
-                className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all bg-[#141464] hover:bg-[#1a1a7a]"
+                className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all bg-[#8442F0] hover:bg-[#7035d9]"
                 onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
                 data-testid="button-final-cta"
               >
