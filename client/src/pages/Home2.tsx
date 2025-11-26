@@ -54,6 +54,9 @@ import avatarCarlosMendoza from "@assets/Image web Lo Simple (4)_1764129710184.p
 import avatarAnaPerez from "@assets/Image web Lo Simple (5)_1764129694505.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
+import firmaCertificados from "@assets/Image web Lo Simple (8)_1764165791870.png";
+import firmaSegura from "@assets/Image web Lo Simple (6)_1764165798998.png";
+import firmaTodoIncluido from "@assets/Image web Lo Simple (7)_1764165795582.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -570,19 +573,19 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Certificados digitales</h3>
                     <p className="text-sm text-muted-foreground mb-6">Persona natural y jurídica con validez legal</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <img src={firmaCertificados} alt="Certificados digitales" className="w-full h-32 object-cover rounded-lg" />
                   </div>
                   <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Firma segura</h3>
                     <p className="text-sm text-muted-foreground mb-6">Valida la autenticidad e integridad de documentos y contratos en el entorno digital.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <img src={firmaSegura} alt="Firma Segura" className="w-full h-32 object-cover rounded-lg" />
                   </div>
                   <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Todo incluido</h3>
                     <p className="text-sm text-muted-foreground mb-6">Adquiere tu firma con la vigencia que necesites con el proceso más rápido del mercado.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <img src={firmaTodoIncluido} alt="Todo incluido" className="w-full h-32 object-cover rounded-lg" />
                   </div>
                 </div>
 
