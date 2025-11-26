@@ -257,10 +257,16 @@ export default function Home2() {
               <Button 
                 size="lg" 
                 className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
-                onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => {
+                  document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' });
+                  setTimeout(() => {
+                    const launchTab = document.querySelector('[data-testid="tab-launch"]') as HTMLButtonElement;
+                    if (launchTab) launchTab.click();
+                  }, 500);
+                }}
                 data-testid="button-get-started"
               >
-                Comenzar Ahora
+                Ver Productos
                 <ChevronRight className="ml-2 h-6 w-6" />
               </Button>
               <Button 
@@ -862,7 +868,7 @@ export default function Home2() {
             <Button 
               size="lg"
               className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
-              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+              onClick={() => window.open('https://calendly.com/veronica-losimple/30min', '_blank')}
               data-testid="button-schedule-consultation"
             >
               <MessageCircle className="mr-2 h-6 w-6" />
