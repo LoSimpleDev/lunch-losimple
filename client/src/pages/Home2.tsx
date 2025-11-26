@@ -52,6 +52,8 @@ import facturacionEmpiezaGratis from "@assets/facturacion_empieza_gratis.png";
 import avatarMariaGonzalez from "@assets/Image web Lo Simple (3)_1764129726261.png";
 import avatarCarlosMendoza from "@assets/Image web Lo Simple (4)_1764129710184.png";
 import avatarAnaPerez from "@assets/Image web Lo Simple (5)_1764129694505.png";
+import decoratorPerson from "@assets/blog-decorator-person.png";
+import decoratorGrid from "@assets/blog-decorator-grid.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -728,23 +730,40 @@ export default function Home2() {
         </div>
       </section>
 
-      {/* Resources/Blog Section */}
-      <section className="py-32 px-4">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
-              Recursos para emprendedores
+      {/* Resources/Blog Section - Blog Hero Style */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-24 lg:py-32 px-4">
+        {/* Decorative Elements */}
+        <div className="absolute top-10 left-10 w-24 h-24 opacity-20 transform -rotate-12 hidden lg:block">
+          <img src={decoratorPerson} alt="" className="w-full h-full object-contain" />
+        </div>
+        <div className="absolute top-16 right-16 w-32 h-32 opacity-15 transform rotate-6 hidden lg:block">
+          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" />
+        </div>
+        <div className="absolute bottom-20 left-20 w-20 h-20 opacity-15 transform rotate-12 hidden lg:block">
+          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" />
+        </div>
+        
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-semibold mb-6">
+              Blog Lo Simple
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
+              Recursos para{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-cyan-600">
+                emprendedores
+              </span>
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Guías prácticas para ayudarte a construir y hacer crecer tu negocio
+              Guías, consejos y noticias sobre constitución de empresas, facturación electrónica y firma digital en Ecuador.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
             {recursos.map((recurso, index) => {
               const IconComponent = recurso.icon;
               return (
-                <Card key={index} className="hover:shadow-lg transition-shadow overflow-hidden p-2 md:p-0" data-testid={`card-resource-${index}`}>
+                <Card key={index} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:shadow-xl transition-all overflow-hidden p-2 md:p-0 border-0 shadow-lg" data-testid={`card-resource-${index}`}>
                   <div className={`h-48 bg-gradient-to-br ${recurso.gradient} flex items-center justify-center`}>
                     <IconComponent className={`h-16 w-16 ${recurso.iconColor || 'text-primary'}`} />
                   </div>
@@ -755,15 +774,16 @@ export default function Home2() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-4 md:p-6 pt-0">
-                    <Button 
-                      variant="ghost" 
-                      className="w-full" 
-                      onClick={() => window.open('https://sasecuador.com/blog', '_blank')}
-                      data-testid={`button-resource-${index}`}
-                    >
-                      Leer más
-                      <ChevronRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <Link href="/blog">
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-purple-600 hover:text-purple-700 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/30" 
+                        data-testid={`button-resource-${index}`}
+                      >
+                        Leer más
+                        <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               );
@@ -771,15 +791,16 @@ export default function Home2() {
           </div>
 
           <div className="text-center">
-            <Button 
-              size="lg" 
-              variant="outline"
-              onClick={() => window.open('https://sasecuador.com/blog', '_blank')}
-              data-testid="button-view-all-resources"
-            >
-              Ver todos los recursos
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href="/blog">
+              <Button 
+                size="lg" 
+                className="bg-purple-600 hover:bg-purple-700 text-white"
+                data-testid="button-view-all-resources"
+              >
+                Ver todos los recursos
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
