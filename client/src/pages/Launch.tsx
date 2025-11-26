@@ -1,8 +1,10 @@
 import { useLocation, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Palette, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, MessageCircle, Package, Star, Building, Calculator, Megaphone, Laptop } from "lucide-react";
+import { Check, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Package, Star, Building, Calculator, Megaphone, Laptop, BadgeCheck } from "lucide-react";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
+import decoratorPerson from "@assets/blog-decorator-person.png";
+import decoratorGrid from "@assets/blog-decorator-grid.png";
 
 const aliadosCategories = [
   {
@@ -36,32 +38,51 @@ export default function Launch() {
   
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-6xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
-              Launch
+      {/* Hero Section - Similar to Blog */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-16 lg:py-20">
+        {/* Decorative Elements */}
+        <div className="absolute top-10 left-10 w-24 h-24 opacity-20 transform -rotate-12 hidden lg:block">
+          <img src={decoratorPerson} alt="" className="w-full h-full object-contain" />
+        </div>
+        <div className="absolute top-16 right-16 w-32 h-32 opacity-15 transform rotate-6 hidden lg:block">
+          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-semibold mb-6">
+              Servicio Todo Incluido
+            </span>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+              Launch:{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-cyan-600">
+                Lánzalo simple
+              </span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Launch es un servicio todo incluido para quienes empiezan un negocio. Por un sólo precio, 
-              <span className="font-semibold text-foreground"> en dos semanas puedes tener</span>:
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Todo incluido para quienes empiezan un negocio. Por un solo precio, 
+              <span className="font-semibold text-foreground"> en 2 días puedes tener</span>:
             </p>
           </div>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-6xl mx-auto">
 
           {/* Inclusiones Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-logo">
+            <Card className="hover:shadow-lg transition-shadow" data-testid="card-company">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Palette className="w-6 h-6 text-primary" />
+                    <Building2 className="w-6 h-6 text-primary" />
                   </div>
-                  <CardTitle className="text-xl">Logo</CardTitle>
+                  <CardTitle className="text-xl">Compañía Constituida</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Identidad visual profesional para tu marca</p>
+                <p className="text-muted-foreground">SAS 100% legal y lista para operar</p>
               </CardContent>
             </Card>
 
@@ -83,27 +104,13 @@ export default function Launch() {
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Share2 className="w-6 h-6 text-primary" />
+                    <BadgeCheck className="w-6 h-6 text-primary" />
                   </div>
-                  <CardTitle className="text-xl">Redes Sociales</CardTitle>
+                  <CardTitle className="text-xl">Verificación de Redes</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Cuentas verificadas de Facebook e Instagram</p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-company">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">Compañía Constituida</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">SAS 100% legal y lista para operar</p>
+                <p className="text-muted-foreground">Cuentas verificadas en Meta por si quieres montar un chatbot después</p>
               </CardContent>
             </Card>
 
@@ -117,7 +124,7 @@ export default function Launch() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Sistema listo para emitir facturas</p>
+                <p className="text-muted-foreground">Sistema listo para emitir facturas por un año</p>
               </CardContent>
             </Card>
 
@@ -131,23 +138,23 @@ export default function Launch() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Firma digital con validez legal</p>
+                <p className="text-muted-foreground">Firma digital con validez legal por un año</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Contactar Asesora Button */}
+          {/* Empezar Ahora Button */}
           <div className="flex justify-center mb-12">
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-lg px-8 py-6 bg-green-500 text-white border-green-500 hover:bg-green-600 hover:border-green-600"
-              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
-              data-testid="button-contact-whatsapp"
-            >
-              <MessageCircle className="mr-2 h-5 w-5" />
-              Contactar Asesora
-            </Button>
+            <Link href="/login">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-6 bg-[#6C5CE7] hover:bg-[#5a4bd1] text-white font-semibold"
+                data-testid="button-start-now"
+              >
+                Empezar Ahora
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
 
           {/* Beneficios Section */}
@@ -278,16 +285,18 @@ export default function Launch() {
           <div className="text-center py-12 bg-primary/5 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">¿Listo para lanzar tu negocio?</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              En solo dos semanas tendrás todo lo necesario para empezar a operar formalmente
+              En solo 2 días tendrás todo lo necesario para empezar a operar formalmente
             </p>
-            <Button 
-              size="lg" 
-              className="text-lg px-12" 
-              data-testid="button-start-launch"
-              onClick={() => setLocation('/login')}
-            >
-              Solicitar Launch
-            </Button>
+            <Link href="/login">
+              <Button 
+                size="lg" 
+                className="text-lg px-12 bg-[#6C5CE7] hover:bg-[#5a4bd1]" 
+                data-testid="button-start-launch"
+              >
+                Empezar Ahora
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
