@@ -1,7 +1,14 @@
+import { useState } from "react";
 import { useLocation, Link } from "wouter";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Globe, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, BadgeCheck, Headphones } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { Check, Globe, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, BadgeCheck, Headphones, Send, Loader2 } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
@@ -35,6 +42,46 @@ const aliadosCategories = [
 
 export default function Launch() {
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
+  
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    businessDescription: "",
+    phone: "",
+    email: ""
+  });
+  
+  const contactMutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      return apiRequest("POST", "/api/contact/launch", data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Mensaje enviado",
+        description: "Nos pondremos en contacto contigo pronto.",
+      });
+      setFormData({
+        firstName: "",
+        lastName: "",
+        businessDescription: "",
+        phone: "",
+        email: ""
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "No se pudo enviar el mensaje. Intenta de nuevo.",
+        variant: "destructive"
+      });
+    }
+  });
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    contactMutation.mutate(formData);
+  };
   
   return (
     <div className="min-h-screen bg-background">
@@ -157,6 +204,19 @@ export default function Launch() {
             </Card>
           </div>
 
+          {/* Precio Section */}
+          <div className="text-center mb-12 py-12 bg-gradient-to-r from-purple-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl">
+            <p className="text-muted-foreground text-lg mb-2">Precio del servicio</p>
+            <div className="flex items-baseline justify-center gap-2 mb-4">
+              <span className="text-5xl md:text-6xl font-extrabold text-[#6C5CE7]">$599</span>
+              <span className="text-xl text-muted-foreground">+ IVA</span>
+            </div>
+            <p className="text-muted-foreground mb-2">Total: <span className="font-semibold">$688.85</span></p>
+            <p className="text-sm text-muted-foreground max-w-xl mx-auto mt-4 px-4">
+              * No incluye dominio ni hosting. Si lo necesitas, podemos adquirirlo por ti.
+            </p>
+          </div>
+
           {/* Empezar Ahora Button */}
           <div className="flex justify-center mb-12">
             <Link href="/login">
@@ -270,6 +330,106 @@ export default function Launch() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+          </div>
+
+          {/* Contact Form Section */}
+          <div className="mt-16 max-w-2xl mx-auto">
+            <Card className="border-2 border-primary/20">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">¿Necesitas una reunión?</CardTitle>
+                <CardDescription className="text-lg">
+                  Déjanos tus datos y nos pondremos en contacto contigo.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">Nombre</Label>
+                      <Input
+                        id="firstName"
+                        placeholder="Tu nombre"
+                        value={formData.firstName}
+                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                        required
+                        data-testid="input-first-name"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Apellido</Label>
+                      <Input
+                        id="lastName"
+                        placeholder="Tu apellido"
+                        value={formData.lastName}
+                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                        required
+                        data-testid="input-last-name"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="businessDescription">¿Qué hace tu negocio?</Label>
+                    <Textarea
+                      id="businessDescription"
+                      placeholder="Cuéntanos brevemente sobre tu negocio o idea"
+                      value={formData.businessDescription}
+                      onChange={(e) => setFormData({ ...formData, businessDescription: e.target.value })}
+                      required
+                      rows={3}
+                      data-testid="input-business-description"
+                    />
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Teléfono</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+593 999 999 999"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        required
+                        data-testid="input-phone"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Correo electrónico</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="tu@email.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        required
+                        data-testid="input-email"
+                      />
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full bg-[#6C5CE7] hover:bg-[#5a4bd1]"
+                    disabled={contactMutation.isPending}
+                    data-testid="button-submit-contact"
+                  >
+                    {contactMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-5 w-5" />
+                        Enviar mensaje
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

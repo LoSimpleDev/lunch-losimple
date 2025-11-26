@@ -610,6 +610,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
   
+  // POST /contact/launch - Contact form for Launch page
+  api.post("/contact/launch", async (req, res) => {
+    try {
+      const { firstName, lastName, businessDescription, phone, email } = req.body;
+      
+      if (!firstName || !lastName || !businessDescription || !phone || !email) {
+        return res.status(400).json({ error: 'Todos los campos son requeridos' });
+      }
+      
+      // Log the contact request (for now, until SendGrid is configured)
+      console.log('='.repeat(50));
+      console.log('NUEVA SOLICITUD DE CONTACTO - LAUNCH');
+      console.log('='.repeat(50));
+      console.log(`Nombre: ${firstName} ${lastName}`);
+      console.log(`Email: ${email}`);
+      console.log(`Teléfono: ${phone}`);
+      console.log(`Negocio: ${businessDescription}`);
+      console.log('='.repeat(50));
+      
+      // Store the contact in database
+      await storage.createContactRequest({
+        firstName,
+        lastName,
+        businessDescription,
+        phone,
+        email,
+        source: 'launch_page',
+        createdAt: new Date()
+      });
+      
+      res.json({ message: 'Mensaje recibido correctamente' });
+    } catch (error) {
+      console.error('Error processing contact form:', error);
+      res.status(500).json({ error: 'Error al procesar el formulario' });
+    }
+  });
+  
   // GET /auth/session - Check current session
   api.get("/auth/session", (req, res) => {
     if (req.isAuthenticated()) {

@@ -84,6 +84,9 @@ export interface IStorage {
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: string, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: string): Promise<boolean>;
+  
+  // Contact Requests
+  createContactRequest(request: { firstName: string; lastName: string; businessDescription: string; phone: string; email: string; source: string; createdAt: Date }): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -924,6 +927,13 @@ export class MemStorage implements IStorage {
 
   async deleteBlogPost(id: string): Promise<boolean> {
     return this.blogPosts.delete(id);
+  }
+  
+  // Contact Requests
+  async createContactRequest(request: { firstName: string; lastName: string; businessDescription: string; phone: string; email: string; source: string; createdAt: Date }): Promise<void> {
+    // For now, just log the contact request (stored in server logs)
+    // When SendGrid is configured, this will also send email notification
+    console.log('Contact request stored:', request);
   }
 
   // Initialize benefits

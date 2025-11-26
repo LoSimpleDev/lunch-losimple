@@ -248,6 +248,20 @@ export const blogPosts = pgTable("blog_posts", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+// Contact requests
+export const contactRequests = pgTable("contact_requests", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  businessDescription: text("business_description").notNull(),
+  phone: text("phone").notNull(),
+  email: text("email").notNull(),
+  source: text("source").notNull(), // "launch_page", "home", etc.
+  isContacted: boolean("is_contacted").notNull().default(false),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Schemas for existing marketplace
 export const insertServiceSchema = createInsertSchema(services).omit({
   id: true,
@@ -310,6 +324,11 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   updatedAt: true,
 });
 
+export const insertContactRequestSchema = createInsertSchema(contactRequests).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types for existing marketplace
 export type Service = typeof services.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
@@ -337,3 +356,7 @@ export type InsertBenefitCode = z.infer<typeof insertBenefitCodeSchema>;
 // Types for Blog system
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
+
+// Types for Contact system
+export type ContactRequest = typeof contactRequests.$inferSelect;
+export type InsertContactRequest = z.infer<typeof insertContactRequestSchema>;
