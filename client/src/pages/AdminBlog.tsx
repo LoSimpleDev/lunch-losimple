@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,11 +31,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil, Trash2, Eye, EyeOff, ExternalLink, ArrowLeft } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, ExternalLink, ArrowLeft, LogOut } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Link } from "wouter";
 import type { BlogPost } from "@shared/schema";
+
+interface User {
+  id: string;
+  email: string;
+  fullName: string;
+  role: 'client' | 'simplificador' | 'superadmin';
+}
 
 const categories = ["SAS", "Facturación", "Firma Electrónica", "Legal"];
 
@@ -77,14 +85,45 @@ const emptyForm: BlogFormData = {
 
 export default function AdminBlog() {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [formData, setFormData] = useState<BlogFormData>(emptyForm);
   const [autoSlug, setAutoSlug] = useState(true);
 
-  const { data: posts, isLoading } = useQuery<BlogPost[]>({
-    queryKey: ["/api/blog/admin/posts"]
+  const { data: sessionData, isLoading: isLoadingSession } = useQuery<{ user: User }>({
+    queryKey: ["/api/auth/session"],
   });
+
+  const { data: posts, isLoading } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog/admin/posts"],
+    enabled: !!sessionData?.user && (sessionData.user.role === 'superadmin' || sessionData.user.role === 'simplificador'),
+  });
+
+  useEffect(() => {
+    if (!isLoadingSession && (!sessionData?.user || (sessionData.user.role !== 'superadmin' && sessionData.user.role !== 'simplificador'))) {
+      setLocation('/admin-login');
+      toast({
+        title: "Acceso denegado",
+        description: "Debes iniciar sesión como administrador",
+        variant: "destructive",
+      });
+    }
+  }, [sessionData, isLoadingSession, setLocation, toast]);
+
+  const handleLogout = async () => {
+    try {
+      await apiRequest("POST", "/api/auth/logout");
+      await queryClient.invalidateQueries();
+      setLocation('/admin-login');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error al cerrar sesión",
+        variant: "destructive",
+      });
+    }
+  };
 
   const createMutation = useMutation({
     mutationFn: async (data: BlogFormData) => {
@@ -202,6 +241,22 @@ export default function AdminBlog() {
     }
   };
 
+  if (isLoadingSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Verificando acceso...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const user = sessionData?.user;
+  if (!user || (user.role !== 'superadmin' && user.role !== 'simplificador')) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4 py-8">
@@ -215,176 +270,184 @@ export default function AdminBlog() {
             </Link>
             <div>
               <h1 className="text-2xl font-bold">Administrar Blog</h1>
-              <p className="text-muted-foreground">Gestiona los artículos del blog de Lo Simple</p>
+              <p className="text-muted-foreground">
+                {user.fullName} - {user.role === 'superadmin' ? 'Superadmin' : 'Simplificador'}
+              </p>
             </div>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={openCreateDialog} className="bg-purple-600 hover:bg-purple-700" data-testid="button-new-post">
-                <Plus className="w-4 h-4 mr-2" />
-                Nuevo Artículo
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>{editingPost ? "Editar Artículo" : "Nuevo Artículo"}</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-6 py-4">
-                {/* Title */}
-                <div className="space-y-2">
-                  <Label htmlFor="title">Título *</Label>
-                  <Input
-                    id="title"
-                    value={formData.title}
-                    onChange={(e) => handleTitleChange(e.target.value)}
-                    placeholder="Ej: Cómo constituir una SAS en Ecuador"
-                    data-testid="input-title"
-                  />
-                </div>
+          <div className="flex items-center gap-3">
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={openCreateDialog} className="bg-purple-600 hover:bg-purple-700" data-testid="button-new-post">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nuevo Artículo
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>{editingPost ? "Editar Artículo" : "Nuevo Artículo"}</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-6 py-4">
+                  {/* Title */}
+                  <div className="space-y-2">
+                    <Label htmlFor="title">Título *</Label>
+                    <Input
+                      id="title"
+                      value={formData.title}
+                      onChange={(e) => handleTitleChange(e.target.value)}
+                      placeholder="Ej: Cómo constituir una SAS en Ecuador"
+                      data-testid="input-title"
+                    />
+                  </div>
 
-                {/* Slug */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="slug">URL (slug) *</Label>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Switch
-                        checked={autoSlug}
-                        onCheckedChange={setAutoSlug}
-                        data-testid="switch-auto-slug"
-                      />
-                      <span className="text-muted-foreground">Auto</span>
+                  {/* Slug */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="slug">URL (slug) *</Label>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Switch
+                          checked={autoSlug}
+                          onCheckedChange={setAutoSlug}
+                          data-testid="switch-auto-slug"
+                        />
+                        <span className="text-muted-foreground">Auto</span>
+                      </div>
+                    </div>
+                    <Input
+                      id="slug"
+                      value={formData.slug}
+                      onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
+                      placeholder="como-constituir-sas-ecuador"
+                      disabled={autoSlug}
+                      data-testid="input-slug"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      URL: /blog/{formData.slug || "..."}
+                    </p>
+                  </div>
+
+                  {/* Category */}
+                  <div className="space-y-2">
+                    <Label htmlFor="category">Categoría *</Label>
+                    <Select
+                      value={formData.category}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                    >
+                      <SelectTrigger data-testid="select-category">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((cat) => (
+                          <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Excerpt */}
+                  <div className="space-y-2">
+                    <Label htmlFor="excerpt">Extracto / Descripción corta *</Label>
+                    <Textarea
+                      id="excerpt"
+                      value={formData.excerpt}
+                      onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
+                      placeholder="Breve descripción que aparece en las tarjetas del blog..."
+                      rows={2}
+                      data-testid="input-excerpt"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="space-y-2">
+                    <Label htmlFor="content">Contenido (HTML) *</Label>
+                    <Textarea
+                      id="content"
+                      value={formData.content}
+                      onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                      placeholder="<h2>Título de sección</h2><p>Contenido del artículo...</p>"
+                      rows={12}
+                      className="font-mono text-sm"
+                      data-testid="input-content"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Usa HTML para formatear: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, etc.
+                    </p>
+                  </div>
+
+                  {/* SEO Section */}
+                  <div className="border-t pt-6">
+                    <h3 className="font-semibold mb-4">SEO (Opcional)</h3>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="metaTitle">Meta Título</Label>
+                        <Input
+                          id="metaTitle"
+                          value={formData.metaTitle}
+                          onChange={(e) => setFormData(prev => ({ ...prev, metaTitle: e.target.value }))}
+                          placeholder="Título para motores de búsqueda (máx 60 caracteres)"
+                          data-testid="input-meta-title"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="metaDescription">Meta Descripción</Label>
+                        <Textarea
+                          id="metaDescription"
+                          value={formData.metaDescription}
+                          onChange={(e) => setFormData(prev => ({ ...prev, metaDescription: e.target.value }))}
+                          placeholder="Descripción para motores de búsqueda (máx 160 caracteres)"
+                          rows={2}
+                          data-testid="input-meta-description"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                    placeholder="como-constituir-sas-ecuador"
-                    disabled={autoSlug}
-                    data-testid="input-slug"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    URL: /blog/{formData.slug || "..."}
-                  </p>
-                </div>
 
-                {/* Category */}
-                <div className="space-y-2">
-                  <Label htmlFor="category">Categoría *</Label>
-                  <Select
-                    value={formData.category}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
-                  >
-                    <SelectTrigger data-testid="select-category">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((cat) => (
-                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Excerpt */}
-                <div className="space-y-2">
-                  <Label htmlFor="excerpt">Extracto / Descripción corta *</Label>
-                  <Textarea
-                    id="excerpt"
-                    value={formData.excerpt}
-                    onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
-                    placeholder="Breve descripción que aparece en las tarjetas del blog..."
-                    rows={2}
-                    data-testid="input-excerpt"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="space-y-2">
-                  <Label htmlFor="content">Contenido (HTML) *</Label>
-                  <Textarea
-                    id="content"
-                    value={formData.content}
-                    onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                    placeholder="<h2>Título de sección</h2><p>Contenido del artículo...</p>"
-                    rows={12}
-                    className="font-mono text-sm"
-                    data-testid="input-content"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Usa HTML para formatear: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, etc.
-                  </p>
-                </div>
-
-                {/* SEO Section */}
-                <div className="border-t pt-6">
-                  <h3 className="font-semibold mb-4">SEO (Opcional)</h3>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="metaTitle">Meta Título</Label>
-                      <Input
-                        id="metaTitle"
-                        value={formData.metaTitle}
-                        onChange={(e) => setFormData(prev => ({ ...prev, metaTitle: e.target.value }))}
-                        placeholder="Título para motores de búsqueda (máx 60 caracteres)"
-                        data-testid="input-meta-title"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="metaDescription">Meta Descripción</Label>
-                      <Textarea
-                        id="metaDescription"
-                        value={formData.metaDescription}
-                        onChange={(e) => setFormData(prev => ({ ...prev, metaDescription: e.target.value }))}
-                        placeholder="Descripción para motores de búsqueda (máx 160 caracteres)"
-                        rows={2}
-                        data-testid="input-meta-description"
-                      />
+                  {/* Author & Publish */}
+                  <div className="border-t pt-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="author">Autor</Label>
+                        <Input
+                          id="author"
+                          value={formData.author}
+                          onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
+                          placeholder="Lo Simple"
+                          data-testid="input-author"
+                        />
+                      </div>
+                      <div className="flex items-center gap-3 pt-6">
+                        <Switch
+                          checked={formData.isPublished}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isPublished: checked }))}
+                          data-testid="switch-publish"
+                        />
+                        <Label>Publicar artículo</Label>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Author & Publish */}
-                <div className="border-t pt-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="author">Autor</Label>
-                      <Input
-                        id="author"
-                        value={formData.author}
-                        onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
-                        placeholder="Lo Simple"
-                        data-testid="input-author"
-                      />
-                    </div>
-                    <div className="flex items-center gap-3 pt-6">
-                      <Switch
-                        checked={formData.isPublished}
-                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isPublished: checked }))}
-                        data-testid="switch-publish"
-                      />
-                      <Label>Publicar artículo</Label>
-                    </div>
+                  {/* Actions */}
+                  <div className="flex justify-end gap-3 pt-4 border-t">
+                    <Button variant="outline" onClick={closeDialog} data-testid="button-cancel">
+                      Cancelar
+                    </Button>
+                    <Button 
+                      onClick={handleSubmit} 
+                      disabled={createMutation.isPending || updateMutation.isPending}
+                      className="bg-purple-600 hover:bg-purple-700"
+                      data-testid="button-save"
+                    >
+                      {createMutation.isPending || updateMutation.isPending ? "Guardando..." : (editingPost ? "Guardar cambios" : "Crear artículo")}
+                    </Button>
                   </div>
                 </div>
-
-                {/* Actions */}
-                <div className="flex justify-end gap-3 pt-4 border-t">
-                  <Button variant="outline" onClick={closeDialog} data-testid="button-cancel">
-                    Cancelar
-                  </Button>
-                  <Button 
-                    onClick={handleSubmit} 
-                    disabled={createMutation.isPending || updateMutation.isPending}
-                    className="bg-purple-600 hover:bg-purple-700"
-                    data-testid="button-save"
-                  >
-                    {createMutation.isPending || updateMutation.isPending ? "Guardando..." : (editingPost ? "Guardar cambios" : "Crear artículo")}
-                  </Button>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
+              </DialogContent>
+            </Dialog>
+            <Button variant="outline" onClick={handleLogout} data-testid="button-logout">
+              <LogOut className="w-4 h-4 mr-2" />
+              Salir
+            </Button>
+          </div>
         </div>
 
         {/* Posts Table */}
