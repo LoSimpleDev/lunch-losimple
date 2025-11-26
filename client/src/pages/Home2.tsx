@@ -909,8 +909,7 @@ export default function Home2() {
             <div className="md:col-span-2">
               <img src={logoUrl} alt="Lo Simple" className="h-8 w-auto mb-4 brightness-0 invert" />
               <p className="text-sm mb-4 opacity-80">
-                La puerta de entrada a la formalización en Ecuador. 
-                Construimos patrimonios familiares sólidos una pequeña empresa a la vez.
+                La puerta de entrada a la formalización en Ecuador.
               </p>
               <p className="text-sm opacity-60">
                 Hecho en Ecuador con 💜
@@ -930,8 +929,8 @@ export default function Home2() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/saslegal-plus" className="hover:opacity-100 transition-opacity" data-testid="link-footer-membresia">
-                    Membresía
+                  <Link href="/blog" className="hover:opacity-100 transition-opacity" data-testid="link-footer-blog">
+                    Blog
                   </Link>
                 </li>
               </ul>

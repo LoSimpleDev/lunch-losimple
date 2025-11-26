@@ -12,6 +12,7 @@ import type { BlogPost } from "@shared/schema";
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
 import decoratorFolder from "@assets/blog-decorator-folder.png";
+import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 
 const POSTS_PER_PAGE = 6;
 
@@ -371,6 +372,72 @@ export default function Blog() {
           </Button>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-[#141464] text-white py-12 px-4 mt-16">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <img src={logoUrl} alt="Lo Simple" className="h-8 w-auto mb-4 brightness-0 invert" />
+              <p className="text-sm mb-4 opacity-80">
+                La puerta de entrada a la formalización en Ecuador.
+              </p>
+              <p className="text-sm opacity-60">
+                Hecho en Ecuador con 💜
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Enlaces</h4>
+              <ul className="space-y-2 text-sm opacity-80">
+                <li>
+                  <Link href="/" className="hover:opacity-100 transition-opacity" data-testid="link-footer-inicio">
+                    Inicio
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/launch" className="hover:opacity-100 transition-opacity" data-testid="link-footer-launch">
+                    Launch
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog" className="hover:opacity-100 transition-opacity" data-testid="link-footer-blog">
+                    Blog
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Contacto</h4>
+              <ul className="space-y-2 text-sm opacity-80">
+                <li>Ecuador</li>
+                <li>
+                  <a href="mailto:hola@losimple.ai" className="hover:opacity-100 transition-opacity" data-testid="link-footer-email">
+                    hola@losimple.ai
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+593958613237" className="hover:opacity-100 transition-opacity" data-testid="link-footer-phone">
+                    +593 958 613 237
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-white/20 mt-8 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-60">
+              <p>© 2024 Lo Simple. Todos los derechos reservados.</p>
+              <div className="flex gap-6">
+                <Link href="/terminos-y-condiciones" className="hover:opacity-100 transition-opacity" data-testid="link-footer-terminos">
+                  Términos y Condiciones
+                </Link>
+                <Link href="/politica-privacidad-datos-lo-simple" className="hover:opacity-100 transition-opacity" data-testid="link-footer-privacidad">
+                  Política de Privacidad
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

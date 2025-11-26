@@ -37,27 +37,11 @@ export function Header() {
               Launch
             </a>
             <a 
-              href="/saslegal-plus"
-              className="text-sm font-medium hover:text-primary transition-colors"
-              data-testid="link-membership"
-            >
-              Membresía
-            </a>
-            <a 
               href="/blog"
               className="text-sm font-medium hover:text-primary transition-colors"
               data-testid="link-blog"
             >
               Blog
-            </a>
-            <a 
-              href="https://facturacion.losimple.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium hover:text-primary transition-colors"
-              data-testid="link-billing"
-            >
-              Facturación Electrónica
             </a>
             <Cart />
           </div>
