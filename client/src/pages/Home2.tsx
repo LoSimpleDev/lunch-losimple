@@ -879,34 +879,36 @@ export default function Home2() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-32 md:py-40 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10">
-        <div className="container mx-auto max-w-5xl text-center">
-          <h2 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight">
-            Menos trámites. Más acción.
-          </h2>
-          <p className="text-2xl md:text-3xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            Únete a Lo Simple y comienza a construir el negocio de tus sueños hoy mismo.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button 
-              size="lg" 
-              className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
-              onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
-              data-testid="button-final-cta"
-            >
-              Comenzar Ahora
-              <ChevronRight className="ml-2 h-6 w-6" />
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-xl px-12 py-8 font-semibold border-2"
-              onClick={() => window.open('https://wa.me/593958613237', '_blank')}
-              data-testid="button-final-contact"
-            >
-              <MessageCircle className="mr-2 h-6 w-6" />
-              Hablar con Asesora
-            </Button>
+      <section className="py-20 md:py-32 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="bg-[#FEF9C3] rounded-3xl p-12 md:p-20 text-center shadow-lg">
+            <h2 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight text-gray-900">
+              Menos trámites. Más acción.
+            </h2>
+            <p className="text-2xl md:text-3xl text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Únete a Lo Simple y comienza a construir el negocio de tus sueños hoy mismo.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button 
+                size="lg" 
+                className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all bg-[#141464] hover:bg-[#1a1a7a]"
+                onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
+                data-testid="button-final-cta"
+              >
+                Comenzar Ahora
+                <ChevronRight className="ml-2 h-6 w-6" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-xl px-12 py-8 font-semibold border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
+                onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                data-testid="button-final-contact"
+              >
+                <MessageCircle className="mr-2 h-6 w-6" />
+                Hablar con Asesora
+              </Button>
+            </div>
           </div>
         </div>
       </section>
