@@ -48,6 +48,7 @@ import facturacionGenerador from "@assets/facturacion_generador.png";
 import facturacionReportes from "@assets/facturacion_reportes.png";
 import facturacionConfiguracion from "@assets/facturacion_configuracion.png";
 import facturacionIndicadores from "@assets/facturacion_indicadores.png";
+import facturacionEmpiezaGratis from "@assets/facturacion_empieza_gratis.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -633,14 +634,14 @@ export default function Home2() {
                           </Button>
                         </a>
                       </div>
-                      <img src={facturacionIndicadores} alt="Indicadores de facturación" className="rounded-lg h-48 w-full md:w-64 flex-shrink-0 object-cover object-left shadow-md" />
+                      <img src={facturacionEmpiezaGratis} alt="Dashboard de facturación" className="rounded-lg h-48 w-full md:w-64 flex-shrink-0 object-cover object-left shadow-md" />
                     </div>
                   </div>
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Empieza Gratis</h3>
                     <p className="text-sm text-muted-foreground mb-6">Genera un usuario y usa las facturas que te damos de cortesía sin necesidad de ingresar forma de pago.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <img src={facturacionIndicadores} alt="Indicadores de facturación" className="w-full h-32 object-cover object-top rounded-lg shadow-md" />
                   </div>
                 </div>
               </div>
