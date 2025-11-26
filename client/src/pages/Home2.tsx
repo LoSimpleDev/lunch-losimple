@@ -40,6 +40,7 @@ import loSimpleLlaveMano from "@assets/Screenshot 2025-11-25 at 11.06.51_1764086
 import loSimpleFirma from "@assets/Screenshot 2025-11-25 at 11.22.10_1764087734934.png";
 import loSimpleFacturacion from "@assets/Screenshot 2025-11-25 at 11.14.52_1764087296521.png";
 import loSimpleReviews from "@assets/Image web Lo Simple (1)_1764090599190.png";
+import legalConstitucionSAS from "@assets/legal_constitucion_sas_dashboard.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -494,7 +495,9 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
                     <h3 className="text-2xl font-bold mb-4">Constitución de SAS</h3>
                     <p className="text-sm text-muted-foreground mb-6">Trámites legales completos ante la Superintendencia en 5 días</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={legalConstitucionSAS} alt="Dashboard Constitución de SAS" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
