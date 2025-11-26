@@ -41,6 +41,7 @@ import loSimpleFirma from "@assets/Screenshot 2025-11-25 at 11.22.10_17640877349
 import loSimpleFacturacion from "@assets/Screenshot 2025-11-25 at 11.14.52_1764087296521.png";
 import loSimpleReviews from "@assets/Image web Lo Simple (1)_1764090599190.png";
 import legalConstitucionSAS from "@assets/legal_constitucion_sas_dashboard.png";
+import legalReformaEstatuto from "@assets/Image web Lo Simple_1764118354925.png";
 
 // Data structures for repeated sections
 const benefits = [
@@ -503,7 +504,9 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
                     <h3 className="text-2xl font-bold mb-4">Reforma de Estatuto</h3>
                     <p className="text-sm text-muted-foreground mb-6">Todo el proceso para añadir o quitar actividades de tu SAS de forma ágil.</p>
-                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg"></div>
+                    <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
+                      <img src={legalReformaEstatuto} alt="Reforma de Estatuto" className="w-full h-full object-cover object-top" />
+                    </div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-3">Legal</p>
