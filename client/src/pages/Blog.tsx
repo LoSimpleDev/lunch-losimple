@@ -84,38 +84,43 @@ function BlogPostCardSkeleton() {
 function LaunchCTACard() {
   return (
     <div 
-      className="rounded-2xl p-8 sticky top-24 bg-accent/30 dark:bg-accent/20 border border-accent/50"
+      className="rounded-2xl p-8 sticky top-24"
+      style={{ backgroundColor: '#FFF3CD' }}
       data-testid="cta-launch-card"
     >
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white dark:bg-gray-800 mb-6">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white mb-6">
           <Rocket className="w-8 h-8 text-[#6C5CE7]" />
         </div>
         
-        <h3 className="text-2xl font-bold text-foreground mb-4">
-          Emprende tu negocio con Lo Simple hoy
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          Constituye tu SAS con Lo Simple
         </h3>
         
-        <p className="text-muted-foreground mb-6">
-          Constituimos tu SAS en Ecuador en solo 5 días y te acompañamos para que cumplas con todos los requisitos legales.
+        <p className="text-gray-700 mb-6">
+          Formaliza tu empresa en Ecuador en solo 5 días. Te acompañamos en cada paso del proceso.
         </p>
         
         <ul className="text-left space-y-3 mb-8">
-          <li className="flex items-start gap-2 text-foreground">
+          <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Constitución 100% digital</span>
+            <span>Proceso 100% en línea</span>
           </li>
-          <li className="flex items-start gap-2 text-foreground">
+          <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Capital mínimo de $1</span>
+            <span>Firma electrónica incluida</span>
           </li>
-          <li className="flex items-start gap-2 text-foreground">
+          <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Equipo de expertos a tu lado</span>
+            <span>RUC y permisos gestionados</span>
+          </li>
+          <li className="flex items-start gap-2 text-gray-800">
+            <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
+            <span>Soporte legal personalizado</span>
           </li>
         </ul>
         
-        <Link href="/launch">
+        <Link href="/login">
           <Button 
             size="lg" 
             className="w-full text-white font-semibold bg-[#6C5CE7] hover:bg-[#5a4bd1]"
