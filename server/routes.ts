@@ -1,12 +1,18 @@
 import express, { type Express, Router } from "express";
 import { createServer, type Server } from "http";
 import Stripe from "stripe";
+import sgMail from "@sendgrid/mail";
 import { storage } from "./storage";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import session from "express-session";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+
+// Initialize SendGrid
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 // Initialize Stripe
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -619,7 +625,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Todos los campos son requeridos' });
       }
       
-      // Log the contact request (for now, until SendGrid is configured)
+      // Log the contact request
       console.log('='.repeat(50));
       console.log('NUEVA SOLICITUD DE CONTACTO - LAUNCH');
       console.log('='.repeat(50));
@@ -639,6 +645,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         source: 'launch_page',
         createdAt: new Date()
       });
+      
+      // Send email notification via SendGrid
+      if (process.env.SENDGRID_API_KEY) {
+        const msg = {
+          to: 'joseantoniosanchez0701@gmail.com',
+          from: 'hola@losimple.ai',
+          subject: `Nueva solicitud de Launch - ${firstName} ${lastName}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2 style="color: #6C5CE7;">Nueva Solicitud de Contacto - Launch</h2>
+              <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p><strong>Nombre:</strong> ${firstName} ${lastName}</p>
+                <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                <p><strong>Teléfono:</strong> ${phone}</p>
+                <p><strong>Descripción del negocio:</strong></p>
+                <p style="background-color: white; padding: 15px; border-radius: 4px;">${businessDescription}</p>
+              </div>
+              <p style="color: #666; font-size: 12px;">Este mensaje fue enviado desde el formulario de contacto de Launch en losimple.ai</p>
+            </div>
+          `
+        };
+        
+        try {
+          await sgMail.send(msg);
+          console.log('Email notification sent successfully');
+        } catch (emailError) {
+          console.error('Error sending email notification:', emailError);
+        }
+      }
       
       res.json({ message: 'Mensaje recibido correctamente' });
     } catch (error) {
