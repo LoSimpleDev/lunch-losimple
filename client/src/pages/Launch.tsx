@@ -1,7 +1,7 @@
 import { useLocation, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Globe, Share2, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Package, Star, Building, Calculator, Megaphone, Laptop, BadgeCheck, Headphones } from "lucide-react";
+import { Check, Globe, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, BadgeCheck, Headphones } from "lucide-react";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
@@ -171,44 +171,6 @@ export default function Launch() {
             </Link>
           </div>
 
-          {/* Beneficios Section */}
-          <div className="bg-primary/5 rounded-lg p-8 mb-12">
-            <h2 className="text-3xl font-bold mb-8 text-center">Beneficios</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="flex items-start gap-3">
-                <Check className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold mb-2">Negocios formales y seguros desde el principio</h3>
-                  <p className="text-muted-foreground">Inicia con todas las bases legales establecidas</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Check className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold mb-2">Era digital con cuentas aptas para chatbots</h3>
-                  <p className="text-muted-foreground">Accede a herramientas empresariales que solo compañías pueden tener</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Check className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold mb-2">Un solo proveedor para todo</h3>
-                  <p className="text-muted-foreground">No repartas tu esfuerzo entre múltiples proveedores</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Check className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold mb-2">Ahorra dinero y tiempo</h3>
-                  <p className="text-muted-foreground">Todo incluido en un solo paquete</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Beneficio Adicional Especial */}
           <Card className="border-primary border-2 mb-12" data-testid="card-guarantee">
             <CardHeader className="text-center">
@@ -227,84 +189,81 @@ export default function Launch() {
             </CardContent>
           </Card>
 
-          {/* Marketplace de Aliados */}
-          <div className="bg-gradient-to-b from-muted/20 to-background rounded-lg py-20 px-8 mb-16">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-8">
-                <Package className="h-10 w-10 text-primary" />
-              </div>
+          {/* Beneficios del servicio Launch - Perks estilo aceleradora */}
+          <div className="bg-gradient-to-b from-purple-50 to-background dark:from-gray-900 dark:to-background rounded-2xl py-20 px-8 mb-16">
+            <div className="text-center mb-16">
+              <span className="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-semibold mb-6">
+                Exclusivo para clientes Launch
+              </span>
               <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
-                Red de Aliados Verificados
+                Beneficios del servicio Launch
               </h2>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Accede a servicios complementarios de calidad. Continúa tu crecimiento con aliados de confianza.
+                Acceso a perks y descuentos exclusivos que representan{" "}
+                <span className="font-bold text-[#6C5CE7]">miles de dólares en ahorros</span>{" "}
+                para hacer crecer tu negocio.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {aliadosCategories.map((category) => {
                 const IconComponent = category.icon;
                 const colorClasses = {
                   blue: {
                     bg: 'bg-blue-100 dark:bg-blue-900/20',
-                    text: 'text-blue-600 dark:text-blue-400'
+                    text: 'text-blue-600 dark:text-blue-400',
+                    border: 'border-blue-200 dark:border-blue-800'
                   },
                   green: {
                     bg: 'bg-green-100 dark:bg-green-900/20',
-                    text: 'text-green-600 dark:text-green-400'
+                    text: 'text-green-600 dark:text-green-400',
+                    border: 'border-green-200 dark:border-green-800'
                   },
                   purple: {
                     bg: 'bg-purple-100 dark:bg-purple-900/20',
-                    text: 'text-purple-600 dark:text-purple-400'
+                    text: 'text-purple-600 dark:text-purple-400',
+                    border: 'border-purple-200 dark:border-purple-800'
                   },
                   orange: {
                     bg: 'bg-orange-100 dark:bg-orange-900/20',
-                    text: 'text-orange-600 dark:text-orange-400'
+                    text: 'text-orange-600 dark:text-orange-400',
+                    border: 'border-orange-200 dark:border-orange-800'
                   }
                 };
                 const colors = colorClasses[category.color as keyof typeof colorClasses] || colorClasses.blue;
                 
                 return (
-                  <div key={category.title} className="group" data-testid={`card-aliado-${category.title.toLowerCase()}`}>
-                    <div className={`w-16 h-16 ${colors.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                      <IconComponent className={`h-8 w-8 ${colors.text}`} />
+                  <div 
+                    key={category.title} 
+                    className={`group bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 ${colors.border} hover:shadow-lg transition-all`}
+                    data-testid={`card-perk-${category.title.toLowerCase()}`}
+                  >
+                    <div className={`w-14 h-14 ${colors.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                      <IconComponent className={`h-7 w-7 ${colors.text}`} />
                     </div>
-                    <h3 className="text-2xl font-bold mb-3">{category.title}</h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed">
+                    <h3 className="text-xl font-bold mb-2">{category.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">
                       {category.description}
                     </p>
                   </div>
                 );
               })}
             </div>
-
-            <div className="bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 rounded-3xl p-12 md:p-16 text-center border border-primary/10">
-              <Star className="h-16 w-16 text-primary mx-auto mb-6" />
-              <h3 className="text-3xl md:text-4xl font-bold mb-6">
-                Beneficios y descuentos exclusivos
-              </h3>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-                Como cliente de Lo Simple, accedes a descuentos especiales y condiciones preferenciales 
-                con nuestros aliados. Ahorra dinero mientras haces crecer tu negocio.
-              </p>
-              <Link href="/beneficios">
-                <Button size="lg" className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all" data-testid="button-explore-benefits">
-                  Explorar Beneficios
-                </Button>
-              </Link>
-            </div>
           </div>
 
-          {/* CTA Section */}
-          <div className="text-center py-12 bg-primary/5 rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">¿Listo para lanzar tu negocio?</h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+          {/* CTA Section - Yellow Card */}
+          <div 
+            className="text-center py-12 px-8 rounded-2xl"
+            style={{ backgroundColor: '#FFEAA7' }}
+          >
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">¿Listo para lanzar tu negocio?</h3>
+            <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
               En solo 2 días tendrás todo lo necesario para empezar a operar formalmente
             </p>
             <Link href="/login">
               <Button 
                 size="lg" 
-                className="text-lg px-12 bg-[#6C5CE7] hover:bg-[#5a4bd1]" 
+                className="text-lg px-12 bg-[#6C5CE7] hover:bg-[#5a4bd1] text-white font-semibold" 
                 data-testid="button-start-launch"
               >
                 Empezar Ahora
