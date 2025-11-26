@@ -199,8 +199,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // GET /orders/my-orders - Get user's order history
-  api.get("/my-orders", isAuthenticated, async (req, res) => {
+  // GET /my-orders - Get user's order history
+  api.get("/user/orders", isAuthenticated, async (req, res) => {
     try {
       const user = req.user as any;
       

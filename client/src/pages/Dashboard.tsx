@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check, Gift } from "lucide-react";
+import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check, Gift, ShoppingBag, Package } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -63,6 +63,16 @@ interface TeamMessage {
   createdAt: string;
 }
 
+interface Order {
+  id: string;
+  customerName: string;
+  customerEmail: string;
+  services: Array<{ serviceId: string; quantity: number; price: string }>;
+  totalAmount: string;
+  status: string;
+  createdAt: string;
+}
+
 export default function Dashboard() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
@@ -89,6 +99,17 @@ export default function Dashboard() {
   const { data: messages = [] } = useQuery<TeamMessage[]>({
     queryKey: ["/api/launch/messages"],
     enabled: !!launchRequest?.isStarted,
+  });
+
+  // Fetch user's order history
+  const { data: orders = [], isLoading: isLoadingOrders } = useQuery<Order[]>({
+    queryKey: ["/api/user/orders"],
+    enabled: !!sessionData?.user,
+  });
+
+  // Fetch services for order display
+  const { data: services = [] } = useQuery<Array<{ id: string; name: string }>>({
+    queryKey: ["/api/services"],
   });
 
   useEffect(() => {
@@ -578,6 +599,105 @@ export default function Dashboard() {
               </Card>
             </>
           )}
+
+          {/* Order History Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ShoppingBag className="w-5 h-5" />
+                Historial de Compras
+              </CardTitle>
+              <CardDescription>
+                Tus compras y servicios contratados
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {isLoadingOrders ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                </div>
+              ) : orders.length > 0 ? (
+                <div className="space-y-4">
+                  {orders.map((order) => {
+                    const getServiceName = (serviceId: string) => {
+                      const service = services.find(s => s.id === serviceId);
+                      return service?.name || 'Servicio';
+                    };
+                    
+                    const getStatusBadge = (status: string) => {
+                      switch (status) {
+                        case 'completed':
+                          return <Badge className="bg-green-500" data-testid={`badge-order-status-${order.id}`}>Completado</Badge>;
+                        case 'pending':
+                          return <Badge variant="secondary" data-testid={`badge-order-status-${order.id}`}>Pendiente</Badge>;
+                        case 'cancelled':
+                          return <Badge variant="destructive" data-testid={`badge-order-status-${order.id}`}>Cancelado</Badge>;
+                        default:
+                          return <Badge variant="outline" data-testid={`badge-order-status-${order.id}`}>{status}</Badge>;
+                      }
+                    };
+
+                    return (
+                      <div 
+                        key={order.id} 
+                        className="border rounded-lg p-4 space-y-3"
+                        data-testid={`order-card-${order.id}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Package className="w-4 h-4 text-muted-foreground" />
+                            <span className="font-medium text-sm">
+                              Orden #{order.id.slice(0, 8)}
+                            </span>
+                          </div>
+                          {getStatusBadge(order.status)}
+                        </div>
+                        
+                        <div className="space-y-1">
+                          {order.services.map((item, idx) => (
+                            <div key={idx} className="flex justify-between text-sm">
+                              <span className="text-muted-foreground">
+                                {getServiceName(item.serviceId)} x{item.quantity}
+                              </span>
+                              <span>${parseFloat(item.price).toFixed(2)}</span>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <div className="flex items-center justify-between pt-2 border-t">
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(order.createdAt).toLocaleDateString('es-EC', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </span>
+                          <span className="font-semibold">
+                            Total: ${parseFloat(order.totalAmount).toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <ShoppingBag className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground" data-testid="text-no-orders">
+                    No tienes compras registradas aún
+                  </p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4"
+                    onClick={() => setLocation('/')}
+                    data-testid="button-explore-services"
+                  >
+                    Explorar Servicios
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>
