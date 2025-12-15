@@ -668,6 +668,31 @@ export default function Dashboard() {
                     </Button>
                   </CardContent>
                 </Card>
+              ) : !isLaunchCompany ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                      Empresa Registrada
+                    </CardTitle>
+                    <CardDescription>
+                      Tu empresa SAS existente está registrada en nuestro sistema
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      Puedes acceder a nuestros servicios desde la pestaña "Mi Empresa" o explorar servicios adicionales.
+                    </p>
+                    <Button 
+                      variant="outline"
+                      onClick={() => setLocation('/')}
+                      className="w-full"
+                      data-testid="button-explore-services-estado"
+                    >
+                      Explorar Servicios
+                    </Button>
+                  </CardContent>
+                </Card>
               ) : hasStarted ? (
                 <>
                   <Card>
@@ -895,24 +920,7 @@ export default function Dashboard() {
                     </CardContent>
                   </Card>
                 </>
-              ) : (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-500" />
-                      Empresa Registrada
-                    </CardTitle>
-                    <CardDescription>
-                      Tu empresa SAS existente está registrada en nuestro sistema
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Puedes acceder a nuestros servicios desde la pestaña "Mi Empresa"
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
+              ) : null}
             </>
           )}
         </div>
