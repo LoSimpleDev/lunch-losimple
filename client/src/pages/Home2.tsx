@@ -944,6 +944,11 @@ export default function Home2() {
                     Blog
                   </Link>
                 </li>
+                <li>
+                  <Link href="/multas-sas-ecuador" className="hover:opacity-100 transition-opacity" data-testid="link-footer-multas">
+                    Consulta Multas
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
