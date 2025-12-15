@@ -17,7 +17,9 @@ import {
   Lock,
   ArrowRight,
   Loader2,
-  XCircle
+  XCircle,
+  Mail,
+  Send
 } from "lucide-react";
 
 type CheckStatus = "idle" | "checking" | "complete";
@@ -37,6 +39,9 @@ export default function MultasSAS() {
   const [currentStep, setCurrentStep] = useState(0);
   const [results, setResults] = useState<InstitutionResult[]>([]);
   const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
 
   const steps = [
     "Validando RUC...",
@@ -52,54 +57,41 @@ export default function MultasSAS() {
   };
 
   const generateSimulatedResults = (): InstitutionResult[] => {
-    const scenarios = [
-      {
-        supercias: { status: "clean" as const, message: "Sin obligaciones pendientes", details: [] },
-        trabajo: { status: "clean" as const, message: "Al día con obligaciones laborales", details: [] },
-        municipio: { status: "warning" as const, message: "Patente municipal por renovar", details: ["Vencimiento: próximos 30 días"] }
-      },
-      {
-        supercias: { status: "alert" as const, message: "Declaración anual pendiente", details: ["Formulario 101 no presentado", "Plazo vencido: hace 45 días"] },
-        trabajo: { status: "clean" as const, message: "Sin novedades registradas", details: [] },
-        municipio: { status: "clean" as const, message: "Patente vigente", details: [] }
-      },
-      {
-        supercias: { status: "clean" as const, message: "Cumplimiento al día", details: [] },
-        trabajo: { status: "alert" as const, message: "Posible inconsistencia en aportes", details: ["Revisar planillas IESS últimos 3 meses"] },
-        municipio: { status: "clean" as const, message: "Sin multas registradas", details: [] }
-      },
-      {
-        supercias: { status: "clean" as const, message: "Sin observaciones", details: [] },
-        trabajo: { status: "clean" as const, message: "Registros en orden", details: [] },
-        municipio: { status: "clean" as const, message: "Todo en regla", details: [] }
-      }
-    ];
-
-    const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-
     return [
       {
         name: "Superintendencia de Compañías",
         icon: Building2,
-        status: scenario.supercias.status,
-        message: scenario.supercias.message,
-        details: scenario.supercias.details
+        status: "checking" as const,
+        message: "Revisando registros...",
+        details: []
       },
       {
         name: "Ministerio de Trabajo",
         icon: Briefcase,
-        status: scenario.trabajo.status,
-        message: scenario.trabajo.message,
-        details: scenario.trabajo.details
+        status: "clean" as const,
+        message: "Sin alertas registradas",
+        details: []
       },
       {
         name: "Municipios",
         icon: MapPin,
-        status: scenario.municipio.status,
-        message: scenario.municipio.message,
-        details: scenario.municipio.details
+        status: "checking" as const,
+        message: "Revisando registros...",
+        details: []
       }
     ];
+  };
+
+  const validateEmail = (email: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleSendEmail = async () => {
+    if (!validateEmail(email)) return;
+    setSendingEmail(true);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setEmailSent(true);
+    setSendingEmail(false);
   };
 
   const generateCompanyName = (ruc: string): string => {
@@ -137,6 +129,8 @@ export default function MultasSAS() {
         return <XCircle className="w-6 h-6 text-red-500" />;
       case "warning":
         return <AlertTriangle className="w-6 h-6 text-yellow-500" />;
+      case "checking":
+        return <Loader2 className="w-6 h-6 text-blue-500 animate-spin" />;
       default:
         return <Clock className="w-6 h-6 text-gray-400" />;
     }
@@ -150,6 +144,8 @@ export default function MultasSAS() {
         return <Badge className="bg-red-100 text-red-800 hover:bg-red-100">Requiere atención</Badge>;
       case "warning":
         return <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">Revisar</Badge>;
+      case "checking":
+        return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">Revisando</Badge>;
       default:
         return <Badge variant="secondary">Pendiente</Badge>;
     }
@@ -280,6 +276,8 @@ export default function MultasSAS() {
                     ? "border-red-200 dark:border-red-900"
                     : result.status === "warning"
                     ? "border-yellow-200 dark:border-yellow-900"
+                    : result.status === "checking"
+                    ? "border-blue-200 dark:border-blue-900"
                     : "border-gray-200 dark:border-gray-700"
                 }`}
                 data-testid={`card-result-${index}`}
@@ -312,6 +310,64 @@ export default function MultasSAS() {
               </Card>
             ))}
           </div>
+
+          {/* Email Section for Partial Report */}
+          <Card className="border-2 border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 mb-8">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/50">
+                  <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-gray-700 dark:text-gray-300 mb-2">
+                    <strong>Nota:</strong> El informe de estas instituciones será enviado a tu correo electrónico en los próximos 30 minutos. Para un informe completo te recomendamos registrarte.
+                  </p>
+                </div>
+              </div>
+              
+              {!emailSent ? (
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex-1 relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Input
+                      type="email"
+                      placeholder="Ingresa tu correo electrónico"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10 h-12 border-2 border-blue-200 focus:border-blue-500 dark:border-blue-700"
+                      disabled={sendingEmail}
+                      data-testid="input-email-report"
+                    />
+                  </div>
+                  <Button
+                    onClick={handleSendEmail}
+                    disabled={!validateEmail(email) || sendingEmail}
+                    className="h-12 px-6 bg-blue-600 hover:bg-blue-700"
+                    data-testid="button-send-email"
+                  >
+                    {sendingEmail ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" />
+                        Enviar informe
+                      </>
+                    )}
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 p-4 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                  <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
+                  <p className="text-green-800 dark:text-green-300">
+                    ¡Listo! El informe parcial será enviado a <strong>{email}</strong> en los próximos 30 minutos.
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* SRI Section - Requires Login */}
           <Card className="border-2 border-dashed border-purple-300 dark:border-purple-800 bg-gradient-to-r from-purple-50 to-cyan-50 dark:from-purple-900/20 dark:to-cyan-900/20">
