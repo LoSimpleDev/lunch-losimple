@@ -28,6 +28,7 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import AdminBlog from "@/pages/AdminBlog";
 import MultasSAS from "@/pages/MultasSAS";
+import LoginSASExistente from "@/pages/LoginSASExistente";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/admin-blog" component={AdminBlog} />
       <Route path="/multas-sas-ecuador" component={MultasSAS} />
+      <Route path="/login-sas-existente" component={LoginSASExistente} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

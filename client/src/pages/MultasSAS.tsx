@@ -345,8 +345,8 @@ export default function MultasSAS() {
                 </div>
                 <div>
                   <Button asChild size="lg" className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700">
-                    <Link href="/login" data-testid="button-register-sri">
-                      Crear cuenta gratis
+                    <Link href={`/login-sas-existente?ruc=${ruc}`} data-testid="button-register-sri">
+                      Registrar mi empresa
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>

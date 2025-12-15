@@ -546,6 +546,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // POST /auth/register-existing-sas - Register existing SAS company (skips payment, goes straight to dashboard)
+  api.post("/auth/register-existing-sas", async (req, res) => {
+    try {
+      const { email, password, fullName, ruc, companyName } = req.body;
+      
+      if (!email || !password || !fullName || !ruc || !companyName) {
+        return res.status(400).json({ error: 'Todos los campos son requeridos' });
+      }
+      
+      // Validate RUC format (13 digits)
+      if (!/^\d{13}$/.test(ruc)) {
+        return res.status(400).json({ error: 'El RUC debe tener 13 dígitos' });
+      }
+      
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ error: 'El email ya está registrado' });
+      }
+      
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      // Create user
+      const user = await storage.createUser({
+        email,
+        password: hashedPassword,
+        fullName,
+        role: 'client'
+      });
+      
+      // Create a completed LaunchRequest for this existing SAS
+      // Store RUC in billingIdNumber field (since it's the company tax ID)
+      const launchRequest = await storage.createLaunchRequest({
+        userId: user.id,
+        companyName1: companyName,
+        billingIdNumber: ruc, // Store RUC here
+        adminStatus: 'completed', // Existing SAS - already completed
+        paymentStatus: 'completed', // No payment required - mark as completed
+        isFormComplete: true,
+        currentStep: 8,
+        isStarted: true
+      });
+      
+      // Create launch progress with appropriate statuses for existing SAS
+      await storage.createLaunchProgress({
+        launchRequestId: launchRequest.id,
+        logoStatus: 'completed',
+        logoProgress: 100,
+        logoCurrentStep: 'No aplica - empresa existente',
+        websiteStatus: 'completed',
+        websiteProgress: 100,
+        websiteCurrentStep: 'No aplica - empresa existente',
+        socialMediaStatus: 'completed',
+        socialMediaProgress: 100,
+        socialMediaCurrentStep: 'No aplica - empresa existente',
+        companyStatus: 'completed',
+        companyProgress: 100,
+        companyCurrentStep: 'Empresa ya constituida',
+        invoicingStatus: 'pending',
+        invoicingProgress: 0,
+        invoicingCurrentStep: 'Disponible para activar',
+        signatureStatus: 'pending',
+        signatureProgress: 0,
+        signatureCurrentStep: 'Disponible para activar'
+      });
+      
+      console.log(`Existing SAS registered: ${companyName} (RUC: ${ruc}) by ${email}`);
+      
+      // Log the user in automatically
+      req.login(user, (err) => {
+        if (err) {
+          return res.status(500).json({ error: 'Error al iniciar sesión' });
+        }
+        
+        // Return user without password
+        const { password: _, ...userWithoutPassword } = user;
+        res.status(201).json({ user: userWithoutPassword, launchRequestId: launchRequest.id });
+      });
+    } catch (error) {
+      console.error('Error registering existing SAS:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
   // POST /auth/login - Login user
   api.post("/auth/login", (req, res, next) => {
     passport.authenticate('local', (err: any, user: any, info: any) => {
