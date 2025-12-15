@@ -200,24 +200,6 @@ export default function Launch() {
             </Link>
           </div>
 
-          {/* Beneficio Adicional Especial */}
-          <Card className="border-primary border-2 mb-12" data-testid="card-guarantee">
-            <CardHeader className="text-center">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <ShieldCheck className="w-8 h-8 text-primary" />
-                </div>
-              </div>
-              <CardTitle className="text-2xl">Beneficio Adicional: Garantía de Cierre</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center">
-              <p className="text-lg text-muted-foreground">
-                Si no te va bien dentro del primer año, <span className="font-semibold text-foreground">incluimos el cierre de tu empresa 
-                en el precio sin costo adicional</span>. Emprendes con tranquilidad.
-              </p>
-            </CardContent>
-          </Card>
-
           {/* Beneficios del servicio Launch - Perks estilo aceleradora */}
           <div className="bg-gradient-to-b from-purple-50 to-background dark:from-gray-900 dark:to-background rounded-2xl py-20 px-8 mb-16">
             <div className="text-center mb-16">
