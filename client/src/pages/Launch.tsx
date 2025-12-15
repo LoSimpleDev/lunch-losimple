@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Check, Globe, Building2, FileText, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, BadgeCheck, Headphones, Send, Loader2 } from "lucide-react";
+import { Building2, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, Headphones, Send, Loader2 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
@@ -118,7 +118,7 @@ export default function Launch() {
         <div className="max-w-6xl mx-auto">
 
           {/* Inclusiones Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="grid md:grid-cols-2 gap-6 mb-16">
             <Card className="hover:shadow-lg transition-shadow" data-testid="card-company">
               <CardHeader>
                 <div className="flex items-center gap-3">
@@ -133,45 +133,17 @@ export default function Launch() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-website">
+            <Card className="hover:shadow-lg transition-shadow" data-testid="card-support">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-primary" />
+                    <Headphones className="w-6 h-6 text-primary" />
                   </div>
-                  <CardTitle className="text-xl">Sitio Web</CardTitle>
+                  <CardTitle className="text-xl">Soporte Anual</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Presencia digital lista para tus clientes</p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-social">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <BadgeCheck className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">Verificación de Redes</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Cuentas verificadas en Meta por si quieres montar un chatbot después</p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-billing">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <FileText className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">Facturación Electrónica</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Sistema listo para emitir facturas por un año</p>
+                <p className="text-muted-foreground">Nuestro equipo resuelve tus dudas legales y las relacionadas con inclusiones, por un año</p>
               </CardContent>
             </Card>
 
@@ -189,17 +161,17 @@ export default function Launch() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-support">
+            <Card className="hover:shadow-lg transition-shadow" data-testid="card-benefits">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Headphones className="w-6 h-6 text-primary" />
+                    <ShieldCheck className="w-6 h-6 text-primary" />
                   </div>
-                  <CardTitle className="text-xl">Soporte Anual</CardTitle>
+                  <CardTitle className="text-xl">Beneficios por Miles de Dólares</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Nuestro equipo resuelve tus dudas legales y las relacionadas con inclusiones, por un año</p>
+                <p className="text-muted-foreground">Acceso exclusivo a perks y descuentos de nuestros aliados</p>
               </CardContent>
             </Card>
           </div>
@@ -208,13 +180,10 @@ export default function Launch() {
           <div className="text-center mb-12 py-12 bg-gradient-to-r from-purple-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl">
             <p className="text-muted-foreground text-lg mb-2">Precio del servicio</p>
             <div className="flex items-baseline justify-center gap-2 mb-4">
-              <span className="text-5xl md:text-6xl font-extrabold text-[#6C5CE7]">$599</span>
+              <span className="text-5xl md:text-6xl font-extrabold text-[#6C5CE7]">$350</span>
               <span className="text-xl text-muted-foreground">+ IVA</span>
             </div>
-            <p className="text-muted-foreground mb-2">Total: <span className="font-semibold">$688.85</span></p>
-            <p className="text-sm text-muted-foreground max-w-xl mx-auto mt-4 px-4">
-              * No incluye dominio ni hosting. Si lo necesitas, podemos adquirirlo por ti.
-            </p>
+            <p className="text-muted-foreground mb-2">Total: <span className="font-semibold">$392</span></p>
           </div>
 
           {/* Empezar Ahora Button */}
