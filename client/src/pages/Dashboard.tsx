@@ -93,6 +93,8 @@ export default function Dashboard() {
   const [responses, setResponses] = useState<{ [key: string]: string }>({});
   const [activeTab, setActiveTab] = useState<TabType>('perfil');
   const [legalRepresentative, setLegalRepresentative] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("Ecuador");
   const [shareholdersInput, setShareholdersInput] = useState<Array<{ name: string; percentage: string }>>([
     { name: "", percentage: "" }
   ]);
@@ -366,93 +368,108 @@ export default function Dashboard() {
                     Información de tu empresa
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Company Name */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Razón Social de la Empresa
-                    </label>
-                    <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                      <p className="font-medium" data-testid="text-company-name">{companyName}</p>
-                    </div>
-                  </div>
-
-                  {/* RUC */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Número de RUC
-                    </label>
-                    <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                      <p className="font-medium" data-testid="text-ruc">{rucNumber}</p>
-                    </div>
-                  </div>
-
-                  {/* Legal Representative */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Representante Legal Actual
-                    </label>
-                    <Input
-                      value={legalRepresentative}
-                      onChange={(e) => setLegalRepresentative(e.target.value)}
-                      placeholder="Ingresa el nombre del representante legal"
-                      data-testid="input-legal-representative"
-                    />
-                  </div>
-
-                  {/* Shareholders */}
-                  <div className="space-y-3">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      Accionistas Actuales
-                    </label>
-                    {shareholdersInput.map((shareholder, index) => (
-                      <div key={index} className="flex gap-3 items-center">
-                        <Input
-                          value={shareholder.name}
-                          onChange={(e) => updateShareholder(index, 'name', e.target.value)}
-                          placeholder="Nombre del accionista"
-                          className="flex-1"
-                          data-testid={`input-shareholder-name-${index}`}
-                        />
-                        <Input
-                          value={shareholder.percentage}
-                          onChange={(e) => updateShareholder(index, 'percentage', e.target.value)}
-                          placeholder="%"
-                          className="w-20"
-                          data-testid={`input-shareholder-percentage-${index}`}
-                        />
-                        {shareholdersInput.length > 1 && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeShareholder(index)}
-                            data-testid={`button-remove-shareholder-${index}`}
-                          >
-                            <XCircle className="w-4 h-4 text-red-500" />
-                          </Button>
-                        )}
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Company Name */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Razón Social de la Empresa
+                      </label>
+                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                        <p className="font-medium" data-testid="text-company-name">{companyName}</p>
                       </div>
-                    ))}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={addShareholder}
-                      data-testid="button-add-shareholder"
-                    >
-                      <PlusCircle className="w-4 h-4 mr-2" />
-                      Agregar Accionista
-                    </Button>
-                  </div>
+                    </div>
 
-                  {/* Location */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                      <MapPin className="w-4 h-4" />
-                      Localidad y País
-                    </label>
-                    <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                      <p className="font-medium" data-testid="text-location">{location}</p>
+                    {/* RUC */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Número de RUC
+                      </label>
+                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                        <p className="font-medium" data-testid="text-ruc">{rucNumber}</p>
+                      </div>
+                    </div>
+
+                    {/* Legal Representative */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Representante Legal Actual
+                      </label>
+                      <Input
+                        value={legalRepresentative}
+                        onChange={(e) => setLegalRepresentative(e.target.value)}
+                        placeholder="Ingresa el nombre del representante legal"
+                        data-testid="input-legal-representative"
+                      />
+                    </div>
+
+                    {/* Location - City and Country */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                        <MapPin className="w-4 h-4" />
+                        Localidad y País
+                      </label>
+                      <div className="flex gap-3">
+                        <Input
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
+                          placeholder="Ciudad"
+                          className="flex-1"
+                          data-testid="input-city"
+                        />
+                        <Input
+                          value={country}
+                          onChange={(e) => setCountry(e.target.value)}
+                          placeholder="País"
+                          className="flex-1"
+                          data-testid="input-country"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Shareholders - Full width */}
+                    <div className="space-y-3 md:col-span-2">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        Accionistas Actuales
+                      </label>
+                      {shareholdersInput.map((shareholder, index) => (
+                        <div key={index} className="flex gap-3 items-center">
+                          <Input
+                            value={shareholder.name}
+                            onChange={(e) => updateShareholder(index, 'name', e.target.value)}
+                            placeholder="Nombre del accionista"
+                            className="flex-1"
+                            data-testid={`input-shareholder-name-${index}`}
+                          />
+                          <Input
+                            value={shareholder.percentage}
+                            onChange={(e) => updateShareholder(index, 'percentage', e.target.value)}
+                            placeholder="%"
+                            className="w-20"
+                            data-testid={`input-shareholder-percentage-${index}`}
+                          />
+                          {shareholdersInput.length > 1 && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeShareholder(index)}
+                              data-testid={`button-remove-shareholder-${index}`}
+                            >
+                              <XCircle className="w-4 h-4 text-red-500" />
+                            </Button>
+                          )}
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={addShareholder}
+                        data-testid="button-add-shareholder"
+                      >
+                        <PlusCircle className="w-4 h-4 mr-2" />
+                        Agregar Accionista
+                      </Button>
                     </div>
                   </div>
                 </CardContent>

@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Gift, Sparkles, Copy, CheckCircle } from "lucide-react";
+import { ArrowLeft, Gift, Sparkles, Copy, CheckCircle, Lock } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -29,10 +29,19 @@ interface BenefitCode {
   benefitPartner?: string;
 }
 
+interface LaunchRequest {
+  id: string;
+  paymentStatus: string;
+}
+
 export default function Benefits() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  const { data: launchRequest, isLoading: isLoadingLaunch } = useQuery<LaunchRequest>({
+    queryKey: ["/api/launch/my-request"],
+  });
 
   const { data: benefits = [], isLoading: isLoadingBenefits } = useQuery<Benefit[]>({
     queryKey: ["/api/benefits"],
@@ -41,6 +50,8 @@ export default function Benefits() {
   const { data: myCodes = [], isLoading: isLoadingCodes } = useQuery<BenefitCode[]>({
     queryKey: ["/api/benefits/my-codes"],
   });
+
+  const isLaunchCustomer = launchRequest?.paymentStatus !== 'not_required' && launchRequest?.paymentStatus !== undefined;
 
   const generateCodeMutation = useMutation({
     mutationFn: async (benefitId: string) => {
@@ -77,12 +88,49 @@ export default function Benefits() {
     return myCodes.some(code => code.benefitId === benefitId);
   };
 
-  if (isLoadingBenefits || isLoadingCodes) {
+  if (isLoadingBenefits || isLoadingCodes || isLoadingLaunch) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-muted-foreground">Cargando beneficios...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isLaunchCustomer) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-2xl mx-auto p-8">
+          <div className="mb-6">
+            <Button 
+              variant="ghost" 
+              onClick={() => setLocation('/dashboard')}
+              data-testid="button-back-dashboard"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Volver al Dashboard
+            </Button>
+          </div>
+
+          <Card className="border-2 border-amber-200 dark:border-amber-800">
+            <CardContent className="py-12 text-center">
+              <Lock className="w-16 h-16 mx-auto mb-6 text-amber-500" />
+              <h2 className="text-2xl font-bold mb-4">Sección Exclusiva</h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                Esta sección está reservada únicamente para clientes que han creado empresas con nosotros a través del programa Launch.
+              </p>
+              <Button 
+                onClick={() => setLocation('/launch')}
+                style={{ backgroundColor: '#FEC817' }}
+                data-testid="button-go-launch"
+              >
+                <Gift className="w-4 h-4 mr-2" />
+                Conocer Launch
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     );
