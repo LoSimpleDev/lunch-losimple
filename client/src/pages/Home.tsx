@@ -8,6 +8,8 @@ import { useCart } from "@/contexts/CartContext";
 import { Cart } from "@/components/Cart";
 import { ShoppingCart, CheckCircle, Phone, Mail, Edit, Info, MessageCircle, Shield } from "lucide-react";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
+import decoratorGrid from "@assets/blog-decorator-grid.png";
+import decoratorFolder from "@assets/blog-decorator-folder.png";
 import { Link } from "wouter";
 import {
   Tooltip,
@@ -119,21 +121,44 @@ export default function Home() {
       <SchemaMarkup />
       <div className="min-h-screen bg-background">
       <main role="main">
-        {/* Services Section */}
-        <section id="services" className="py-20 px-4">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Documentos legales para tu empresa SAS en Ecuador, listos y en regla
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-              Tener una empresa SAS no es solo constituirla. A lo largo de su vida necesitas documentos claros, actualizados y bien hechos: actas, nombramientos, reformas, certificaciones y resoluciones que respalden decisiones, eviten problemas legales y mantengan tu empresa en cumplimiento.
-            </p>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Aquí encuentras documentos societarios para SAS en Ecuador, preparados de forma correcta y alineados con la normativa vigente.
-            </p>
+        {/* Hero Section - Blog Style */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-16 lg:py-20">
+          {/* Decorative Elements */}
+          <div className="absolute top-10 left-10 w-24 h-24 opacity-20 transform -rotate-12 hidden lg:block">
+            <img src={decoratorGrid} alt="" className="w-full h-full object-contain" />
           </div>
+          <div className="absolute top-16 right-16 w-32 h-32 opacity-15 transform rotate-6 hidden lg:block">
+            <img src={decoratorFolder} alt="" className="w-full h-full object-contain" />
+          </div>
+          <div className="absolute bottom-10 left-1/4 w-20 h-20 opacity-10 transform rotate-12 hidden lg:block">
+            <img src={decoratorFolder} alt="" className="w-full h-full object-contain" />
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <span className="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-semibold mb-6">
+                Documentos Societarios SAS
+              </span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
+                Documentos legales para tu{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-cyan-600">
+                  empresa SAS
+                </span>
+                {" "}en Ecuador
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
+                Tener una empresa SAS no es solo constituirla. A lo largo de su vida necesitas documentos claros, actualizados y bien hechos: actas, nombramientos, reformas, certificaciones y resoluciones que respalden decisiones, eviten problemas legales y mantengan tu empresa en cumplimiento.
+              </p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Aquí encuentras documentos societarios para SAS en Ecuador, preparados de forma correcta y alineados con la normativa vigente.
+              </p>
+            </div>
+          </div>
+        </section>
 
+        {/* Services Section */}
+        <section id="services" className="py-16 px-4">
+        <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Documentos que tu SAS necesita para operar, crecer o cerrar sin problemas
