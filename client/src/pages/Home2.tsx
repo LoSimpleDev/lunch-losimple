@@ -235,7 +235,7 @@ export default function Home2() {
             {/* Main Headline */}
             <div className="mb-8">
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
-                Constituye tu SAS en Ecuador en 48 horas
+                Constituye tu SAS en Ecuador con soporte por un año
               </h1>
             </div>
 
