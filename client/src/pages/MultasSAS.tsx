@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -152,7 +153,14 @@ export default function MultasSAS() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <>
+      <SEO 
+        title="Consulta Multas SAS Ecuador | Verificación de obligaciones empresariales"
+        description="Consulta si tu empresa SAS tiene multas pendientes en Superintendencia de Compañías, SRI, IESS, Municipio y más. Verificación rápida con el RUC de tu empresa."
+        canonical="/multas-sas-ecuador"
+        keywords="multas SAS Ecuador, consulta multas empresa, verificación SRI, Superintendencia de Compañías multas"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Decorative elements */}
@@ -459,6 +467,7 @@ export default function MultasSAS() {
           </div>
         </section>
       )}
-    </div>
+      </div>
+    </>
   );
 }

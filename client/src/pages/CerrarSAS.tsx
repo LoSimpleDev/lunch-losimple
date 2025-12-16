@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { 
@@ -129,7 +130,14 @@ export default function CerrarSAS() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <SEO 
+        title="Cerrar Empresa SAS Ecuador | Liquidación voluntaria abreviada"
+        description="Cierra tu empresa SAS en Ecuador de forma legal y rápida. Proceso de liquidación voluntaria abreviada en 4 días sin juicio. Asesoría profesional incluida."
+        canonical="/cerrar-sas"
+        keywords="cerrar empresa SAS Ecuador, liquidación SAS, disolver empresa Ecuador, cerrar compañía Ecuador"
+      />
+      <div className="min-h-screen bg-background">
       {/* Scroll Popup */}
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
@@ -515,6 +523,7 @@ export default function CerrarSAS() {
           </Link>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

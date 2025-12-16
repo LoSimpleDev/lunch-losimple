@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -84,7 +85,14 @@ export default function Launch() {
   };
   
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <SEO 
+        title="Launch: Lanza tu negocio todo incluido | SAS + Firma + Facturación"
+        description="Servicio todo incluido para emprendedores. Constituye tu SAS, obtén firma electrónica, facturación y soporte por un año. En 2 días tu negocio operando en Ecuador."
+        canonical="/launch"
+        keywords="lanzar negocio Ecuador, constituir empresa Ecuador, SAS todo incluido, emprender Ecuador"
+      />
+      <div className="min-h-screen bg-background">
       {/* Hero Section - Similar to Blog */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-16 lg:py-20">
         {/* Decorative Elements */}
@@ -450,6 +458,7 @@ export default function Launch() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

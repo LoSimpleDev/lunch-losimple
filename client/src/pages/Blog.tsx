@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CalendarDays, ArrowRight, Rocket, CheckCircle, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
@@ -231,7 +232,14 @@ export default function Blog() {
   }, [posts, totalPages, currentPage]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <SEO 
+        title="Blog Lo Simple | Recursos para emprendedores en Ecuador"
+        description="Guías, consejos y noticias sobre constitución de empresas SAS, facturación electrónica y firma digital en Ecuador. Recursos para emprendedores."
+        canonical="/blog"
+        keywords="emprender Ecuador, SAS Ecuador blog, facturación electrónica, firma digital Ecuador"
+      />
+      <div className="min-h-screen bg-background">
       {/* Hero Section - Simplified */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-16 lg:py-20">
         {/* Decorative Elements */}
@@ -438,6 +446,7 @@ export default function Blog() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { SEO } from "@/components/SEO";
+import { SchemaMarkup } from "@/components/SchemaMarkup";
 import { 
   Rocket, 
   Scale, 
@@ -192,7 +194,15 @@ const home2Faqs = [
 
 export default function Home2() {
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <SEO 
+        title="Abrir Empresa SAS en Ecuador | Constituye tu SAS con soporte por un año"
+        description="Abre tu empresa SAS en Ecuador de forma 100% digital. Constituye tu Sociedad por Acciones Simplificada con soporte legal por un año, firma electrónica y todos los trámites incluidos. Sin capital mínimo, desde 1 accionista."
+        canonical="/"
+        keywords="abrir empresa SAS Ecuador, constituir SAS Ecuador, crear SAS Ecuador, Sociedad por Acciones Simplificada Ecuador, SAS Ecuador requisitos, formar empresa Ecuador"
+      />
+      <SchemaMarkup />
+      <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 py-32 md:py-40 px-4">
         {/* Decorative Geometric Shapes */}
@@ -1136,6 +1146,7 @@ export default function Home2() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }
