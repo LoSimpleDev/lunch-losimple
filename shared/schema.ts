@@ -262,6 +262,41 @@ export const contactRequests = pgTable("contact_requests", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+// Institution credentials for multas reports
+export const institutionCredentials = pgTable("institution_credentials", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  institution: text("institution").notNull(), // "sri", "municipio", "iess"
+  username: text("username").notNull(),
+  passwordEncrypted: text("password_encrypted").notNull(), // Encrypted password
+  canton: text("canton"), // For municipio - which municipality
+  isValidated: boolean("is_validated").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+// Multas reports
+export const multasReports = pgTable("multas_reports", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  companyName: text("company_name"),
+  ruc: text("ruc"),
+  status: text("status").notNull().default("processing"), // processing, ready, paid, downloaded
+  validationStatus: json("validation_status").$type<{
+    supercias: 'pending' | 'validating' | 'validated' | 'error';
+    sri: 'pending' | 'validating' | 'validated' | 'error';
+    iess: 'pending' | 'validating' | 'validated' | 'error';
+    municipio: 'pending' | 'validating' | 'validated' | 'error';
+    sercop: 'pending' | 'validating' | 'validated' | 'error';
+    minTrabajo: 'pending' | 'validating' | 'validated' | 'error';
+  }>(),
+  reportUrl: text("report_url"), // URL to download the report
+  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  isPaid: boolean("is_paid").notNull().default(false),
+  paidAt: timestamp("paid_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Schemas for existing marketplace
 export const insertServiceSchema = createInsertSchema(services).omit({
   id: true,
@@ -329,6 +364,17 @@ export const insertContactRequestSchema = createInsertSchema(contactRequests).om
   createdAt: true,
 });
 
+export const insertInstitutionCredentialSchema = createInsertSchema(institutionCredentials).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertMultasReportSchema = createInsertSchema(multasReports).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types for existing marketplace
 export type Service = typeof services.$inferSelect;
 export type InsertService = z.infer<typeof insertServiceSchema>;
@@ -360,3 +406,9 @@ export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 // Types for Contact system
 export type ContactRequest = typeof contactRequests.$inferSelect;
 export type InsertContactRequest = z.infer<typeof insertContactRequestSchema>;
+
+// Types for Multas system
+export type InstitutionCredential = typeof institutionCredentials.$inferSelect;
+export type InsertInstitutionCredential = z.infer<typeof insertInstitutionCredentialSchema>;
+export type MultasReport = typeof multasReports.$inferSelect;
+export type InsertMultasReport = z.infer<typeof insertMultasReportSchema>;

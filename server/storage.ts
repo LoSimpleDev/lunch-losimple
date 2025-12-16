@@ -9,7 +9,9 @@ import {
   type TeamMessage, type InsertTeamMessage,
   type Benefit, type InsertBenefit,
   type BenefitCode, type InsertBenefitCode,
-  type BlogPost, type InsertBlogPost
+  type BlogPost, type InsertBlogPost,
+  type InstitutionCredential, type InsertInstitutionCredential,
+  type MultasReport, type InsertMultasReport
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -87,6 +89,18 @@ export interface IStorage {
   
   // Contact Requests
   createContactRequest(request: { firstName: string; lastName: string; businessDescription: string; phone: string; email: string; source: string; createdAt: Date }): Promise<void>;
+  
+  // Institution Credentials
+  getCredentialsByUser(userId: string): Promise<InstitutionCredential[]>;
+  getCredentialByUserAndInstitution(userId: string, institution: string): Promise<InstitutionCredential | undefined>;
+  createCredential(credential: InsertInstitutionCredential): Promise<InstitutionCredential>;
+  updateCredential(id: string, credential: Partial<InsertInstitutionCredential>): Promise<InstitutionCredential | undefined>;
+  
+  // Multas Reports
+  getMultasReportsByUser(userId: string): Promise<MultasReport[]>;
+  getMultasReport(id: string): Promise<MultasReport | undefined>;
+  createMultasReport(report: InsertMultasReport): Promise<MultasReport>;
+  updateMultasReport(id: string, report: Partial<InsertMultasReport>): Promise<MultasReport | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -101,6 +115,8 @@ export class MemStorage implements IStorage {
   private benefits: Map<string, Benefit>;
   private benefitCodes: Map<string, BenefitCode>;
   private blogPosts: Map<string, BlogPost>;
+  private institutionCredentials: Map<string, InstitutionCredential>;
+  private multasReports: Map<string, MultasReport>;
 
   constructor() {
     this.services = new Map();
@@ -111,6 +127,8 @@ export class MemStorage implements IStorage {
     this.documents = new Map();
     this.adminNotes = new Map();
     this.teamMessages = new Map();
+    this.institutionCredentials = new Map();
+    this.multasReports = new Map();
     this.benefits = new Map();
     this.benefitCodes = new Map();
     this.blogPosts = new Map();
@@ -808,6 +826,27 @@ export class MemStorage implements IStorage {
         ],
         isActive: 1,
         imageUrl: null
+      },
+      // INFORME DE MULTAS
+      {
+        id: "informe-multas-sas",
+        name: "Informe de Multas SAS",
+        description: "Informe detallado de multas y obligaciones pendientes de tu empresa SAS. Consulta en Superintendencia de Compañías, SRI, IESS, Municipio, Sercop y Ministerio del Trabajo.",
+        shortDescription: "Reporte completo de multas y obligaciones empresariales",
+        price: "12.00",
+        category: "Informes",
+        features: [
+          "Consulta en Superintendencia de Compañías",
+          "Verificación en SRI",
+          "Revisión en IESS",
+          "Consulta en Municipio",
+          "Verificación en Sercop",
+          "Consulta en Ministerio del Trabajo",
+          "Alertas de obligaciones próximas a vencer",
+          "Recomendaciones de cumplimiento"
+        ],
+        isActive: 1,
+        imageUrl: null
       }
     ];
 
@@ -934,6 +973,73 @@ export class MemStorage implements IStorage {
     // For now, just log the contact request (stored in server logs)
     // When SendGrid is configured, this will also send email notification
     console.log('Contact request stored:', request);
+  }
+
+  // Institution Credentials methods
+  async getCredentialsByUser(userId: string): Promise<InstitutionCredential[]> {
+    return Array.from(this.institutionCredentials.values()).filter(cred => cred.userId === userId);
+  }
+
+  async getCredentialByUserAndInstitution(userId: string, institution: string): Promise<InstitutionCredential | undefined> {
+    return Array.from(this.institutionCredentials.values()).find(
+      cred => cred.userId === userId && cred.institution === institution
+    );
+  }
+
+  async createCredential(insertCredential: InsertInstitutionCredential): Promise<InstitutionCredential> {
+    const id = randomUUID();
+    const credential: InstitutionCredential = {
+      ...insertCredential,
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    } as InstitutionCredential;
+    this.institutionCredentials.set(id, credential);
+    return credential;
+  }
+
+  async updateCredential(id: string, credentialUpdate: Partial<InsertInstitutionCredential>): Promise<InstitutionCredential | undefined> {
+    const existing = this.institutionCredentials.get(id);
+    if (!existing) return undefined;
+    
+    const updated = {
+      ...existing,
+      ...credentialUpdate,
+      updatedAt: new Date()
+    } as InstitutionCredential;
+    this.institutionCredentials.set(id, updated);
+    return updated;
+  }
+
+  // Multas Reports methods
+  async getMultasReportsByUser(userId: string): Promise<MultasReport[]> {
+    return Array.from(this.multasReports.values())
+      .filter(report => report.userId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getMultasReport(id: string): Promise<MultasReport | undefined> {
+    return this.multasReports.get(id);
+  }
+
+  async createMultasReport(insertReport: InsertMultasReport): Promise<MultasReport> {
+    const id = randomUUID();
+    const report: MultasReport = {
+      ...insertReport,
+      id,
+      createdAt: new Date()
+    } as MultasReport;
+    this.multasReports.set(id, report);
+    return report;
+  }
+
+  async updateMultasReport(id: string, reportUpdate: Partial<InsertMultasReport>): Promise<MultasReport | undefined> {
+    const existing = this.multasReports.get(id);
+    if (!existing) return undefined;
+    
+    const updated = { ...existing, ...reportUpdate } as MultasReport;
+    this.multasReports.set(id, updated);
+    return updated;
   }
 
   // Initialize benefits

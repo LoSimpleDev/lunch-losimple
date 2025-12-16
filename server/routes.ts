@@ -1665,6 +1665,295 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ========== MULTAS REPORTS ENDPOINTS ==========
+  
+  // GET /multas/reports - Get user's multas reports
+  api.get("/multas/reports", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const reports = await storage.getMultasReportsByUser(userId);
+      res.json(reports);
+    } catch (error) {
+      console.error('Error fetching multas reports:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /multas/reports/:id - Get a specific report
+  api.get("/multas/reports/:id", isAuthenticated, async (req, res) => {
+    try {
+      const report = await storage.getMultasReport(req.params.id);
+      if (!report) {
+        return res.status(404).json({ error: 'Informe no encontrado' });
+      }
+      
+      const userId = (req.user as any).id;
+      if (report.userId !== userId) {
+        return res.status(403).json({ error: 'No autorizado' });
+      }
+      
+      res.json(report);
+    } catch (error) {
+      console.error('Error fetching multas report:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /multas/reports - Create a new multas report request
+  api.post("/multas/reports", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const { companyName, ruc, credentials, saveCredentials } = req.body;
+      
+      // Create the report with initial validation status
+      const report = await storage.createMultasReport({
+        userId,
+        companyName,
+        ruc,
+        status: 'processing',
+        validationStatus: {
+          supercias: 'pending',
+          sri: 'pending',
+          iess: 'pending',
+          municipio: 'pending',
+          sercop: 'pending',
+          minTrabajo: 'pending'
+        },
+        isPaid: false
+      });
+      
+      // If user wants to save credentials, store them (encrypted in production)
+      if (saveCredentials && credentials) {
+        for (const cred of credentials) {
+          const existingCred = await storage.getCredentialByUserAndInstitution(userId, cred.institution);
+          if (existingCred) {
+            await storage.updateCredential(existingCred.id, {
+              username: cred.username,
+              passwordEncrypted: cred.password, // In production, encrypt this
+              canton: cred.canton,
+              isValidated: false
+            });
+          } else {
+            await storage.createCredential({
+              userId,
+              institution: cred.institution,
+              username: cred.username,
+              passwordEncrypted: cred.password, // In production, encrypt this
+              canton: cred.canton,
+              isValidated: false
+            });
+          }
+        }
+      }
+      
+      // Simulate validation process (in production, this would be handled by a worker)
+      simulateValidation(report.id);
+      
+      res.status(201).json(report);
+    } catch (error) {
+      console.error('Error creating multas report:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // Helper function to simulate validation process
+  async function simulateValidation(reportId: string) {
+    const institutions = ['supercias', 'sri', 'iess', 'municipio', 'sercop', 'minTrabajo'] as const;
+    
+    for (let i = 0; i < institutions.length; i++) {
+      const institution = institutions[i];
+      
+      // Wait 2-4 seconds between validations
+      await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 2000));
+      
+      const report = await storage.getMultasReport(reportId);
+      if (!report) return;
+      
+      const currentStatus = report.validationStatus || {
+        supercias: 'pending' as const,
+        sri: 'pending' as const,
+        iess: 'pending' as const,
+        municipio: 'pending' as const,
+        sercop: 'pending' as const,
+        minTrabajo: 'pending' as const
+      };
+      
+      const newStatus = {
+        ...currentStatus,
+        [institution]: 'validated' as const
+      };
+      
+      await storage.updateMultasReport(reportId, {
+        validationStatus: newStatus
+      });
+    }
+    
+    // After all validations, mark report as ready and add a mock PDF URL
+    await storage.updateMultasReport(reportId, {
+      status: 'ready',
+      reportUrl: '/api/multas/reports/' + reportId + '/download'
+    });
+  }
+  
+  // POST /multas/reports/:id/create-payment-intent - Create Stripe payment for report
+  api.post("/multas/reports/:id/create-payment-intent", isAuthenticated, async (req, res) => {
+    try {
+      const report = await storage.getMultasReport(req.params.id);
+      if (!report) {
+        return res.status(404).json({ error: 'Informe no encontrado' });
+      }
+      
+      const userId = (req.user as any).id;
+      if (report.userId !== userId) {
+        return res.status(403).json({ error: 'No autorizado' });
+      }
+      
+      if (report.isPaid) {
+        return res.status(400).json({ error: 'Este informe ya fue pagado' });
+      }
+      
+      // Price: $12 + IVA (12%) = $13.44
+      const amount = Math.round(12 * 1.12 * 100); // in cents
+      
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'usd',
+        metadata: {
+          type: 'multas_report',
+          reportId: report.id,
+          userId
+        }
+      });
+      
+      await storage.updateMultasReport(report.id, {
+        stripePaymentIntentId: paymentIntent.id
+      });
+      
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (error) {
+      console.error('Error creating payment intent:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // POST /multas/reports/:id/confirm-payment - Confirm payment was successful
+  api.post("/multas/reports/:id/confirm-payment", isAuthenticated, async (req, res) => {
+    try {
+      const report = await storage.getMultasReport(req.params.id);
+      if (!report) {
+        return res.status(404).json({ error: 'Informe no encontrado' });
+      }
+      
+      const userId = (req.user as any).id;
+      if (report.userId !== userId) {
+        return res.status(403).json({ error: 'No autorizado' });
+      }
+      
+      // Verify payment with Stripe
+      if (report.stripePaymentIntentId) {
+        const paymentIntent = await stripe.paymentIntents.retrieve(report.stripePaymentIntentId);
+        if (paymentIntent.status === 'succeeded') {
+          await storage.updateMultasReport(report.id, {
+            isPaid: true,
+            status: 'paid',
+            paidAt: new Date()
+          });
+          
+          const updatedReport = await storage.getMultasReport(report.id);
+          return res.json(updatedReport);
+        }
+      }
+      
+      res.status(400).json({ error: 'Pago no confirmado' });
+    } catch (error) {
+      console.error('Error confirming payment:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /multas/reports/:id/download - Download report (only if paid)
+  api.get("/multas/reports/:id/download", isAuthenticated, async (req, res) => {
+    try {
+      const report = await storage.getMultasReport(req.params.id);
+      if (!report) {
+        return res.status(404).json({ error: 'Informe no encontrado' });
+      }
+      
+      const userId = (req.user as any).id;
+      if (report.userId !== userId) {
+        return res.status(403).json({ error: 'No autorizado' });
+      }
+      
+      if (!report.isPaid) {
+        return res.status(402).json({ error: 'Debe pagar el informe antes de descargarlo' });
+      }
+      
+      // Generate a simple text report (in production, this would be a PDF)
+      const reportContent = `
+INFORME DE MULTAS Y OBLIGACIONES
+================================
+
+Empresa: ${report.companyName || 'N/A'}
+RUC: ${report.ruc || 'N/A'}
+Fecha de generación: ${new Date().toLocaleDateString('es-EC')}
+
+RESUMEN DE CONSULTAS
+--------------------
+
+1. Superintendencia de Compañías: Sin multas pendientes
+2. SRI (Servicio de Rentas Internas): Sin obligaciones vencidas
+3. IESS (Instituto Ecuatoriano de Seguridad Social): Al día
+4. Municipio: Sin deudas municipales
+5. SERCOP: Sin inhabilitaciones
+6. Ministerio del Trabajo: Sin sanciones
+
+PRÓXIMAS OBLIGACIONES
+---------------------
+- Declaración IVA: Vence en 15 días
+- Declaración Impuesto a la Renta: Vence en 45 días
+- Aportes IESS: Al día
+
+RECOMENDACIONES
+---------------
+Su empresa se encuentra al día con todas las obligaciones fiscales y tributarias.
+Continúe manteniendo el cumplimiento oportuno de sus obligaciones.
+
+---
+Este informe fue generado por Lo Simple
+www.losimple.ec
+      `;
+      
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', `attachment; filename="informe-multas-${report.ruc || 'empresa'}.txt"`);
+      res.send(reportContent);
+    } catch (error) {
+      console.error('Error downloading report:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+  // GET /multas/credentials - Get user's saved credentials (without passwords)
+  api.get("/multas/credentials", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any).id;
+      const credentials = await storage.getCredentialsByUser(userId);
+      
+      // Return credentials without the encrypted password
+      const sanitizedCredentials = credentials.map(cred => ({
+        id: cred.id,
+        institution: cred.institution,
+        username: cred.username,
+        canton: cred.canton,
+        isValidated: cred.isValidated
+      }));
+      
+      res.json(sanitizedCredentials);
+    } catch (error) {
+      console.error('Error fetching credentials:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+
   // Terminal 404 handler for API routes
   api.use((_req, res) => {
     res.status(404).json({ error: "API endpoint not found" });

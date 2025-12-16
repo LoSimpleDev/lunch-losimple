@@ -7,7 +7,8 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check, Gift, ShoppingBag, Package, Building2, Users, MapPin, PlusCircle, FilePlus, XCircle } from "lucide-react";
+import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check, Gift, ShoppingBag, Package, Building2, Users, MapPin, PlusCircle, FilePlus, XCircle, FolderOpen, Download } from "lucide-react";
+import MultasReportModal from "@/components/MultasReportModal";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -85,6 +86,25 @@ interface Order {
   createdAt: string;
 }
 
+interface MultasReport {
+  id: string;
+  userId: string;
+  companyName?: string;
+  ruc?: string;
+  status: string;
+  validationStatus?: {
+    supercias: string;
+    sri: string;
+    iess: string;
+    municipio: string;
+    sercop: string;
+    minTrabajo: string;
+  };
+  reportUrl?: string;
+  isPaid: boolean;
+  createdAt: string;
+}
+
 type TabType = 'perfil' | 'estado';
 
 export default function Dashboard() {
@@ -99,6 +119,7 @@ export default function Dashboard() {
   const [shareholdersInput, setShareholdersInput] = useState<Array<{ name: string; percentage: string }>>([
     { name: "", percentage: "" }
   ]);
+  const [showMultasModal, setShowMultasModal] = useState(false);
 
   const { data: sessionData, isLoading: isLoadingSession } = useQuery<{ user: User }>({
     queryKey: ["/api/auth/session"],
@@ -126,6 +147,12 @@ export default function Dashboard() {
 
   const { data: services = [] } = useQuery<Array<{ id: string; name: string }>>({
     queryKey: ["/api/services"],
+  });
+
+  const { data: multasReports = [], isLoading: isLoadingReports } = useQuery<MultasReport[]>({
+    queryKey: ["/api/multas/reports"],
+    enabled: !!sessionData?.user,
+    refetchInterval: 5000, // Poll every 5 seconds to check for status updates
   });
 
   useEffect(() => {
@@ -224,6 +251,43 @@ export default function Dashboard() {
     const updated = [...shareholdersInput];
     updated[index][field] = value;
     setShareholdersInput(updated);
+  };
+
+  const handlePayReport = async (reportId: string) => {
+    toast({
+      title: "Pago de informe",
+      description: "Redirigiendo al proceso de pago...",
+    });
+    // TODO: Implement Stripe payment flow
+    // For now, simulate payment
+    try {
+      const response = await apiRequest("POST", `/api/multas/reports/${reportId}/create-payment-intent`);
+      const { clientSecret } = await response.json();
+      // In production, this would open a Stripe payment modal
+      // For demo, we'll just confirm payment immediately after creating intent
+      toast({
+        title: "Procesando pago...",
+        description: "Por favor espera mientras procesamos tu pago",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error al procesar el pago",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDownloadReport = async (reportId: string) => {
+    try {
+      window.open(`/api/multas/reports/${reportId}/download`, '_blank');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error al descargar el informe",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isLoadingSession || isLoadingRequest) {
@@ -485,7 +549,100 @@ export default function Dashboard() {
                         Agregar Accionista
                       </Button>
                     </div>
+
+                    {/* Generate Multas Report Button - Full width */}
+                    <div className="md:col-span-2 pt-4 border-t">
+                      <Button
+                        className="w-full bg-purple-600 hover:bg-purple-700 text-white h-auto py-4"
+                        onClick={() => setShowMultasModal(true)}
+                        data-testid="button-generate-multas-report"
+                      >
+                        <FileText className="w-5 h-5 mr-2" />
+                        Generar Informe de Multas
+                      </Button>
+                      <p className="text-xs text-muted-foreground text-center mt-2">
+                        Consulta multas y obligaciones en Super Cias, SRI, IESS, Municipio, Sercop y Min. Trabajo
+                      </p>
+                    </div>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* My Documents Section */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FolderOpen className="w-5 h-5" />
+                    Mis Documentos
+                  </CardTitle>
+                  <CardDescription>
+                    Informes generados y documentos disponibles para descarga
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {isLoadingReports ? (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    </div>
+                  ) : multasReports.length > 0 ? (
+                    <div className="space-y-3">
+                      {multasReports.map((report) => (
+                        <div 
+                          key={report.id} 
+                          className="border rounded-lg p-4 flex items-center justify-between"
+                          data-testid={`document-card-${report.id}`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <FileText className="w-8 h-8 text-purple-600" />
+                            <div>
+                              <p className="font-medium">Informe de Multas</p>
+                              <p className="text-sm text-muted-foreground">
+                                {new Date(report.createdAt).toLocaleDateString('es-EC')}
+                                {report.status === 'processing' && ' - Procesando...'}
+                                {report.status === 'ready' && ' - Listo para pagar'}
+                                {report.status === 'paid' && ' - Pagado'}
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            {report.status === 'processing' && (
+                              <Badge variant="secondary">En proceso</Badge>
+                            )}
+                            {report.status === 'ready' && !report.isPaid && (
+                              <Button 
+                                size="sm" 
+                                className="bg-green-600 hover:bg-green-700"
+                                onClick={() => handlePayReport(report.id)}
+                                data-testid={`button-pay-report-${report.id}`}
+                              >
+                                <CreditCard className="w-4 h-4 mr-2" />
+                                Pagar y Descargar ($13.44)
+                              </Button>
+                            )}
+                            {report.isPaid && (
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleDownloadReport(report.id)}
+                                data-testid={`button-download-report-${report.id}`}
+                              >
+                                <Download className="w-4 h-4 mr-2" />
+                                Descargar
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <FolderOpen className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                      <p className="text-muted-foreground">No tienes documentos generados</p>
+                      <p className="text-sm text-muted-foreground">
+                        Usa el botón "Generar Informe de Multas" para crear tu primer reporte
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
@@ -700,30 +857,120 @@ export default function Dashboard() {
                   </CardContent>
                 </Card>
               ) : !isLaunchCompany ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-500" />
-                      Empresa Registrada
-                    </CardTitle>
-                    <CardDescription>
-                      Tu empresa SAS existente está registrada en nuestro sistema
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                      Puedes acceder a nuestros servicios desde la pestaña "Mi Empresa" o explorar servicios adicionales.
-                    </p>
-                    <Button 
-                      variant="outline"
-                      onClick={() => setLocation('/')}
-                      className="w-full"
-                      data-testid="button-explore-services-estado"
-                    >
-                      Explorar Servicios
-                    </Button>
-                  </CardContent>
-                </Card>
+                <>
+                  {/* SAS Existente - Option to start form */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-500" />
+                        Empresa Registrada
+                      </CardTitle>
+                      <CardDescription>
+                        Tu empresa SAS existente está registrada en nuestro sistema
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        ¿Quieres aprovechar todos los beneficios del paquete Launch? Completa el formulario para acceder a:
+                      </p>
+                      <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                        <li>• Soporte anual incluido</li>
+                        <li>• Firma electrónica</li>
+                        <li>• Beneficios exclusivos con aliados</li>
+                      </ul>
+                      <Button 
+                        onClick={() => setLocation('/launch-form')}
+                        className="w-full"
+                        data-testid="button-start-form-existing"
+                      >
+                        Comenzar Formulario Launch
+                      </Button>
+                      <Button 
+                        variant="outline"
+                        onClick={() => setLocation('/')}
+                        className="w-full"
+                        data-testid="button-explore-services-estado"
+                      >
+                        Explorar Servicios
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Documents Section for SAS Existente */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <FolderOpen className="w-5 h-5" />
+                        Documentos Entregados
+                      </CardTitle>
+                      <CardDescription>
+                        Documentos y entregables disponibles para tu empresa
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {isLoadingReports ? (
+                        <div className="flex items-center justify-center py-8">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                        </div>
+                      ) : multasReports.length > 0 ? (
+                        <div className="space-y-3">
+                          {multasReports.map((report) => (
+                            <div 
+                              key={report.id} 
+                              className="border rounded-lg p-4 flex items-center justify-between"
+                              data-testid={`estado-document-card-${report.id}`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <FileText className="w-8 h-8 text-purple-600" />
+                                <div>
+                                  <p className="font-medium">Informe de Multas</p>
+                                  <p className="text-sm text-muted-foreground">
+                                    {new Date(report.createdAt).toLocaleDateString('es-EC')}
+                                  </p>
+                                </div>
+                              </div>
+                              <div>
+                                {report.status === 'processing' && (
+                                  <Badge variant="secondary">En proceso</Badge>
+                                )}
+                                {report.status === 'ready' && !report.isPaid && (
+                                  <Button 
+                                    size="sm" 
+                                    className="bg-green-600 hover:bg-green-700"
+                                    onClick={() => handlePayReport(report.id)}
+                                    data-testid={`estado-button-pay-${report.id}`}
+                                  >
+                                    <CreditCard className="w-4 h-4 mr-2" />
+                                    Pagar ($13.44)
+                                  </Button>
+                                )}
+                                {report.isPaid && (
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    onClick={() => handleDownloadReport(report.id)}
+                                    data-testid={`estado-button-download-${report.id}`}
+                                  >
+                                    <Download className="w-4 h-4 mr-2" />
+                                    Descargar
+                                  </Button>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-8">
+                          <FolderOpen className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                          <p className="text-muted-foreground">No hay documentos disponibles</p>
+                          <p className="text-sm text-muted-foreground">
+                            Los documentos de tus servicios aparecerán aquí
+                          </p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </>
               ) : hasStarted ? (
                 <>
                   <Card>
@@ -956,6 +1203,15 @@ export default function Dashboard() {
           )}
         </div>
       </main>
+
+      {/* Multas Report Modal */}
+      <MultasReportModal
+        isOpen={showMultasModal}
+        onClose={() => setShowMultasModal(false)}
+        companyName={companyName}
+        ruc={rucNumber}
+        canton={launchRequest?.fiscalCity || city}
+      />
     </div>
   );
 }
