@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Building2, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, Headphones, Send, Loader2 } from "lucide-react";
+import { Building2, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, Headphones, Send, Loader2, FileText, AlertTriangle, XCircle } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
@@ -392,6 +392,54 @@ export default function Launch() {
           </div>
         </div>
       </div>
+
+      {/* Related Services Section */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-2xl font-bold text-center mb-8">Otros servicios que te pueden interesar</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link href="/documentos-sas">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-cyan-600" />
+                    Documentos SAS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Toda la documentación legal que necesitas para tu empresa SAS en Ecuador.</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/multas-sas-ecuador">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-purple-600" />
+                    Consulta de Multas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Verifica si tu empresa SAS tiene multas pendientes con entidades del Estado.</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/cerrar-sas">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <XCircle className="h-5 w-5 text-red-600" />
+                    Cerrar SAS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Proceso de liquidación y cierre de tu empresa SAS de forma legal y ordenada.</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-[#141464] text-white py-12 px-4 mt-16">

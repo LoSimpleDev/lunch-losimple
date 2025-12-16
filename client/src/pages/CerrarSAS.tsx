@@ -513,6 +513,54 @@ export default function CerrarSAS() {
         </div>
       </section>
 
+      {/* Related Services Section */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-2xl font-bold text-center mb-8">Otros servicios que te pueden interesar</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link href="/launch">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <Building className="h-5 w-5 text-purple-600" />
+                    Launch
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">¿Quieres empezar un nuevo negocio? Lanza tu SAS con todo incluido.</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/multas-sas-ecuador">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-purple-600" />
+                    Consulta de Multas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Antes de cerrar, verifica si tienes multas pendientes.</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/documentos-sas">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-cyan-600" />
+                    Documentos SAS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Toda la documentación legal para tu empresa SAS.</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Footer link back */}
       <section className="py-8 px-4 bg-muted/30">
         <div className="container mx-auto max-w-3xl text-center">

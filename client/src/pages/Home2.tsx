@@ -576,7 +576,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Inicio Llave en Mano</h3>
                     <p className="text-sm text-muted-foreground mb-6">Con Launch obtén todo lo que necesitas para empezar en sólo 2 días.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={loSimpleLlaveMano} alt="Dashboard Inicio Llave en Mano" className="w-full h-full object-cover object-top" />
+                      <img src={loSimpleLlaveMano} alt="Dashboard Inicio Llave en Mano" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
@@ -584,7 +584,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Firma Electrónica Simple</h3>
                     <p className="text-sm text-muted-foreground mb-6">La forma más sencilla de obtener tu firma electrónica está aquí.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={loSimpleFirma} alt="Dashboard Firma Electrónica Simple" className="w-full h-full object-cover object-top" />
+                      <img src={loSimpleFirma} alt="Dashboard Firma Electrónica Simple" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
@@ -592,7 +592,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Facturación Electrónica</h3>
                     <p className="text-sm text-muted-foreground mb-6">Empieza facturando de forma gratuita hoy.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={loSimpleFacturacion} alt="Dashboard Facturación Electrónica" className="w-full h-full object-cover object-top" />
+                      <img src={loSimpleFacturacion} alt="Dashboard Facturación Electrónica" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                 </div>
@@ -625,7 +625,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Compañía SAS</h3>
                     <p className="text-sm text-muted-foreground mb-6">Creamos la SAS que necesitas para empezar de forma simple y sin errores.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={launchDashboardSAS} alt="Dashboard Compañía SAS" className="w-full h-full object-cover object-top" />
+                      <img src={launchDashboardSAS} alt="Dashboard Compañía SAS" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
@@ -633,7 +633,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
                     <p className="text-sm text-muted-foreground mb-6">Sitio web profesional en una experiencia que te hará alucinar.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={launchDashboardLanding} alt="Dashboard Landing Page" className="w-full h-full object-cover object-top" />
+                      <img src={launchDashboardLanding} alt="Dashboard Landing Page" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
@@ -641,7 +641,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Facturación y Firma</h3>
                     <p className="text-sm text-muted-foreground mb-6">Habilitamos tu facturación y firma electrónicas por un año en el mismo paquete.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={launchDashboardFacturacion} alt="Dashboard Facturación y Firma" className="w-full h-full object-cover object-top" />
+                      <img src={launchDashboardFacturacion} alt="Dashboard Facturación y Firma" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                 </div>
@@ -653,7 +653,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Soporte Continuo</h3>
                     <p className="text-sm text-muted-foreground mb-6">Soporte Continuo en consultas legales por un año.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={launchDashboardSoporte} alt="Dashboard Soporte Continuo" className="w-full h-full object-cover object-top" />
+                      <img src={launchDashboardSoporte} alt="Dashboard Soporte Continuo" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   {/* Description with Border Frame - spans 2 columns */}
@@ -684,7 +684,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Constitución de SAS</h3>
                     <p className="text-sm text-muted-foreground mb-6">Trámites legales completos ante la Superintendencia en 5 días</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={legalConstitucionSAS} alt="Dashboard Constitución de SAS" className="w-full h-full object-cover object-top" />
+                      <img src={legalConstitucionSAS} alt="Dashboard Constitución de SAS" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
@@ -692,7 +692,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Reforma de Estatuto</h3>
                     <p className="text-sm text-muted-foreground mb-6">Todo el proceso para añadir o quitar actividades de tu SAS de forma ágil.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={legalReformaEstatuto} alt="Reforma de Estatuto" className="w-full h-full object-cover object-top" />
+                      <img src={legalReformaEstatuto} alt="Reforma de Estatuto" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   <div className="bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl p-8">
@@ -700,7 +700,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Cesión de Acciones</h3>
                     <p className="text-sm text-muted-foreground mb-6">Te acompañamos en la cesión de una parte de tu empresa con asesoría completa.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={legalCesionAcciones} alt="Cesión de Acciones" className="w-full h-full object-cover object-top" />
+                      <img src={legalCesionAcciones} alt="Cesión de Acciones" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                 </div>
@@ -727,7 +727,7 @@ export default function Home2() {
                     <h3 className="text-2xl font-bold mb-4">Liquidación de Empresa</h3>
                     <p className="text-sm text-muted-foreground mb-6">Cierra tu compañía SAS a tiempo, no incrementes obligaciones innecesarias.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={legalLiquidacion} alt="Liquidación de Empresa" className="w-full h-full object-cover object-center" />
+                      <img src={legalLiquidacion} alt="Liquidación de Empresa" className="w-full h-full object-cover object-center" loading="lazy" />
                     </div>
                   </div>
                 </div>
@@ -742,19 +742,19 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Certificados digitales</h3>
                     <p className="text-sm text-muted-foreground mb-6">Persona natural y jurídica con validez legal</p>
-                    <img src={firmaCertificados} alt="Certificados digitales" className="w-full h-32 object-cover rounded-lg" />
+                    <img src={firmaCertificados} alt="Certificados digitales" className="w-full h-32 object-cover rounded-lg" loading="lazy" />
                   </div>
                   <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Firma segura</h3>
                     <p className="text-sm text-muted-foreground mb-6">Valida la autenticidad e integridad de documentos y contratos en el entorno digital.</p>
-                    <img src={firmaSegura} alt="Firma Segura" className="w-full h-32 object-cover rounded-lg" />
+                    <img src={firmaSegura} alt="Firma Segura" className="w-full h-32 object-cover rounded-lg" loading="lazy" />
                   </div>
                   <div className="bg-green-100 dark:bg-green-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">Firma Electrónica</p>
                     <h3 className="text-2xl font-bold mb-4">Todo incluido</h3>
                     <p className="text-sm text-muted-foreground mb-6">Adquiere tu firma con la vigencia que necesites con el proceso más rápido del mercado.</p>
-                    <img src={firmaTodoIncluido} alt="Todo incluido" className="w-full h-32 object-cover rounded-lg" />
+                    <img src={firmaTodoIncluido} alt="Todo incluido" className="w-full h-32 object-cover rounded-lg" loading="lazy" />
                   </div>
                 </div>
 
@@ -784,19 +784,19 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Facturación electrónica</h3>
                     <p className="text-sm text-muted-foreground mb-6">100% cumplimiento SRI, autorizado y confiable</p>
-                    <img src={facturacionGenerador} alt="Generador de Facturas Lo Simple" className="w-full h-32 object-cover object-top rounded-lg shadow-md" />
+                    <img src={facturacionGenerador} alt="Generador de Facturas Lo Simple" className="w-full h-32 object-cover object-top rounded-lg shadow-md" loading="lazy" />
                   </div>
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Reportes automáticos</h3>
                     <p className="text-sm text-muted-foreground mb-6">Genera reportes listos para el SRI automaticamente</p>
-                    <img src={facturacionReportes} alt="Reportes de facturación" className="w-full h-32 object-cover object-top rounded-lg shadow-md" />
+                    <img src={facturacionReportes} alt="Reportes de facturación" className="w-full h-32 object-cover object-top rounded-lg shadow-md" loading="lazy" />
                   </div>
                   <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Acceso multiplataforma</h3>
                     <p className="text-sm text-muted-foreground mb-6">Desde web, móvil o escritorio en cualquier momento</p>
-                    <img src={facturacionConfiguracion} alt="Configuración multiplataforma" className="w-full h-32 object-cover object-top rounded-lg shadow-md" />
+                    <img src={facturacionConfiguracion} alt="Configuración multiplataforma" className="w-full h-32 object-cover object-top rounded-lg shadow-md" loading="lazy" />
                   </div>
                 </div>
 
@@ -820,7 +820,7 @@ export default function Home2() {
                     <p className="text-sm font-semibold text-yellow-700 dark:text-yellow-300 mb-3">Facturación</p>
                     <h3 className="text-2xl font-bold mb-4">Empieza Gratis</h3>
                     <p className="text-sm text-muted-foreground mb-6">Genera un usuario y usa las facturas que te damos de cortesía sin necesidad de ingresar forma de pago.</p>
-                    <img src={facturacionIndicadores} alt="Indicadores de facturación" className="w-full h-32 object-cover object-top rounded-lg shadow-md" />
+                    <img src={facturacionIndicadores} alt="Indicadores de facturación" className="w-full h-32 object-cover object-top rounded-lg shadow-md" loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -906,13 +906,13 @@ export default function Home2() {
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-24 lg:py-32 px-4">
         {/* Decorative Elements */}
         <div className="absolute top-10 left-10 w-24 h-24 opacity-20 transform -rotate-12 hidden lg:block">
-          <img src={decoratorPerson} alt="" className="w-full h-full object-contain" />
+          <img src={decoratorPerson} alt="" className="w-full h-full object-contain" loading="lazy" />
         </div>
         <div className="absolute top-16 right-16 w-32 h-32 opacity-15 transform rotate-6 hidden lg:block">
-          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" />
+          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" loading="lazy" />
         </div>
         <div className="absolute bottom-20 left-20 w-20 h-20 opacity-15 transform rotate-12 hidden lg:block">
-          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" />
+          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" loading="lazy" />
         </div>
         
         <div className="container mx-auto max-w-7xl relative z-10">
@@ -1081,7 +1081,7 @@ export default function Home2() {
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
-              <img src={logoUrl} alt="Lo Simple" className="h-8 w-auto mb-4 brightness-0 invert" />
+              <img src={logoUrl} alt="Lo Simple" className="h-8 w-auto mb-4 brightness-0 invert" loading="lazy" />
               <p className="text-sm mb-4 opacity-80">
                 La puerta de entrada a la formalización en Ecuador.
               </p>
