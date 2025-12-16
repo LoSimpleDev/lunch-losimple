@@ -9,6 +9,7 @@ import { Link } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
+import veronicaUrl from "@assets/accounting_simple_1765904253176.png";
 
 export default function PrepararCierreSAS() {
   const { toast } = useToast();
@@ -44,7 +45,7 @@ export default function PrepararCierreSAS() {
 
       const decisionText = formData.decision === "decidido" 
         ? "Estoy decidido y quiero una cotización" 
-        : "Aún estoy indeciso pero me gustaría saber más";
+        : "No me interesa este servicio";
       
       const mensaje = encodeURIComponent(
         `Hola Dra. Verónica, vengo de la página de cierre de SAS.\n\n` +
@@ -89,8 +90,13 @@ export default function PrepararCierreSAS() {
         </h1>
 
         <div className="flex justify-center mb-6">
-          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center border-4 border-green-500 shadow-lg">
-            <MessageCircle className="h-12 w-12 text-white" />
+          <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-green-500 shadow-lg">
+            <img 
+              src={veronicaUrl} 
+              alt="Dra. Verónica" 
+              className="w-full h-full object-cover"
+              data-testid="img-asesora"
+            />
           </div>
         </div>
 
@@ -169,7 +175,7 @@ export default function PrepararCierreSAS() {
                     <RadioGroupItem value="indeciso" id="indeciso" data-testid="radio-indeciso" />
                     <Label htmlFor="indeciso" className="flex items-center gap-2 cursor-pointer flex-1">
                       <AlertCircle className="h-5 w-5 text-amber-500" />
-                      No, aún estoy indeciso
+                      No me interesa este servicio
                     </Label>
                   </div>
                 </RadioGroup>
