@@ -463,7 +463,7 @@ export default function MultasReportModal({ isOpen, onClose, companyName, ruc, c
                 <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-lg mb-2">¡Validación completada!</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Tu informe ha sido generado exitosamente. Puedes encontrarlo en la sección 
+                  Tu informe ha sido generado exitosamente. En 10 minutos podrás encontrarlo en la sección 
                   "Mis Documentos" del perfil de empresa.
                 </p>
                 <Button onClick={handleClose} className="bg-green-600 hover:bg-green-700" data-testid="button-close-modal">
