@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -11,10 +12,21 @@ import {
   Building,
   AlertTriangle,
   ChevronRight,
-  MessageCircle
+  MessageCircle,
+  X
 } from "lucide-react";
 import { Link } from "wouter";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
+
+const popupChecklist = [
+  "Tu empresa ya no está operando",
+  "No tienes deudas pendientes con nadie",
+  "Estás al día con el SRI",
+  "No mantienes obligaciones con el IESS",
+  "Puedes presentar un balance final en cero",
+  "Los socios están de acuerdo en cerrar de forma voluntaria",
+  "Quieres dejar todo bien hecho, sin multas ni problemas más adelante"
+];
 
 const requisitos = [
   "Empresa sin deudas con terceros",
@@ -97,8 +109,75 @@ function CTAButton() {
 }
 
 export default function CerrarSAS() {
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupDismissed, setPopupDismissed] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 150 && !popupDismissed) {
+        setShowPopup(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [popupDismissed]);
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setPopupDismissed(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      {/* Scroll Popup */}
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <button 
+              onClick={closePopup}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              data-testid="button-close-popup"
+            >
+              <X className="h-6 w-6 text-gray-500" />
+            </button>
+            
+            <div className="p-8">
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-4 text-red-600">
+                Con nuestro proceso premium puedes "cerrar" tu empresa en 4 días
+              </h3>
+              
+              <p className="text-center text-lg text-muted-foreground mb-6">
+                Cerrar una empresa no es fracasar.
+              </p>
+
+              <p className="font-semibold mb-4">Este proceso es para ti si:</p>
+              
+              <ul className="space-y-3 mb-6">
+                {popupChecklist.map((item, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="text-sm text-muted-foreground mb-6">
+                Si te reconoces en estos puntos, el proceso premium es el camino correcto. Dale clic, abre una cuenta en nuestra plataforma y libérate del problema.
+              </p>
+
+              <Button 
+                size="lg" 
+                className="w-full text-lg py-6 font-semibold bg-red-600 hover:bg-red-700 text-white"
+                data-testid="button-popup-cerrar-sas"
+              >
+                Quiero Cerrar Empresa SAS
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-red-50 via-background to-red-100/30 dark:from-red-950/20 dark:to-red-900/10 py-20 px-4">
         <div className="container mx-auto max-w-5xl relative z-10">
