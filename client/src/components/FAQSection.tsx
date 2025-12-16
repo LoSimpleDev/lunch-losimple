@@ -8,28 +8,28 @@ import { HelpCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "¿Cuánto cuesta constituir una SAS en Ecuador?",
-    answer: "El servicio de constitución de compañía tiene un costo de USD 179 más IVA para una empresa de un sólo accionista."
+    question: "¿Qué es una SAS en Ecuador?",
+    answer: "Una Sociedad por Acciones Simplificada (SAS) es el tipo de empresa más flexible para emprendedores en Ecuador. Se constituye 100% en línea, puede tener un solo accionista, no requiere capital mínimo alto y limita tu responsabilidad al capital aportado. Es ideal para formalizar tu negocio de forma rápida y segura."
   },
   {
-    question: "¿Qué documentos necesito para crear mi SAS?",
-    answer: "Solo necesitas tu cédula de identidad y completar nuestro formulario en línea. Te guiamos paso a paso para recopilar toda la información."
+    question: "¿Cuáles son los requisitos para crear una SAS en Ecuador?",
+    answer: "Para constituir una SAS necesitas: firma electrónica vigente de cada accionista (formato .p12), cédula de ciudadanía o pasaporte, reserva de nombre aprobada en la Superintendencia de Compañías, definir el objeto social y los estatutos de la empresa. Nosotros te guiamos en todo el proceso."
   },
   {
-    question: "¿Cuánto tiempo demora el proceso?",
-    answer: "En promedio 5 días hábiles. Recibes tu empresa completamente lista para operar con todos los trámites legales completos."
+    question: "¿Cuánto tiempo toma constituir una SAS en Ecuador?",
+    answer: "El proceso completo para crear tu SAS toma entre 2 y 5 días hábiles una vez que tengas todos los requisitos listos. Con Lo Simple, gestionamos todo para que tu empresa quede constituida lo más rápido posible."
   },
   {
-    question: "¿Necesito capital mínimo para crear una SAS?",
-    answer: "No, una SAS en Ecuador no requiere capital mínimo. Puedes empezar con el monto que tengas disponible."
+    question: "¿Necesito abogado o notario para crear mi SAS?",
+    answer: "No es obligatorio. La SAS en Ecuador se constituye con documentos privados firmados digitalmente, sin necesidad de escritura pública ante notario. Sin embargo, contar con asesoría profesional como la de Lo Simple evita errores y acelera significativamente el proceso."
   },
   {
-    question: "¿Qué es una SAS?",
-    answer: "Es una Sociedad por Acciones Simplificada. Te permite formalizar tu negocio de manera rápida y protege tu patrimonio personal."
+    question: "¿Cuáles son las obligaciones de una SAS una vez constituida?",
+    answer: "Tu SAS debe llevar contabilidad, presentar declaraciones de impuestos (IVA mensual o semestral, Impuesto a la Renta anual), emitir facturas electrónicas y reportar anualmente a la Superintendencia de Compañías. Te ayudamos a entender y cumplir con todas estas obligaciones."
   },
   {
-    question: "¿Puedo crear una SAS yo solo?",
-    answer: "Sí, puedes constituir una SAS con un solo accionista. No necesitas socios para empezar tu empresa."
+    question: "¿Puedo constituir una SAS siendo el único socio?",
+    answer: "Sí, la SAS en Ecuador permite tener desde 1 hasta múltiples accionistas. Es ideal tanto para emprendedores individuales como para proyectos en equipo. No necesitas socios para formalizar tu empresa."
   }
 ];
 

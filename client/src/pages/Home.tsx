@@ -147,22 +147,12 @@ export default function Home() {
         <div className="container mx-auto text-center max-w-4xl relative z-10">
           <div className="mb-6">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-              <span className="text-primary">Lo Simple (antes simpleSAS)</span>
+              <span className="text-primary">Constituye tu SAS en Ecuador en 48 horas</span>
             </h1>
             
-            {/* Definiciones claras para AIO */}
-            <div className="bg-background/80 backdrop-blur-sm rounded-lg p-6 mb-8 text-left max-w-3xl mx-auto shadow-sm border border-primary/10">
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold text-primary mb-2">¿Qué es Lo Simple?</h2>
-                <p className="text-sm text-muted-foreground"><strong>Lo Simple ayuda a constituir empresas SAS en Ecuador en 5 días.</strong> Incluye trámites legales, libros sociales, títulos acción.</p>
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-primary mb-2">¿Qué es una SAS en Ecuador?</h2>
-                <p className="text-sm text-muted-foreground"><strong>Una SAS es una empresa que puedes crear tú solo.</strong> No necesita capital mínimo y protege tu patrimonio personal.</p>
-              </div>
-            </div>
-            
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">Constituye tu empresa SAS en Ecuador en 5 días. Todo incluido: Análisis de documentación, gestión de reserva, selección de actividades y 11 beneficios más desde $179.00 más IVA.</p>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Olvídate de trámites complicados. Somos expertos en SAS Ecuador y nos encargamos de constituir tu Sociedad por Acciones Simplificada de forma 100% digital, rápida y con respaldo legal completo.
+            </p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -362,12 +352,12 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Cómo funciona - Proceso paso a paso */}
+      {/* Cómo constituir tu SAS en Ecuador - Proceso paso a paso */}
       <section className="py-16 px-4 bg-muted/30">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">¿Cómo funciona el proceso de constitución de tu SAS?</h2>
-            <p className="text-muted-foreground">En 4 pasos simples tienes tu empresa legalmente constituida</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Todo lo que necesitas para crear tu SAS en Ecuador</h2>
+            <p className="text-muted-foreground">Pasos para constituir tu SAS en Ecuador de forma rápida y 100% digital</p>
           </div>
           
           <div className="space-y-6">
@@ -376,8 +366,8 @@ export default function Home() {
                 1
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">Elige tu servicio y realiza el pago</h3>
-                <p className="text-sm text-muted-foreground">Selecciona el paquete que mejor se adapte a tus necesidades. Puedes pagar con tarjeta de crédito o débito a través de Stripe.</p>
+                <h3 className="font-semibold text-lg mb-2">Reserva el nombre de tu empresa</h3>
+                <p className="text-sm text-muted-foreground">Elige un nombre único y resérvalo en la Superintendencia de Compañías. Nosotros te ayudamos con este proceso.</p>
               </div>
             </div>
             
@@ -386,8 +376,8 @@ export default function Home() {
                 2
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">Completa el formulario con los datos de tu empresa</h3>
-                <p className="text-sm text-muted-foreground">Te guiamos paso a paso para recopilar toda la información necesaria: nombre de la empresa, actividad económica, datos de accionistas y más.</p>
+                <h3 className="font-semibold text-lg mb-2">Obtén tu firma electrónica</h3>
+                <p className="text-sm text-muted-foreground">Todos los accionistas necesitan firma electrónica (.p12) para firmar digitalmente los documentos de constitución.</p>
               </div>
             </div>
             
@@ -396,8 +386,8 @@ export default function Home() {
                 3
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">Nosotros gestionamos todos los trámites</h3>
-                <p className="text-sm text-muted-foreground">Nuestro equipo se encarga de preparar los estatutos, inscribir la empresa en la Superintendencia de Compañías y obtener tu RUC en el SRI.</p>
+                <h3 className="font-semibold text-lg mb-2">Define tus actividades económicas</h3>
+                <p className="text-sm text-muted-foreground">Selecciona las actividades que realizará tu empresa según el catálogo CIIU. Te asesoramos para elegir las correctas.</p>
               </div>
             </div>
             
@@ -406,8 +396,18 @@ export default function Home() {
                 4
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">Recibe tu empresa lista para operar</h3>
-                <p className="text-sm text-muted-foreground">En 5 días tienes tu SAS constituida con todos los documentos legales, solicita facturación electrónica y firma digital (opcional).</p>
+                <h3 className="font-semibold text-lg mb-2">Constituye tu SAS</h3>
+                <p className="text-sm text-muted-foreground">Nosotros gestionamos todo el proceso legal ante la Superintendencia de Compañías: estatutos, inscripción y documentación.</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4 items-start bg-background rounded-lg p-6 shadow-sm">
+              <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
+                5
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Recibe tu RUC activo</h3>
+                <p className="text-sm text-muted-foreground">Tu empresa queda lista para operar con RUC generado automáticamente por el SRI. ¡Ya puedes facturar!</p>
               </div>
             </div>
           </div>
