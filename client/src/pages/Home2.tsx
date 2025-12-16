@@ -336,6 +336,164 @@ export default function Home2() {
         </div>
       </section>
 
+      {/* Why Choose SAS Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/30">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+              ¿Por qué elegir una SAS en Ecuador?
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              Las Sociedades por Acciones Simplificadas ofrecen múltiples beneficios, como flexibilidad en su estructura y limitación de responsabilidad para los accionistas. Son ideales para emprendedores que buscan formalizar sus negocios de manera eficiente.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <Users className="h-6 w-6 text-primary" />
+                  Asesoría personalizada
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Evaluamos tus necesidades específicas para ofrecerte la mejor solución en la constitución de tu empresa.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <Scale className="h-6 w-6 text-primary" />
+                  Trámites legales completos
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Nos encargamos de todo el proceso legal, desde la creación de estatutos hasta la inscripción en los registros correspondientes.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <PenTool className="h-6 w-6 text-primary" />
+                  Obtención de firma electrónica
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Facilitamos el proceso para que obtengas tu firma electrónica, esencial en la constitución de una SAS.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <Calculator className="h-6 w-6 text-primary" />
+                  Selección de actividades económicas
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Te asesoramos en la elección de las actividades económicas adecuadas para tu empresa, asegurando el cumplimiento normativo.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Steps to Constitute SAS Section */}
+      <section className="py-20 px-4 bg-muted/20">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+              Pasos para constituir tu empresa SAS en línea
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              Hemos simplificado el proceso de constitución de tu SAS en cinco sencillos pasos, permitiéndote iniciar tu negocio sin complicaciones y con total seguridad.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <Card className="text-center border-2 hover:shadow-lg transition-all">
+              <CardHeader className="pb-2">
+                <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <Calculator className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-lg">1. Crea un Presupuesto</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Las empresas SAS tienen obligaciones con el SRI y la Superintendencia de Compañías. Calcula los costos iniciales.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-2 hover:shadow-lg transition-all">
+              <CardHeader className="pb-2">
+                <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <PenTool className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-lg">2. Firma Electrónica</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Todos los accionistas y administradores necesitan Firma Electrónica en archivo .p12 para la constitución.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-2 hover:shadow-lg transition-all">
+              <CardHeader className="pb-2">
+                <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <TrendingUp className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-lg">3. Actividades Económicas</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Según tu giro de negocio, elige las actividades económicas adecuadas que están permitidas para una SAS.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-2 hover:shadow-lg transition-all">
+              <CardHeader className="pb-2">
+                <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <FileText className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-lg">4. Estatutos y Registro</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Preparamos los estatutos de tu empresa y gestionamos el registro ante la Superintendencia de Compañías.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-2 hover:shadow-lg transition-all">
+              <CardHeader className="pb-2">
+                <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <CheckCircle className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-lg">5. Empresa Lista</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Recibes tu RUC y documentos legales. Tu SAS está constituida y lista para operar en Ecuador.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Services Tabs Section */}
       <section id="servicios" className="py-[35px] px-4">
         <div className="container mx-auto max-w-7xl">
@@ -347,7 +505,7 @@ export default function Home2() {
               Todo lo que necesitas para crear tu SAS en Ecuador
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Pasos para constituir tu SAS en Ecuador de forma rápida y 100% digital.
+              Constituye tu empresa y conecta con todos los servicios que necesitas en un solo lugar.
             </p>
           </div>
 
