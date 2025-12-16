@@ -166,13 +166,26 @@ export default function CerrarSAS() {
                 Si te reconoces en estos puntos, el proceso premium es el camino correcto. Dale clic, abre una cuenta en nuestra plataforma y libérate del problema.
               </p>
 
-              <Button 
-                size="lg" 
-                className="w-full text-lg py-6 font-semibold bg-red-600 hover:bg-red-700 text-white"
-                data-testid="button-popup-cerrar-sas"
-              >
-                Quiero Cerrar Empresa SAS
-              </Button>
+              <div className="space-y-3">
+                <Button 
+                  size="lg" 
+                  className="w-full text-lg py-6 font-semibold bg-red-600 hover:bg-red-700 text-white"
+                  data-testid="button-popup-cerrar-sas"
+                  onClick={() => window.location.href = '/login'}
+                >
+                  Empezar Proceso Premium
+                </Button>
+                
+                <Button 
+                  variant="outline"
+                  size="lg" 
+                  className="w-full text-lg py-6 font-semibold border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  data-testid="button-popup-no-cumplo"
+                  onClick={() => window.location.href = '/preparar-cierre-sas'}
+                >
+                  No cumplo requisitos
+                </Button>
+              </div>
             </div>
           </div>
         </div>
