@@ -254,14 +254,16 @@ export default function Home2() {
                 <Rocket className="mr-2 h-5 w-5" />
                 Abrir SAS
               </Button>
-              <Button 
-                size="lg" 
-                className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all bg-red-600 hover:bg-red-700 text-white"
-                data-testid="button-cerrar-sas"
-              >
-                <Building className="mr-2 h-5 w-5" />
-                Cerrar SAS
-              </Button>
+              <Link href="/cerrar-sas">
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all bg-red-600 hover:bg-red-700 text-white"
+                  data-testid="button-cerrar-sas"
+                >
+                  <Building className="mr-2 h-5 w-5" />
+                  Cerrar SAS
+                </Button>
+              </Link>
               <Link href="/multas-sas-ecuador">
                 <Button 
                   size="lg" 
