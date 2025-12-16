@@ -247,17 +247,16 @@ export default function Home2() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
               <Button 
                 size="lg" 
-                className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all"
-                onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all bg-[#25D366] hover:bg-[#128C7E] text-white"
+                onClick={() => window.open('https://wa.me/593958613237?text=' + encodeURIComponent('Hola Dra Verónica, vengo de su página y me interesa abrir una SAS.'), '_blank')}
                 data-testid="button-abrir-sas"
               >
                 <Rocket className="mr-2 h-5 w-5" />
                 Abrir SAS
               </Button>
               <Button 
-                variant="outline" 
                 size="lg" 
-                className="text-lg px-8 py-6 font-semibold border-2"
+                className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all bg-red-600 hover:bg-red-700 text-white"
                 data-testid="button-cerrar-sas"
               >
                 <Building className="mr-2 h-5 w-5" />
@@ -265,9 +264,8 @@ export default function Home2() {
               </Button>
               <Link href="/multas-sas-ecuador">
                 <Button 
-                  variant="outline" 
                   size="lg" 
-                  className="text-lg px-8 py-6 font-semibold border-2 w-full"
+                  className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all bg-purple-600 hover:bg-purple-700 text-white w-full"
                   data-testid="button-consultar-multas"
                 >
                   <Calculator className="mr-2 h-5 w-5" />
