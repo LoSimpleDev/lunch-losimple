@@ -124,11 +124,25 @@ export default function Home() {
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Nuestros Servicios Legales para SAS en Ecuador
+              Documentos legales para tu empresa SAS en Ecuador, listos y en regla
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Servicios profesionales para constituir y hacer crecer tu empresa SAS. 
-              Todos incluyen asesoría personalizada y garantía de satisfacción.
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+              Tener una empresa SAS no es solo constituirla. A lo largo de su vida necesitas documentos claros, actualizados y bien hechos: actas, nombramientos, reformas, certificaciones y resoluciones que respalden decisiones, eviten problemas legales y mantengan tu empresa en cumplimiento.
+            </p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Aquí encuentras documentos societarios para SAS en Ecuador, preparados de forma correcta y alineados con la normativa vigente.
+            </p>
+          </div>
+
+          <div className="text-center mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Documentos que tu SAS necesita para operar, crecer o cerrar sin problemas
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-4">
+              Desde decisiones simples hasta cambios importantes, una SAS funciona sobre documentos bien estructurados. Cuando estos faltan, están mal redactados o no se actualizan a tiempo, aparecen bloqueos: trámites rechazados, conflictos entre socios, multas o procesos innecesarios.
+            </p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Nuestro enfoque es simple: poner en orden la documentación clave de tu empresa, para que puedas operar con tranquilidad hoy y evitar complicaciones mañana.
             </p>
           </div>
 
