@@ -23,6 +23,7 @@ import {
   Send,
   Building
 } from "lucide-react";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 type CheckStatus = "idle" | "checking" | "complete";
 type InstitutionStatus = "pending" | "checking" | "clean" | "alert" | "warning";
@@ -169,6 +170,13 @@ export default function MultasSAS() {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
         
         <div className="max-w-5xl mx-auto px-4 py-16 md:py-24 relative z-10">
+          <Breadcrumbs 
+            items={[
+              { label: "Servicios", href: "/#services" },
+              { label: "Verificación de Multas SAS" }
+            ]}
+            className="mb-8"
+          />
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-purple-100 text-purple-800 hover:bg-purple-100 dark:bg-purple-900/30 dark:text-purple-300">
               <Shield className="w-3 h-3 mr-1" />

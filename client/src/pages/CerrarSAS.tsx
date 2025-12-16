@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
+import { HowToSchema } from "@/components/HowToSchema";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 const popupChecklist = [
   "Tu empresa ya no está operando",
@@ -129,6 +131,11 @@ export default function CerrarSAS() {
     setPopupDismissed(true);
   };
 
+  const howToSteps = pasos.map((paso, index) => ({
+    name: `Paso ${index + 1}`,
+    text: paso
+  }));
+
   return (
     <>
       <SEO 
@@ -136,6 +143,13 @@ export default function CerrarSAS() {
         description="Cierra tu empresa SAS en Ecuador de forma legal y rápida. Proceso de liquidación voluntaria abreviada en 4 días sin juicio. Asesoría profesional incluida."
         canonical="/cerrar-sas"
         keywords="cerrar empresa SAS Ecuador, liquidación SAS, disolver empresa Ecuador, cerrar compañía Ecuador"
+      />
+      <HowToSchema
+        title="Cómo cerrar una empresa SAS en Ecuador"
+        description="Guía paso a paso para cerrar tu empresa SAS mediante el trámite de liquidación voluntaria abreviada ante la Superintendencia de Compañías."
+        steps={howToSteps}
+        totalTime="P4D"
+        estimatedCost={{ currency: "USD", value: "Varía" }}
       />
       <div className="min-h-screen bg-background">
       {/* Scroll Popup */}
@@ -202,6 +216,13 @@ export default function CerrarSAS() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-red-50 via-background to-red-100/30 dark:from-red-950/20 dark:to-red-900/10 py-20 px-4">
         <div className="container mx-auto max-w-5xl relative z-10">
+          <Breadcrumbs 
+            items={[
+              { label: "Servicios", href: "/#services" },
+              { label: "Cerrar SAS" }
+            ]}
+            className="mb-6"
+          />
           <div className="text-center mb-12">
             <Link href="/">
               <div className="mb-8 flex justify-center cursor-pointer">

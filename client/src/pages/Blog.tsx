@@ -360,6 +360,44 @@ export default function Blog() {
         </div>
       </section>
       
+      {/* Related Services Section */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="container mx-auto max-w-5xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+            Servicios relacionados
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link href="/launch">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-purple-200 dark:border-purple-800" data-testid="card-related-launch">
+                <CardContent className="p-6 text-center">
+                  <Rocket className="w-10 h-10 mx-auto mb-4 text-purple-600" />
+                  <h3 className="font-bold mb-2">Launch</h3>
+                  <p className="text-sm text-muted-foreground">Constituye tu SAS con todo incluido</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/multas-sas">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-amber-200 dark:border-amber-800" data-testid="card-related-multas">
+                <CardContent className="p-6 text-center">
+                  <CheckCircle className="w-10 h-10 mx-auto mb-4 text-amber-600" />
+                  <h3 className="font-bold mb-2">Consulta de Multas</h3>
+                  <p className="text-sm text-muted-foreground">Verifica el estado de tu SAS</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/cerrar-sas">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-red-200 dark:border-red-800" data-testid="card-related-cerrar">
+                <CardContent className="p-6 text-center">
+                  <ArrowRight className="w-10 h-10 mx-auto mb-4 text-red-600" />
+                  <h3 className="font-bold mb-2">Cerrar SAS</h3>
+                  <p className="text-sm text-muted-foreground">Cierra tu empresa legalmente</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Full Width CTA Banner */}
       <section className="py-24 md:py-32 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10">
         <div className="container mx-auto max-w-5xl text-center">

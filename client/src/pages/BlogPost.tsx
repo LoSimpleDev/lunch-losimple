@@ -7,6 +7,8 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import type { BlogPost } from "@shared/schema";
 import { useEffect } from "react";
+import { ArticleSchema } from "@/components/ArticleSchema";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 import decoratorGrid from "@assets/blog-decorator-grid.png";
 import decoratorLines from "@assets/blog-decorator-lines.png";
@@ -137,6 +139,15 @@ export default function BlogPostPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <ArticleSchema
+        title={post.title}
+        description={post.metaDescription || post.excerpt}
+        author={post.author}
+        publishedAt={post.publishedAt}
+        category={post.category}
+        slug={post.slug}
+        content={post.content}
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-16 lg:py-20">
         {/* Decorative Elements */}
@@ -149,13 +160,14 @@ export default function BlogPostPage() {
         
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8" data-testid="breadcrumb">
-            <Link href="/blog">
-              <span className="hover:text-primary cursor-pointer">Blog</span>
-            </Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className={style.text}>{post.category}</span>
-          </nav>
+          <Breadcrumbs 
+            items={[
+              { label: "Blog", href: "/blog" },
+              { label: post.category, href: `/blog?category=${encodeURIComponent(post.category)}` },
+              { label: post.title }
+            ]}
+            className="mb-8"
+          />
           
           {/* Category & Meta */}
           <div className="flex flex-wrap items-center gap-3 mb-6">

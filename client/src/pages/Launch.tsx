@@ -13,6 +13,7 @@ import { apiRequest } from "@/lib/queryClient";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 const aliadosCategories = [
   {
@@ -104,6 +105,13 @@ export default function Launch() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
+          <Breadcrumbs 
+            items={[
+              { label: "Servicios", href: "/#services" },
+              { label: "Launch" }
+            ]}
+            className="mb-6"
+          />
           <div className="max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-semibold mb-6">
               Servicio Todo Incluido
