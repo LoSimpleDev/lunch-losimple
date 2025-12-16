@@ -703,7 +703,7 @@ export default function Home2() {
                       <div className="space-y-3 flex-1">
                         <h3 className="text-2xl font-bold">Constituye tu SAS en 5 días</h3>
                         <p className="text-base text-foreground">Servicio completo de constitución de empresas en 5 días, Nuestro servicio estrella con más de 2000 compañías creadas</p>
-                        <Link href="/simplesas">
+                        <Link href="/documentos-sas">
                           <Button className="bg-cyan-600 hover:bg-cyan-700 mt-2" data-testid="button-legal-info">
                             Más Información
                           </Button>

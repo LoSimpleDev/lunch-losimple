@@ -36,7 +36,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home2} />
-      <Route path="/simplesas" component={Home} />
+      <Route path="/documentos-sas" component={Home} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/terminos-y-condiciones" component={TerminosCondiciones} />

@@ -6,7 +6,7 @@ export function SchemaMarkup() {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "name": "Lo Simple",
-      "alternateName": "simpleSAS",
+      "alternateName": "documentos-sas",
       "url": "https://losimple.ai",
       "logo": "https://losimple.ai/logo.png",
       "description": "Servicios empresariales y legales para SAS en Ecuador. Constituye tu empresa SAS de forma simple y rápida.",
