@@ -165,36 +165,28 @@ const recursos = [
 
 const home2Faqs = [
   {
-    question: "¿Qué incluye el servicio Launch?",
-    answer: "Launch es nuestro paquete completo que incluye: constitución de tu SAS, landing page profesional, facturación electrónica y firma electrónica por un año, más soporte continuo. Todo listo en solo 2 días."
+    question: "¿Qué es una SAS en Ecuador?",
+    answer: "Una Sociedad por Acciones Simplificada (SAS) es el tipo de empresa más flexible para emprendedores en Ecuador. Se constituye 100% en línea, puede tener un solo accionista, no requiere capital mínimo alto y limita tu responsabilidad al capital aportado. Es ideal para formalizar tu negocio de forma rápida y segura."
   },
   {
-    question: "¿Cuánto tiempo toma constituir una SAS?",
-    answer: "Con nuestro servicio de constitución, tu SAS estará lista en 5 días hábiles. Si eliges el paquete Launch, tendrás todo operativo en solo 2 días."
+    question: "¿Cuáles son los requisitos para crear una SAS en Ecuador?",
+    answer: "Para constituir una SAS necesitas: firma electrónica vigente de cada accionista (formato .p12), cédula de ciudadanía o pasaporte, reserva de nombre aprobada en la Superintendencia de Compañías, definir el objeto social y los estatutos de la empresa. Nosotros te guiamos en todo el proceso."
   },
   {
-    question: "¿Qué es la firma electrónica y para qué la necesito?",
-    answer: "La firma electrónica es un certificado digital con validez legal que te permite firmar documentos, contratos y facturas de forma segura desde cualquier dispositivo. Es indispensable para facturar electrónicamente."
+    question: "¿Cuánto tiempo toma constituir una SAS en Ecuador?",
+    answer: "El proceso completo para crear tu SAS toma entre 2 y 5 días hábiles una vez que tengas todos los requisitos listos. Con Lo Simple, gestionamos todo para que tu empresa quede constituida lo más rápido posible."
   },
   {
-    question: "¿La facturación electrónica es obligatoria?",
-    answer: "Sí, en Ecuador la facturación electrónica es obligatoria para empresas. Nuestro sistema está 100% autorizado por el SRI y puedes empezar a facturar gratis desde el primer día."
+    question: "¿Necesito abogado o notario para crear mi SAS?",
+    answer: "No es obligatorio. La SAS en Ecuador se constituye con documentos privados firmados digitalmente, sin necesidad de escritura pública ante notario. Sin embargo, contar con asesoría profesional como la de Lo Simple evita errores y acelera significativamente el proceso."
   },
   {
-    question: "¿Puedo crear una SAS siendo una sola persona?",
-    answer: "Sí, puedes constituir una SAS con un solo accionista. No necesitas socios y no se requiere capital mínimo para empezar."
+    question: "¿Cuáles son las obligaciones de una SAS una vez constituida?",
+    answer: "Tu SAS debe llevar contabilidad, presentar declaraciones de impuestos (IVA mensual o semestral, Impuesto a la Renta anual), emitir facturas electrónicas y reportar anualmente a la Superintendencia de Compañías. Te ayudamos a entender y cumplir con todas estas obligaciones."
   },
   {
-    question: "¿Qué documentos necesito para empezar?",
-    answer: "Solo necesitas tu cédula de identidad. Nosotros te guiamos paso a paso con un formulario en línea para recopilar toda la información necesaria."
-  },
-  {
-    question: "¿Ofrecen soporte después de crear mi empresa?",
-    answer: "Sí, con el paquete Launch tienes un año de soporte continuo para consultas legales. Además, nuestra red de aliados te conecta con servicios de contabilidad, marketing y más."
-  },
-  {
-    question: "¿Cuánto cuesta el servicio de constitución?",
-    answer: "El servicio de constitución de SAS tiene un costo desde USD 179 más IVA para empresas de un solo accionista. El paquete Launch con todo incluido tiene un precio especial que puedes consultar con nuestras asesoras."
+    question: "¿Puedo constituir una SAS siendo el único socio?",
+    answer: "Sí, la SAS en Ecuador permite tener desde 1 hasta múltiples accionistas. Es ideal tanto para emprendedores individuales como para proyectos en equipo. No necesitas socios para formalizar tu empresa."
   }
 ];
 
@@ -243,13 +235,12 @@ export default function Home2() {
             {/* Main Headline */}
             <div className="mb-8">
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
-                Empezar negocios en Ecuador
+                Constituye tu SAS en Ecuador en 48 horas
               </h1>
             </div>
 
             <p className="text-xl md:text-3xl text-muted-foreground max-w-4xl mx-auto mb-12 leading-relaxed">
-              La puerta de entrada para constituir y operar negocios en Ecuador. 
-              Todo lo que necesitas en un solo lugar.
+              Somos expertos en SAS Ecuador. Nos encargamos de constituir tu Sociedad por Acciones Simplificada de forma 100% digital, rápida y con respaldo legal completo.
             </p>
 
             {/* CTA Buttons */}
@@ -353,10 +344,10 @@ export default function Home2() {
               Nuestra Oferta
             </p>
             <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
-              Todo lo que necesitas para empezar un negocio en Ecuador
+              Todo lo que necesitas para crear tu SAS en Ecuador
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Constituye tu empresa y conecta con todos los servicios que necesitas en un solo lugar.
+              Pasos para constituir tu SAS en Ecuador de forma rápida y 100% digital.
             </p>
           </div>
 
