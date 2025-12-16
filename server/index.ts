@@ -1,10 +1,18 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import prerender from "prerender-node";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Prerender.io middleware for SEO - serves cached HTML to search engine bots
+if (process.env.PRERENDER_TOKEN) {
+  app.use(prerender
+    .set('prerenderToken', process.env.PRERENDER_TOKEN)
+    .set('protocol', 'https'));
+}
 
 // Content Security Policy for production security
 app.use((req, res, next) => {
