@@ -244,32 +244,36 @@ export default function Home2() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
               <Button 
                 size="lg" 
-                className="text-xl px-12 py-8 font-semibold shadow-lg hover:shadow-xl transition-all"
-                onClick={() => {
-                  document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' });
-                  setTimeout(() => {
-                    const launchTab = document.querySelector('[data-testid="tab-launch"]') as HTMLButtonElement;
-                    if (launchTab) launchTab.click();
-                  }, 500);
-                }}
-                data-testid="button-get-started"
+                className="text-lg px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all"
+                onClick={() => window.open('https://wa.me/593958613237', '_blank')}
+                data-testid="button-abrir-sas"
               >
-                Ver Productos
-                <ChevronRight className="ml-2 h-6 w-6" />
+                <Rocket className="mr-2 h-5 w-5" />
+                Abrir SAS
               </Button>
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="text-xl px-12 py-8 font-semibold border-2"
-                onClick={() => window.open('https://wa.me/593958613237', '_blank')}
-                data-testid="button-contact-advisor"
+                className="text-lg px-8 py-6 font-semibold border-2"
+                data-testid="button-cerrar-sas"
               >
-                <MessageCircle className="mr-2 h-6 w-6" />
-                Hablar con Asesora
+                <Building className="mr-2 h-5 w-5" />
+                Cerrar SAS
               </Button>
+              <Link href="/multas-sas-ecuador">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="text-lg px-8 py-6 font-semibold border-2 w-full"
+                  data-testid="button-consultar-multas"
+                >
+                  <Calculator className="mr-2 h-5 w-5" />
+                  Consultador Multas SAS
+                </Button>
+              </Link>
             </div>
 
             {/* Featured In Section */}
