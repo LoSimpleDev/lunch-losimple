@@ -92,6 +92,83 @@ function isSuperadmin(req: express.Request, res: express.Response, next: express
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve robots.txt
+  app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.send(`# Robots.txt para losimple.ai
+# Permitir a todos los motores de búsqueda rastrear el sitio
+
+User-agent: *
+Allow: /
+
+# Bloquear rutas administrativas
+Disallow: /admin-login
+Disallow: /adminlaunch
+Disallow: /admin-blog
+Disallow: /admin-users
+
+# Sitemap
+Sitemap: https://losimple.ai/sitemap.xml
+`);
+  });
+
+  // Serve dynamic sitemap.xml
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      const blogPosts = await storage.getPublishedBlogPosts();
+      const baseUrl = 'https://losimple.ai';
+      const today = new Date().toISOString().split('T')[0];
+      
+      const staticPages = [
+        { url: '/', priority: '1.0', changefreq: 'weekly' },
+        { url: '/launch', priority: '0.9', changefreq: 'weekly' },
+        { url: '/documentos-sas', priority: '0.8', changefreq: 'weekly' },
+        { url: '/multas-sas-ecuador', priority: '0.8', changefreq: 'weekly' },
+        { url: '/cerrar-sas', priority: '0.8', changefreq: 'weekly' },
+        { url: '/blog', priority: '0.7', changefreq: 'daily' },
+        { url: '/beneficios', priority: '0.6', changefreq: 'monthly' },
+        { url: '/saslegal-plus', priority: '0.6', changefreq: 'monthly' },
+        { url: '/terminos-y-condiciones', priority: '0.3', changefreq: 'yearly' },
+        { url: '/politica-privacidad-datos-lo-simple', priority: '0.3', changefreq: 'yearly' },
+      ];
+
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+
+      // Add static pages
+      for (const page of staticPages) {
+        xml += `  <url>
+    <loc>${baseUrl}${page.url}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>
+`;
+      }
+
+      // Add blog posts
+      for (const post of blogPosts) {
+        const postDate = post.publishedAt ? new Date(post.publishedAt).toISOString().split('T')[0] : today;
+        xml += `  <url>
+    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <lastmod>${postDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+`;
+      }
+
+      xml += `</urlset>`;
+
+      res.type('application/xml');
+      res.send(xml);
+    } catch (error) {
+      console.error('Error generating sitemap:', error);
+      res.status(500).send('Error generating sitemap');
+    }
+  });
+
   // Configure session
   app.use(session({
     secret: process.env.SESSION_SECRET || 'lo-simple-launch-secret-2024',

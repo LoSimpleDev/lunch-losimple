@@ -1,0 +1,14 @@
+# Robots.txt para losimple.ai
+# Permitir a todos los motores de búsqueda rastrear el sitio
+
+User-agent: *
+Allow: /
+
+# Bloquear rutas administrativas
+Disallow: /admin-login
+Disallow: /adminlaunch
+Disallow: /admin-blog
+Disallow: /admin-users
+
+# Sitemap
+Sitemap: https://losimple.ai/sitemap.xml
