@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { LogOut, User, FileText, CreditCard, Play, AlertCircle, CheckCircle, MessageSquare, Send, Check, Gift, ShoppingBag, Package, Building2, Users, MapPin, PlusCircle, FilePlus, XCircle, FolderOpen, Download } from "lucide-react";
 import MultasReportModal from "@/components/MultasReportModal";
 import { queryClient, apiRequest } from "@/lib/queryClient";
@@ -253,30 +254,94 @@ export default function Dashboard() {
     setShareholdersInput(updated);
   };
 
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
   const handlePayReport = async (reportId: string) => {
-    toast({
-      title: "Pago de informe",
-      description: "Redirigiendo al proceso de pago...",
-    });
-    // TODO: Implement Stripe payment flow
-    // For now, simulate payment
+    setSelectedReportId(reportId);
+    setShowPaymentModal(true);
+  };
+
+  const handleStripeCheckout = async () => {
+    if (!selectedReportId) return;
+    
+    setIsProcessingPayment(true);
     try {
-      const response = await apiRequest("POST", `/api/multas/reports/${reportId}/create-payment-intent`);
-      const { clientSecret } = await response.json();
-      // In production, this would open a Stripe payment modal
-      // For demo, we'll just confirm payment immediately after creating intent
-      toast({
-        title: "Procesando pago...",
-        description: "Por favor espera mientras procesamos tu pago",
-      });
+      const response = await apiRequest("POST", `/api/multas/reports/${selectedReportId}/create-checkout-session`);
+      const { url } = await response.json();
+      
+      if (url) {
+        window.location.href = url;
+      }
     } catch (error) {
       toast({
         title: "Error",
-        description: "Error al procesar el pago",
+        description: "Error al iniciar el proceso de pago",
         variant: "destructive",
       });
+      setIsProcessingPayment(false);
     }
   };
+
+  const handleTestPayment = async () => {
+    if (!selectedReportId) return;
+    
+    setIsProcessingPayment(true);
+    try {
+      await apiRequest("POST", `/api/multas/reports/${selectedReportId}/test-payment`);
+      toast({
+        title: "Pago completado",
+        description: "Tu informe está listo para descargar",
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/multas/reports'] });
+      setShowPaymentModal(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error al procesar el pago de prueba",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
+  // Check for payment success callback
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('multas_payment');
+    const reportId = urlParams.get('report_id');
+    
+    if (paymentStatus === 'success' && reportId) {
+      // Confirm payment was successful
+      apiRequest("POST", `/api/multas/reports/${reportId}/confirm-payment`)
+        .then(() => {
+          toast({
+            title: "Pago exitoso",
+            description: "Tu informe está listo para descargar",
+          });
+          queryClient.invalidateQueries({ queryKey: ['/api/multas/reports'] });
+        })
+        .catch(() => {
+          toast({
+            title: "Error",
+            description: "Hubo un problema confirmando tu pago",
+            variant: "destructive",
+          });
+        });
+      
+      // Clean URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (paymentStatus === 'cancelled') {
+      toast({
+        title: "Pago cancelado",
+        description: "El pago fue cancelado",
+        variant: "destructive",
+      });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   const handleDownloadReport = async (reportId: string) => {
     try {
@@ -1203,6 +1268,85 @@ export default function Dashboard() {
           )}
         </div>
       </main>
+
+      {/* Payment Modal for Multas Reports */}
+      <Dialog open={showPaymentModal} onOpenChange={setShowPaymentModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CreditCard className="w-5 h-5" />
+              Pagar Informe de Multas
+            </DialogTitle>
+            <DialogDescription>
+              Completa el pago para descargar tu informe
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+              <div className="flex justify-between items-center mb-2">
+                <span className="font-medium">Informe de Multas SAS</span>
+                <span className="font-bold">$13.44</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Incluye: $12.00 + IVA (12%)
+              </p>
+            </div>
+            
+            <div className="space-y-3">
+              <Button 
+                onClick={handleStripeCheckout}
+                className="w-full bg-purple-600 hover:bg-purple-700"
+                disabled={isProcessingPayment}
+                data-testid="button-stripe-checkout"
+              >
+                {isProcessingPayment ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                    Procesando...
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="w-4 h-4 mr-2" />
+                    Pagar con Tarjeta
+                  </>
+                )}
+              </Button>
+              
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-white dark:bg-gray-900 px-2 text-muted-foreground">
+                    o modo prueba
+                  </span>
+                </div>
+              </div>
+              
+              <Button 
+                onClick={handleTestPayment}
+                variant="outline"
+                className="w-full"
+                disabled={isProcessingPayment}
+                data-testid="button-test-payment"
+              >
+                Simular Pago (Prueba)
+              </Button>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button 
+              variant="ghost" 
+              onClick={() => setShowPaymentModal(false)}
+              disabled={isProcessingPayment}
+            >
+              Cancelar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Multas Report Modal */}
       <MultasReportModal

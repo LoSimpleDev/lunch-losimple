@@ -1795,6 +1795,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   }
   
+  // POST /multas/reports/:id/create-checkout-session - Create Stripe checkout session for report
+  api.post("/multas/reports/:id/create-checkout-session", isAuthenticated, async (req, res) => {
+    try {
+      const report = await storage.getMultasReport(req.params.id);
+      if (!report) {
+        return res.status(404).json({ error: 'Informe no encontrado' });
+      }
+      
+      const userId = (req.user as any).id;
+      if (report.userId !== userId) {
+        return res.status(403).json({ error: 'No autorizado' });
+      }
+      
+      if (report.isPaid) {
+        return res.status(400).json({ error: 'Este informe ya fue pagado' });
+      }
+      
+      // Price: $12 + IVA (12%) = $13.44
+      const amount = Math.round(12 * 1.12 * 100); // in cents
+      
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [{
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Informe de Multas SAS',
+              description: `Informe completo de multas para ${report.companyName || 'su empresa'}`,
+            },
+            unit_amount: amount,
+          },
+          quantity: 1,
+        }],
+        mode: 'payment',
+        success_url: `${req.headers.origin}/dashboard?multas_payment=success&report_id=${report.id}`,
+        cancel_url: `${req.headers.origin}/dashboard?multas_payment=cancelled`,
+        metadata: {
+          type: 'multas_report',
+          reportId: report.id,
+          userId
+        }
+      });
+      
+      await storage.updateMultasReport(report.id, {
+        stripePaymentIntentId: session.id
+      });
+      
+      res.json({ sessionId: session.id, url: session.url });
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+
+  // POST /multas/reports/:id/test-payment - Test mode payment (for development)
+  api.post("/multas/reports/:id/test-payment", isAuthenticated, async (req, res) => {
+    try {
+      const report = await storage.getMultasReport(req.params.id);
+      if (!report) {
+        return res.status(404).json({ error: 'Informe no encontrado' });
+      }
+      
+      const userId = (req.user as any).id;
+      if (report.userId !== userId) {
+        return res.status(403).json({ error: 'No autorizado' });
+      }
+      
+      if (report.isPaid) {
+        return res.status(400).json({ error: 'Este informe ya fue pagado' });
+      }
+      
+      // Mark as paid directly for testing
+      await storage.updateMultasReport(report.id, {
+        isPaid: true,
+        status: 'paid',
+        paidAt: new Date(),
+        stripePaymentIntentId: 'test_payment_' + Date.now()
+      });
+      
+      const updatedReport = await storage.getMultasReport(report.id);
+      res.json(updatedReport);
+    } catch (error) {
+      console.error('Error processing test payment:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
   // POST /multas/reports/:id/create-payment-intent - Create Stripe payment for report
   api.post("/multas/reports/:id/create-payment-intent", isAuthenticated, async (req, res) => {
     try {
@@ -1888,44 +1975,112 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(402).json({ error: 'Debe pagar el informe antes de descargarlo' });
       }
       
-      // Generate a simple text report (in production, this would be a PDF)
-      const reportContent = `
-INFORME DE MULTAS Y OBLIGACIONES
-================================
+      // Generate a PDF-like document using simple text-based PDF structure
+      const currentDate = new Date().toLocaleDateString('es-EC');
+      const pdfContent = `%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
 
-Empresa: ${report.companyName || 'N/A'}
-RUC: ${report.ruc || 'N/A'}
-Fecha de generación: ${new Date().toLocaleDateString('es-EC')}
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
 
-RESUMEN DE CONSULTAS
---------------------
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
 
-1. Superintendencia de Compañías: Sin multas pendientes
-2. SRI (Servicio de Rentas Internas): Sin obligaciones vencidas
-3. IESS (Instituto Ecuatoriano de Seguridad Social): Al día
-4. Municipio: Sin deudas municipales
-5. SERCOP: Sin inhabilitaciones
-6. Ministerio del Trabajo: Sin sanciones
+4 0 obj
+<< /Length 2000 >>
+stream
+BT
+/F1 24 Tf
+50 720 Td
+(INFORME DE MULTAS Y OBLIGACIONES) Tj
+0 -40 Td
+/F1 12 Tf
+(================================) Tj
+0 -30 Td
+(Empresa: ${report.companyName || 'N/A'}) Tj
+0 -20 Td
+(RUC: ${report.ruc || 'N/A'}) Tj
+0 -20 Td
+(Fecha de generacion: ${currentDate}) Tj
+0 -40 Td
+/F1 16 Tf
+(RESUMEN DE CONSULTAS) Tj
+0 -25 Td
+/F1 12 Tf
+(1. Superintendencia de Companias: Sin multas pendientes) Tj
+0 -18 Td
+(2. SRI \\(Servicio de Rentas Internas\\): Sin obligaciones vencidas) Tj
+0 -18 Td
+(3. IESS \\(Instituto Ecuatoriano de Seguridad Social\\): Al dia) Tj
+0 -18 Td
+(4. Municipio: Sin deudas municipales) Tj
+0 -18 Td
+(5. SERCOP: Sin inhabilitaciones) Tj
+0 -18 Td
+(6. Ministerio del Trabajo: Sin sanciones) Tj
+0 -40 Td
+/F1 16 Tf
+(PROXIMAS OBLIGACIONES) Tj
+0 -25 Td
+/F1 12 Tf
+(- Declaracion IVA: Vence en 15 dias) Tj
+0 -18 Td
+(- Declaracion Impuesto a la Renta: Vence en 45 dias) Tj
+0 -18 Td
+(- Aportes IESS: Al dia) Tj
+0 -40 Td
+/F1 16 Tf
+(CONTENIDO DE EJEMPLO - LOREM IPSUM) Tj
+0 -25 Td
+/F1 10 Tf
+(Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod) Tj
+0 -15 Td
+(tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim) Tj
+0 -15 Td
+(veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea) Tj
+0 -15 Td
+(commodo consequat. Duis aute irure dolor in reprehenderit in voluptate) Tj
+0 -15 Td
+(velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat) Tj
+0 -15 Td
+(cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id) Tj
+0 -15 Td
+(est laborum.) Tj
+0 -40 Td
+/F1 10 Tf
+(---) Tj
+0 -15 Td
+(Este informe fue generado por Lo Simple - www.losimple.ec) Tj
+ET
+endstream
+endobj
 
-PRÓXIMAS OBLIGACIONES
----------------------
-- Declaración IVA: Vence en 15 días
-- Declaración Impuesto a la Renta: Vence en 45 días
-- Aportes IESS: Al día
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
 
-RECOMENDACIONES
----------------
-Su empresa se encuentra al día con todas las obligaciones fiscales y tributarias.
-Continúe manteniendo el cumplimiento oportuno de sus obligaciones.
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000266 00000 n 
+0000002320 00000 n 
 
----
-Este informe fue generado por Lo Simple
-www.losimple.ec
-      `;
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2399
+%%EOF`;
       
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Disposition', `attachment; filename="informe-multas-${report.ruc || 'empresa'}.txt"`);
-      res.send(reportContent);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="informe-multas-${report.ruc || 'empresa'}.pdf"`);
+      res.send(pdfContent);
     } catch (error) {
       console.error('Error downloading report:', error);
       res.status(500).json({ error: 'Error interno del servidor' });
