@@ -93,6 +93,7 @@ export default function Dashboard() {
   const [responses, setResponses] = useState<{ [key: string]: string }>({});
   const [activeTab, setActiveTab] = useState<TabType>('perfil');
   const [legalRepresentative, setLegalRepresentative] = useState("");
+  const [legalRepresentativeId, setLegalRepresentativeId] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("Ecuador");
   const [shareholdersInput, setShareholdersInput] = useState<Array<{ name: string; percentage: string }>>([
@@ -400,6 +401,19 @@ export default function Dashboard() {
                         onChange={(e) => setLegalRepresentative(e.target.value)}
                         placeholder="Ingresa el nombre del representante legal"
                         data-testid="input-legal-representative"
+                      />
+                    </div>
+
+                    {/* Legal Representative ID */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Cédula del Representante Legal
+                      </label>
+                      <Input
+                        value={legalRepresentativeId}
+                        onChange={(e) => setLegalRepresentativeId(e.target.value)}
+                        placeholder="Número de cédula"
+                        data-testid="input-legal-representative-id"
                       />
                     </div>
 
