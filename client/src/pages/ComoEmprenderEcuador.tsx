@@ -9,13 +9,11 @@ import {
   DollarSign,
   Shield,
   ClipboardCheck,
-  AlertTriangle,
   ChevronRight,
   Sparkles
 } from "lucide-react";
 import { Link } from "wouter";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 const preguntasClave = [
   {
@@ -100,7 +98,23 @@ const faqs = [
   }
 ];
 
-function CTATest() {
+function CTATestButton() {
+  return (
+    <div className="my-10 text-center">
+      <Button 
+        size="lg" 
+        className="text-lg px-10 py-6 font-semibold shadow-lg hover:shadow-xl transition-all"
+        data-testid="button-test-sas-inline"
+      >
+        <Sparkles className="mr-2 h-5 w-5" />
+        Haz el Test ahora
+        <ChevronRight className="ml-2 h-5 w-5" />
+      </Button>
+    </div>
+  );
+}
+
+function CTATestFinal() {
   return (
     <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10 border-primary/20 mt-12">
       <CardContent className="p-8 text-center">
@@ -140,11 +154,6 @@ function CTATest() {
 }
 
 export default function ComoEmprenderEcuador() {
-  const breadcrumbItems = [
-    { label: "Recursos", href: "/blog" },
-    { label: "Cómo saber si soy una SAS en Ecuador" }
-  ];
-
   return (
     <div className="min-h-screen bg-background">
       <SEO 
@@ -154,22 +163,55 @@ export default function ComoEmprenderEcuador() {
         canonical="https://losimple.ai/como-emprender-en-ecuador-con-una-empresa-2026"
       />
       
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <Breadcrumbs items={breadcrumbItems} />
+      {/* Hero Section - Similar to Home2 */}
+      <section className="relative py-20 md:py-32 px-4 overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 right-10 w-64 h-64 bg-primary opacity-10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-10 w-48 h-48 bg-accent opacity-20 rounded-full blur-3xl"></div>
+        </div>
         
-        <article className="prose prose-lg max-w-none">
-          <header className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className="text-center">
+            {/* Logo */}
+            <div className="mb-8 flex justify-center">
+              <img 
+                src={logoUrl} 
+                alt="Lo Simple" 
+                className="h-14 md:h-16 w-auto"
+                data-testid="img-logo-hero"
+              />
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 leading-tight">
               Cómo saber si soy una SAS en Ecuador en 2026
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
               Crear una SAS en Ecuador es cada vez más común, pero no siempre es la mejor opción para todos los negocios.
               Antes de constituir una empresa, conviene detenerse un momento y evaluar si tu situación, tu negocio y tu nivel de preparación encajan realmente con este tipo societario.
             </p>
-            <p className="text-lg text-muted-foreground mt-4">
-              Este artículo te ayuda a responder esa pregunta con criterios claros, actuales y prácticos, pensados para el contexto Ecuador 2026.
-            </p>
-          </header>
+
+            <Button 
+              size="lg" 
+              className="text-lg px-10 py-6 font-semibold shadow-lg hover:shadow-xl transition-all"
+              data-testid="button-test-sas-hero"
+            >
+              <Sparkles className="mr-2 h-5 w-5" />
+              Haz el Test ahora
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <main className="container mx-auto px-4 pb-16 max-w-4xl">
+        <article className="prose prose-lg max-w-none">
+          <p className="text-lg text-muted-foreground mb-8">
+            Este artículo te ayuda a responder esa pregunta con criterios claros, actuales y prácticos, pensados para el contexto Ecuador 2026.
+          </p>
 
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-6 text-foreground">
@@ -183,6 +225,8 @@ export default function ComoEmprenderEcuador() {
               Una SAS es flexible, sí. Pero sigue siendo una empresa, con obligaciones legales, tributarias y administrativas.
             </p>
           </section>
+
+          <CTATestButton />
 
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-8 text-foreground">
@@ -218,6 +262,8 @@ export default function ComoEmprenderEcuador() {
             </div>
           </section>
 
+          <CTATestButton />
+
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-6 text-foreground">
               Errores comunes al crear una SAS sin estar preparado
@@ -252,7 +298,7 @@ export default function ComoEmprenderEcuador() {
             </p>
           </section>
 
-          <CTATest />
+          <CTATestFinal />
 
           <section className="mt-16">
             <h2 className="text-3xl font-bold mb-8 text-foreground">

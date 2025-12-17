@@ -43,6 +43,13 @@ export function Header() {
             >
               Blog
             </a>
+            <a 
+              href="/como-emprender-en-ecuador-con-una-empresa-2026"
+              className="text-sm font-medium hover:text-primary transition-colors"
+              data-testid="link-test"
+            >
+              Test
+            </a>
             <Cart />
           </div>
         </div>
