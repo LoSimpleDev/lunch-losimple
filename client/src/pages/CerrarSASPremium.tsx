@@ -142,7 +142,7 @@ export default function CerrarSASPremium() {
                 Proceso Premium de Cierre SAS
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Con nuestra asesoría especializada, tu empresa puede quedar formalmente cerrada en tan solo 4 días hábiles.
+                Con nuestra asesoría especializada, tu preocupación por la empresa que ya no quieres tener puede terminar en tan solo 4 días hábiles.
               </p>
             </div>
 
