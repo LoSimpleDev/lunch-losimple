@@ -716,7 +716,7 @@ export default function Dashboard() {
                 <Button
                   variant="outline"
                   className="h-auto py-4 flex flex-col items-center gap-2"
-                  onClick={() => setLocation('/launch')}
+                  onClick={() => setLocation('/launch-form')}
                   data-testid="button-open-another-company"
                 >
                   <PlusCircle className="w-6 h-6" />
