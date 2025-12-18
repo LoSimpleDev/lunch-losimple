@@ -328,15 +328,25 @@ export default function LaunchForm() {
               </p>
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mt-6 text-left">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-3">¿Qué incluye Launch?</h3>
-                <ul className="text-gray-700 dark:text-gray-300 space-y-2 mb-3">
-                  <li>✓ Constitución de tu empresa SAS en Ecuador</li>
-                  <li>✓ Diseño de identidad visual y logo profesional</li>
-                  <li>✓ Página web corporativa completa</li>
-                  <li>✓ Redes sociales configuradas</li>
-                  <li>✓ Sistema de facturación electrónica</li>
-                  <li>✓ Firma electrónica</li>
-                  <li className="font-semibold text-primary">Bonus: te incluimos el cierre de todo sin costo adicional, incluida la liquidación de la empresa durante el primer año siempre que esté al día</li>
-                </ul>
+                <div className="grid md:grid-cols-2 gap-x-4 gap-y-2 text-gray-700 dark:text-gray-300 mb-3">
+                  <li>✓ Guía estratégica para SAS</li>
+                  <li>✓ Contrato Constitutivo aprobado</li>
+                  <li>✓ Títulos de acciones</li>
+                  <li>✓ Nombramientos inscritos</li>
+                  <li>✓ RUC habilitado</li>
+                  <li>✓ Firma electrónica empresarial</li>
+                  <li>✓ Balance inicial ante Superintendencia</li>
+                  <li>✓ Declaración inicial de patente municipal</li>
+                  <li>✓ Acompañamiento en registro marcario</li>
+                  <li>✓ Página web profesional con blog</li>
+                  <li>✓ Chatbot de recepción integrado</li>
+                  <li>✓ Optimización SEO, AEO y AIO</li>
+                  <li>✓ Análisis inicial de visibilidad</li>
+                  <li>✓ Verificación de presencia digital</li>
+                </div>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+                  <strong>Nota:</strong> Las tasas oficiales de registro marcario y patente municipal (~USD 240) se pagan directamente a las instituciones.
+                </p>
                 <div className="flex items-start space-x-2 mt-4 pt-4 border-t border-blue-200 dark:border-blue-700">
                   <Checkbox
                     id="acceptTerms"
@@ -351,7 +361,7 @@ export default function LaunchForm() {
               </div>
               <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mt-4">
                 <p className="text-sm text-amber-800 dark:text-amber-200">
-                  <strong>Plan Launch:</strong> $599 + IVA
+                  <strong>Plan Launch:</strong> $1,499 + IVA
                 </p>
               </div>
             </div>
