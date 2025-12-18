@@ -1277,7 +1277,7 @@ export default function LaunchForm() {
                 </CardHeader>
                 <CardContent className="text-sm space-y-1">
                   <p className="text-lg font-bold text-primary">
-                    Plan Launch - $599 + IVA
+                    Plan Launch - $1,499 + IVA
                   </p>
                   <p><strong>Facturación:</strong> {formData.billingName}</p>
                   <p><strong>RUC/Cédula:</strong> {formData.billingIdNumber}</p>
