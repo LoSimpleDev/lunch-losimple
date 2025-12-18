@@ -632,18 +632,18 @@ export default function Home2() {
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
-                    <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Sitio web profesional en una experiencia que te hará alucinar.</p>
+                    <h3 className="text-2xl font-bold mb-4">Página Web Profesional</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Sitio web con blog incluido, chatbot de recepción 24/7 y hasta 3 rondas de revisión.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={launchDashboardLanding} alt="Dashboard Landing Page" className="w-full h-full object-cover object-top" loading="lazy" />
+                      <img src={launchDashboardLanding} alt="Dashboard Página Web" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
-                    <h3 className="text-2xl font-bold mb-4">Facturación y Firma</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Habilitamos tu facturación y firma electrónicas por un año en el mismo paquete.</p>
+                    <h3 className="text-2xl font-bold mb-4">Registro de Marca</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Acompañamiento en búsqueda y registro de tu marca comercial ante el SENADI.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={launchDashboardFacturacion} alt="Dashboard Facturación y Firma" className="w-full h-full object-cover object-top" loading="lazy" />
+                      <img src={launchDashboardFacturacion} alt="Dashboard Registro de Marca" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                 </div>
@@ -652,18 +652,18 @@ export default function Home2() {
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-2xl p-8">
                     <p className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3">Launch</p>
-                    <h3 className="text-2xl font-bold mb-4">Soporte Continuo</h3>
-                    <p className="text-sm text-muted-foreground mb-6">Soporte Continuo en consultas legales por un año.</p>
+                    <h3 className="text-2xl font-bold mb-4">SEO, AEO y AIO</h3>
+                    <p className="text-sm text-muted-foreground mb-6">Web optimizada para buscadores, motores de IA y evaluaciones digitales de terceros.</p>
                     <div className="h-32 bg-white/50 dark:bg-black/20 rounded-lg overflow-hidden">
-                      <img src={launchDashboardSoporte} alt="Dashboard Soporte Continuo" className="w-full h-full object-cover object-top" loading="lazy" />
+                      <img src={launchDashboardSoporte} alt="Dashboard SEO AEO AIO" className="w-full h-full object-cover object-top" loading="lazy" />
                     </div>
                   </div>
                   {/* Description with Border Frame - spans 2 columns */}
                   <div className="md:col-span-2 border-2 border-purple-600 rounded-2xl p-6">
                     <div className="flex flex-col md:flex-row gap-6 items-center h-full">
                       <div className="space-y-3 flex-1">
-                        <h3 className="text-2xl font-bold">Lanza tu negocio en 2 días</h3>
-                        <p className="text-base text-foreground">Todo lo que necesitas para empezar: sitio web, asistencia en verificación de redes sociales en cuentas de meta, constitución legal, facturación electrónica y firma digital.</p>
+                        <h3 className="text-2xl font-bold">Lanza tu negocio con estructura completa</h3>
+                        <p className="text-base text-foreground">Estructura legal, marca protegida, página web profesional con chatbot, optimización para buscadores y motores de IA. Todo en un solo proceso.</p>
                         <Link href="/launch">
                           <Button className="bg-purple-600 hover:bg-purple-700 mt-2" data-testid="button-launch-info">
                             Más Información
