@@ -59,6 +59,7 @@ import decoratorGrid from "@assets/blog-decorator-grid.png";
 import firmaCertificados from "@assets/Image web Lo Simple (8)_1764165791870.png";
 import firmaSegura from "@assets/Image web Lo Simple (6)_1764165798998.png";
 import firmaTodoIncluido from "@assets/Image web Lo Simple (7)_1764165795582.png";
+import { SASGrowthPopup } from "@/components/SASGrowthPopup";
 
 // Data structures for repeated sections
 const benefits = [
@@ -195,6 +196,7 @@ const home2Faqs = [
 export default function Home2() {
   return (
     <>
+      <SASGrowthPopup />
       <SEO 
         title="Abrir Empresa SAS en Ecuador | Constituye tu SAS con soporte por un año"
         description="Abre tu empresa SAS en Ecuador de forma 100% digital. Constituye tu Sociedad por Acciones Simplificada con soporte legal por un año, firma electrónica y todos los trámites incluidos. Sin capital mínimo, desde 1 accionista."
