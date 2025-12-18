@@ -34,6 +34,7 @@ import CerrarSASPremium from "@/pages/CerrarSASPremium";
 import PrepararCierreSAS from "@/pages/PrepararCierreSAS";
 import ComoEmprenderEcuador from "@/pages/ComoEmprenderEcuador";
 import CotizarCreacionSAS from "@/pages/CotizarCreacionSAS";
+import EmpezarCierre from "@/pages/EmpezarCierre";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -68,6 +69,7 @@ function Router() {
       <Route path="/login-sas-existente" component={LoginSASExistente} />
       <Route path="/como-emprender-en-ecuador-con-una-empresa-2026" component={ComoEmprenderEcuador} />
       <Route path="/cotizar-creacion-sas" component={CotizarCreacionSAS} />
+      <Route path="/empezar-cierre" component={EmpezarCierre} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

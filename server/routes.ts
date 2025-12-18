@@ -2226,6 +2226,11 @@ Sitemap: https://losimple.ai/sitemap.xml
         return res.status(402).json({ error: 'Debe pagar el informe antes de descargarlo' });
       }
       
+      // Mark report as downloaded
+      await storage.updateMultasReport(req.params.id, {
+        status: 'downloaded'
+      });
+      
       // Generate a PDF-like document using simple text-based PDF structure
       const currentDate = new Date().toLocaleDateString('es-EC');
       const pdfContent = `%PDF-1.4

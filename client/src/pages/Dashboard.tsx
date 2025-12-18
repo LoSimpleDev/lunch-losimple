@@ -346,6 +346,10 @@ export default function Dashboard() {
   const handleDownloadReport = async (reportId: string) => {
     try {
       window.open(`/api/multas/reports/${reportId}/download`, '_blank');
+      // Invalidate query after a short delay to allow the server to update the status
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['/api/multas/reports'] });
+      }, 1000);
     } catch (error) {
       toast({
         title: "Error",
@@ -731,15 +735,27 @@ export default function Dashboard() {
                   <FilePlus className="w-6 h-6" />
                   <span>Crear documentos adicionales</span>
                 </Button>
-                <Button
-                  variant="outline"
-                  className="h-auto py-4 flex flex-col items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-                  onClick={() => setLocation('/cerrar-sas-premium')}
-                  data-testid="button-close-company"
-                >
-                  <XCircle className="w-6 h-6" />
-                  <span>Cerrar Empresa</span>
-                </Button>
+                {multasReports.some(r => r.isPaid && r.status === 'downloaded') ? (
+                  <Button
+                    variant="outline"
+                    className="h-auto py-4 flex flex-col items-center gap-2 text-[#6C5CE7] hover:text-[#5a4bd1] hover:bg-purple-50 border-[#6C5CE7]"
+                    onClick={() => setLocation('/empezar-cierre')}
+                    data-testid="button-start-closing"
+                  >
+                    <Play className="w-6 h-6" />
+                    <span>Empezar Cierre</span>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    className="h-auto py-4 flex flex-col items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                    onClick={() => setLocation('/cerrar-sas-premium')}
+                    data-testid="button-close-company"
+                  >
+                    <XCircle className="w-6 h-6" />
+                    <span>Cerrar Empresa</span>
+                  </Button>
+                )}
               </div>
 
               {/* Order History Section */}
