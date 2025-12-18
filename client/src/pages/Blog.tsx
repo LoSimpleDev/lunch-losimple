@@ -101,7 +101,7 @@ function LaunchCTACard() {
         </h3>
         
         <p className="text-gray-700 mb-6">
-          En 2 días tendrás tu empresa lista para operar con presencia digital profesional.
+          En 5 días tendrás tu empresa lista para operar con presencia digital profesional.
         </p>
         
         <ul className="text-left space-y-3 mb-8">
@@ -111,15 +111,11 @@ function LaunchCTACard() {
           </li>
           <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Landing page profesional</span>
+            <span>Títulos Acción</span>
           </li>
           <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Redes sociales verificadas</span>
-          </li>
-          <li className="flex items-start gap-2 text-gray-800">
-            <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
-            <span>Facturación y firma electrónica</span>
+            <span>Firma Electrónica de Empresa</span>
           </li>
           <li className="flex items-start gap-2 text-gray-800">
             <CheckCircle className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />

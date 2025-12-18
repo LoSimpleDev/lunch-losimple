@@ -236,13 +236,8 @@ export default function BlogPostPage() {
               En Lo Simple te acompañamos en todo el proceso de constitución y formalización de tu negocio en Ecuador.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/home-2">
-                <Button className="bg-purple-600 hover:bg-purple-700" data-testid="button-cta-services">
-                  Ver servicios
-                </Button>
-              </Link>
               <a href="https://calendly.com/veronica-losimple/30min" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" data-testid="button-cta-schedule">
+                <Button className="bg-purple-600 hover:bg-purple-700" data-testid="button-cta-schedule">
                   Agendar llamada gratuita
                 </Button>
               </a>
