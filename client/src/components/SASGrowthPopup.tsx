@@ -57,20 +57,22 @@ export function SASGrowthPopup() {
           </button>
 
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 pr-8">
-            ¿Sabías que en Ecuador ya van <span className="text-green-600">constituidas más de 75.576 SAS</span>?
+            ¿Sabías que en Ecuador ya van <span className="text-[#6C5CE7]">constituidas más de 75.576 SAS</span>?
           </h2>
 
-          <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            Hoy puedes tener un nombre legal para tu negocio, llevar contabilidad profesional, 
-            acceder a mejores créditos y <strong>vender acciones</strong> a inversionistas. 
-            Aprovecha esta oportunidad única: constituye tu empresa <strong className="text-green-600">desde $1, sin notarios</strong> ni trámites costosos. 
-            Es fácil, rápido y ahora está al alcance de todos.
-          </p>
+          <div className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed space-y-4">
+            <p>
+              Hoy, crear una empresa en Ecuador es más accesible que nunca. Con una SAS puedes darle un nombre legal a tu negocio, separar tu patrimonio personal, llevar contabilidad profesional y abrir la puerta a mejores oportunidades de financiamiento o inversión.
+            </p>
+            <p>
+              La constitución dejó de ser un trámite complejo y costoso. Hoy es posible formalizarse <strong className="text-[#6C5CE7]">desde $1, sin notarios</strong> y mediante un proceso digital. Por eso la SAS se ha convertido en la opción preferida para emprender en 2026, siempre que estés listo para asumir la formalidad que conlleva.
+            </p>
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/cotizar-creacion-sas" className="flex-1">
               <Button 
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold h-12"
+                className="w-full bg-[#6C5CE7] hover:bg-[#5a4bd1] text-white font-semibold h-12"
                 onClick={handleClose}
                 data-testid="button-popup-cotizar"
               >
@@ -80,8 +82,7 @@ export function SASGrowthPopup() {
             </Link>
             <Link href="/blog/crecimiento-sas-ecuador-estadisticas-2026" className="flex-1">
               <Button 
-                variant="outline"
-                className="w-full border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 font-semibold h-12"
+                className="w-full bg-[#FFEAA7] hover:bg-[#f5dc8a] text-gray-900 font-semibold h-12 border-0"
                 onClick={handleClose}
                 data-testid="button-popup-leer-articulo"
               >
