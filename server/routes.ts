@@ -1011,20 +1011,61 @@ Sitemap: https://losimple.ai/sitemap.xml
         resetTokenExpiry
       });
       
-      // TODO: Send email with token
-      // Por ahora solo lo mostramos en consola para desarrollo
-      console.log('='.repeat(50));
-      console.log('CÓDIGO DE RECUPERACIÓN DE CONTRASEÑA');
-      console.log('='.repeat(50));
-      console.log(`Email: ${email}`);
-      console.log(`Código: ${resetToken}`);
-      console.log(`Expira en: 15 minutos`);
-      console.log('='.repeat(50));
+      // Send email with token using SendGrid
+      if (process.env.SENDGRID_API_KEY) {
+        const msg = {
+          to: email,
+          from: 'info@losimple.ai',
+          subject: 'Código de recuperación de contraseña - Lo Simple',
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <div style="background: linear-gradient(135deg, #6C5CE7 0%, #00cec9 100%); padding: 30px; text-align: center;">
+                <h1 style="color: white; margin: 0;">Lo Simple</h1>
+              </div>
+              <div style="padding: 30px; background: #f8f9fa;">
+                <h2 style="color: #333; margin-bottom: 20px;">Recuperación de contraseña</h2>
+                <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                  Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.
+                </p>
+                <div style="background: white; border: 2px dashed #6C5CE7; border-radius: 10px; padding: 20px; text-align: center; margin: 25px 0;">
+                  <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Tu código de recuperación es:</p>
+                  <p style="font-size: 36px; font-weight: bold; color: #6C5CE7; letter-spacing: 8px; margin: 0;">${resetToken}</p>
+                </div>
+                <p style="color: #666; font-size: 14px;">
+                  Este código expirará en <strong>15 minutos</strong>.
+                </p>
+                <p style="color: #999; font-size: 12px; margin-top: 20px;">
+                  Si no solicitaste este cambio, puedes ignorar este mensaje.
+                </p>
+              </div>
+              <div style="background: #333; padding: 20px; text-align: center;">
+                <p style="color: #999; font-size: 12px; margin: 0;">
+                  © 2025 Lo Simple. Todos los derechos reservados.
+                </p>
+              </div>
+            </div>
+          `,
+        };
+        
+        try {
+          await sgMail.send(msg);
+          console.log('Password reset email sent successfully to:', email);
+        } catch (emailError) {
+          console.error('Error sending password reset email:', emailError);
+        }
+      } else {
+        console.log('='.repeat(50));
+        console.log('CÓDIGO DE RECUPERACIÓN DE CONTRASEÑA');
+        console.log('='.repeat(50));
+        console.log(`Email: ${email}`);
+        console.log(`Código: ${resetToken}`);
+        console.log(`Expira en: 15 minutos`);
+        console.log('='.repeat(50));
+      }
       
       res.json({ 
         message: 'Si el email existe, recibirás instrucciones para resetear tu contraseña',
-        // En desarrollo, devolvemos el token
-        ...(process.env.NODE_ENV === 'development' && { resetToken })
+        ...(process.env.NODE_ENV === 'development' && !process.env.SENDGRID_API_KEY && { resetToken })
       });
     } catch (error) {
       console.error('Error forgot password:', error);
