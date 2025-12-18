@@ -184,12 +184,13 @@ export default function Launch() {
             </div>
             <div className="text-center mt-8 p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl max-w-2xl mx-auto">
               <p className="text-muted-foreground">
-                Si tu prioridad es solo formalizar rápido, tenemos{" "}
+                Nuestros{" "}
                 <Link href="/cotizar-creacion-sas" className="text-[#6C5CE7] font-medium hover:underline">
-                  servicios adecuados para eso
-                </Link>.
+                  servicios
+                </Link>{" "}
+                se adaptan a distintos momentos del emprendimiento.
                 <br />
-                <strong className="text-foreground">Launch existe para otra etapa del emprendimiento.</strong>
+                <strong className="text-foreground">Launch está pensado para cuando el proyecto va a comercializarse con base en lo digital y no depende al 100% del espacio físico.</strong>
               </p>
             </div>
           </div>
