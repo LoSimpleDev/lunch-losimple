@@ -125,6 +125,7 @@ Sitemap: https://losimple.ai/sitemap.xml
         { url: '/documentos-sas', priority: '0.8', changefreq: 'weekly' },
         { url: '/multas-sas-ecuador', priority: '0.8', changefreq: 'weekly' },
         { url: '/cerrar-sas', priority: '0.8', changefreq: 'weekly' },
+        { url: '/como-emprender-en-ecuador-con-una-empresa-2026', priority: '0.8', changefreq: 'monthly' },
         { url: '/blog', priority: '0.7', changefreq: 'daily' },
         { url: '/beneficios', priority: '0.6', changefreq: 'monthly' },
         { url: '/saslegal-plus', priority: '0.6', changefreq: 'monthly' },

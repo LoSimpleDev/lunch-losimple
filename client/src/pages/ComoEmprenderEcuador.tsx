@@ -1,3 +1,4 @@
+import { useEffect, useId } from "react";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
@@ -98,6 +99,91 @@ const faqs = [
   }
 ];
 
+function FAQSchema() {
+  const schemaId = useId();
+  
+  useEffect(() => {
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-schema-id', `faq-schema-${schemaId}`);
+    script.textContent = JSON.stringify(faqSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const existingScript = document.querySelector(`script[data-schema-id="faq-schema-${schemaId}"]`);
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, [schemaId]);
+
+  return null;
+}
+
+function ArticleSchemaLocal() {
+  const schemaId = useId();
+  
+  useEffect(() => {
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Cómo saber si soy una SAS en Ecuador en 2026",
+      "description": "Descubre si estás listo para crear una SAS en Ecuador. Evalúa tu situación, negocio y nivel de preparación con criterios claros y prácticos para 2026.",
+      "author": {
+        "@type": "Organization",
+        "name": "Lo Simple",
+        "url": "https://losimple.ai"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lo Simple",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://losimple.ai/logo.png"
+        }
+      },
+      "datePublished": "2025-01-01",
+      "dateModified": new Date().toISOString().split('T')[0],
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://losimple.ai/como-emprender-en-ecuador-con-una-empresa-2026"
+      },
+      "image": "https://losimple.ai/og-image-losimple.png",
+      "articleSection": "Emprendimiento",
+      "inLanguage": "es-EC",
+      "keywords": "SAS Ecuador, crear empresa Ecuador, emprender Ecuador 2026, requisitos SAS"
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-schema-id', `article-schema-${schemaId}`);
+    script.textContent = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const existingScript = document.querySelector(`script[data-schema-id="article-schema-${schemaId}"]`);
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, [schemaId]);
+
+  return null;
+}
+
 function CTATestButton() {
   return (
     <div className="my-10 text-center">
@@ -160,8 +246,12 @@ export default function ComoEmprenderEcuador() {
         title="Cómo saber si soy una SAS en Ecuador en 2026 | Lo Simple"
         description="Descubre si estás listo para crear una SAS en Ecuador. Evalúa tu situación, negocio y nivel de preparación con criterios claros y prácticos para 2026."
         keywords="SAS Ecuador, crear empresa Ecuador, emprender Ecuador 2026, requisitos SAS, formalizar negocio Ecuador"
-        canonical="https://losimple.ai/como-emprender-en-ecuador-con-una-empresa-2026"
+        canonical="/como-emprender-en-ecuador-con-una-empresa-2026"
+        ogType="article"
       />
+      
+      <FAQSchema />
+      <ArticleSchemaLocal />
       
       {/* Hero Section - Similar to Home2 */}
       <section className="relative py-20 md:py-32 px-4 overflow-hidden">
