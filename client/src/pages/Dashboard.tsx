@@ -734,6 +734,7 @@ export default function Dashboard() {
                 <Button
                   variant="outline"
                   className="h-auto py-4 flex flex-col items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                  onClick={() => setLocation('/cerrar-sas-premium')}
                   data-testid="button-close-company"
                 >
                   <XCircle className="w-6 h-6" />

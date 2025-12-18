@@ -11,7 +11,8 @@ import {
   Lock,
   AlertCircle,
   ChevronRight,
-  ArrowRight
+  ArrowRight,
+  Calendar
 } from "lucide-react";
 import { Link } from "wouter";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -61,15 +62,18 @@ export default function CerrarSASPremium() {
     terceros: null,
     sri: null
   });
+  const [loSimpleCertificate, setLoSimpleCertificate] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmittingLeft, setIsSubmittingLeft] = useState(false);
 
   const handleFileChange = (id: string, file: File | null) => {
     setFiles(prev => ({ ...prev, [id]: file }));
   };
 
   const allFilesUploaded = Object.values(files).every(file => file !== null);
+  const hasLoSimpleCertificate = loSimpleCertificate !== null;
 
-  const handleSubmit = async () => {
+  const handleSubmitRight = async () => {
     if (!allFilesUploaded) {
       toast({
         title: "Documentos incompletos",
@@ -87,6 +91,27 @@ export default function CerrarSASPremium() {
         description: "Hemos recibido tus documentos. Te contactaremos pronto para continuar con el proceso.",
       });
       setIsSubmitting(false);
+    }, 1500);
+  };
+
+  const handleSubmitLeft = async () => {
+    if (!hasLoSimpleCertificate) {
+      toast({
+        title: "Certificado requerido",
+        description: "Por favor, sube el certificado Lo Simple.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmittingLeft(true);
+    
+    setTimeout(() => {
+      toast({
+        title: "Certificado recibido",
+        description: "Hemos recibido tu certificado Lo Simple. Te contactaremos pronto para continuar con el proceso.",
+      });
+      setIsSubmittingLeft(false);
     }, 1500);
   };
 
@@ -192,6 +217,50 @@ export default function CerrarSASPremium() {
                   <p className="text-xs text-muted-foreground text-center mt-4">
                     Esta es una verificación preliminar basada en información pública disponible. Para un análisis completo y actualizado, te recomendamos crear una cuenta.
                   </p>
+
+                  <div className="mt-8 pt-6 border-t border-purple-200 dark:border-purple-700">
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-[#6C5CE7]" />
+                      ¿Ya tienes el certificado Lo Simple?
+                    </h4>
+                    
+                    <div className="space-y-3">
+                      <Label htmlFor="losimple-cert" className="text-sm font-medium flex items-start gap-2">
+                        {loSimpleCertificate ? (
+                          <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0 mt-0.5" />
+                        ) : (
+                          <AlertCircle className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                        )}
+                        <span>Certificado Lo Simple</span>
+                      </Label>
+                      <Input
+                        id="losimple-cert"
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        onChange={(e) => setLoSimpleCertificate(e.target.files?.[0] || null)}
+                        className="cursor-pointer"
+                        data-testid="input-file-losimple-cert"
+                      />
+                      <p className="text-xs text-muted-foreground">El certificado emitido por nuestra plataforma que confirma que cumples todos los requisitos</p>
+                    </div>
+
+                    <Button 
+                      size="lg"
+                      className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold h-14 text-lg"
+                      onClick={handleSubmitLeft}
+                      disabled={!hasLoSimpleCertificate || isSubmittingLeft}
+                      data-testid="button-submit-losimple-cert"
+                    >
+                      {isSubmittingLeft ? (
+                        "Enviando..."
+                      ) : (
+                        <>
+                          Iniciar Proceso de Cierre
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -248,7 +317,7 @@ export default function CerrarSASPremium() {
                     <Button 
                       size="lg"
                       className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold h-14 text-lg"
-                      onClick={handleSubmit}
+                      onClick={handleSubmitRight}
                       disabled={!allFilesUploaded || isSubmitting}
                       data-testid="button-submit-documents"
                     >
@@ -275,11 +344,12 @@ export default function CerrarSASPremium() {
 
             <div className="mt-12 text-center">
               <p className="text-muted-foreground mb-4">
-                ¿Tienes dudas sobre el proceso?
+                ¿No cumples con los requisitos?
               </p>
-              <Link href="/cerrar-sas">
-                <Button variant="outline" data-testid="button-back-cerrar-sas">
-                  Volver a información de cierre
+              <Link href="/preparar-cierre-sas">
+                <Button variant="outline" data-testid="button-agenda-cita">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  Agenda una cita
                 </Button>
               </Link>
             </div>
