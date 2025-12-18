@@ -725,7 +725,7 @@ export default function Dashboard() {
                 <Button
                   variant="outline"
                   className="h-auto py-4 flex flex-col items-center gap-2"
-                  onClick={() => setLocation('/')}
+                  onClick={() => setLocation('/documentos-sas')}
                   data-testid="button-create-documents"
                 >
                   <FilePlus className="w-6 h-6" />
