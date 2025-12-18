@@ -30,6 +30,7 @@ import AdminBlog from "@/pages/AdminBlog";
 import MultasSAS from "@/pages/MultasSAS";
 import LoginSASExistente from "@/pages/LoginSASExistente";
 import CerrarSAS from "@/pages/CerrarSAS";
+import CerrarSASPremium from "@/pages/CerrarSASPremium";
 import PrepararCierreSAS from "@/pages/PrepararCierreSAS";
 import ComoEmprenderEcuador from "@/pages/ComoEmprenderEcuador";
 import CotizarCreacionSAS from "@/pages/CotizarCreacionSAS";
@@ -62,6 +63,7 @@ function Router() {
       <Route path="/admin-blog" component={AdminBlog} />
       <Route path="/multas-sas-ecuador" component={MultasSAS} />
       <Route path="/cerrar-sas" component={CerrarSAS} />
+      <Route path="/cerrar-sas-premium" component={CerrarSASPremium} />
       <Route path="/preparar-cierre-sas" component={PrepararCierreSAS} />
       <Route path="/login-sas-existente" component={LoginSASExistente} />
       <Route path="/como-emprender-en-ecuador-con-una-empresa-2026" component={ComoEmprenderEcuador} />

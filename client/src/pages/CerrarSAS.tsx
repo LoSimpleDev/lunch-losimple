@@ -193,7 +193,7 @@ export default function CerrarSAS() {
                   size="lg" 
                   className="w-full text-lg py-6 font-semibold bg-red-600 hover:bg-red-700 text-white"
                   data-testid="button-popup-cerrar-sas"
-                  onClick={() => window.location.href = '/login'}
+                  onClick={() => window.location.href = '/cerrar-sas-premium'}
                 >
                   Empezar Proceso Premium
                 </Button>
