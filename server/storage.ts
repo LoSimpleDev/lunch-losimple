@@ -133,7 +133,6 @@ export class MemStorage implements IStorage {
     this.benefitCodes = new Map();
     this.blogPosts = new Map();
     this.initializeServices();
-    this.initializeDefaultAdmin();
     this.initializeBenefits();
     this.initializeBlogPosts();
   }
