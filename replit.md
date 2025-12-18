@@ -44,6 +44,16 @@ Preferred communication style: Simple, everyday language.
 - **Cart Management**: Client-side cart state with server-side price validation
 - **Checkout Flow**: Multi-step process with form validation and order creation
 
+## Company Closing Flow (Empezar Cierre)
+- **Trigger**: Dashboard button changes from "Cerrar Empresa" to "Empezar Cierre" once a Multas Report is paid and downloaded
+- **Verification Step**: Simulated verification of the multas report before proceeding
+- **Declaración Juramentada**: 
+  - Legal popup explaining liability and consequences
+  - Dynamic shareholder form (add/remove shareholders with names and IDs)
+  - Auto-generated declaration document for download and electronic signature
+- **Document Upload**: Zone for uploading the electronically signed declaration
+- **Premium Service**: Share transfer (cesión de acciones) and legal representative change to facilitate company closure
+
 # External Dependencies
 
 ## Core Framework Dependencies
