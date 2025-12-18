@@ -8,39 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Building2, PenTool, ShieldCheck, ArrowRight, Building, Calculator, Megaphone, Laptop, Headphones, Send, Loader2, FileText, AlertTriangle, XCircle } from "lucide-react";
+import { Building2, ArrowRight, Send, Loader2, FileText, AlertTriangle, XCircle, Scale, Shield, Globe, Search, CheckCircle2, Users, Target, Award, TrendingUp } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import logoUrl from "@assets/aArtboard 1_1757538311500.png";
 import decoratorPerson from "@assets/blog-decorator-person.png";
 import decoratorGrid from "@assets/blog-decorator-grid.png";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-
-const aliadosCategories = [
-  {
-    icon: Building,
-    title: "Oficinas",
-    description: "Espacios de coworking y oficinas virtuales para tu empresa",
-    color: "blue"
-  },
-  {
-    icon: Calculator,
-    title: "Contabilidad",
-    description: "Servicios contables profesionales para mantener tu empresa al día",
-    color: "green"
-  },
-  {
-    icon: Megaphone,
-    title: "Marketing",
-    description: "Agencias especializadas en hacer crecer tu negocio digitalmente",
-    color: "purple"
-  },
-  {
-    icon: Laptop,
-    title: "Tecnología",
-    description: "Desarrollo de software y soluciones tecnológicas para tu empresa",
-    color: "orange"
-  }
-];
 
 export default function Launch() {
   const [, setLocation] = useLocation();
@@ -84,17 +57,53 @@ export default function Launch() {
     e.preventDefault();
     contactMutation.mutate(formData);
   };
+
+  const legalInclusions = [
+    "Contrato Constitutivo aprobado de la SAS",
+    "Títulos de acciones",
+    "Nombramientos inscritos",
+    "RUC habilitado",
+    "Firma electrónica de la empresa",
+    "Balance inicial presentado ante la Superintendencia de Compañías",
+    "Declaración inicial de patente municipal"
+  ];
+
+  const summaryInclusions = [
+    "Guía estratégica para SAS",
+    "Contrato Constitutivo aprobado",
+    "Títulos de acciones",
+    "Nombramientos inscritos",
+    "RUC habilitado",
+    "Firma electrónica empresarial",
+    "Balance inicial ante Superintendencia de Compañías",
+    "Declaración inicial de patente municipal",
+    "Acompañamiento en registro marcario",
+    "Página web profesional",
+    "Blog incluido",
+    "Chatbot de recepción",
+    "Optimización SEO, AEO y AIO",
+    "Análisis inicial de visibilidad",
+    "Verificación de presencia digital"
+  ];
+
+  const targetAudience = [
+    "Planeas buscar contratos de mayor tamaño",
+    "Quieres presentarte ante inversionistas con orden y credibilidad",
+    "Necesitas dejar reglas claras con tus socios desde el día uno",
+    "Debes prepararte para certificaciones o procesos de evaluación",
+    "Quieres que tu negocio funcione incluso cuando tú no estás presente"
+  ];
   
   return (
     <>
       <SEO 
-        title="Launch: Lanza tu negocio todo incluido | SAS + Firma + Facturación"
-        description="Servicio todo incluido para emprendedores. Constituye tu SAS, obtén firma electrónica, facturación y soporte por un año. En 2 días tu negocio operando en Ecuador."
+        title="Launch: crea tu SAS y tu web con estructura integral | Lo Simple"
+        description="Launch es un servicio integral para crear tu SAS en Ecuador con estructura legal completa, marca, web, chatbot y optimización SEO, AEO y AIO."
         canonical="/launch"
-        keywords="lanzar negocio Ecuador, constituir empresa Ecuador, SAS todo incluido, emprender Ecuador"
+        keywords="crear SAS Ecuador, constitución SAS completa, lanzar empresa Ecuador, SAS para inversión, estructura legal emprendimiento, web optimizada para IA"
       />
       <div className="min-h-screen bg-background">
-      {/* Hero Section - Similar to Blog */}
+      {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-16 lg:py-20">
         {/* Decorative Elements */}
         <div className="absolute top-10 left-10 w-24 h-24 opacity-20 transform -rotate-12 hidden lg:block">
@@ -112,19 +121,19 @@ export default function Launch() {
             ]}
             className="mb-6"
           />
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-semibold mb-6">
-              Servicio Todo Incluido
+              Nuestro Servicio Más Completo
             </span>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-              Launch:{" "}
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
+              Lanza tu negocio con una estructura{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-cyan-600">
-                Lánzalo simple
-              </span>
+                legal, digital y operativa
+              </span>{" "}
+              preparada para crecer
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Todo incluido para quienes empiezan un negocio. Por un solo precio, 
-              <span className="font-semibold text-foreground"> en 2 días puedes tener</span>:
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Launch es un servicio integral que combina constitución legal de una SAS, activos societarios, marca, presencia digital y automatización básica para emprendedores que buscan crecer, contratar o invertir con una base sólida.
             </p>
           </div>
         </div>
@@ -133,174 +142,364 @@ export default function Launch() {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
 
-          {/* Inclusiones Grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-16">
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-company">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">Compañía Constituida</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">SAS 100% legal y lista para operar</p>
-              </CardContent>
-            </Card>
+          {/* Intro Section */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <div className="bg-gradient-to-r from-purple-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl p-8 md:p-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                Launch es nuestro servicio más completo.
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Está diseñado para quienes no solo quieren crear una empresa, sino lanzar un negocio con reglas claras, activos formales y presencia digital operativa desde el inicio.
+              </p>
+              <div className="border-l-4 border-[#6C5CE7] pl-6 py-2">
+                <p className="text-lg font-medium text-foreground">
+                  No es un trámite rápido.
+                </p>
+                <p className="text-muted-foreground">
+                  Es una estructura llave en mano, pensada para jugar en una liga más grande.
+                </p>
+              </div>
+            </div>
+          </div>
 
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-support">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Headphones className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">Soporte Anual</CardTitle>
+          {/* ¿Para quién es Launch? */}
+          <div className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+              ¿Para quién es Launch?
+            </h2>
+            <p className="text-center text-muted-foreground mb-10 max-w-2xl mx-auto">
+              Launch es para ti si:
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+              {targetAudience.map((item, index) => (
+                <div 
+                  key={index}
+                  className="flex items-start gap-3 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700"
+                  data-testid={`target-audience-${index}`}
+                >
+                  <CheckCircle2 className="w-5 h-5 text-[#6C5CE7] mt-0.5 flex-shrink-0" />
+                  <span className="text-foreground">{item}</span>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Nuestro equipo resuelve tus dudas legales y las relacionadas con inclusiones, por un año</p>
-              </CardContent>
-            </Card>
+              ))}
+            </div>
+            <div className="text-center mt-8 p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl max-w-2xl mx-auto">
+              <p className="text-muted-foreground">
+                Si tu prioridad es solo formalizar rápido, tenemos{" "}
+                <Link href="/cotizar-creacion-sas" className="text-[#6C5CE7] font-medium hover:underline">
+                  servicios adecuados para eso
+                </Link>.
+                <br />
+                <strong className="text-foreground">Launch existe para otra etapa del emprendimiento.</strong>
+              </p>
+            </div>
+          </div>
 
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-signature">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <PenTool className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">Firma Electrónica</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Firma digital con validez legal por un año</p>
-              </CardContent>
-            </Card>
+          {/* Las 4 cosas más poderosas */}
+          <div className="mb-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Las 4 cosas más poderosas para lanzar un negocio serio
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                Un negocio preparado para crecer necesita reglas claras, identidad protegida, presencia digital activa y una estructura entendible por terceros. Launch integra estos cuatro pilares en un solo proceso.
+              </p>
+            </div>
 
-            <Card className="hover:shadow-lg transition-shadow" data-testid="card-benefits">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <ShieldCheck className="w-6 h-6 text-primary" />
+            <div className="space-y-8">
+              {/* Pilar 1: Reglas claras */}
+              <Card className="overflow-hidden" data-testid="card-pillar-legal">
+                <div className="md:flex">
+                  <div className="md:w-1/4 bg-[#6C5CE7] p-6 flex items-center justify-center">
+                    <div className="text-center">
+                      <Scale className="w-12 h-12 text-white mx-auto mb-2" />
+                      <span className="text-white font-bold text-xl">1</span>
+                    </div>
                   </div>
-                  <CardTitle className="text-xl">Beneficios por Miles de Dólares</CardTitle>
+                  <div className="md:w-3/4 p-6">
+                    <CardTitle className="text-2xl mb-4">Reglas claras y estructura legal completa</CardTitle>
+                    <p className="text-muted-foreground mb-4">
+                      Incluye todo lo necesario para operar formalmente desde el inicio:
+                    </p>
+                    <div className="grid sm:grid-cols-2 gap-2">
+                      {legalInclusions.map((item, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                          <span className="text-sm">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-4 italic">
+                      Esta base reduce fricciones legales, bloqueos operativos y confusiones entre socios.
+                    </p>
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Acceso exclusivo a perks y descuentos de nuestros aliados</p>
-              </CardContent>
-            </Card>
+              </Card>
+
+              {/* Pilar 2: Marca */}
+              <Card className="overflow-hidden" data-testid="card-pillar-brand">
+                <div className="md:flex">
+                  <div className="md:w-1/4 bg-cyan-600 p-6 flex items-center justify-center">
+                    <div className="text-center">
+                      <Shield className="w-12 h-12 text-white mx-auto mb-2" />
+                      <span className="text-white font-bold text-xl">2</span>
+                    </div>
+                  </div>
+                  <div className="md:w-3/4 p-6">
+                    <CardTitle className="text-2xl mb-4">Marca e identidad legal protegida</CardTitle>
+                    <p className="text-muted-foreground mb-4">Incluye:</p>
+                    <ul className="space-y-2 mb-4">
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        <span>Acompañamiento en búsqueda y registro de marca</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        <span>Coherencia entre empresa, nombre comercial y presencia digital</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        <span>Preparación para evaluaciones de terceros (clientes, aliados, certificadores)</span>
+                      </li>
+                    </ul>
+                    <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
+                      <p className="text-sm text-muted-foreground">
+                        <strong className="text-foreground">Importante:</strong> Las tasas oficiales de búsqueda y registro marcario, así como el pago de la patente municipal, no están incluidas. Estas tasas suman aproximadamente <strong>USD 240</strong> y se pagan directamente a las instituciones correspondientes. Esto garantiza transparencia y control total del proceso.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Pilar 3: Presencia digital */}
+              <Card className="overflow-hidden" data-testid="card-pillar-digital">
+                <div className="md:flex">
+                  <div className="md:w-1/4 bg-green-600 p-6 flex items-center justify-center">
+                    <div className="text-center">
+                      <Globe className="w-12 h-12 text-white mx-auto mb-2" />
+                      <span className="text-white font-bold text-xl">3</span>
+                    </div>
+                  </div>
+                  <div className="md:w-3/4 p-6">
+                    <CardTitle className="text-2xl mb-4">Presencia digital que recibe y responde</CardTitle>
+                    <p className="text-muted-foreground mb-4">Incluye:</p>
+                    <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <h4 className="font-semibold mb-2">Página web profesional completa</h4>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>• Diseño alineado a tu modelo de negocio</li>
+                          <li>• Blog incluido desde el inicio</li>
+                          <li>• Hasta 3 rondas de revisión</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-2">Chatbot de recepción integrado</h4>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>• Atender consultas</li>
+                          <li>• Filtrar contactos</li>
+                          <li>• Responder 24/7</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium text-[#6C5CE7]">
+                      Tu negocio empieza a operar digitalmente desde el primer día.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Pilar 4: Visibilidad SEO/AEO/AIO */}
+              <Card className="overflow-hidden" data-testid="card-pillar-seo">
+                <div className="md:flex">
+                  <div className="md:w-1/4 bg-orange-500 p-6 flex items-center justify-center">
+                    <div className="text-center">
+                      <Search className="w-12 h-12 text-white mx-auto mb-2" />
+                      <span className="text-white font-bold text-xl">4</span>
+                    </div>
+                  </div>
+                  <div className="md:w-3/4 p-6">
+                    <CardTitle className="text-2xl mb-4">Negocio visible y entendible por personas y por IA</CardTitle>
+                    <p className="text-muted-foreground mb-4">Incluye:</p>
+                    <ul className="space-y-2 mb-4">
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        <span>Web optimizada para SEO, AEO y AIO</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        <span>Estructura semántica clara</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        <span>Contenidos pensados para buscadores tradicionales, motores de respuesta con IA y procesos de evaluación digital</span>
+                      </li>
+                    </ul>
+                    <p className="text-sm text-muted-foreground italic">
+                      Esto es clave cuando te buscan, te comparan o te analizan terceros.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          {/* Un solo proceso */}
+          <div className="bg-[#6C5CE7] text-white rounded-2xl p-8 md:p-12 mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
+              Un solo proceso, no piezas sueltas
+            </h2>
+            <p className="text-lg text-center text-white/90 max-w-3xl mx-auto">
+              Launch integra en un solo proceso lo que normalmente se resuelve en etapas separadas y con múltiples proveedores. Empresa, marca, web, automatización y base operativa quedan alineadas desde el inicio. No porque sea más lento, sino porque es más completo.
+            </p>
+          </div>
+
+          {/* Qué incluye Launch (resumen) */}
+          <div className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+              Qué incluye Launch
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto">
+              {summaryInclusions.map((item, index) => (
+                <div 
+                  key={index}
+                  className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg"
+                  data-testid={`inclusion-${index}`}
+                >
+                  <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+                  <span className="text-sm">{item}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Precio Section */}
           <div className="text-center mb-12 py-12 bg-gradient-to-r from-purple-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl">
-            <p className="text-muted-foreground text-lg mb-2">Precio del servicio</p>
+            <p className="text-muted-foreground text-lg mb-2">Precio</p>
             <div className="flex items-baseline justify-center gap-2 mb-4">
-              <span className="text-5xl md:text-6xl font-extrabold text-[#6C5CE7]">$350</span>
-              <span className="text-xl text-muted-foreground">+ IVA</span>
+              <span className="text-5xl md:text-6xl font-extrabold text-[#6C5CE7]">$1.499</span>
             </div>
-            <p className="text-muted-foreground mb-2">Total: <span className="font-semibold">$392</span></p>
+            <p className="text-muted-foreground max-w-2xl mx-auto px-4">
+              Incluye todo lo descrito en esta página, en un solo proceso, con acompañamiento completo.
+            </p>
           </div>
 
-          {/* Empezar Ahora Button */}
-          <div className="flex justify-center mb-12">
+          {/* Empezar Launch Button */}
+          <div className="flex justify-center mb-16">
             <Link href="/login">
               <Button 
                 size="lg" 
-                className="text-lg px-8 py-6 bg-[#6C5CE7] hover:bg-[#5a4bd1] text-white font-semibold"
-                data-testid="button-start-now"
+                className="text-lg px-12 py-6 bg-[#6C5CE7] hover:bg-[#5a4bd1] text-white font-semibold"
+                data-testid="button-start-launch"
               >
-                Empezar Ahora
+                Empieza tu Launch
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
 
-          {/* Beneficios del servicio Launch - Perks estilo aceleradora */}
-          <div className="bg-gradient-to-b from-purple-50 to-background dark:from-gray-900 dark:to-background rounded-2xl py-20 px-8 mb-16">
-            <div className="text-center mb-16">
-              <span className="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-semibold mb-6">
-                Exclusivo para clientes Launch
-              </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
-                Beneficios del servicio Launch
+          {/* Costos operativos posteriores */}
+          <div className="mb-16">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
+                Costos operativos posteriores al Launch
               </h2>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Acceso a perks y descuentos exclusivos que representan{" "}
-                <span className="font-bold text-[#6C5CE7]">miles de dólares en ahorros</span>{" "}
-                para hacer crecer tu negocio.
+              <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
+                Todo negocio digital requiere una infraestructura mínima para mantenerse operativo, visible y atendiendo. Una vez lanzado, tu negocio opera sobre una infraestructura básica que incluye:
               </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {aliadosCategories.map((category) => {
-                const IconComponent = category.icon;
-                const colorClasses = {
-                  blue: {
-                    bg: 'bg-blue-100 dark:bg-blue-900/20',
-                    text: 'text-blue-600 dark:text-blue-400',
-                    border: 'border-blue-200 dark:border-blue-800'
-                  },
-                  green: {
-                    bg: 'bg-green-100 dark:bg-green-900/20',
-                    text: 'text-green-600 dark:text-green-400',
-                    border: 'border-green-200 dark:border-green-800'
-                  },
-                  purple: {
-                    bg: 'bg-purple-100 dark:bg-purple-900/20',
-                    text: 'text-purple-600 dark:text-purple-400',
-                    border: 'border-purple-200 dark:border-purple-800'
-                  },
-                  orange: {
-                    bg: 'bg-orange-100 dark:bg-orange-900/20',
-                    text: 'text-orange-600 dark:text-orange-400',
-                    border: 'border-orange-200 dark:border-orange-800'
-                  }
-                };
-                const colors = colorClasses[category.color as keyof typeof colorClasses] || colorClasses.blue;
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <Globe className="w-8 h-8 text-[#6C5CE7] mx-auto mb-2" />
+                  <span className="text-sm font-medium">Hosting profesional</span>
+                </div>
+                <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <Users className="w-8 h-8 text-[#6C5CE7] mx-auto mb-2" />
+                  <span className="text-sm font-medium">Soporte técnico básico</span>
+                </div>
+                <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <Target className="w-8 h-8 text-[#6C5CE7] mx-auto mb-2" />
+                  <span className="text-sm font-medium">Chatbot activo</span>
+                </div>
+                <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <TrendingUp className="w-8 h-8 text-[#6C5CE7] mx-auto mb-2" />
+                  <span className="text-sm font-medium">Continuidad y estabilidad</span>
+                </div>
+              </div>
+              <p className="text-center text-sm text-muted-foreground mb-8">
+                Estos costos no son exclusivos de Launch; son parte natural de operar online.
+              </p>
+              
+              {/* Pricing Options */}
+              <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <Card className="border-2 border-gray-200 dark:border-gray-700">
+                  <CardHeader className="text-center">
+                    <CardTitle className="text-xl">Opción mensual</CardTitle>
+                    <CardDescription>Infraestructura operativa</CardDescription>
+                  </CardHeader>
+                  <CardContent className="text-center">
+                    <div className="text-4xl font-bold text-foreground mb-2">$35</div>
+                    <p className="text-muted-foreground">/ mes</p>
+                  </CardContent>
+                </Card>
                 
-                return (
-                  <div 
-                    key={category.title} 
-                    className={`group bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 ${colors.border} hover:shadow-lg transition-all`}
-                    data-testid={`card-perk-${category.title.toLowerCase()}`}
-                  >
-                    <div className={`w-14 h-14 ${colors.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                      <IconComponent className={`h-7 w-7 ${colors.text}`} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">{category.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {category.description}
-                    </p>
+                <Card className="border-2 border-[#6C5CE7] relative">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#6C5CE7] text-white text-xs font-semibold rounded-full">
+                    Recomendada
                   </div>
-                );
-              })}
+                  <CardHeader className="text-center">
+                    <CardTitle className="text-xl">Opción anual</CardTitle>
+                    <CardDescription>Infraestructura operativa anual</CardDescription>
+                  </CardHeader>
+                  <CardContent className="text-center">
+                    <div className="text-4xl font-bold text-[#6C5CE7] mb-2">$299</div>
+                    <p className="text-muted-foreground">/ año</p>
+                    <p className="text-sm text-green-600 mt-2">(equivalente a menos de $25/mes)</p>
+                  </CardContent>
+                </Card>
+              </div>
+              <p className="text-center text-sm text-muted-foreground mt-6">
+                La anualidad evita fricciones, cortes y recordatorios innecesarios.
+              </p>
             </div>
           </div>
 
-          {/* CTA Section - Yellow Card */}
+          {/* ¿Launch es para todos? */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 md:p-12 mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
+              ¿Launch es para todos?
+            </h2>
+            <div className="max-w-2xl mx-auto text-center">
+              <p className="text-2xl font-bold text-[#6C5CE7] mb-4">No.</p>
+              <p className="text-lg text-muted-foreground mb-6">
+                Y está bien que no lo sea.
+              </p>
+              <p className="text-foreground leading-relaxed">
+                Launch es para quienes ven su negocio como un activo, no solo como un trámite. Para quienes prefieren orden, claridad y proyección desde el inicio.
+              </p>
+            </div>
+          </div>
+
+          {/* CTA Section */}
           <div 
-            className="text-center py-12 px-8 rounded-2xl"
+            className="text-center py-12 px-8 rounded-2xl mb-16"
             style={{ backgroundColor: '#FEF9C3' }}
           >
-            <h3 className="text-2xl font-bold mb-4 text-gray-900">¿Listo para lanzar tu negocio?</h3>
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">¿Listo para lanzar tu negocio con estructura completa?</h3>
             <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-              En solo 2 días tendrás todo lo necesario para empezar a operar formalmente
+              Si estás construyendo algo serio y quieres lanzarlo con una estructura a la altura, este servicio fue diseñado para ti.
             </p>
             <Link href="/login">
               <Button 
                 size="lg" 
                 className="text-lg px-12 bg-[#6C5CE7] hover:bg-[#5a4bd1] text-white font-semibold" 
-                data-testid="button-start-launch"
+                data-testid="button-start-launch-cta"
               >
-                Empezar Ahora
+                Empieza tu Launch
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
 
           {/* Contact Form Section */}
-          <div className="mt-16 max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <Card className="border-2 border-primary/20">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl">¿Necesitas una reunión?</CardTitle>

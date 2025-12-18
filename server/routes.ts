@@ -1462,8 +1462,8 @@ Sitemap: https://losimple.ai/sitemap.xml
     try {
       const userId = (req.user as any).id;
       
-      // Plan Launch fijo: $599 + IVA
-      const baseAmount = 599;
+      // Plan Launch fijo: $1499 (sin IVA adicional - precio final)
+      const baseAmount = 1499;
       const tax = baseAmount * 0.15; // 15% IVA
       const totalAmount = baseAmount + tax;
       
@@ -1558,8 +1558,8 @@ Sitemap: https://losimple.ai/sitemap.xml
         return res.status(400).json({ error: 'Debes completar el formulario primero' });
       }
       
-      // Mark as paid (TEST MODE)
-      const baseAmount = 599;
+      // Mark as paid (TEST MODE) - Plan Launch: $1499 + IVA
+      const baseAmount = 1499;
       const tax = baseAmount * 0.15;
       const totalAmount = baseAmount + tax;
       

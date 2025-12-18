@@ -78,7 +78,7 @@ const CheckoutForm = () => {
         disabled={!stripe || isProcessing}
         data-testid="button-confirm-payment"
       >
-        {isProcessing ? "Procesando..." : "Confirmar pago - $688.85"}
+        {isProcessing ? "Procesando..." : "Confirmar pago - $1,723.85"}
       </Button>
     </form>
   );
@@ -156,15 +156,21 @@ export default function LaunchPayment() {
 
   const plan = {
     name: 'Plan Launch',
-    price: 599,
+    price: 1499,
     features: [
-      'Constitución de tu empresa SAS en Ecuador',
-      'Diseño de identidad visual y logo profesional',
-      'Página web corporativa completa',
-      'Redes sociales configuradas',
-      'Sistema de facturación electrónica',
-      'Firma electrónica',
-      'Bonus: Cierre de todo sin costo adicional, incluida la liquidación de la empresa durante el primer año siempre que esté al día'
+      'Guía estratégica para SAS',
+      'Contrato Constitutivo aprobado',
+      'Títulos de acciones y nombramientos inscritos',
+      'RUC habilitado',
+      'Firma electrónica empresarial',
+      'Balance inicial ante Superintendencia de Compañías',
+      'Declaración inicial de patente municipal',
+      'Acompañamiento en registro marcario',
+      'Página web profesional con blog incluido',
+      'Chatbot de recepción integrado',
+      'Optimización SEO, AEO y AIO',
+      'Análisis inicial de visibilidad',
+      'Verificación de presencia digital'
     ]
   };
 
