@@ -191,6 +191,7 @@ function CTATestButton() {
         size="lg" 
         className="text-lg px-10 py-6 font-semibold shadow-lg hover:shadow-xl transition-all"
         data-testid="button-test-sas-inline"
+        onClick={() => window.open('https://launch.losimple.ai', '_blank')}
       >
         <Sparkles className="mr-2 h-5 w-5" />
         Haz el Test ahora
@@ -227,6 +228,7 @@ function CTATestFinal() {
           size="lg" 
           className="text-lg px-10 py-6 font-semibold shadow-lg hover:shadow-xl transition-all"
           data-testid="button-test-sas"
+          onClick={() => window.open('https://launch.losimple.ai', '_blank')}
         >
           Hacer el Test SAS
           <ChevronRight className="ml-2 h-5 w-5" />
@@ -287,6 +289,7 @@ export default function ComoEmprenderEcuador() {
               size="lg" 
               className="text-lg px-10 py-6 font-semibold shadow-lg hover:shadow-xl transition-all"
               data-testid="button-test-sas-hero"
+              onClick={() => window.open('https://launch.losimple.ai', '_blank')}
             >
               <Sparkles className="mr-2 h-5 w-5" />
               Haz el Test ahora
