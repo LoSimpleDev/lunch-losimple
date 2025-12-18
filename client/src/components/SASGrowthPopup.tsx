@@ -8,12 +8,6 @@ export function SASGrowthPopup() {
   const [hasBeenClosed, setHasBeenClosed] = useState(false);
 
   useEffect(() => {
-    const hasSeenPopup = sessionStorage.getItem('sas-growth-popup-closed');
-    if (hasSeenPopup) {
-      setHasBeenClosed(true);
-      return;
-    }
-
     const handleScroll = () => {
       const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
       
@@ -30,7 +24,6 @@ export function SASGrowthPopup() {
   const handleClose = () => {
     setIsVisible(false);
     setHasBeenClosed(true);
-    sessionStorage.setItem('sas-growth-popup-closed', 'true');
   };
 
   if (!isVisible || hasBeenClosed) return null;
