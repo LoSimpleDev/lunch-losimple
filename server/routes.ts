@@ -906,6 +906,69 @@ Sitemap: https://losimple.ai/sitemap.xml
       res.status(500).json({ error: 'Error al procesar el formulario' });
     }
   });
+
+  // POST /contact/cotizar-sas - Contact form for cotizar creación SAS page
+  api.post("/contact/cotizar-sas", async (req, res) => {
+    try {
+      const { nombre, email, whatsapp, decision } = req.body;
+      
+      if (!nombre || !email || !whatsapp) {
+        return res.status(400).json({ error: 'Todos los campos son requeridos' });
+      }
+      
+      const decisionText = decision === "decidido" 
+        ? "Estoy decidido, quiero crear mi SAS" 
+        : "Solo quiero información por ahora";
+      
+      console.log('='.repeat(50));
+      console.log('NUEVA SOLICITUD - COTIZACIÓN CREACIÓN SAS');
+      console.log('='.repeat(50));
+      console.log(`Nombre: ${nombre}`);
+      console.log(`Email: ${email}`);
+      console.log(`WhatsApp: ${whatsapp}`);
+      console.log(`Estado de decisión: ${decisionText}`);
+      console.log('='.repeat(50));
+
+      if (process.env.SENDGRID_API_KEY) {
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        
+        const msg = {
+          to: 'hola@losimple.ai',
+          from: 'hola@losimple.ai',
+          subject: `Nueva solicitud de cotización SAS - ${nombre}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2 style="color: #16A34A;">Nueva Solicitud - Cotización Creación SAS</h2>
+              <p style="color: #666;">Esta persona quiere información sobre crear su empresa SAS.</p>
+              <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p><strong>Nombre:</strong> ${nombre}</p>
+                <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                <p><strong>WhatsApp:</strong> ${whatsapp}</p>
+                <p><strong>Estado de decisión:</strong> ${decisionText}</p>
+              </div>
+              <p style="background-color: #DCFCE7; padding: 15px; border-radius: 4px; border-left: 4px solid #16A34A;">
+                <strong>Nota:</strong> Este cliente ha sido redirigido a WhatsApp automáticamente después de completar el formulario.
+              </p>
+              <p style="color: #666; font-size: 12px;">Este mensaje fue enviado desde la página de Cotizar Creación SAS en losimple.ai</p>
+            </div>
+          `
+        };
+        
+        try {
+          await sgMail.send(msg);
+          console.log('Email notification sent successfully');
+        } catch (emailError) {
+          console.error('Error sending email notification:', emailError);
+        }
+      }
+      
+      res.json({ message: 'Mensaje recibido correctamente' });
+    } catch (error) {
+      console.error('Error processing cotizar-sas form:', error);
+      res.status(500).json({ error: 'Error al procesar el formulario' });
+    }
+  });
   
   // GET /auth/session - Check current session
   api.get("/auth/session", (req, res) => {
