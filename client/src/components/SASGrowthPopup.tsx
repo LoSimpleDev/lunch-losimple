@@ -17,7 +17,7 @@ export function SASGrowthPopup() {
     const handleScroll = () => {
       const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
       
-      if (scrollPercentage > 25 && !hasBeenClosed) {
+      if (scrollPercentage > 7 && !hasBeenClosed) {
         setIsVisible(true);
         window.removeEventListener('scroll', handleScroll);
       }
