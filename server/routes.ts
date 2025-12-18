@@ -101,11 +101,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 User-agent: *
 Allow: /
 
-# Bloquear rutas administrativas
+# Bloquear rutas administrativas y privadas
 Disallow: /admin-login
 Disallow: /adminlaunch
 Disallow: /admin-blog
 Disallow: /admin-users
+Disallow: /dashboard
+Disallow: /launch-form
+Disallow: /launch-payment
+Disallow: /login
+Disallow: /register
 
 # Sitemap
 Sitemap: https://losimple.ai/sitemap.xml
@@ -122,9 +127,11 @@ Sitemap: https://losimple.ai/sitemap.xml
       const staticPages = [
         { url: '/', priority: '1.0', changefreq: 'weekly' },
         { url: '/launch', priority: '0.9', changefreq: 'weekly' },
+        { url: '/cotizar-creacion-sas', priority: '0.9', changefreq: 'weekly' },
         { url: '/documentos-sas', priority: '0.8', changefreq: 'weekly' },
         { url: '/multas-sas-ecuador', priority: '0.8', changefreq: 'weekly' },
         { url: '/cerrar-sas', priority: '0.8', changefreq: 'weekly' },
+        { url: '/preparar-cierre-sas', priority: '0.7', changefreq: 'monthly' },
         { url: '/como-emprender-en-ecuador-con-una-empresa-2026', priority: '0.8', changefreq: 'monthly' },
         { url: '/blog', priority: '0.7', changefreq: 'daily' },
         { url: '/beneficios', priority: '0.6', changefreq: 'monthly' },

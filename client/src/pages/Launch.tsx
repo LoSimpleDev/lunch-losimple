@@ -107,10 +107,10 @@ export default function Launch() {
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-16 lg:py-20">
         {/* Decorative Elements */}
         <div className="absolute top-10 left-10 w-24 h-24 opacity-20 transform -rotate-12 hidden lg:block">
-          <img src={decoratorPerson} alt="" className="w-full h-full object-contain" />
+          <img src={decoratorPerson} alt="" className="w-full h-full object-contain" loading="lazy" />
         </div>
         <div className="absolute top-16 right-16 w-32 h-32 opacity-15 transform rotate-6 hidden lg:block">
-          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" />
+          <img src={decoratorGrid} alt="" className="w-full h-full object-contain" loading="lazy" />
         </div>
         
         <div className="container mx-auto px-4 relative z-10">

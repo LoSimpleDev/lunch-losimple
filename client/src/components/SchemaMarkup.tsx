@@ -34,29 +34,105 @@ export function SchemaMarkup() {
     const launchServiceSchema = {
       "@context": "https://schema.org",
       "@type": "Product",
-      "name": "Launch - Paquete Todo Incluido para SAS",
-      "description": "Servicio completo para constituir tu empresa SAS en Ecuador. Incluye logo, página web, redes sociales, constitución legal, facturación electrónica y firma electrónica.",
+      "name": "Launch - Servicio Integral para SAS en Ecuador",
+      "description": "Servicio integral para crear tu SAS en Ecuador con estructura legal completa, registro de marca, página web profesional con blog y chatbot, optimización SEO, AEO y AIO.",
       "brand": {
         "@type": "Brand",
         "name": "Lo Simple"
       },
       "offers": {
         "@type": "Offer",
-        "price": "688.85",
+        "price": "1723.85",
         "priceCurrency": "USD",
-        "priceValidUntil": "2025-12-31",
+        "priceValidUntil": "2026-12-31",
         "availability": "https://schema.org/InStock",
         "seller": {
           "@type": "Organization",
           "name": "Lo Simple"
         },
-        "description": "$599 + IVA (15%)"
+        "description": "$1,499 + IVA (15%)"
       },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5",
         "reviewCount": "150"
       }
+    };
+
+    const constitucionSASSchema = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Constitución de SAS",
+      "name": "Constitución de Empresa SAS en Ecuador",
+      "description": "Servicio de constitución de Sociedades por Acciones Simplificadas (SAS) en Ecuador. Trámite 100% digital ante la Superintendencia de Compañías.",
+      "provider": {
+        "@type": "Organization",
+        "name": "Lo Simple",
+        "url": "https://losimple.ai"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Ecuador"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios de Constitución SAS",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Constitución SAS Básica",
+              "description": "Constitución de empresa SAS con contrato, títulos de acciones, nombramientos y RUC"
+            }
+          }
+        ]
+      }
+    };
+
+    const howToSchema = {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Cómo constituir una SAS en Ecuador",
+      "description": "Guía paso a paso para crear tu Sociedad por Acciones Simplificada (SAS) en Ecuador de forma 100% digital.",
+      "totalTime": "P5D",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": "1"
+      },
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Obtener firma electrónica",
+          "text": "Cada accionista debe contar con una firma electrónica vigente emitida por el Registro Civil o Security Data."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Reservar nombre de la empresa",
+          "text": "Solicitar la reserva de denominación en la Superintendencia de Compañías, Valores y Seguros."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Preparar documentos constitutivos",
+          "text": "Elaborar el contrato constitutivo con objeto social, capital, distribución de acciones y administración."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Firmar digitalmente",
+          "text": "Todos los accionistas firman electrónicamente los documentos constitutivos."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Obtener RUC",
+          "text": "Una vez aprobada la constitución, obtener el Registro Único de Contribuyentes (RUC) ante el SRI."
+        }
+      ]
     };
 
     const faqSchema = {
@@ -142,6 +218,8 @@ export function SchemaMarkup() {
     const schemas = [
       organizationSchema,
       launchServiceSchema,
+      constitucionSASSchema,
+      howToSchema,
       faqSchema,
       breadcrumbSchema
     ];
