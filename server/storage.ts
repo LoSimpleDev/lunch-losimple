@@ -135,6 +135,7 @@ export class MemStorage implements IStorage {
     this.initializeServices();
     this.initializeBenefits();
     this.initializeBlogPosts();
+    this.initializeDefaultAdmin();
   }
 
   // Services methods

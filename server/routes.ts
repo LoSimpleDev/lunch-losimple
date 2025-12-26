@@ -1000,8 +1000,11 @@ Sitemap: https://losimple.ai/sitemap.xml
       const user = await storage.getUserByEmail(email);
       if (!user) {
         // Por seguridad, no revelamos si el email existe
+        console.log('Password reset requested for non-existent email:', email);
         return res.json({ message: 'Si el email existe, recibirás instrucciones para resetear tu contraseña' });
       }
+      
+      console.log('Password reset requested for user:', email);
       
       // Generate reset token (6 digit code)
       const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
