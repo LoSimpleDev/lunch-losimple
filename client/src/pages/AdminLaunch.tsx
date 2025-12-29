@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LogOut, FileText, Calendar, Users } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
@@ -12,14 +18,14 @@ interface User {
   id: string;
   email: string;
   fullName: string;
-  role: 'client' | 'simplificador' | 'superadmin';
+  role: "client" | "simplificador" | "superadmin";
 }
 
 interface TeamUser {
   id: string;
   email: string;
   fullName: string;
-  role: 'simplificador' | 'superadmin';
+  role: "simplificador" | "superadmin";
 }
 
 interface LaunchRequest {
@@ -42,31 +48,43 @@ export default function AdminLaunch() {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   // Fetch user session
-  const { data: sessionData, isLoading: isLoadingSession } = useQuery<{ user: User }>({
+  const { data: sessionData, isLoading: isLoadingSession } = useQuery<{
+    user: User;
+  }>({
     queryKey: ["/api/auth/session"],
   });
 
   // Fetch team users (for superadmin assignment)
   const { data: teamUsers } = useQuery<TeamUser[]>({
     queryKey: ["/api/admin/team"],
-    enabled: !!sessionData?.user && sessionData.user.role === 'superadmin',
+    enabled: !!sessionData?.user && sessionData.user.role === "superadmin",
   });
 
   // Fetch unassigned requests (for simplificadores to take)
   const { data: unassignedRequests } = useQuery<LaunchRequest[]>({
     queryKey: ["/api/admin/unassigned"],
-    enabled: !!sessionData?.user && sessionData.user.role === 'simplificador',
+    enabled: !!sessionData?.user && sessionData.user.role === "simplificador",
   });
 
   // Fetch launch requests
-  const { data: requests, isLoading: isLoadingRequests } = useQuery<LaunchRequest[]>({
+  const { data: requests, isLoading: isLoadingRequests } = useQuery<
+    LaunchRequest[]
+  >({
     queryKey: ["/api/admin/requests", selectedStatus],
-    enabled: !!sessionData?.user && (sessionData.user.role === 'superadmin' || sessionData.user.role === 'simplificador'),
+    enabled:
+      !!sessionData?.user &&
+      (sessionData.user.role === "superadmin" ||
+        sessionData.user.role === "simplificador"),
   });
 
   useEffect(() => {
-    if (!isLoadingSession && (!sessionData || (sessionData.user.role !== 'superadmin' && sessionData.user.role !== 'simplificador'))) {
-      setLocation('/');
+    if (
+      !isLoadingSession &&
+      (!sessionData ||
+        (sessionData.user.role !== "superadmin" &&
+          sessionData.user.role !== "simplificador"))
+    ) {
+      setLocation("/");
       toast({
         title: "Acceso denegado",
         description: "No tienes permisos de administrador",
@@ -79,7 +97,7 @@ export default function AdminLaunch() {
     try {
       await apiRequest("POST", "/api/auth/logout");
       await queryClient.invalidateQueries();
-      setLocation('/');
+      setLocation("/");
     } catch (error) {
       toast({
         title: "Error",
@@ -101,31 +119,32 @@ export default function AdminLaunch() {
   }
 
   const user = sessionData?.user;
-  if (!user || (user.role !== 'superadmin' && user.role !== 'simplificador')) return null;
+  if (!user || (user.role !== "superadmin" && user.role !== "simplificador"))
+    return null;
 
-  const isSuperadmin = user.role === 'superadmin';
+  const isSuperadmin = user.role === "superadmin";
 
   // Find team member name for assigned requests
   const getAssignedName = (assignedTo?: string) => {
     if (!assignedTo) return null;
-    if (assignedTo === user.id) return 'Tú';
-    const assignee = teamUsers?.find(u => u.id === assignedTo);
-    return assignee?.fullName || 'Asignado';
+    if (assignedTo === user.id) return "Tú";
+    const assignee = teamUsers?.find((u) => u.id === assignedTo);
+    return assignee?.fullName || "Asignado";
   };
 
   // Group requests by status
   const requestsByStatus = {
-    new: requests?.filter(r => r.adminStatus === 'new') || [],
-    reviewing: requests?.filter(r => r.adminStatus === 'reviewing') || [],
-    in_progress: requests?.filter(r => r.adminStatus === 'in_progress') || [],
-    completed: requests?.filter(r => r.adminStatus === 'completed') || [],
+    new: requests?.filter((r) => r.adminStatus === "new") || [],
+    reviewing: requests?.filter((r) => r.adminStatus === "reviewing") || [],
+    in_progress: requests?.filter((r) => r.adminStatus === "in_progress") || [],
+    completed: requests?.filter((r) => r.adminStatus === "completed") || [],
   };
 
   const statusLabels = {
-    new: 'Nuevo',
-    reviewing: 'En Revisión',
-    in_progress: 'En Proceso',
-    completed: 'Completado'
+    new: "Nuevo",
+    reviewing: "En Revisión",
+    in_progress: "En Proceso",
+    completed: "Completado",
   };
 
   return (
@@ -136,22 +155,39 @@ export default function AdminLaunch() {
           <div>
             <h1 className="text-2xl font-bold">Admin Launch</h1>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {isSuperadmin ? 'Superadmin' : 'Simplificador'} - Panel de administración
+              {isSuperadmin ? "Superadmin" : "Simplificador"} - Panel de
+              administración
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <Button 
-              variant="outline" 
-              onClick={() => setLocation('/admin-blog')}
+            <Button
+              variant="outline"
+              onClick={() => setLocation("/adminlegal")}
+              data-testid="button-adminlegal"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Legal
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setLocation("/conciliation")}
+              data-testid="button-conciliation"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Financiero
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setLocation("/admin-blog")}
               data-testid="button-admin-blog"
             >
               <FileText className="w-4 h-4 mr-2" />
               Blog
             </Button>
             {isSuperadmin && (
-              <Button 
-                variant="outline" 
-                onClick={() => setLocation('/admin-users')}
+              <Button
+                variant="outline"
+                onClick={() => setLocation("/admin-users")}
                 data-testid="button-admin-users"
               >
                 <Users className="w-4 h-4 mr-2" />
@@ -160,9 +196,15 @@ export default function AdminLaunch() {
             )}
             <div className="text-right">
               <p className="text-sm font-medium">{user.fullName}</p>
-              <p className="text-xs text-gray-600 dark:text-gray-400">{user.email}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {user.email}
+              </p>
             </div>
-            <Button variant="outline" onClick={handleLogout} data-testid="button-admin-logout">
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              data-testid="button-admin-logout"
+            >
               <LogOut className="w-4 h-4 mr-2" />
               Salir
             </Button>
@@ -178,26 +220,40 @@ export default function AdminLaunch() {
               Solicitudes Disponibles ({unassignedRequests.length})
             </h3>
             <p className="text-sm text-yellow-800 dark:text-yellow-200 mb-3">
-              Estas solicitudes están sin asignar. Haz clic en "Tomar" para asignártela.
+              Estas solicitudes están sin asignar. Haz clic en "Tomar" para
+              asignártela.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {unassignedRequests.map((request) => (
-                <Card key={request.id} data-testid={`card-unassigned-${request.id}`}>
+                <Card
+                  key={request.id}
+                  data-testid={`card-unassigned-${request.id}`}
+                >
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">{request.fullName || 'Sin nombre'}</CardTitle>
+                    <CardTitle className="text-sm">
+                      {request.fullName || "Sin nombre"}
+                    </CardTitle>
                     <CardDescription className="text-xs truncate">
-                      {request.personalEmail || 'Sin email'}
+                      {request.personalEmail || "Sin email"}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       className="w-full"
                       onClick={async () => {
                         try {
-                          await apiRequest("PATCH", `/api/admin/requests/${request.id}/assign`, { assignedTo: user.id });
-                          await queryClient.invalidateQueries({ queryKey: ["/api/admin/requests"] });
-                          await queryClient.invalidateQueries({ queryKey: ["/api/admin/unassigned"] });
+                          await apiRequest(
+                            "PATCH",
+                            `/api/admin/requests/${request.id}/assign`,
+                            { assignedTo: user.id }
+                          );
+                          await queryClient.invalidateQueries({
+                            queryKey: ["/api/admin/requests"],
+                          });
+                          await queryClient.invalidateQueries({
+                            queryKey: ["/api/admin/unassigned"],
+                          });
                           toast({
                             title: "Solicitud asignada",
                             description: "La solicitud ha sido asignada a ti",
@@ -228,8 +284,13 @@ export default function AdminLaunch() {
           {Object.entries(requestsByStatus).map(([status, statusRequests]) => (
             <div key={status} className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-lg">{statusLabels[status as keyof typeof statusLabels]}</h3>
-                <Badge variant="secondary" data-testid={`badge-count-${status}`}>
+                <h3 className="font-semibold text-lg">
+                  {statusLabels[status as keyof typeof statusLabels]}
+                </h3>
+                <Badge
+                  variant="secondary"
+                  data-testid={`badge-count-${status}`}
+                >
                   {statusRequests.length}
                 </Badge>
               </div>
@@ -245,20 +306,22 @@ export default function AdminLaunch() {
                   statusRequests.map((request) => {
                     const assignedName = getAssignedName(request.assignedTo);
                     return (
-                      <Card 
-                        key={request.id} 
+                      <Card
+                        key={request.id}
                         className="cursor-pointer hover:shadow-md transition-shadow"
-                        onClick={() => setLocation(`/adminlaunch/${request.id}`)}
+                        onClick={() =>
+                          setLocation(`/adminlaunch/${request.id}`)
+                        }
                         data-testid={`card-request-${request.id}`}
                       >
                         <CardHeader className="pb-3">
                           <div className="flex items-start justify-between">
                             <div className="flex-1 min-w-0">
                               <CardTitle className="text-base truncate">
-                                {request.fullName || 'Sin nombre'}
+                                {request.fullName || "Sin nombre"}
                               </CardTitle>
                               <CardDescription className="truncate">
-                                {request.personalEmail || 'Sin email'}
+                                {request.personalEmail || "Sin email"}
                               </CardDescription>
                             </div>
                             <Badge variant="outline" className="ml-2">
@@ -279,14 +342,32 @@ export default function AdminLaunch() {
                           </div>
                           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                             <Calendar className="w-4 h-4" />
-                            <span>{new Date(request.createdAt).toLocaleDateString()}</span>
+                            <span>
+                              {new Date(request.createdAt).toLocaleDateString()}
+                            </span>
                           </div>
                           <div className="flex gap-2 flex-wrap">
-                            <Badge variant={request.isFormComplete ? "default" : "secondary"} className="text-xs">
-                              {request.isFormComplete ? 'Completo' : 'Incompleto'}
+                            <Badge
+                              variant={
+                                request.isFormComplete ? "default" : "secondary"
+                              }
+                              className="text-xs"
+                            >
+                              {request.isFormComplete
+                                ? "Completo"
+                                : "Incompleto"}
                             </Badge>
-                            <Badge variant={request.paymentStatus === 'completed' ? "default" : "secondary"} className="text-xs">
-                              {request.paymentStatus === 'completed' ? 'Pagado' : 'Sin pagar'}
+                            <Badge
+                              variant={
+                                request.paymentStatus === "completed"
+                                  ? "default"
+                                  : "secondary"
+                              }
+                              className="text-xs"
+                            >
+                              {request.paymentStatus === "completed"
+                                ? "Pagado"
+                                : "Sin pagar"}
                             </Badge>
                           </div>
                         </CardContent>

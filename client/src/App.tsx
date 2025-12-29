@@ -1,41 +1,44 @@
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { Header } from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/contexts/CartContext";
-import { Header } from "@/components/Header";
-import Home from "@/pages/Home";
-import Home2 from "@/pages/Home2";
-import Checkout from "@/pages/Checkout";
-import PaymentSuccess from "@/pages/PaymentSuccess";
-import TerminosCondiciones from "@/pages/TerminosCondiciones";
-import PoliticaPrivacidad from "@/pages/PoliticaPrivacidad";
-import Membresia from "@/pages/Membresia";
-import Launch from "@/pages/Launch";
-import Login from "@/pages/Login";
-import Dashboard from "@/pages/Dashboard";
-import LaunchForm from "@/pages/LaunchForm";
-import LaunchPayment from "@/pages/LaunchPayment";
-import AdminLogin from "@/pages/AdminLogin";
+import AdminBlog from "@/pages/AdminBlog";
 import AdminLaunch from "@/pages/AdminLaunch";
+import AdminLogin from "@/pages/AdminLogin";
 import AdminRequestDetail from "@/pages/AdminRequestDetail";
 import AdminUsers from "@/pages/AdminUsers";
-import ForgotPassword from "@/pages/ForgotPassword";
-import ResetPassword from "@/pages/ResetPassword";
 import Benefits from "@/pages/Benefits";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
-import AdminBlog from "@/pages/AdminBlog";
-import MultasSAS from "@/pages/MultasSAS";
-import LoginSASExistente from "@/pages/LoginSASExistente";
 import CerrarSAS from "@/pages/CerrarSAS";
 import CerrarSASPremium from "@/pages/CerrarSASPremium";
-import PrepararCierreSAS from "@/pages/PrepararCierreSAS";
+import Checkout from "@/pages/Checkout";
 import ComoEmprenderEcuador from "@/pages/ComoEmprenderEcuador";
 import CotizarCreacionSAS from "@/pages/CotizarCreacionSAS";
+import Dashboard from "@/pages/Dashboard";
 import EmpezarCierre from "@/pages/EmpezarCierre";
+import ForgotPassword from "@/pages/ForgotPassword";
+import Home from "@/pages/Home";
+import Home2 from "@/pages/Home2";
+import Launch from "@/pages/Launch";
+import LaunchForm from "@/pages/LaunchForm";
+import LaunchPayment from "@/pages/LaunchPayment";
+import Login from "@/pages/Login";
+import LoginSASExistente from "@/pages/LoginSASExistente";
+import Membresia from "@/pages/Membresia";
+import MultasSAS from "@/pages/MultasSAS";
 import NotFound from "@/pages/not-found";
+import PaymentSuccess from "@/pages/PaymentSuccess";
+import PoliticaPrivacidad from "@/pages/PoliticaPrivacidad";
+import PrepararCierreSAS from "@/pages/PrepararCierreSAS";
+import ResetPassword from "@/pages/ResetPassword";
+import TerminosCondiciones from "@/pages/TerminosCondiciones";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Route, Switch } from "wouter";
+import { queryClient } from "./lib/queryClient";
+import ClientsPage from "./pages/Clients";
+import ConciliationPage from "./pages/Conciliation";
+import AdminLegal from "./pages/AdminLegal";
 
 function Router() {
   return (
@@ -45,7 +48,10 @@ function Router() {
       <Route path="/checkout" component={Checkout} />
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/terminos-y-condiciones" component={TerminosCondiciones} />
-      <Route path="/politica-privacidad-datos-lo-simple" component={PoliticaPrivacidad} />
+      <Route
+        path="/politica-privacidad-datos-lo-simple"
+        component={PoliticaPrivacidad}
+      />
       <Route path="/saslegal-plus" component={Membresia} />
       <Route path="/launch" component={Launch} />
       <Route path="/login" component={Login} />
@@ -55,6 +61,9 @@ function Router() {
       <Route path="/admin-login" component={AdminLogin} />
       <Route path="/adminlaunch/:id" component={AdminRequestDetail} />
       <Route path="/adminlaunch" component={AdminLaunch} />
+      <Route path="/adminlegal" component={AdminLegal} />
+      <Route path="/clients" component={ClientsPage} />
+      <Route path="/conciliation" component={ConciliationPage} />
       <Route path="/admin-users" component={AdminUsers} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/reset-password" component={ResetPassword} />
@@ -67,7 +76,10 @@ function Router() {
       <Route path="/cerrar-sas-premium" component={CerrarSASPremium} />
       <Route path="/preparar-cierre-sas" component={PrepararCierreSAS} />
       <Route path="/login-sas-existente" component={LoginSASExistente} />
-      <Route path="/como-emprender-en-ecuador-con-una-empresa-2026" component={ComoEmprenderEcuador} />
+      <Route
+        path="/como-emprender-en-ecuador-con-una-empresa-2026"
+        component={ComoEmprenderEcuador}
+      />
       <Route path="/cotizar-creacion-sas" component={CotizarCreacionSAS} />
       <Route path="/empezar-cierre" component={EmpezarCierre} />
       {/* Fallback to 404 */}
