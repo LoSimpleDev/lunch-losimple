@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,10 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { LogOut, FileText, Calendar, Users } from "lucide-react";
-import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useQuery } from "@tanstack/react-query";
+import { Calendar, FileText, LogOut, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 
 interface User {
   id: string;
@@ -162,11 +162,11 @@ export default function AdminLaunch() {
           <div className="flex items-center gap-4">
             <Button
               variant="outline"
-              onClick={() => setLocation("/adminlegal")}
-              data-testid="button-adminlegal"
+              onClick={() => setLocation("/clients")}
+              data-testid="button-clients"
             >
               <FileText className="w-4 h-4 mr-2" />
-              Legal
+              Constituciones
             </Button>
             <Button
               variant="outline"
