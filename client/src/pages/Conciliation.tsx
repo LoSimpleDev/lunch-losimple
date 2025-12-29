@@ -9,7 +9,9 @@ import {
   XCircle,
   Clock,
   Image as ImageIcon,
+  ArrowLeft,
 } from 'lucide-react';
+import { Link } from "wouter";
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DataTable } from '@/components/shared/DataTable';
@@ -161,31 +163,40 @@ export default function ConciliationPage() {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <motion.h1
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-semibold text-foreground"
-          >
-            Conciliación de Pagos
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-muted-foreground"
-          >
-            Revisa y gestiona los comprobantes de pago
-          </motion.p>
-        </div>
-        <Button onClick={loadPayments} variant="outline" className="gap-2">
-          <RefreshCw className="w-4 h-4" />
-          Actualizar
-        </Button>
-      </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4 py-8">
+        <div className="space-y-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <Link href="/adminlaunch">
+                <Button variant="ghost" size="icon" data-testid="button-back">
+                  <ArrowLeft className="w-5 h-5" />
+                </Button>
+              </Link>
+              <div>
+                <motion.h1
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-2xl font-bold"
+                >
+                  Conciliación de Pagos
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-muted-foreground"
+                >
+                  Revisa y gestiona los comprobantes de pago
+                </motion.p>
+              </div>
+            </div>
+            <Button onClick={loadPayments} variant="outline" className="gap-2">
+              <RefreshCw className="w-4 h-4" />
+              Actualizar
+            </Button>
+          </div>
 
       {/* Filters */}
       <motion.div
@@ -387,6 +398,8 @@ export default function ConciliationPage() {
           </div>
         )}
       </SlidePanel>
+        </div>
+      </div>
     </div>
   );
 }

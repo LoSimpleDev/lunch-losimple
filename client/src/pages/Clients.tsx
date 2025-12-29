@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Search, RefreshCw, Filter, Building2 } from "lucide-react";
+import { Search, RefreshCw, Filter, Building2, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -164,31 +165,40 @@ export default function ClientsPage() {
   console.log("clientes:", clientes);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <motion.h1
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-semibold text-foreground"
-          >
-            Gestión de Clientes
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-muted-foreground"
-          >
-            Clientes recibidos desde Typeform
-          </motion.p>
-        </div>
-        <Button onClick={loadData} variant="outline" className="gap-2">
-          <RefreshCw className="w-4 h-4" />
-          Actualizar
-        </Button>
-      </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4 py-8">
+        <div className="space-y-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <Link href="/adminlaunch">
+                <Button variant="ghost" size="icon" data-testid="button-back">
+                  <ArrowLeft className="w-5 h-5" />
+                </Button>
+              </Link>
+              <div>
+                <motion.h1
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-2xl font-bold"
+                >
+                  Gestión de Clientes
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-muted-foreground"
+                >
+                  Clientes recibidos desde Typeform
+                </motion.p>
+              </div>
+            </div>
+            <Button onClick={loadData} variant="outline" className="gap-2">
+              <RefreshCw className="w-4 h-4" />
+              Actualizar
+            </Button>
+          </div>
 
       {/* Filters */}
       <motion.div
@@ -276,6 +286,8 @@ export default function ClientsPage() {
           />
         )}
       </SlidePanel>
+        </div>
+      </div>
     </div>
   );
 }
