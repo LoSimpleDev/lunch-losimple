@@ -10,7 +10,14 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useQuery } from "@tanstack/react-query";
-import { Calendar, FileText, LogOut, Users } from "lucide-react";
+import {
+  Calendar,
+  FileText,
+  IdCard,
+  LogOut,
+  UserPlus,
+  Users,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 
@@ -165,7 +172,7 @@ export default function AdminLaunch() {
               onClick={() => setLocation("/clients")}
               data-testid="button-clients"
             >
-              <FileText className="w-4 h-4 mr-2" />
+              <UserPlus className="w-4 h-4 mr-2" />
               Constituciones
             </Button>
             <Button
@@ -173,7 +180,7 @@ export default function AdminLaunch() {
               onClick={() => setLocation("/conciliation")}
               data-testid="button-conciliation"
             >
-              <FileText className="w-4 h-4 mr-2" />
+              <IdCard className="w-4 h-4 mr-2" />
               Financiero
             </Button>
             <Button
